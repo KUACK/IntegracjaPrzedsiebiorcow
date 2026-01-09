@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Konferencja Przedsiębiorców</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- PASEK PROMOCYJNY -->
+    <div class="promo-bar">
+      <div class="promo-content">
+        <div class="promo-text">
+          🎉 Tylko do końca Stycznia!<br />
+          Kod: <strong>STYCZEN</strong> - Najniższa cena! 50% zniżki!
+        </div>
+        <div class="timer" id="timer">⏱️ Pozostało: Ładowanie...</div>
+      </div>
+    </div>
+
+    <!-- HEADER -->
+    <div class="header">
+      <div class="logo">
+        <img src="obrazy/logo.png" alt="logo" />
+      </div>
+    </div>
+
+    <!-- SEKCJA PRELEGENCI -->
+    <div class="container">
+      <div class="section">
+        <h2 class="section-title">NASI PRELEGENCI</h2>
+        <div class="speakers-grid">
+          <div class="speaker-card">
+            <img
+              src="https://agi-prod-file-upload-public-main-use1.s3.amazonaws.com/7d2755f5-8d35-42f0-8b29-762ba550fe91"
+              alt="Prelegentka"
+              class="speaker-avatar"
+            />
+          </div>
+          <div class="speaker-card">
+            <img
+              src="https://agi-prod-file-upload-public-main-use1.s3.amazonaws.com/66374bdb-03ef-485d-b07d-2d94e1fe0541"
+              alt="Prelegent"
+              class="speaker-avatar"
+            />
+          </div>
+          <div class="speaker-card">
+            <img
+              src="https://agi-prod-file-upload-public-main-use1.s3.amazonaws.com/2dac8c81-4c26-4359-b9e7-05a43a987688"
+              alt="Prelegent"
+              class="speaker-avatar"
+            />
+          </div>
+        </div>
+        <p class="section-subtitle2">
+          Z KAŻDYM MIĘSIĄCEM PRZEDSTWIAMY NOWEGO PRELEGENTA
+        </p>
+      </div>
+    </div>
+
+    <!-- HARMONOGRAM -->
+    <div class="container">
+      <div class="section">
+        <h2 class="section-title">HARMONOGRAM</h2>
+
+        <div class="schedule-container">
+          <div class="schedule-day">
+            <h3>📅 Piątek - 10 Października 2026</h3>
+            <div class="schedule-item">
+              <span class="time">09:00</span> OTWARCIE KONFERENCJI
+            </div>
+            <div class="schedule-item">
+              <span class="time">10:00</span> KEYNOTE - "BIZNES W ERZE CYFROWEJ"
+            </div>
+            <div class="schedule-item">
+              <span class="time">11:30</span> PRZERWA NETWORKINGOWA
+            </div>
+            <div class="schedule-item">
+              <span class="time">12:00</span> WARSZTATY BIZNESOWE - SEKCJA A
+            </div>
+            <div class="schedule-item">
+              <span class="time">13:00</span> LUNCH
+            </div>
+            <div class="schedule-item">
+              <span class="time">14:00</span> WARSZTATY BIZNESOWE - SEKCJA B
+            </div>
+            <div class="schedule-item">
+              <span class="time">15:30</span> PRZERWA NETWORKINGOWA
+            </div>
+            <div class="schedule-item">
+              <span class="time">17:00</span> ZAKOŃCZENIE DNIA
+            </div>
+          </div>
+
+          <div class="schedule-day">
+            <h3>📅 Sobota - 11 Października 2026</h3>
+            <div class="schedule-item">
+              <span class="time">09:00</span> OTWARCIE DRUGIEGO DNIA
+            </div>
+            <div class="schedule-item">
+              <span class="time">10:00</span> PANEL DYSKUSYJNY: "INWESTYCJE I
+              FINANSE"
+            </div>
+            <div class="schedule-item">
+              <span class="time">11:30</span> PRZERWA NETWORKINGOWA
+            </div>
+            <div class="schedule-item">
+              <span class="time">12:00</span> MASTERSKLASY - SEKCJA C
+            </div>
+            <div class="schedule-item">
+              <span class="time">13:00</span> LUNCH
+            </div>
+            <div class="schedule-item">
+              <span class="time">14:00</span> MASTERSKLASY - SEKCJA D
+            </div>
+            <div class="schedule-item">
+              <span class="time">15:30</span> PRZERWA NETWORKINGOWA
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BILETY -->
+    <div class="container">
+      <div class="section">
+        <h2 class="section-title">WYBIERZ SWÓJ BILET</h2>
+        <p class="section-subtitle">Kod promocyjny STYCZEN daje 50% zniżki</p>
+
+        <div class="tickets-grid">
+          <!-- BILET 1 -->
+          <div class="ticket-card">
+            <div class="ticket-badge">Premium</div>
+            <div class="ticket-name">Bilet Premium</div>
+            <div class="ticket-description">1 Dzień Konferencji</div>
+            <div class="ticket-price">
+              <div class="old-price">599 PLN</div>
+              <div class="new-price">499 PLN</div>
+              <div class="price-info">ze zniżką STYCZEN</div>
+            </div>
+            <button class="btn-buy">Kup teraz</button>
+          </div>
+
+          <!-- BILET 2 -->
+          <div class="ticket-card">
+            <div class="ticket-badge">Biznes Plus</div>
+            <div class="ticket-name">Bilet Biznes Plus</div>
+            <div class="ticket-description">2 Dni Konferencji</div>
+            <div class="ticket-price">
+              <div class="old-price">699 PLN</div>
+              <div class="new-price">599 PLN</div>
+              <div class="price-info">ze zniżką STYCZEN</div>
+            </div>
+            <button class="btn-buy">Kup teraz</button>
+          </div>
+
+          <!-- BILET 3 -->
+          <div class="ticket-card">
+            <div class="ticket-badge">VIP</div>
+            <div class="ticket-name">Bilet VIP</div>
+            <div class="ticket-description">2 Dni Konferencji + Bankiet</div>
+            <div class="ticket-price">
+              <div class="old-price">1199 PLN</div>
+              <div class="new-price">999 PLN</div>
+              <div class="price-info">ze zniżką STYCZEN</div>
+            </div>
+            <button class="btn-buy">Kup teraz</button>
+          </div>
+
+          <!-- BILET 4 -->
+          <div class="ticket-card">
+            <div class="ticket-badge">Online</div>
+            <div class="ticket-name">Premium Online</div>
+            <div class="ticket-description">1 Dzień Konferencji Online</div>
+            <div class="ticket-price">
+              <div class="old-price">299 PLN</div>
+              <div class="new-price">199 PLN</div>
+              <div class="price-info">ze zniżką STYCZEN</div>
+            </div>
+            <button class="btn-buy">Kup teraz</button>
+          </div>
+
+          <!-- BILET 5 -->
+          <div class="ticket-card">
+            <div class="ticket-badge">Online</div>
+            <div class="ticket-name">Biznes Plus Online</div>
+            <div class="ticket-description">2 Dni Konferencji Online</div>
+            <div class="ticket-price">
+              <div class="old-price">449 PLN</div>
+              <div class="new-price">349 PLN</div>
+              <div class="price-info">ze zniżką STYCZEN</div>
+            </div>
+            <button class="btn-buy">Kup teraz</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FORMULARZ REJESTRACJI -->
+    <div class="form-section">
+      <div class="container">
+        <h2>📝 ZAREJESTRUJ SIĘ NA KONFERENCJĘ</h2>
+        <form class="form-wrapper" id="registrationForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName">Imię *</label>
+              <input
+                type="text"
+                id="firstName"
+                name="firstName"
+                placeholder="Twoje imię"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="lastName">Nazwisko *</label>
+              <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                placeholder="Twoje nazwisko"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="twoj@email.com"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Telefon</label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              placeholder="+48 123 456 789"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="company">Firma / Organizacja</label>
+            <input
+              type="text"
+              id="company"
+              name="company"
+              placeholder="Nazwa Twojej firmy"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="ticket">Wybierz bilet *</label>
+            <select id="ticket" name="ticket" required>
+              <option value="">-- Wybierz typ biletu --</option>
+              <option value="premium">Bilet Premium (499 PLN)</option>
+              <option value="biznes">Bilet Biznes Plus (599 PLN)</option>
+              <option value="vip">Bilet VIP (999 PLN)</option>
+              <option value="premium-online">Premium Online (199 PLN)</option>
+              <option value="biznes-online">
+                Biznes Plus Online (349 PLN)
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="promo">Kod promocyjny</label>
+            <input
+              type="text"
+              id="promo"
+              name="promo"
+              placeholder="np. STYCZEN"
+            />
+          </div>
+
+          <button type="submit" class="btn-submit">
+            🎫 ZAREJESTRUJ SIĘ TERAZ
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <script src="main.js" defer></script>
+  </body>
+</html>
