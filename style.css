@@ -59,6 +59,10 @@ body {
   font-weight: 700;
 }
 
+.logo img {
+  margin: 0 auto;
+}
+
 /* CONTAINER */
 .container {
   max-width: 1200px;
@@ -621,7 +625,12 @@ img {
 
   .speakers-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px;
+    justify-items: center;
+    gap: 0px;
+  }
+  .speakers-grid > .speaker-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1; /* zajmuje cały rząd */
+    justify-self: center; /* i jest na środku */
   }
 
   .speaker-avatar {
@@ -662,6 +671,15 @@ img {
   /* Kafel "wide" niech nie próbuje się rozpychać na mobile */
   .schedule-card--wide {
     grid-column: auto;
+  }
+
+  .banquet__label {
+    margin-left: 50px;
+  }
+
+  .banquet__title {
+    margin-top: 60px;
+    margin-right: 20px;
   }
 
   /* Bilety */
