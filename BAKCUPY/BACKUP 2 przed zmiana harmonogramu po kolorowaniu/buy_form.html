@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Konferencja Przedsiębiorców</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700;800&family=DM+Serif+Display&display=swap">
+</head>
+
+<body>
+
+    <div class="form-section">
+        <div class="container">
+            <h2>📝 ZAREJESTRUJ SIĘ NA KONFERENCJĘ</h2>
+            <form class="form-wrapper" id="registrationForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">Imię *</label>
+                        <input type="text" id="firstName" name="firstName" placeholder="Twoje imię" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Nazwisko *</label>
+                        <input type="text" id="lastName" name="lastName" placeholder="Twoje nazwisko" required />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" placeholder="twoj@email.com" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Telefon</label>
+                    <input type="tel" id="phone" name="phone" placeholder="+48 123 456 789" />
+                </div>
+
+                <div class="form-group">
+                    <label for="company">Firma / Organizacja</label>
+                    <input type="text" id="company" name="company" placeholder="Nazwa Twojej firmy" />
+                </div>
+
+                <div class="form-group">
+                    <label for="ticket">Wybierz bilet *</label>
+                    <select id="ticket" name="ticket" required>
+                        <option value="">-- Wybierz typ biletu --</option>
+                        <option value="premium">Bilet Premium (499 PLN)</option>
+                        <option value="biznes">Bilet Biznes Plus (599 PLN)</option>
+                        <option value="vip">Bilet VIP (999 PLN)</option>
+                        <option value="premium-online">Premium Online (199 PLN)</option>
+                        <option value="biznes-online">
+                            Biznes Plus Online (349 PLN)
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="promo">Kod promocyjny</label>
+                    <input type="text" id="promo" name="promo" placeholder="np. STYCZEN" />
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    🎫 ZAREJESTRUJ SIĘ TERAZ
+                </button>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>
