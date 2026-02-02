@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="pl">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Dziękujemy</title>
+    <style>
+        body {
+            font-family: system-ui;
+            max-width: 720px;
+            margin: 2rem auto;
+            padding: 0 1rem
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Dziękujemy!</h1>
+    <p>Jeśli płatność została zakończona, bilet wyślemy mailem (PDF).</p>
+    <p id="status">Sprawdzam status...</p>
+
+    <script>
+        const url = new URL(location.href);
+        const order = url.searchParams.get("order");
+        const el = document.getElementById("status");
+
+        async function poll() {
+            if (!order) { el.textContent = "Brak numeru zamówienia w URL."; return; }
+            const res = await fetch(`/api/order-status?order=${encodeURIComponent(order)}`);
+            const data = await res.json();
+            if (!data.found) { el.textContent = "Nie znaleziono zamówienia."; return; }
+            el.textContent = `Status: ${data.status || "UNKNOWN"}`;
+        }
+
+        poll();
+        setInterval(poll, 3000);
+    </script>
+</body>
+
+</html>

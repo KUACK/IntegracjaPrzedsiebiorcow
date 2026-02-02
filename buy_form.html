@@ -11,63 +11,87 @@
 </head>
 
 <body>
+    <div class="row">
+        <h1>Kup bilet</h1>
 
-    <div class="form-section">
-        <div class="container">
-            <h2>📝 ZAREJESTRUJ SIĘ NA KONFERENCJĘ</h2>
-            <form class="form-wrapper" id="registrationForm">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="firstName">Imię *</label>
-                        <input type="text" id="firstName" name="firstName" placeholder="Twoje imię" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="lastName">Nazwisko *</label>
-                        <input type="text" id="lastName" name="lastName" placeholder="Twoje nazwisko" required />
-                    </div>
-                </div>
+        <form id="buy">
+            <label>Imię i Nazwisko</label>
+            <input name="fullName" required autocomplete="name" />
 
-                <div class="form-group">
-                    <label for="email">Email *</label>
-                    <input type="email" id="email" name="email" placeholder="twoj@email.com" required />
-                </div>
+            <label>Email</label>
+            <input name="email" type="email" required autocomplete="email" />
 
-                <div class="form-group">
-                    <label for="phone">Telefon</label>
-                    <input type="tel" id="phone" name="phone" placeholder="+48 123 456 789" />
-                </div>
+            <label>Numer telefonu</label>
+            <input name="phone" required autocomplete="tel" />
 
-                <div class="form-group">
-                    <label for="company">Firma / Organizacja</label>
-                    <input type="text" id="company" name="company" placeholder="Nazwa Twojej firmy" />
-                </div>
+            <label>Typ biletu</label>
+            <select name="ticketType" required>
+                <option value="premium">Premium (499 PLN)</option>
+                <option value="biznes_plus">Biznes Plus (599 PLN)</option>
+                <option value="vip">VIP (999 PLN)</option>
+                <option value="premium_online">Premium Online (199 PLN)</option>
+                <option value="biznes_plus_online">Biznes Plus Online (349 PLN)</option>
+            </select>
 
-                <div class="form-group">
-                    <label for="ticket">Wybierz bilet *</label>
-                    <select id="ticket" name="ticket" required>
-                        <option value="">-- Wybierz typ biletu --</option>
-                        <option value="premium">Bilet Premium (499 PLN)</option>
-                        <option value="biznes">Bilet Biznes Plus (599 PLN)</option>
-                        <option value="vip">Bilet VIP (999 PLN)</option>
-                        <option value="premium-online">Premium Online (199 PLN)</option>
-                        <option value="biznes-online">
-                            Biznes Plus Online (349 PLN)
-                        </option>
-                    </select>
-                </div>
+            <label>Ilość sztuk</label>
+            <input name="quantity" type="number" min="1" max="20" value="1" required />
 
-                <div class="form-group">
-                    <label for="promo">Kod promocyjny</label>
-                    <input type="text" id="promo" name="promo" placeholder="np. STYCZEN" />
-                </div>
+            <label>Kod promocyjny</label>
+            <input name="promoCode" placeholder="np. Luty" />
 
-                <button type="submit" class="btn-submit">
-                    🎫 ZAREJESTRUJ SIĘ TERAZ
-                </button>
-            </form>
-        </div>
+            <label style="margin-top:1rem;">
+                <input id="invoiceNeeded" name="invoiceNeeded" type="checkbox" />
+                Potrzebujesz faktury
+            </label>
+
+            <div id="invoiceBox" class="hidden">
+                <label>Firma</label>
+                <input name="companyName" />
+
+                <label>NIP</label>
+                <input name="nip" />
+
+                <label>Adres</label>
+                <input name="companyAddress" />
+            </div>
+
+            <button type="submit">Przejdź do płatności</button>
+            <p id="msg"></p>
+        </form>
     </div>
 
+    <script>
+        const invoiceNeeded = document.getElementById("invoiceNeeded");
+        const invoiceBox = document.getElementById("invoiceBox");
+        const msg = document.getElementById("msg");
+
+        invoiceNeeded.addEventListener("change", () => {
+            invoiceBox.classList.toggle("hidden", !invoiceNeeded.checked);
+        });
+
+        document.getElementById("buy").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            msg.textContent = "Tworzę zamówienie...";
+
+            const fd = new FormData(e.target);
+            const payload = Object.fromEntries(fd.entries());
+            payload.invoiceNeeded = invoiceNeeded.checked;
+
+            const res = await fetch("/api/create-order", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+            });
+
+            if (!res.ok) {
+                msg.textContent = "Błąd tworzenia zamówienia. Spróbuj ponownie.";
+                return;
+            }
+
+            const data = await res.json();
+            window.location.href = data.redirectUri;
+        });
+    </script>
 </body>
 
 </html>
