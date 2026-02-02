@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Konferencja Przedsiębiorców</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="form_style.css" />
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700;800&family=DM+Serif+Display&display=swap">
 </head>
@@ -37,11 +38,11 @@
             <input name="quantity" type="number" min="1" max="20" value="1" required />
 
             <label>Kod promocyjny</label>
-            <input name="promoCode" placeholder="np. Luty" />
+            <input name="promoCode" placeholder=" " />
 
             <label style="margin-top:1rem;">
                 <input id="invoiceNeeded" name="invoiceNeeded" type="checkbox" />
-                Potrzebujesz faktury
+                Potrzebuję faktury
             </label>
 
             <div id="invoiceBox" class="hidden">
@@ -55,7 +56,11 @@
                 <input name="companyAddress" />
             </div>
 
-            <button type="submit">Przejdź do płatności</button>
+            <button type="submit" class="payu-btn">
+                <span class="payu-btn__brand">PayU</span>
+                <span class="payu-btn__text">Przejdź do płatności</span>
+            </button>
+
             <p id="msg"></p>
         </form>
     </div>

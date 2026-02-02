@@ -1,0 +1,215 @@
+/* =========================
+   BUY FORM (buy_form.html)
+   ========================= */
+
+.row {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.row > h1 {
+  text-align: center;
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 800;
+  color: var(--secondary);
+  margin-bottom: 22px;
+}
+
+/* Karta formularza w stylu strony (podobnie do .form-section) */
+#buy {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 28px 22px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--secondary) 0%, #1f3a4d 100%);
+  color: var(--white);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* Pola */
+#buy label {
+  display: block;
+  margin-top: 14px;
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+}
+
+#buy input[type="text"],
+#buy input[type="email"],
+#buy input[type="tel"],
+#buy input[type="number"],
+#buy select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--text-dark);
+  background: rgba(255, 255, 255, 0.95);
+  outline: none;
+}
+
+#buy input::placeholder {
+  color: #9aa3ad;
+}
+
+#buy input:focus,
+#buy select:focus {
+  border-color: rgba(239, 157, 77, 0.9); /* pod var(--primary) */
+  box-shadow: 0 0 0 4px rgba(239, 157, 77, 0.18);
+}
+
+/* Checkbox „faktura” – żeby nie rozciągał się na całą szerokość */
+#buy input[type="checkbox"] {
+  width: auto;
+  margin-right: 10px;
+  transform: translateY(1px);
+}
+
+#invoiceBox {
+  margin-top: 14px;
+  padding-bottom: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* Przycisk – spójny z resztą (jak .btn-submit / .btn-buy) */
+#buy button[type="submit"] {
+  width: 100%;
+  margin-top: 18px;
+  background: #a4c615;
+  color: #ffffff;
+  border: none;
+  padding: 16px;
+  font-size: 20px;
+  font-weight: 500;
+  border-radius: 50px;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+#buy button[type="submit"]:hover {
+  background: #95b80b;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(239, 157, 77, 0.3);
+}
+
+/* Komunikat pod formularzem */
+#msg {
+  margin-top: 12px;
+  font-weight: 600;
+  opacity: 0.95;
+}
+
+/* Klasa używana w buy_form.html do chowania sekcji faktury */
+.hidden {
+  display: none !important;
+}
+
+@media (max-width: 600px) {
+  .row {
+    padding: 24px 16px;
+  }
+  #buy {
+    padding: 22px 16px;
+    border-radius: 12px;
+  }
+}
+
+/* BUY FORM – ujednolicenie wszystkich pól */
+#buy input:not([type="checkbox"]),
+#buy select,
+#buy textarea {
+  width: 100%;
+  min-height: 46px;
+  padding: 12px 14px;
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 10px;
+
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--text-dark);
+
+  background: rgba(255, 255, 255, 0.96);
+  outline: none;
+
+  box-sizing: border-box;
+}
+
+/* placeholder */
+#buy input:not([type="checkbox"])::placeholder,
+#buy textarea::placeholder {
+  color: #9aa3ad;
+}
+
+/* focus */
+#buy input:not([type="checkbox"]):focus,
+#buy select:focus,
+#buy textarea:focus {
+  border-color: rgba(239, 157, 77, 0.95);
+  box-shadow: 0 0 0 4px rgba(239, 157, 77, 0.18);
+}
+
+/* select: żeby wysokość i „feel” był taki sam jak input */
+#buy select {
+  cursor: pointer;
+}
+
+/* checkbox zostaje mały i nie rozciąga layoutu */
+#buy input[type="checkbox"] {
+  width: auto;
+  min-height: auto;
+}
+
+/* PayU – płaski zielony przycisk */
+#buy .payu-btn {
+  width: 100%;
+  margin-top: 18px;
+
+  background: #8cc63e; /* płaski zielony */
+  color: #ffffff;
+
+  border: 0;
+  border-radius: 14px; /* zaokrąglenie */
+  padding: 16px 18px;
+
+  font: inherit; /* ta sama czcionka co strona */
+  font-weight: 800;
+  letter-spacing: 0.01em;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    background 0.15s ease;
+  box-shadow: none; /* płaski = bez cienia */
+}
+
+#buy .payu-btn__brand {
+  font-weight: 900;
+}
+
+#buy .payu-btn:hover {
+  background: #7fba31; /* delikatnie ciemniej */
+  transform: translateY(-1px); /* minimalny “lift” */
+}
+
+#buy .payu-btn:active {
+  transform: translateY(0);
+}
+
+#buy .payu-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(239, 157, 77, 0.22); /* spójny focus z resztą */
+}
