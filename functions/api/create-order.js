@@ -6,16 +6,23 @@ export async function onRequestPost({ request, env }) {
     fullName,
     email,
     phone,
-    invoiceNeeded,
-    companyName,
-    nip,
-    companyAddress,
+    street,
+    city,
+    postalCode,
     ticketType,
     quantity,
     promoCode,
   } = input;
 
-  if (!fullName || !email || !phone || !ticketType) {
+  if (
+    !fullName ||
+    !email ||
+    !phone ||
+    !street ||
+    !city ||
+    !postalCode ||
+    !ticketType
+  ) {
     return new Response("Missing fields", { status: 400 });
   }
 
@@ -37,14 +44,14 @@ export async function onRequestPost({ request, env }) {
   // Kod promocyjny: "Luty" do końca lutego (czas PL), -50%, bez limitu
   const now = new Date();
   const year = now.getFullYear();
-  const promoOkUntil = new Date(`${year}-03-01T00:00:00+01:00`); // początek marca czasu PL
+  const promoOkUntil = new Date(`${year}-03-01T00:00:00+01:00`);
   const promo = String(promoCode || "")
     .trim()
     .toLowerCase();
   const discountFactor = promo === "luty" && now < promoOkUntil ? 0.5 : 1;
 
   const unitPrice = Math.round(t.unit * discountFactor);
-  const totalAmount = String(unitPrice * qty);
+  const totalAmount = unitPrice * qty; // number (grosze)
 
   const parts = String(fullName).trim().split(/\s+/);
   const firstName = parts[0] || "Klient";
@@ -52,7 +59,46 @@ export async function onRequestPost({ request, env }) {
 
   const extOrderId = crypto.randomUUID();
 
-  // 1) OAuth token
+  // Zamiast BASE_URL: działa na preview i production
+  const origin = new URL(request.url).origin;
+  const notifyUrl = `${origin}/api/notify`;
+  const continueUrl = `${origin}/thanks.html?order=${encodeURIComponent(extOrderId)}`;
+
+  // 0) Zapisz zamówienie PENDING do D1 (przed PayU, żeby nie zgubić danych)
+  // Wymagany binding w Pages: env.DB
+  if (!env.DB) return new Response("Missing D1 binding: DB", { status: 500 });
+
+  await env.DB.prepare(
+    `
+    INSERT INTO orders (
+      ext_order_id, status, created_at, updated_at,
+      full_name, email, phone, street, city, postal_code,
+      ticket_type, quantity, unit_price, total_amount, promo_code, promo_applied
+    ) VALUES (?, ?, datetime('now'), datetime('now'),
+      ?, ?, ?, ?, ?, ?,
+      ?, ?, ?, ?, ?, ?
+    )
+  `,
+  )
+    .bind(
+      extOrderId,
+      "PENDING",
+      fullName,
+      email,
+      phone,
+      street,
+      city,
+      postalCode,
+      t.name,
+      qty,
+      unitPrice,
+      totalAmount,
+      promoCode ? String(promoCode) : null,
+      discountFactor !== 1 ? 1 : 0,
+    )
+    .run();
+
+  // 1) OAuth token (PayU wymaga x-www-form-urlencoded, inaczej 401) [page:1]
   const tokenRes = await fetch(
     `${env.PAYU_BASE_URL}/pl/standard/user/oauth/authorize`,
     {
@@ -65,15 +111,13 @@ export async function onRequestPost({ request, env }) {
       }),
     },
   );
+
   const tokenJson = await tokenRes.json().catch(() => ({}));
   if (!tokenJson.access_token)
     return new Response("PayU auth failed", { status: 502 });
   const accessToken = tokenJson.access_token;
 
-  const notifyUrl = `${env.BASE_URL}/api/notify`;
-  const continueUrl = `${env.BASE_URL}/thanks.html?order=${encodeURIComponent(extOrderId)}`;
-
-  // 2) Utworzenie zamówienia
+  // 2) Utworzenie zamówienia w PayU [page:1]
   const orderPayload = {
     notifyUrl,
     continueUrl,
@@ -81,7 +125,7 @@ export async function onRequestPost({ request, env }) {
     merchantPosId: env.PAYU_POS_ID,
     description: `Integracja Przedsiebiorcow - ${t.name}`,
     currencyCode: "PLN",
-    totalAmount,
+    totalAmount: String(totalAmount),
     extOrderId,
     buyer: {
       email,
@@ -112,28 +156,35 @@ export async function onRequestPost({ request, env }) {
   } catch (_) {}
 
   const redirectUri = orderJson.redirectUri || orderRes.headers.get("location");
-  if (!redirectUri)
-    return new Response("No redirectUri from PayU", { status: 502 });
+  const payuOrderId = orderJson.orderId || null;
 
-  // Zapisz “pending” w KV, żeby thanks.html mogło pytać o status
-  await env.ORDERS.put(
-    extOrderId,
-    JSON.stringify({
-      extOrderId,
-      createdAt: new Date().toISOString(),
-      status: "PENDING",
-      ticketType: t.name,
-      qty,
-      email,
-      phone,
-      invoiceNeeded: !!invoiceNeeded,
-      companyName: companyName || null,
-      nip: nip || null,
-      companyAddress: companyAddress || null,
-      promoApplied: discountFactor !== 1,
-      totalAmount,
-    }),
-  );
+  if (!redirectUri) {
+    // Oznacz w DB, że coś poszło nie tak (żebyś widział to w danych)
+    await env.DB.prepare(
+      `
+      UPDATE orders
+      SET status = ?, updated_at = datetime('now')
+      WHERE ext_order_id = ?
+    `,
+    )
+      .bind("PAYU_CREATE_FAILED", extOrderId)
+      .run();
+
+    return new Response("No redirectUri from PayU", { status: 502 });
+  }
+
+  // Zapisz payu_order_id (jak jest) i zostaw status PENDING
+  if (payuOrderId) {
+    await env.DB.prepare(
+      `
+      UPDATE orders
+      SET payu_order_id = ?, updated_at = datetime('now')
+      WHERE ext_order_id = ?
+    `,
+    )
+      .bind(payuOrderId, extOrderId)
+      .run();
+  }
 
   return new Response(JSON.stringify({ redirectUri, extOrderId }), {
     headers: { "Content-Type": "application/json" },
