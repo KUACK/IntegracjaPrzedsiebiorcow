@@ -60,21 +60,15 @@
     </div>
 
     <script>
-        const invoiceNeeded = document.getElementById("invoiceNeeded");
-        const invoiceBox = document.getElementById("invoiceBox");
         const msg = document.getElementById("msg");
+        const form = document.getElementById("buy");
 
-        invoiceNeeded.addEventListener("change", () => {
-            invoiceBox.classList.toggle("hidden", !invoiceNeeded.checked);
-        });
-
-        document.getElementById("buy").addEventListener("submit", async (e) => {
+        form.addEventListener("submit", async (e) => {
             e.preventDefault();
             msg.textContent = "Tworzę zamówienie...";
 
-            const fd = new FormData(e.target);
+            const fd = new FormData(form);
             const payload = Object.fromEntries(fd.entries());
-            payload.invoiceNeeded = invoiceNeeded.checked;
 
             const res = await fetch("/api/create-order", {
                 method: "POST",
@@ -83,7 +77,8 @@
             });
 
             if (!res.ok) {
-                msg.textContent = "Błąd tworzenia zamówienia. Spróbuj ponownie.";
+                const t = await res.text().catch(() => "");
+                msg.textContent = `Błąd tworzenia zamówienia: ${res.status} ${t}`;
                 return;
             }
 
