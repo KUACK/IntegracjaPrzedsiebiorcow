@@ -24,6 +24,14 @@
 
             <label>Numer telefonu</label>
             <input name="phone" required autocomplete="tel" />
+            <label>Ulica</label>
+            <input name="street" required />
+
+            <label>Miasto</label>
+            <input name="city" required />
+
+            <label>Kod pocztowy</label>
+            <input name="postalCode" required placeholder="00-000" />
 
             <label>Typ biletu</label>
             <select name="ticketType" required>
@@ -40,21 +48,7 @@
             <label>Kod promocyjny</label>
             <input name="promoCode" placeholder=" " />
 
-            <label style="margin-top:1rem;">
-                <input id="invoiceNeeded" name="invoiceNeeded" type="checkbox" />
-                Potrzebuję faktury
-            </label>
 
-            <div id="invoiceBox" class="hidden">
-                <label>Firma</label>
-                <input name="companyName" />
-
-                <label>NIP</label>
-                <input name="nip" />
-
-                <label>Adres</label>
-                <input name="companyAddress" />
-            </div>
 
             <button type="submit" class="payu-btn">
                 <span class="payu-btn__brand">PayU</span>
