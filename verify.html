@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="pl">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Weryfikacja biletu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 24px;
+        }
+
+        .row {
+            margin: 12px 0;
+        }
+
+        button {
+            padding: 10px 12px;
+            margin-right: 8px;
+            cursor: pointer;
+        }
+
+        pre {
+            background: #f5f5f5;
+            padding: 12px;
+            overflow: auto;
+        }
+
+        .ok {
+            color: #0a7a2f;
+            font-weight: 700;
+        }
+
+        .bad {
+            color: #b00020;
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Weryfikacja biletu</h1>
+    <div class="row">Token: <code id="t"></code></div>
+
+    <div class="row">
+        <button onclick="verify('day1')">Skan: Dzień 1</button>
+        <button onclick="verify('day2')">Skan: Dzień 2</button>
+        <button onclick="verify('banquet')">Skan: Bankiet</button>
+    </div>
+
+    <div class="row" id="msg"></div>
+    <pre id="out"></pre>
+
+    <script>
+        const url = new URL(location.href);
+        const token = url.searchParams.get("t");
+        document.getElementById("t").textContent = token || "(brak)";
+
+        // jeśli używasz ochrony SCAN_KEY, dopisz ?k=... do verify.html albo wpisz tu na sztywno dla obsługi
+        const k = url.searchParams.get("k") || "";
+
+        async function verify(forWhat) {
+            const msg = document.getElementById("msg");
+            const out = document.getElementById("out");
+            msg.textContent = "Sprawdzam…";
+            out.textContent = "";
+
+            if (!token) {
+                msg.innerHTML = '<span class="bad">Brak tokenu</span>';
+                return;
+            }
+
+            const r = await fetch(`/api/verify?t=${encodeURIComponent(token)}&for=${encodeURIComponent(forWhat)}&k=${encodeURIComponent(k)}`, {
+                cache: "no-store",
+                headers: { "Accept": "application/json" }
+            });
+
+            const j = await r.json().catch(() => ({}));
+
+            if (!r.ok || !j.valid) {
+                msg.innerHTML = `<span class="bad">NIEWAŻNY</span> (${j.reason || r.status})`;
+                out.textContent = JSON.stringify(j, null, 2);
+                return;
+            }
+
+            msg.innerHTML = `<span class="ok">WAŻNY</span> • ${j.ticketType}`;
+            out.textContent = JSON.stringify(j, null, 2);
+        }
+    </script>
+</body>
+
+</html>

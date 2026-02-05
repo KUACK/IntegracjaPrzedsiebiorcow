@@ -25,9 +25,7 @@ export async function onRequestGet({ request, env }) {
   if (!payuOrderId) {
     return new Response(
       JSON.stringify({ found: true, status: row.status, payuOrderId: null }),
-      {
-        headers: { "Content-Type": "application/json" },
-      },
+      { headers: { "Content-Type": "application/json" } },
     );
   }
 
@@ -44,6 +42,7 @@ export async function onRequestGet({ request, env }) {
       }),
     },
   );
+
   const tokenJson = await tokenRes.json().catch(() => ({}));
   const accessToken = tokenJson.access_token;
   if (!accessToken) return new Response("PayU auth failed", { status: 502 });
@@ -72,7 +71,7 @@ export async function onRequestGet({ request, env }) {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
         },
-        body: "", // body ma być puste
+        body: "",
       },
     );
 
@@ -92,16 +91,20 @@ export async function onRequestGet({ request, env }) {
       .run();
   }
 
-  // Utwórz bilety, jeśli COMPLETED
+  // Utwórz bilety, jeśli COMPLETED (z tokenem)
   if (String(payuStatus || "").toUpperCase() === "COMPLETED") {
     const q = Number(row.quantity || 0);
+
     for (let i = 1; i <= q; i++) {
       const ticketNo = `${row.ext_order_id}-${i}`;
+      const token = crypto.randomUUID();
+
+      // 1) Spróbuj wstawić nowy bilet z tokenem
       await env.DB.prepare(
         `
         INSERT OR IGNORE INTO tickets
-          (ticket_no, ext_order_id, email, full_name, ticket_type, created_at)
-        VALUES (?, ?, ?, ?, ?, datetime('now'))
+          (ticket_no, ext_order_id, email, full_name, ticket_type, created_at, ticket_token)
+        VALUES (?, ?, ?, ?, ?, datetime('now'), ?)
       `,
       )
         .bind(
@@ -110,7 +113,19 @@ export async function onRequestGet({ request, env }) {
           row.email,
           row.full_name,
           row.ticket_type,
+          token,
         )
+        .run();
+
+      // 2) Jeśli bilet już istniał (stare testy) i token był pusty -> uzupełnij
+      await env.DB.prepare(
+        `
+        UPDATE tickets
+        SET ticket_token = COALESCE(ticket_token, ?)
+        WHERE ticket_no = ?
+      `,
+      )
+        .bind(token, ticketNo)
         .run();
     }
   }
@@ -122,8 +137,6 @@ export async function onRequestGet({ request, env }) {
       payuOrderId,
       payuStatus: payuStatus || null,
     }),
-    {
-      headers: { "Content-Type": "application/json" },
-    },
+    { headers: { "Content-Type": "application/json" } },
   );
 }
