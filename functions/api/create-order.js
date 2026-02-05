@@ -1,4 +1,17 @@
 export async function onRequestPost({ request, env }) {
+  // --- request meta (bez PII) ---
+  const reqUrl = new URL(request.url);
+  console.log(
+    "CREATE_ORDER_REQUEST",
+    JSON.stringify({
+      method: request.method,
+      host: reqUrl.host,
+      path: reqUrl.pathname,
+      ct: request.headers.get("content-type"),
+      cfRay: request.headers.get("cf-ray"),
+    }),
+  );
+
   const input = await request.json().catch(() => null);
   if (!input) return new Response("Bad JSON", { status: 400 });
 
@@ -51,7 +64,7 @@ export async function onRequestPost({ request, env }) {
   const discountFactor = promo === "luty" && now < promoOkUntil ? 0.5 : 1;
 
   const unitPrice = Math.round(t.unit * discountFactor);
-  const totalAmount = unitPrice * qty; // number (grosze)
+  const totalAmount = unitPrice * qty; // grosze
 
   const parts = String(fullName).trim().split(/\s+/);
   const firstName = parts[0] || "Klient";
@@ -59,65 +72,101 @@ export async function onRequestPost({ request, env }) {
 
   const extOrderId = crypto.randomUUID();
 
-  // Zamiast BASE_URL: działa na preview i production
-  const origin = new URL(request.url).origin;
+  // URL-e liczone z aktualnego hosta (działa na production i preview)
+  const origin = reqUrl.origin;
   const notifyUrl = `${origin}/api/notify`;
   const continueUrl = `${origin}/thanks.html?order=${encodeURIComponent(extOrderId)}`;
 
-  // 0) Zapisz zamówienie PENDING do D1 (przed PayU, żeby nie zgubić danych)
-  // Wymagany binding w Pages: env.DB
-  if (!env.DB) return new Response("Missing D1 binding: DB", { status: 500 });
-
-  await env.DB.prepare(
-    `
-    INSERT INTO orders (
-      ext_order_id, status, created_at, updated_at,
-      full_name, email, phone, street, city, postal_code,
-      ticket_type, quantity, unit_price, total_amount, promo_code, promo_applied
-    ) VALUES (?, ?, datetime('now'), datetime('now'),
-      ?, ?, ?, ?, ?, ?,
-      ?, ?, ?, ?, ?, ?
-    )
-  `,
-  )
-    .bind(
+  console.log(
+    "CREATE_ORDER_URLS",
+    JSON.stringify({
+      origin,
+      notifyUrl,
+      continueUrl,
       extOrderId,
-      "PENDING",
-      fullName,
-      email,
-      phone,
-      street,
-      city,
-      postalCode,
-      t.name,
-      qty,
-      unitPrice,
-      totalAmount,
-      promoCode ? String(promoCode) : null,
-      discountFactor !== 1 ? 1 : 0,
-    )
-    .run();
-
-  // 1) OAuth token (PayU wymaga x-www-form-urlencoded, inaczej 401) [page:1]
-  const tokenRes = await fetch(
-    `${env.PAYU_BASE_URL}/pl/standard/user/oauth/authorize`,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({
-        grant_type: "client_credentials",
-        client_id: env.PAYU_CLIENT_ID,
-        client_secret: env.PAYU_CLIENT_SECRET,
-      }),
-    },
+    }),
   );
 
-  const tokenJson = await tokenRes.json().catch(() => ({}));
-  if (!tokenJson.access_token)
-    return new Response("PayU auth failed", { status: 502 });
-  const accessToken = tokenJson.access_token;
+  if (!env.DB) {
+    console.log("CREATE_ORDER_ERROR", "Missing D1 binding: DB");
+    return new Response("Missing D1 binding: DB", { status: 500 });
+  }
 
-  // 2) Utworzenie zamówienia w PayU [page:1]
+  // 0) Zapis PENDING do D1 (bez logowania PII)
+  try {
+    const ins = await env.DB.prepare(
+      `
+      INSERT INTO orders (
+        ext_order_id, status, created_at, updated_at,
+        full_name, email, phone, street, city, postal_code,
+        ticket_type, quantity, unit_price, total_amount, promo_code, promo_applied
+      ) VALUES (?, ?, datetime('now'), datetime('now'),
+        ?, ?, ?, ?, ?, ?,
+        ?, ?, ?, ?, ?, ?
+      )
+    `,
+    )
+      .bind(
+        extOrderId,
+        "PENDING",
+        fullName,
+        email,
+        phone,
+        street,
+        city,
+        postalCode,
+        t.name,
+        qty,
+        unitPrice,
+        totalAmount,
+        promoCode ? String(promoCode) : null,
+        discountFactor !== 1 ? 1 : 0,
+      )
+      .run();
+
+    console.log(
+      "CREATE_ORDER_DB_INSERT",
+      JSON.stringify({ extOrderId, result: ins }),
+    );
+  } catch (e) {
+    console.log("CREATE_ORDER_DB_INSERT_ERROR", String(e));
+    return new Response("DB insert failed", { status: 500 });
+  }
+
+  // 1) OAuth token (PayU: bez x-www-form-urlencoded będzie 401) [page:0]
+  let accessToken;
+  try {
+    const tokenRes = await fetch(
+      `${env.PAYU_BASE_URL}/pl/standard/user/oauth/authorize`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          grant_type: "client_credentials",
+          client_id: env.PAYU_CLIENT_ID,
+          client_secret: env.PAYU_CLIENT_SECRET,
+        }),
+      },
+    );
+
+    const tokenJson = await tokenRes.json().catch(() => ({}));
+    accessToken = tokenJson.access_token;
+
+    console.log(
+      "CREATE_ORDER_PAYU_AUTH",
+      JSON.stringify({
+        ok: !!accessToken,
+        http: tokenRes.status,
+      }),
+    );
+
+    if (!accessToken) return new Response("PayU auth failed", { status: 502 });
+  } catch (e) {
+    console.log("CREATE_ORDER_PAYU_AUTH_ERROR", String(e));
+    return new Response("PayU auth error", { status: 502 });
+  }
+
+  // 2) Create order w PayU [page:0]
   const orderPayload = {
     notifyUrl,
     continueUrl,
@@ -139,27 +188,55 @@ export async function onRequestPost({ request, env }) {
     ],
   };
 
-  const orderRes = await fetch(`${env.PAYU_BASE_URL}/api/v2_1/orders`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
-    },
-    redirect: "manual",
-    body: JSON.stringify(orderPayload),
-  });
+  let redirectUri = null;
+  let payuOrderId = null;
 
-  const bodyText = await orderRes.text();
-  let orderJson = {};
   try {
-    orderJson = JSON.parse(bodyText);
-  } catch (_) {}
+    const orderRes = await fetch(`${env.PAYU_BASE_URL}/api/v2_1/orders`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      redirect: "manual",
+      body: JSON.stringify(orderPayload),
+    });
 
-  const redirectUri = orderJson.redirectUri || orderRes.headers.get("location");
-  const payuOrderId = orderJson.orderId || null;
+    const bodyText = await orderRes.text();
+    let orderJson = {};
+    try {
+      orderJson = JSON.parse(bodyText);
+    } catch (_) {}
 
-  if (!redirectUri) {
-    // Oznacz w DB, że coś poszło nie tak (żebyś widział to w danych)
+    redirectUri = orderJson.redirectUri || orderRes.headers.get("location");
+    payuOrderId = orderJson.orderId || null;
+
+    console.log(
+      "CREATE_ORDER_PAYU_CREATE",
+      JSON.stringify({
+        http: orderRes.status,
+        hasRedirect: !!redirectUri,
+        payuOrderId,
+        extOrderId,
+        // UWAGA: nie logujemy bodyText, bo może zawierać dane
+      }),
+    );
+
+    if (!redirectUri) {
+      await env.DB.prepare(
+        `
+        UPDATE orders
+        SET status = ?, updated_at = datetime('now')
+        WHERE ext_order_id = ?
+      `,
+      )
+        .bind("PAYU_CREATE_FAILED", extOrderId)
+        .run();
+
+      return new Response("No redirectUri from PayU", { status: 502 });
+    }
+  } catch (e) {
+    console.log("CREATE_ORDER_PAYU_CREATE_ERROR", String(e));
     await env.DB.prepare(
       `
       UPDATE orders
@@ -167,23 +244,28 @@ export async function onRequestPost({ request, env }) {
       WHERE ext_order_id = ?
     `,
     )
-      .bind("PAYU_CREATE_FAILED", extOrderId)
+      .bind("PAYU_CREATE_ERROR", extOrderId)
       .run();
 
-    return new Response("No redirectUri from PayU", { status: 502 });
+    return new Response("PayU create order error", { status: 502 });
   }
 
-  // Zapisz payu_order_id (jak jest) i zostaw status PENDING
+  // Zapisz payu_order_id
   if (payuOrderId) {
-    await env.DB.prepare(
-      `
-      UPDATE orders
-      SET payu_order_id = ?, updated_at = datetime('now')
-      WHERE ext_order_id = ?
-    `,
-    )
-      .bind(payuOrderId, extOrderId)
-      .run();
+    try {
+      await env.DB.prepare(
+        `
+        UPDATE orders
+        SET payu_order_id = ?, updated_at = datetime('now')
+        WHERE ext_order_id = ?
+      `,
+      )
+        .bind(payuOrderId, extOrderId)
+        .run();
+    } catch (e) {
+      console.log("CREATE_ORDER_DB_UPDATE_PAYU_ID_ERROR", String(e));
+      // nie blokujemy płatności, bo redirect już mamy
+    }
   }
 
   return new Response(JSON.stringify({ redirectUri, extOrderId }), {
