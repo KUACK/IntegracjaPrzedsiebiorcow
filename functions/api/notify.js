@@ -1,4 +1,9 @@
 export async function onRequestPost({ request, env }) {
+  const payloadText = await request.text();
+  console.log("PAYU_NOTIFY_RAW", payloadText);
+  // dalej:
+  const payload = JSON.parse(payloadText);
+
   const payload = await request.json().catch(() => null);
   if (!payload) return new Response("Bad JSON", { status: 400 });
 

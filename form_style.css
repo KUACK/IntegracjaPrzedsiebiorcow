@@ -213,3 +213,7 @@
   outline: none;
   box-shadow: 0 0 0 4px rgba(239, 157, 77, 0.22); /* spójny focus z resztą */
 }
+
+.promo-bar {
+  width: 100%;
+}

@@ -12,7 +12,18 @@
 </head>
 
 <body>
+    <div class="promo-bar">
+        <div class="promo-content">
+            <div class="promo-text">
+                🎉 Tylko do końca Stycznia!<br />
+                Kod: <strong>STYCZEN</strong> - Najniższa cena! 50% zniżki!
+            </div>
+            <div class="timer" id="timer">⏱️ Pozostało: Ładowanie...</div>
+        </div>
+    </div>
     <div class="row">
+        <!-- PASEK PROMOCYJNY -->
+
         <h1>Kup bilet</h1>
 
         <form id="buy">
@@ -86,6 +97,7 @@
             window.location.href = data.redirectUri;
         });
     </script>
+    <script src="main.js" defer></script>
 </body>
 
 </html>
