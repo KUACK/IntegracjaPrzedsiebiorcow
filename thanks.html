@@ -3,38 +3,168 @@
 
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Dziękujemy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dziękujemy za zakup</title>
+    <link rel="stylesheet" href="style.css" />
     <style>
-        body {
-            font-family: system-ui;
-            max-width: 720px;
-            margin: 2rem auto;
-            padding: 0 1rem
+        .box {
+            max-width: 760px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .muted {
+            opacity: .8;
+            font-size: 14px;
+        }
+
+        code {
+            word-break: break-all;
+        }
+
+        .ok {
+            color: #0a7a2f;
+        }
+
+        .bad {
+            color: #b00020;
+        }
+
+        button {
+            padding: 10px 14px;
+            cursor: pointer;
         }
     </style>
 </head>
 
 <body>
-    <h1>Dziękujemy!</h1>
-    <p>Jeśli płatność została zakończona, bilet wyślemy mailem (PDF).</p>
-    <p id="status">Sprawdzam status...</p>
+    <div class="box">
+        <h1>Dziękujemy!</h1>
+        <p id="status">Sprawdzam status płatności…</p>
+        <p class="muted">Zamówienie: <code id="orderId">-</code></p>
+
+        <div id="actions" style="display:none; margin-top: 14px;">
+            <button id="retry">Odśwież status</button>
+            <a id="ticketsLink" href="#" style="margin-left: 12px; display:none;">Zobacz bilety</a>
+        </div>
+
+        <p id="hint" class="muted"></p>
+    </div>
 
     <script>
-        const url = new URL(location.href);
-        const order = url.searchParams.get("order");
-        const el = document.getElementById("status");
+        const statusEl = document.getElementById("status");
+        const orderEl = document.getElementById("orderId");
+        const actionsEl = document.getElementById("actions");
+        const retryBtn = document.getElementById("retry");
+        const ticketsLink = document.getElementById("ticketsLink");
+        const hintEl = document.getElementById("hint");
 
-        async function poll() {
-            if (!order) { el.textContent = "Brak numeru zamówienia w URL."; return; }
-            const res = await fetch(`/api/order-status?order=${encodeURIComponent(order)}`);
-            const data = await res.json();
-            if (!data.found) { el.textContent = "Nie znaleziono zamówienia."; return; }
-            el.textContent = `Status: ${data.status || "UNKNOWN"}`;
+        const url = new URL(window.location.href);
+        const extOrderId = url.searchParams.get("order");
+
+        orderEl.textContent = extOrderId || "(brak)";
+
+        if (!extOrderId) {
+            statusEl.textContent = "Brak parametru order w URL. Wróć do formularza i spróbuj ponownie.";
+            statusEl.className = "bad";
+            actionsEl.style.display = "block";
+            retryBtn.onclick = () => window.location.href = "/buy_form";
+            throw new Error("Missing order param");
         }
 
-        poll();
-        setInterval(poll, 3000);
+        // gdzie ma prowadzić link do biletów:
+        // (na razie możesz zrobić prostą stronę, która pokazuje bilety po extOrderId)
+        ticketsLink.href = `/tickets.html?order=${encodeURIComponent(extOrderId)}`;
+
+        let tries = 0;
+        const maxTries = 40;        // ok. 2 min przy interval 3s
+        const intervalMs = 3000;
+
+        async function syncOnce() {
+            tries += 1;
+
+            const r = await fetch(`/api/sync-status?order=${encodeURIComponent(extOrderId)}`, {
+                method: "GET",
+                headers: { "Accept": "application/json" },
+                cache: "no-store",
+            });
+
+            if (!r.ok) {
+                throw new Error(`sync-status HTTP ${r.status}`);
+            }
+
+            const j = await r.json();
+            if (!j || !j.found) {
+                statusEl.textContent = "Nie znaleziono zamówienia w bazie (found=false).";
+                statusEl.className = "bad";
+                actionsEl.style.display = "block";
+                return { done: true };
+            }
+
+            const s = String(j.payuStatus || "").toUpperCase();
+
+            if (!s) {
+                statusEl.textContent = "Zamówienie utworzone, czekam na status z PayU…";
+                statusEl.className = "";
+                return { done: false };
+            }
+
+            if (s === "COMPLETED") {
+                statusEl.textContent = "Płatność potwierdzona. Możesz pobrać bilety.";
+                statusEl.className = "ok";
+                actionsEl.style.display = "block";
+                ticketsLink.style.display = "inline";
+                hintEl.textContent = "";
+                return { done: true };
+            }
+
+            if (s === "CANCELED" || s === "REJECTED") {
+                statusEl.textContent = `Płatność nieudana (status: ${s}).`;
+                statusEl.className = "bad";
+                actionsEl.style.display = "block";
+                hintEl.textContent = "Jeśli pieniądze zeszły, daj znać — sprawdzimy po payu_order_id.";
+                return { done: true };
+            }
+
+            // Inne statusy typu PENDING / WAITING_FOR_CONFIRMATION itp.
+            statusEl.textContent = `Czekam na potwierdzenie (status: ${s})…`;
+            statusEl.className = "";
+            return { done: false };
+        }
+
+        async function loop() {
+            try {
+                const { done } = await syncOnce();
+
+                if (done) return;
+
+                if (tries >= maxTries) {
+                    statusEl.textContent = "To trwa dłużej niż zwykle. Kliknij „Odśwież status” za chwilę.";
+                    statusEl.className = "";
+                    actionsEl.style.display = "block";
+                    hintEl.textContent = "Jeśli dalej stoi, podeślij extOrderId — sprawdzimy PayU i logi /api/notify.";
+                    return;
+                }
+
+                setTimeout(loop, intervalMs);
+            } catch (e) {
+                statusEl.textContent = "Błąd sprawdzania statusu. Kliknij „Odśwież status”.";
+                statusEl.className = "bad";
+                actionsEl.style.display = "block";
+                hintEl.textContent = String(e && e.message ? e.message : e);
+            }
+        }
+
+        retryBtn.onclick = () => {
+            tries = 0;
+            statusEl.textContent = "Sprawdzam status płatności…";
+            statusEl.className = "";
+            ticketsLink.style.display = "none";
+            hintEl.textContent = "";
+            loop();
+        };
+
+        loop();
     </script>
 </body>
 
