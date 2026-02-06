@@ -956,6 +956,10 @@ img {
 .logo_footer {
   filter: grayscale(1) brightness(0) invert(1); /* robi z niego „białe” */
 }
+
+body.page-short .site-footer {
+  margin-top: 174px;
+}
 /* Mobile */
 @media (max-width: 900px) {
   .footer-grid {
