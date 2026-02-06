@@ -14,7 +14,7 @@ function safeOneLine(value, maxLen = 140) {
 }
 
 function registerFonts(doc) {
-  doc.setCharSpace(0); // jsPDF supports setCharSpace() [page:1]
+  doc.setCharSpace(0);
 
   if (!dejavuNormalBase64) return;
 
@@ -54,7 +54,7 @@ function textWrap(doc, text, maxWidth) {
 }
 
 function makeTicketPdf({ ticketNo, fullName, ticketType, verifyUrl }) {
-  const doc = new jsPDF({ unit: "mm", format: "a4" }); // jsPDF constructor supports unit/format [page:1]
+  const doc = new jsPDF({ unit: "mm", format: "a4" });
   registerFonts(doc);
 
   // Kolory
@@ -88,7 +88,7 @@ function makeTicketPdf({ ticketNo, fullName, ticketType, verifyUrl }) {
   doc.setFontSize(16);
   doc.text("Bilet wstępu", cardX + 10, cardY + 12);
 
-  // Typ biletu (VIP) — POGRUBIONE
+  // Typ biletu (VIP) — POGRUBIONY
   const typeText = safeOneLine(ticketType, 50);
   doc.setFontSize(11);
   doc.setFont("DejaVuSans", dejavuBoldBase64 ? "bold" : "normal");
@@ -97,22 +97,19 @@ function makeTicketPdf({ ticketNo, fullName, ticketType, verifyUrl }) {
   // Layout
   const leftX = cardX + 10;
   const topY = cardY + 30;
-
-  // Większe przerwy między sekcjami:
-  const labelGap = 12; // odstęp między kolejnymi etykietami
-  const valueOffset = 5; // jak nisko względem etykiety rysować wartość
+  const labelGap = 12;
+  const valueOffset = 5;
 
   const qrSize = 42;
   const qrX = cardX + cardW - 10 - qrSize;
   const qrY = cardY + 32;
 
-  // Etykiety
+  // Etykiety (BEZ "Weryfikacja")
   doc.setTextColor(...muted);
   doc.setFontSize(9);
   doc.setFont("DejaVuSans", "normal");
   doc.text("Numer biletu", leftX, topY);
   doc.text("Imię i nazwisko", leftX, topY + labelGap);
-  doc.text("Weryfikacja", leftX, topY + labelGap * 2);
 
   // Wartości
   doc.setTextColor(...ink);
@@ -144,24 +141,20 @@ function makeTicketPdf({ ticketNo, fullName, ticketType, verifyUrl }) {
   // QR
   drawQrToPdf(doc, verifyUrl, qrX, qrY, qrSize);
 
-  // Logo — lewy dolny róg karty
+  // Logo — lewy dolny róg (POPRAWIONE proporcje)
   if (logoPngBase64) {
     const logoDataUrl = `data:image/png;base64,${logoPngBase64}`;
-    const logoW = 28; // mm (możesz dopasować)
-    const logoH = 10; // mm (możesz dopasować)
+    const logoH = 16; // mm wysokość (większa niż poprzednio)
+    const logoW = 12; // mm szerokość (mniejsza, by zachować proporcje pionowe)
     const logoX = cardX + 10;
-    const logoY = cardY + cardH - 8 - logoH;
+    const logoY = cardY + cardH - 6 - logoH;
 
-    doc.addImage(logoDataUrl, "PNG", logoX, logoY, logoW, logoH); // jsPDF addImage supports DataUrl + format + x,y,w,h [page:0]
+    doc.addImage(logoDataUrl, "PNG", logoX, logoY, logoW, logoH);
   }
 
-  // Stopka (bez linku tekstowego)
-  doc.setTextColor(...muted);
-  doc.setFontSize(8);
-  doc.setFont("DejaVuSans", "normal");
-  doc.text("Integracja Przedsiębiorców", cardX + 10, cardY + cardH - 5);
+  // BEZ stopki "Integracja Przedsiębiorców"
 
-  return doc.output("arraybuffer"); // jsPDF output('arraybuffer') exists [page:1]
+  return doc.output("arraybuffer");
 }
 
 export async function onRequestGet({ request, env }) {
