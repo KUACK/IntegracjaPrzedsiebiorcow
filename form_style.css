@@ -217,3 +217,67 @@
 .promo-bar {
   width: 100%;
 }
+
+/* Promo input + button in one line */
+#buy .promo-line {
+  display: flex;
+  gap: 10px;
+  align-items: stretch;
+}
+
+#buy .promo-line input {
+  flex: 1;
+}
+
+#buy .promo-apply-btn {
+  white-space: nowrap;
+  padding: 0 14px;
+  min-height: 46px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+#buy .promo-apply-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+#buy .promo-apply-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+#buy .promo-hint {
+  margin-top: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+/* Total aligned to the right, between promo and PayU */
+#buy .order-summary {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: baseline;
+  gap: 10px;
+}
+
+#buy .order-summary__label {
+  font-weight: 700;
+  opacity: 0.95;
+}
+
+#buy .order-summary__value {
+  font-weight: 900;
+  font-size: 18px;
+}
+
+@media (max-width: 480px) {
+  #buy .promo-line {
+    flex-direction: column;
+  }
+}

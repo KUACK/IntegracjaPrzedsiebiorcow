@@ -15,8 +15,8 @@
     <div class="promo-bar">
         <div class="promo-content">
             <div class="promo-text">
-                🎉 Tylko do końca Stycznia!<br />
-                Kod: <strong>STYCZEN</strong> - Najniższa cena! 50% zniżki!
+                🎉 Tylko do końca Lutego!<br />
+                Kod: <strong>LUTY</strong> - Najniższa cena! 50% zniżki!
             </div>
             <div class="timer" id="timer">⏱️ Pozostało: Ładowanie...</div>
         </div>
@@ -47,19 +47,26 @@
             <label>Typ biletu</label>
             <select name="ticketType" required>
                 <option value="premium">Premium (499 PLN)</option>
-                <option value="biznes_plus">Biznes Plus (599 PLN)</option>
+                <option value="biznesplus">Biznes Plus (599 PLN)</option>
                 <option value="vip">VIP (999 PLN)</option>
-                <option value="premium_online">Premium Online (199 PLN)</option>
-                <option value="biznes_plus_online">Biznes Plus Online (349 PLN)</option>
+                <option value="premiumonline">Premium Online (199 PLN)</option>
+                <option value="biznesplusonline">Biznes Plus Online (349 PLN)</option>
             </select>
 
             <label>Ilość sztuk</label>
             <input name="quantity" type="number" min="1" max="20" value="1" required />
 
             <label>Kod promocyjny</label>
-            <input name="promoCode" placeholder=" " />
+            <div class="promo-line">
+                <input name="promoCode" id="promoCode" placeholder=" " />
+                <button type="button" id="applyPromo" class="promo-apply-btn">Zastosuj</button>
+            </div>
+            <div id="promoHint" class="promo-hint"></div>
 
-
+            <div class="order-summary" aria-live="polite">
+                <span class="order-summary__label">Razem:</span>
+                <span class="order-summary__value" id="orderTotal">—</span>
+            </div>
 
             <button type="submit" class="payu-btn">
                 <span class="payu-btn__brand">PayU</span>
@@ -74,12 +81,96 @@
         const msg = document.getElementById("msg");
         const form = document.getElementById("buy");
 
+        // --- Dynamiczna kwota + promo apply ---
+        const PRICE_GROSZE = {
+            premium: 49900,
+            biznesplus: 59900,
+            vip: 99900,
+            premiumonline: 19900,
+            biznesplusonline: 34900,
+        };
+
+        const ticketSel = form.querySelector('select[name="ticketType"]');
+        const qtyInput = form.querySelector('input[name="quantity"]');
+
+        const promoInput = document.getElementById("promoCode");
+        const applyPromoBtn = document.getElementById("applyPromo");
+        const promoHintEl = document.getElementById("promoHint");
+        const totalEl = document.getElementById("orderTotal");
+
+        let promoApplied = false;
+        let appliedCode = "";
+        let discountFactor = 1;
+
+        function formatPLNFromGrosze(grosze) {
+            return (grosze / 100).toLocaleString("pl-PL", { style: "currency", currency: "PLN" });
+        }
+
+        function getQty() {
+            const q = parseInt(qtyInput.value || "1", 10);
+            return Math.max(1, Math.min(20, Number.isFinite(q) ? q : 1));
+        }
+
+        function getUnit() {
+            const key = (ticketSel.value || "").toLowerCase();
+            return PRICE_GROSZE[key] ?? 0;
+        }
+
+        function renderTotal() {
+            const qty = getQty();
+            const unit = getUnit();
+            const unitAfter = Math.round(unit * (promoApplied ? discountFactor : 1));
+            const total = unitAfter * qty;
+            totalEl.textContent = unit ? formatPLNFromGrosze(total) : "—";
+        }
+
+        function clearPromo() {
+            promoApplied = false;
+            appliedCode = "";
+            discountFactor = 1;
+            promoHintEl.textContent = "";
+            renderTotal();
+        }
+
+        promoInput.addEventListener("input", () => {
+            if (promoApplied) clearPromo(); // zmiana kodu po zastosowaniu = reset
+            applyPromoBtn.disabled = !promoInput.value.trim();
+        });
+
+        applyPromoBtn.addEventListener("click", () => {
+            const code = (promoInput.value || "").trim().toLowerCase();
+
+            // UWAGA: to MUSI być spójne z backendem (patrz punkt 5).
+            if (code === "luty") {
+                promoApplied = true;
+                appliedCode = "LUTY";
+                discountFactor = 0.5;
+                promoHintEl.textContent = "Kod zastosowany (-50%).";
+            } else {
+                promoApplied = false;
+                appliedCode = "";
+                discountFactor = 1;
+                promoHintEl.textContent = "Nieprawidłowy kod.";
+            }
+            renderTotal();
+        });
+
+        ticketSel.addEventListener("change", renderTotal);
+        qtyInput.addEventListener("input", renderTotal);
+
+        applyPromoBtn.disabled = !promoInput.value.trim();
+        renderTotal();
+
+        // --- Twój submit, tylko z jedną zmianą: wysyłaj promoCode tylko gdy applied ---
         form.addEventListener("submit", async (e) => {
             e.preventDefault();
             msg.textContent = "Tworzę zamówienie...";
 
             const fd = new FormData(form);
             const payload = Object.fromEntries(fd.entries());
+
+            if (!promoApplied) payload.promoCode = "";
+            else payload.promoCode = appliedCode || payload.promoCode;
 
             const res = await fetch("/api/create-order", {
                 method: "POST",
@@ -97,6 +188,7 @@
             window.location.href = data.redirectUri;
         });
     </script>
+
     <script src="main.js" defer></script>
 </body>
 
