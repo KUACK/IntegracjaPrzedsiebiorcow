@@ -134,9 +134,9 @@ body {
 .speakers-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 40px;
-  max-width: 800px;
-  margin: 0 auto;
+  gap: 0px;
+  max-width: 1200px;
+  margin: 40px auto;
   justify-items: center;
 }
 
@@ -145,8 +145,8 @@ body {
 }
 
 .speaker-avatar {
-  width: 160px;
-  height: 160px;
+  width: 220px;
+  height: 220px;
   border-radius: 50%;
   background-color: #d0d0d0;
   margin-bottom: 20px;
