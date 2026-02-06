@@ -145,7 +145,7 @@ function makeTicketPdf({ ticketNo, fullName, ticketType, verifyUrl }) {
   if (logoPngBase64) {
     const logoDataUrl = `data:image/png;base64,${logoPngBase64}`;
     const logoH = 20; // mm wysokość (większa niż poprzednio)
-    const logoW = 15; // mm szerokość (mniejsza, by zachować proporcje pionowe)
+    const logoW = 17; // mm szerokość (mniejsza, by zachować proporcje pionowe)
     const logoX = cardX + 10;
     const logoY = cardY + cardH - 10 - logoH;
 
