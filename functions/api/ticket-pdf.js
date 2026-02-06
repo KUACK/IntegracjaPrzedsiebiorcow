@@ -1,8 +1,8 @@
 import { jsPDF } from "jspdf";
 import QRCode from "qrcode-generator";
 
-import dejavuNormalBase64 from "../../_assets/fonts/DejaVuSans-normal.js";
-import dejavuBoldBase64 from "../../_assets/fonts/DejaVuSans-bold.js";
+import dejavuNormalBase64 from "../_assets/fonts/DejaVuSans-normal.js";
+import dejavuBoldBase64 from "../_assets/fonts/DejaVuSans-bold.js";
 
 // Opcjonalnie: logo (patrz sekcja niżej)
 // import logoPngBase64 from "../../_assets/images/logo-png.js";
