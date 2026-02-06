@@ -144,10 +144,10 @@ function makeTicketPdf({ ticketNo, fullName, ticketType, verifyUrl }) {
   // Logo — lewy dolny róg (POPRAWIONE proporcje)
   if (logoPngBase64) {
     const logoDataUrl = `data:image/png;base64,${logoPngBase64}`;
-    const logoH = 16; // mm wysokość (większa niż poprzednio)
-    const logoW = 12; // mm szerokość (mniejsza, by zachować proporcje pionowe)
+    const logoH = 20; // mm wysokość (większa niż poprzednio)
+    const logoW = 15; // mm szerokość (mniejsza, by zachować proporcje pionowe)
     const logoX = cardX + 10;
-    const logoY = cardY + cardH - 6 - logoH;
+    const logoY = cardY + cardH - 10 - logoH;
 
     doc.addImage(logoDataUrl, "PNG", logoX, logoY, logoW, logoH);
   }
