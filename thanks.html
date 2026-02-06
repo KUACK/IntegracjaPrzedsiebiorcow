@@ -9,8 +9,15 @@
     <style>
         .box {
             max-width: 760px;
-            margin: 40px auto;
-            padding: 20px;
+            margin: 24px auto 60px;
+            padding: 0 16px;
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, .08);
+            border-radius: 14px;
+            padding: 22px;
         }
 
         .muted {
@@ -30,25 +37,63 @@
             color: #b00020;
         }
 
-        button {
+        .actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 14px;
+        }
+
+        .btn {
             padding: 10px 14px;
             cursor: pointer;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 0, 0, .18);
+            background: #0f172a;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .btn.secondary {
+            background: #fff;
+            color: #0f172a;
+        }
+
+        .btn:disabled {
+            opacity: .6;
+            cursor: not-allowed;
         }
     </style>
 </head>
 
 <body>
-    <div class="box">
-        <h1>Dziękujemy!</h1>
-        <p id="status">Sprawdzam status płatności…</p>
-        <p class="muted">Zamówienie: <code id="orderId">-</code></p>
-
-        <div id="actions" style="display:none; margin-top: 14px;">
-            <button id="retry">Odśwież status</button>
-            <a id="ticketsLink" href="#" style="margin-left: 12px; display:none;">Zobacz bilety</a>
+    <!-- Header jak w index.html -->
+    <div class="header">
+        <div class="logo">
+            <img src="obrazy/logo.png" alt="logo" />
         </div>
+    </div>
 
-        <p id="hint" class="muted"></p>
+    <div class="box">
+        <div class="card">
+            <h1>Dziękujemy!</h1>
+            <p id="status">Sprawdzam status płatności…</p>
+            <p class="muted">Zamówienie: <code id="orderId">-</code></p>
+
+            <div class="actions" id="actions" style="display:none;">
+                <button class="btn secondary" id="retry" type="button">Odśwież status</button>
+
+                <!-- NOWE: pobieranie PDFów -->
+                <button class="btn" id="downloadBtn" type="button" style="display:none;">
+                    Pobierz bilety (PDF)
+                </button>
+
+                <!-- Opcjonalnie: link do listy biletów -->
+                <a class="btn secondary" id="ticketsLink" href="#" style="display:none;">Zobacz bilety</a>
+            </div>
+
+            <p id="hint" class="muted"></p>
+        </div>
     </div>
 
     <script>
@@ -57,27 +102,26 @@
         const actionsEl = document.getElementById("actions");
         const retryBtn = document.getElementById("retry");
         const ticketsLink = document.getElementById("ticketsLink");
+        const downloadBtn = document.getElementById("downloadBtn");
         const hintEl = document.getElementById("hint");
 
         const url = new URL(window.location.href);
         const extOrderId = url.searchParams.get("order");
-
         orderEl.textContent = extOrderId || "(brak)";
 
         if (!extOrderId) {
             statusEl.textContent = "Brak parametru order w URL. Wróć do formularza i spróbuj ponownie.";
             statusEl.className = "bad";
-            actionsEl.style.display = "block";
+            actionsEl.style.display = "flex";
+            retryBtn.textContent = "Wróć do formularza";
             retryBtn.onclick = () => window.location.href = "/buy_form";
             throw new Error("Missing order param");
         }
 
-        // gdzie ma prowadzić link do biletów:
-        // (na razie możesz zrobić prostą stronę, która pokazuje bilety po extOrderId)
         ticketsLink.href = `/tickets.html?order=${encodeURIComponent(extOrderId)}`;
 
         let tries = 0;
-        const maxTries = 40;        // ok. 2 min przy interval 3s
+        const maxTries = 40;
         const intervalMs = 3000;
 
         async function syncOnce() {
@@ -89,15 +133,13 @@
                 cache: "no-store",
             });
 
-            if (!r.ok) {
-                throw new Error(`sync-status HTTP ${r.status}`);
-            }
+            if (!r.ok) throw new Error(`sync-status HTTP ${r.status}`);
 
             const j = await r.json();
             if (!j || !j.found) {
                 statusEl.textContent = "Nie znaleziono zamówienia w bazie (found=false).";
                 statusEl.className = "bad";
-                actionsEl.style.display = "block";
+                actionsEl.style.display = "flex";
                 return { done: true };
             }
 
@@ -112,8 +154,9 @@
             if (s === "COMPLETED") {
                 statusEl.textContent = "Płatność potwierdzona. Możesz pobrać bilety.";
                 statusEl.className = "ok";
-                actionsEl.style.display = "block";
-                ticketsLink.style.display = "inline";
+                actionsEl.style.display = "flex";
+                downloadBtn.style.display = "inline-block";
+                ticketsLink.style.display = "inline-block"; // możesz wyłączyć jeśli nie chcesz
                 hintEl.textContent = "";
                 return { done: true };
             }
@@ -121,12 +164,11 @@
             if (s === "CANCELED" || s === "REJECTED") {
                 statusEl.textContent = `Płatność nieudana (status: ${s}).`;
                 statusEl.className = "bad";
-                actionsEl.style.display = "block";
+                actionsEl.style.display = "flex";
                 hintEl.textContent = "Jeśli pieniądze zeszły, daj znać — sprawdzimy po payu_order_id.";
                 return { done: true };
             }
 
-            // Inne statusy typu PENDING / WAITING_FOR_CONFIRMATION itp.
             statusEl.textContent = `Czekam na potwierdzenie (status: ${s})…`;
             statusEl.className = "";
             return { done: false };
@@ -135,13 +177,12 @@
         async function loop() {
             try {
                 const { done } = await syncOnce();
-
                 if (done) return;
 
                 if (tries >= maxTries) {
                     statusEl.textContent = "To trwa dłużej niż zwykle. Kliknij „Odśwież status” za chwilę.";
                     statusEl.className = "";
-                    actionsEl.style.display = "block";
+                    actionsEl.style.display = "flex";
                     hintEl.textContent = "Jeśli dalej stoi, podeślij extOrderId — sprawdzimy PayU i logi /api/notify.";
                     return;
                 }
@@ -150,7 +191,7 @@
             } catch (e) {
                 statusEl.textContent = "Błąd sprawdzania statusu. Kliknij „Odśwież status”.";
                 statusEl.className = "bad";
-                actionsEl.style.display = "block";
+                actionsEl.style.display = "flex";
                 hintEl.textContent = String(e && e.message ? e.message : e);
             }
         }
@@ -159,9 +200,56 @@
             tries = 0;
             statusEl.textContent = "Sprawdzam status płatności…";
             statusEl.className = "";
+            downloadBtn.style.display = "none";
             ticketsLink.style.display = "none";
             hintEl.textContent = "";
             loop();
+        };
+
+        // Pobierz wiele PDF (po jednym na bilet)
+        downloadBtn.onclick = async () => {
+            try {
+                downloadBtn.disabled = true;
+                hintEl.textContent = "Przygotowuję bilety…";
+
+                const r = await fetch(`/api/tickets-by-order?order=${encodeURIComponent(extOrderId)}`, {
+                    method: "GET",
+                    headers: { "Accept": "application/json" },
+                    cache: "no-store",
+                });
+                if (!r.ok) throw new Error(`tickets-by-order HTTP ${r.status}`);
+
+                const j = await r.json();
+                const tickets = (j && j.tickets) ? j.tickets : [];
+                if (!Array.isArray(tickets) || tickets.length === 0) {
+                    hintEl.textContent = "Brak biletów dla tego zamówienia.";
+                    return;
+                }
+
+                hintEl.textContent = `Pobieram ${tickets.length} bilet(ów)…`;
+
+                // mały delay między pobraniami (stabilniej w przeglądarkach)
+                for (let i = 0; i < tickets.length; i++) {
+                    const t = tickets[i];
+                    const token = t.token;
+                    const ticketNo = t.ticketNo || (i + 1);
+
+                    const a = document.createElement("a");
+                    a.href = `/api/ticket-pdf?t=${encodeURIComponent(token)}`;
+                    a.download = `bilet-${ticketNo}.pdf`;
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+
+                    await new Promise(res => setTimeout(res, 400));
+                }
+
+                hintEl.textContent = "Gotowe.";
+            } catch (e) {
+                hintEl.textContent = "Nie udało się pobrać biletów: " + (e?.message || String(e));
+            } finally {
+                downloadBtn.disabled = false;
+            }
         };
 
         loop();
