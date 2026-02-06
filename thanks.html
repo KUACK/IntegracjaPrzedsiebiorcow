@@ -88,8 +88,6 @@
                     Pobierz bilety (PDF)
                 </button>
 
-                <!-- Opcjonalnie: link do listy biletów -->
-                <a class="btn secondary" id="ticketsLink" href="#" style="display:none;">Zobacz bilety</a>
             </div>
 
             <p id="hint" class="muted"></p>
@@ -101,7 +99,6 @@
         const orderEl = document.getElementById("orderId");
         const actionsEl = document.getElementById("actions");
         const retryBtn = document.getElementById("retry");
-        const ticketsLink = document.getElementById("ticketsLink");
         const downloadBtn = document.getElementById("downloadBtn");
         const hintEl = document.getElementById("hint");
 
@@ -118,7 +115,6 @@
             throw new Error("Missing order param");
         }
 
-        ticketsLink.href = `/tickets.html?order=${encodeURIComponent(extOrderId)}`;
 
         let tries = 0;
         const maxTries = 40;
@@ -156,7 +152,6 @@
                 statusEl.className = "ok";
                 actionsEl.style.display = "flex";
                 downloadBtn.style.display = "inline-block";
-                ticketsLink.style.display = "inline-block"; // możesz wyłączyć jeśli nie chcesz
                 hintEl.textContent = "";
                 return { done: true };
             }
@@ -201,7 +196,6 @@
             statusEl.textContent = "Sprawdzam status płatności…";
             statusEl.className = "";
             downloadBtn.style.display = "none";
-            ticketsLink.style.display = "none";
             hintEl.textContent = "";
             loop();
         };
@@ -212,41 +206,16 @@
                 downloadBtn.disabled = true;
                 hintEl.textContent = "Przygotowuję bilety…";
 
-                const r = await fetch(`/api/tickets-by-order?order=${encodeURIComponent(extOrderId)}`, {
-                    method: "GET",
-                    headers: { "Accept": "application/json" },
-                    cache: "no-store",
-                });
-                if (!r.ok) throw new Error(`tickets-by-order HTTP ${r.status}`);
+                const a = document.createElement("a");
+                a.href = `/api/tickets-pdf-all?order=${encodeURIComponent(extOrderId)}`;
+                a.download = `bilety-${extOrderId}.pdf`;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
 
-                const j = await r.json();
-                const tickets = (j && j.tickets) ? j.tickets : [];
-                if (!Array.isArray(tickets) || tickets.length === 0) {
-                    hintEl.textContent = "Brak biletów dla tego zamówienia.";
-                    return;
-                }
-
-                hintEl.textContent = `Pobieram ${tickets.length} bilet(ów)…`;
-
-                // mały delay między pobraniami (stabilniej w przeglądarkach)
-                for (let i = 0; i < tickets.length; i++) {
-                    const t = tickets[i];
-                    const token = t.token;
-                    const ticketNo = t.ticketNo || (i + 1);
-
-                    const a = document.createElement("a");
-                    a.href = `/api/ticket-pdf?t=${encodeURIComponent(token)}`;
-                    a.download = `bilet-${ticketNo}.pdf`;
-                    document.body.appendChild(a);
-                    a.click();
-                    a.remove();
-
-                    await new Promise(res => setTimeout(res, 400));
-                }
-
-                hintEl.textContent = "Gotowe.";
+                hintEl.textContent = "Pobrano.";
             } catch (e) {
-                hintEl.textContent = "Nie udało się pobrać biletów: " + (e?.message || String(e));
+                hintEl.textContent = "Błąd: " + (e?.message || String(e));
             } finally {
                 downloadBtn.disabled = false;
             }
