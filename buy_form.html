@@ -21,8 +21,16 @@
             <div class="timer" id="timer">⏱️ Pozostało: Ładowanie...</div>
         </div>
     </div>
+
+    <div class="header">
+        <div class="logo">
+            <a class="logo" href="index.html" aria-label="Strona główna">
+                <img src="obrazy/logo.png" alt="logo" />
+            </a>
+        </div>
+    </div>
     <div class="row">
-        <!-- PASEK PROMOCYJNY -->
+
 
         <h1>Kup bilet</h1>
 
@@ -76,6 +84,90 @@
             <p id="msg"></p>
         </form>
     </div>
+
+    <footer class="site-footer">
+        <div class="footer-bg" aria-hidden="true"></div>
+
+        <div class="container footer-container">
+            <div class="footer-grid">
+                <!-- LEWA KOLUMNA: znak + opis -->
+                <div class="footer-col footer-brand">
+                    <div class="footer-mark">
+                        <div class="logo_footer">
+                            <img src="obrazy/logo.png" alt="logo" />
+                        </div>
+                    </div>
+
+                    <p class="footer-desc">
+                        Duszpasterstwo Przedsiębiorców i Pracodawców Talent w Archidiecezji Poznańskiej
+                    </p>
+                </div>
+
+                <!-- ŚRODKOWA: adres -->
+                <div class="footer-col">
+                    <h3 class="footer-title">Adres</h3>
+
+                    <ul class="footer-list footer-list--icons">
+                        <li>
+                            <span class="footer-ico" aria-hidden="true">
+                                <!-- pin -->
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+                                    <path d="M12 22s7-4.6 7-12a7 7 0 1 0-14 0c0 7.4 7 12 7 12Z" stroke="currentColor"
+                                        stroke-width="1.8" />
+                                    <path d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke="currentColor"
+                                        stroke-width="1.8" />
+                                </svg>
+                            </span>
+                            <span>ul. Głogowska 92, Poznań</span>
+                        </li>
+
+                        <li>
+                            <span class="footer-ico" aria-hidden="true">
+                                <!-- mail -->
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+                                    <path d="M4 6h16v12H4V6Z" stroke="currentColor" stroke-width="1.8" />
+                                    <path d="m4.5 7 7.5 6 7.5-6" stroke="currentColor" stroke-width="1.8" />
+                                </svg>
+                            </span>
+                            <a href="mailto:konferencja@brh.eu">konferencja@brh.eu</a>
+                        </li>
+
+                        <li>
+                            <span class="footer-ico footer-ico--dot" aria-hidden="true"></span>
+                            <span>NIP: 7792461653</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- MENU -->
+                <div class="footer-col">
+                    <h3 class="footer-title">Menu</h3>
+
+                    <ul class="footer-list">
+                        <li><a href="#misja">Misja</a></li>
+                        <li><a href="#program">Program</a></li>
+                        <li><a href="#prelegenci">Prelegenci</a></li>
+                        <li><a href="#zapisy">Zapisy</a></li>
+                        <li><a href="#polityka-prywatnosci">Polityka prywatności</a></li>
+                    </ul>
+                </div>
+
+                <!-- ORGANIZATOR -->
+                <div class="footer-col footer-org">
+                    <h3 class="footer-title">Organizator</h3>
+
+                    <a class="footer-org-card" href="#" aria-label="Talent">
+                        <!-- Podmień ścieżkę na właściwą w Twoim projekcie -->
+                        <img src="obrazy/talent.png" alt="talent" />
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                © 2026 Duszpasterstwo Przedsiębiorców i Pracodawców Talent w Archidiecezji Poznańskiej
+            </div>
+        </div>
+    </footer>
 
     <script>
         const msg = document.getElementById("msg");
