@@ -3,9 +3,7 @@ import QRCode from "qrcode-generator";
 
 import dejavuNormalBase64 from "../_assets/fonts/DejaVuSans-normal.js";
 import dejavuBoldBase64 from "../_assets/fonts/DejaVuSans-bold.js";
-
-// Opcjonalnie: logo (patrz sekcja niżej)
-// import logoPngBase64 from "../../_assets/images/logo-png.js";
+import logoPngBase64 from "../_assets/images/logo-png.js";
 
 function safeOneLine(value, maxLen = 140) {
   return String(value ?? "")
@@ -16,13 +14,9 @@ function safeOneLine(value, maxLen = 140) {
 }
 
 function registerFonts(doc) {
-  // Reset odstępów między znakami (na wypadek gdyby viewer/ustawienia mieszały)
-  doc.setCharSpace(0); // API jsPDF [page:1]
+  doc.setCharSpace(0); // jsPDF supports setCharSpace() [page:1]
 
-  if (!dejavuNormalBase64) {
-    // Bez fontu też zadziała, ale bez PL znaków
-    return;
-  }
+  if (!dejavuNormalBase64) return;
 
   doc.addFileToVFS("DejaVuSans.ttf", dejavuNormalBase64);
   doc.addFont("DejaVuSans.ttf", "DejaVuSans", "normal");
@@ -54,27 +48,25 @@ function drawQrToPdf(doc, text, x, y, sizeMm) {
 }
 
 function textWrap(doc, text, maxWidth) {
-  // jsPDF ma splitTextToSize w runtime; jeśli go nie ma, zwróć 1 linię
-  if (typeof doc.splitTextToSize === "function") {
+  if (typeof doc.splitTextToSize === "function")
     return doc.splitTextToSize(text, maxWidth);
-  }
   return [text];
 }
 
 function makeTicketPdf({ ticketNo, fullName, ticketType, verifyUrl }) {
-  const doc = new jsPDF({ unit: "mm", format: "a4" }); // jsPDF constructor [page:1]
+  const doc = new jsPDF({ unit: "mm", format: "a4" }); // jsPDF constructor supports unit/format [page:1]
   registerFonts(doc);
 
   // Kolory
-  const ink = [17, 24, 39]; // prawie czarny
-  const muted = [107, 114, 128]; // szary
-  const border = [229, 231, 235]; // jasny szary
-  const headerBg = [15, 23, 42]; // granat
+  const ink = [17, 24, 39];
+  const muted = [107, 114, 128];
+  const border = [229, 231, 235];
+  const headerBg = [15, 23, 42];
 
   const pageW = 210;
   const margin = 15;
 
-  // “Karta biletu”
+  // Karta biletu
   const cardX = margin;
   const cardY = 20;
   const cardW = pageW - margin * 2;
@@ -88,7 +80,7 @@ function makeTicketPdf({ ticketNo, fullName, ticketType, verifyUrl }) {
   // Pasek nagłówka
   doc.setFillColor(...headerBg);
   doc.roundedRect(cardX, cardY, cardW, 18, 4, 4, "F");
-  doc.rect(cardX, cardY + 14, cardW, 4, "F"); // “wyrównanie” zaokrągleń
+  doc.rect(cardX, cardY + 14, cardW, 4, "F");
 
   // Tytuł
   doc.setTextColor(255, 255, 255);
@@ -96,16 +88,19 @@ function makeTicketPdf({ ticketNo, fullName, ticketType, verifyUrl }) {
   doc.setFontSize(16);
   doc.text("Bilet wstępu", cardX + 10, cardY + 12);
 
-  // Typ biletu w nagłówku (po prawej)
+  // Typ biletu (VIP) — POGRUBIONE
   const typeText = safeOneLine(ticketType, 50);
   doc.setFontSize(11);
-  doc.setFont("DejaVuSans", "normal");
+  doc.setFont("DejaVuSans", dejavuBoldBase64 ? "bold" : "normal");
   doc.text(typeText, cardX + cardW - 10, cardY + 12, { align: "right" });
 
-  // Zawartość
+  // Layout
   const leftX = cardX + 10;
   const topY = cardY + 30;
-  const line = 8;
+
+  // Większe przerwy między sekcjami:
+  const labelGap = 12; // odstęp między kolejnymi etykietami
+  const valueOffset = 5; // jak nisko względem etykiety rysować wartość
 
   const qrSize = 42;
   const qrX = cardX + cardW - 10 - qrSize;
@@ -114,9 +109,10 @@ function makeTicketPdf({ ticketNo, fullName, ticketType, verifyUrl }) {
   // Etykiety
   doc.setTextColor(...muted);
   doc.setFontSize(9);
+  doc.setFont("DejaVuSans", "normal");
   doc.text("Numer biletu", leftX, topY);
-  doc.text("Imię i nazwisko", leftX, topY + line * 1.2);
-  doc.text("Weryfikacja", leftX, topY + line * 2.4);
+  doc.text("Imię i nazwisko", leftX, topY + labelGap);
+  doc.text("Weryfikacja", leftX, topY + labelGap * 2);
 
   // Wartości
   doc.setTextColor(...ink);
@@ -126,10 +122,14 @@ function makeTicketPdf({ ticketNo, fullName, ticketType, verifyUrl }) {
   const no = safeOneLine(ticketNo, 80);
   const name = safeOneLine(fullName, 80);
 
-  doc.text(textWrap(doc, no, qrX - leftX - 8), leftX, topY + 5);
-  doc.text(textWrap(doc, name, qrX - leftX - 8), leftX, topY + line * 1.2 + 5);
+  doc.text(textWrap(doc, no, qrX - leftX - 8), leftX, topY + valueOffset);
+  doc.text(
+    textWrap(doc, name, qrX - leftX - 8),
+    leftX,
+    topY + labelGap + valueOffset,
+  );
 
-  // QR + opis
+  // QR opis
   doc.setFont("DejaVuSans", "normal");
   doc.setFontSize(9);
   doc.setTextColor(...muted);
@@ -144,21 +144,24 @@ function makeTicketPdf({ ticketNo, fullName, ticketType, verifyUrl }) {
   // QR
   drawQrToPdf(doc, verifyUrl, qrX, qrY, qrSize);
 
-  // URL weryfikacji (na dole karty)
-  doc.setTextColor(...muted);
-  doc.setFontSize(8.5);
-  doc.text(
-    textWrap(doc, verifyUrl, cardW - 20),
-    cardX + 10,
-    cardY + cardH - 12,
-  );
+  // Logo — lewy dolny róg karty
+  if (logoPngBase64) {
+    const logoDataUrl = `data:image/png;base64,${logoPngBase64}`;
+    const logoW = 28; // mm (możesz dopasować)
+    const logoH = 10; // mm (możesz dopasować)
+    const logoX = cardX + 10;
+    const logoY = cardY + cardH - 8 - logoH;
 
-  // Mała stopka
+    doc.addImage(logoDataUrl, "PNG", logoX, logoY, logoW, logoH); // jsPDF addImage supports DataUrl + format + x,y,w,h [page:0]
+  }
+
+  // Stopka (bez linku tekstowego)
   doc.setTextColor(...muted);
   doc.setFontSize(8);
+  doc.setFont("DejaVuSans", "normal");
   doc.text("Integracja Przedsiębiorców", cardX + 10, cardY + cardH - 5);
 
-  return doc.output("arraybuffer"); // jsPDF output supports ArrayBuffer [page:1]
+  return doc.output("arraybuffer"); // jsPDF output('arraybuffer') exists [page:1]
 }
 
 export async function onRequestGet({ request, env }) {
