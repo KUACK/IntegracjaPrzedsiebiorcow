@@ -61,7 +61,7 @@ export async function onRequestPost({ request, env }) {
   const promo = String(promoCode || "")
     .trim()
     .toLowerCase();
-  const discountFactor = promo === "luty" && now < promoOkUntil ? 0.5 : 1;
+  const discountFactor = promo === "marzec" && now < promoOkUntil ? 0.5 : 1;
 
   const unitPrice = Math.round(t.unit * discountFactor);
   const totalAmount = unitPrice * qty; // grosze
