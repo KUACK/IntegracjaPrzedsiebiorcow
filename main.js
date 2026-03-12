@@ -1,6 +1,6 @@
 // TIMER ODLICZAJĄCY
 function updateTimer() {
-  const endDate = new Date("2026-02-28T23:59:59").getTime();
+  const endDate = new Date("2026-03-31T23:59:59").getTime();
   const now = Date.now();
   const distance = endDate - now;
 

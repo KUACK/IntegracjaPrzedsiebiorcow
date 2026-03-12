@@ -15,8 +15,8 @@
     <div class="promo-bar">
         <div class="promo-content">
             <div class="promo-text">
-                🎉 Tylko do końca Lutego!<br />
-                Kod: <strong>LUTY</strong> - Najniższa cena! 50% zniżki!
+                🎉 Tylko do końca Marca!<br />
+                Kod: <strong>MARZEC</strong> - Najniższa cena! 50% zniżki!
             </div>
             <div class="timer" id="timer">⏱️ Pozostało: Ładowanie...</div>
         </div>
@@ -84,6 +84,7 @@
             <p id="msg"></p>
         </form>
     </div>
+    <p class="realizacja">Czas realizacji zamówienia - 1 dzień roboczy.</p>
 
     <footer class="site-footer">
         <div class="footer-bg" aria-hidden="true"></div>
@@ -233,9 +234,9 @@
             const code = (promoInput.value || "").trim().toLowerCase();
 
             // UWAGA: to MUSI być spójne z backendem (patrz punkt 5).
-            if (code === "luty") {
+            if (code === "marzec") {
                 promoApplied = true;
-                appliedCode = "LUTY";
+                appliedCode = "MARZEC";
                 discountFactor = 0.5;
                 promoHintEl.textContent = "Kod zastosowany (-50%).";
             } else {
