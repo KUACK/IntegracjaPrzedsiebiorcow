@@ -54,14 +54,14 @@ export async function onRequestPost({ request, env }) {
   const t = tickets[String(ticketType || "").toLowerCase()];
   if (!t) return new Response("Unknown ticketType", { status: 400 });
 
-  // Kod promocyjny: "Luty" do końca lutego (czas PL), -50%, bez limitu
+  // Kod promocyjny: "Marzec" do końca marca (czas PL), -50%, bez limitu
   const now = new Date();
   const year = now.getFullYear();
-  const promoOkUntil = new Date(`${year}-03-01T00:00:00+01:00`);
+  const promoOkUntil = new Date(`${year}-04-01T00:00:00+01:00`);
   const promo = String(promoCode || "")
     .trim()
     .toLowerCase();
-  const discountFactor = promo === "marzec" && now < promoOkUntil ? 0.5 : 1;
+  const discountFactor = promo === "lmarzec" && now < promoOkUntil ? 0.5 : 1;
 
   const unitPrice = Math.round(t.unit * discountFactor);
   const totalAmount = unitPrice * qty; // grosze
