@@ -281,3 +281,10 @@
     flex-direction: column;
   }
 }
+
+.realizacja{
+  font-weight: 700;
+  font-size: 24px;
+  margin:10px 0px;
+  
+}
