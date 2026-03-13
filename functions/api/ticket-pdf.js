@@ -53,11 +53,10 @@ function textWrap(doc, text, maxWidth) {
   return [text];
 }
 
-function makeTicketPdf({ ticketNo, fullName, ticketType, verifyUrl }) {
+function makeTicketPdf({ ticketNo, fullName, ticketType, email, verifyUrl }) {
   const doc = new jsPDF({ unit: "mm", format: "a4" });
   registerFonts(doc);
 
-  // Kolory
   const ink = [17, 24, 39];
   const muted = [107, 114, 128];
   const border = [229, 231, 235];
@@ -66,11 +65,10 @@ function makeTicketPdf({ ticketNo, fullName, ticketType, verifyUrl }) {
   const pageW = 210;
   const margin = 15;
 
-  // Karta biletu
   const cardX = margin;
   const cardY = 20;
   const cardW = pageW - margin * 2;
-  const cardH = 85;
+  const cardH = 95; // +10mm żeby zmieścił się email
 
   // Tło + obramowanie
   doc.setDrawColor(...border);
@@ -88,7 +86,7 @@ function makeTicketPdf({ ticketNo, fullName, ticketType, verifyUrl }) {
   doc.setFontSize(16);
   doc.text("Bilet wstępu", cardX + 10, cardY + 12);
 
-  // Typ biletu (VIP) — POGRUBIONY
+  // Typ biletu
   const typeText = safeOneLine(ticketType, 50);
   doc.setFontSize(11);
   doc.setFont("DejaVuSans", dejavuBoldBase64 ? "bold" : "normal");
@@ -97,19 +95,20 @@ function makeTicketPdf({ ticketNo, fullName, ticketType, verifyUrl }) {
   // Layout
   const leftX = cardX + 10;
   const topY = cardY + 30;
-  const labelGap = 12;
+  const labelGap = 14;
   const valueOffset = 5;
 
   const qrSize = 42;
   const qrX = cardX + cardW - 10 - qrSize;
   const qrY = cardY + 32;
 
-  // Etykiety (BEZ "Weryfikacja")
+  // Etykiety
   doc.setTextColor(...muted);
   doc.setFontSize(9);
   doc.setFont("DejaVuSans", "normal");
   doc.text("Numer biletu", leftX, topY);
   doc.text("Imię i nazwisko", leftX, topY + labelGap);
+  doc.text("E-mail", leftX, topY + labelGap * 2);
 
   // Wartości
   doc.setTextColor(...ink);
@@ -118,12 +117,18 @@ function makeTicketPdf({ ticketNo, fullName, ticketType, verifyUrl }) {
 
   const no = safeOneLine(ticketNo, 80);
   const name = safeOneLine(fullName, 80);
+  const emailSafe = safeOneLine(email, 80);
 
   doc.text(textWrap(doc, no, qrX - leftX - 8), leftX, topY + valueOffset);
   doc.text(
     textWrap(doc, name, qrX - leftX - 8),
     leftX,
     topY + labelGap + valueOffset,
+  );
+  doc.text(
+    textWrap(doc, emailSafe, qrX - leftX - 8),
+    leftX,
+    topY + labelGap * 2 + valueOffset,
   );
 
   // QR opis
@@ -141,18 +146,16 @@ function makeTicketPdf({ ticketNo, fullName, ticketType, verifyUrl }) {
   // QR
   drawQrToPdf(doc, verifyUrl, qrX, qrY, qrSize);
 
-  // Logo — lewy dolny róg (POPRAWIONE proporcje)
+  // Logo
   if (logoPngBase64) {
     const logoDataUrl = `data:image/png;base64,${logoPngBase64}`;
-    const logoH = 20; // mm wysokość (większa niż poprzednio)
-    const logoW = 20; // mm szerokość (mniejsza, by zachować proporcje pionowe)
+    const logoH = 20;
+    const logoW = 20;
     const logoX = cardX + 10;
     const logoY = cardY + cardH - 10 - logoH;
 
     doc.addImage(logoDataUrl, "PNG", logoX, logoY, logoW, logoH);
   }
-
-  // BEZ stopki "Integracja Przedsiębiorców"
 
   return doc.output("arraybuffer");
 }
@@ -168,7 +171,7 @@ export async function onRequestGet({ request, env }) {
 
   const ticket = await env.DB.prepare(
     `
-      SELECT ticket_no, full_name, ticket_type, ticket_token
+      SELECT ticket_no, full_name, ticket_type, ticket_token, email
       FROM tickets
       WHERE ticket_token = ?
       LIMIT 1
@@ -187,6 +190,7 @@ export async function onRequestGet({ request, env }) {
     ticketNo: ticket.ticket_no,
     fullName: ticket.full_name,
     ticketType: ticket.ticket_type,
+    email: ticket.email,
     verifyUrl,
   });
 

@@ -210,19 +210,9 @@ body {
 /* siatka kafli */
 .schedule-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 28px;
   align-items: stretch;
-}
-
-/* kafel na cały rząd */
-.schedule-card--wide {
-  grid-column: 1 / -1;
-}
-
-/* siatka dnia 2: 4 kolumny */
-.schedule-grid--day2 {
-  grid-template-columns: repeat(4, 1fr);
 }
 
 /* kafel */
@@ -671,10 +661,6 @@ img {
     gap: 16px;
   }
 
-  .schedule-grid--day2 {
-    grid-template-columns: 1fr;
-  }
-
   .schedule-card {
     padding: 16px;
     border-radius: 12px;
@@ -1013,6 +999,7 @@ body.page-short .site-footer {
 .adresss {
   font-size: 14px;
   margin-top: 10px;
+  margin-left: -20px;
 }
 .miejsce_adress {
   font-weight: 400;
