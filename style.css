@@ -497,7 +497,6 @@ input[type="tel"]::placeholder {
     ),
     linear-gradient(180deg, #ffffff 0%, #fbfbfd 100%); */
   width: 1200px;
-  margin: 0 auto 40px auto;
 }
 
 .banquet__inner {
@@ -516,7 +515,7 @@ input[type="tel"]::placeholder {
   color: var(--secondary);
   text-transform: uppercase;
   letter-spacing: -0.02em;
-  margin-left: 200px;
+  margin-left: 300px;
 }
 
 /* "CONCORDIA DESIGN" — duży tytuł, lekko przesunięty w prawo */
@@ -530,7 +529,7 @@ input[type="tel"]::placeholder {
   text-transform: uppercase;
   letter-spacing: -0.02em;
   text-align: right;
-  margin-right: 200px;
+  margin-right: 00px;
 }
 
 /* jeśli chcesz, żeby "DESIGN" miało subtelny akcent kolorem */
@@ -547,6 +546,8 @@ input[type="tel"]::placeholder {
     Roboto,
     Arial,
     sans-serif;
+  display: flex;
+  justify-content: space-between;
 }
 .banquet__title {
   font-family: "DM Serif Display", serif;
@@ -967,7 +968,7 @@ body.page-short .site-footer {
 
 .tooltip-text {
   position: absolute;
-  bottom: 120%;          /* nad linkiem */
+  bottom: 120%; /* nad linkiem */
   left: 50%;
   transform: translateX(-50%);
   background: #333;

@@ -1,407 +1,479 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Konferencja Przedsiębiorców</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700;800&family=DM+Serif+Display&display=swap"
+    />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Konferencja Przedsiębiorców</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700;800&family=DM+Serif+Display&display=swap">
-</head>
-
-<body>
-  <!-- PASEK PROMOCYJNY -->
-  <div class="promo-bar">
-    <div class="promo-content">
-      <div class="promo-text">
-        🎉 Tylko do końca Marca!<br />
-        Kod: <strong>MARZEC</strong> - Najniższa cena! 50% zniżki!
-      </div>
-      <div class="timer" id="timer">⏱️ Pozostało: Ładowanie...</div>
-    </div>
-  </div>
-
-  <!-- HEADER -->
-  <div class="header">
-    <div class="logo">
-      <a class="logo" href="index.html" aria-label="Strona główna">
-        <img src="obrazy/logo.png" alt="logo" />
-      </a>
-    </div>
-  </div>
-
-  <!-- SEKCJA PRELEGENCI -->
-  <section class="hero" id="prelegenci">
-    <div class="container">
-      <div class="section hiro">
-        <h2 class="section-title">NASI PRELEGENCI</h2>
-        <div class="speakers-grid">
-          <div class="speaker-card">
-            <img
-              src="obrazy/woman.png"
-              alt="Prelegentka" class="speaker-avatar" />
-          </div>
-          <div class="speaker-card">
-            <img
-              src="obrazy/men.png"
-              alt="Prelegent" class="speaker-avatar" />
-          </div>
-          <div class="speaker-card">
-            <img
-              src="obrazy/ksiadz.png"
-              alt="Prelegent" class="speaker-avatar" />
-          </div>
+  <body>
+    <!-- PASEK PROMOCYJNY -->
+    <div class="promo-bar">
+      <div class="promo-content">
+        <div class="promo-text">
+          🎉 Tylko do końca Marca!<br />
+          Kod: <strong>MARZEC</strong> - Najniższa cena! 50% zniżki!
         </div>
-        <p class="section-subtitle2">
-          Z KAŻDYM MIĘSIĄCEM PRZEDSTAWIAMY NOWEGO PRELEGENTA
-        </p>
+        <div class="timer" id="timer">⏱️ Pozostało: Ładowanie...</div>
       </div>
     </div>
-  </section>
-  <!-- HARMONOGRAM -->
-  <section class="harmonogram" id="program">
-    <!-- DZIEŃ 1 -->
-    <div class="schedule-stripe day-1">
+
+    <!-- HEADER -->
+    <div class="header">
+      <div class="logo">
+        <a class="logo" href="index.html" aria-label="Strona główna">
+          <img src="obrazy/logo.png" alt="logo" />
+        </a>
+      </div>
+    </div>
+
+    <!-- SEKCJA PRELEGENCI -->
+    <section class="hero" id="prelegenci">
       <div class="container">
-        <header class="schedule-head">
-          <div class="schedule-kicker">Program Konferencji</div>
-          <h2 class="schedule-main-date">10 X 2026 piątek</h2>
-        </header>
-
-        <div class="schedule-grid">
-          <article class="schedule-card">
-            <div class="schedule-time">09.00</div>
-            <h4 class="schedule-title">OTWARCIE KONFERENCJI</h4>
-            <p class="schedule-desc">Start i wprowadzenie organizatorów.</p>
-          </article>
-
-          <article class="schedule-card">
-            <div class="schedule-time">10.00</div>
-            <h4 class="schedule-title">KEYNOTE</h4>
-            <p class="schedule-desc">„Biznes w erze cyfrowej”.</p>
-
-          </article>
-
-          <article class="schedule-card">
-            <div class="schedule-time">11.30</div>
-            <h4 class="schedule-title">PRZERWA NETWORKINGOWA</h4>
-            <p class="schedule-desc">Kawa + rozmowy.</p>
-          </article>
-
-          <article class="schedule-card">
-            <div class="schedule-time">12.00</div>
-            <h4 class="schedule-title">WARSZTATY</h4>
-            <p class="schedule-desc">Sekcja A.</p>
-          </article>
-
-          <article class="schedule-card">
-            <div class="schedule-time">13.00</div>
-            <h4 class="schedule-title">LUNCH</h4>
-            <p class="schedule-desc">Przerwa obiadowa.</p>
-          </article>
-
-          <article class="schedule-card">
-            <div class="schedule-time">14.00</div>
-            <h4 class="schedule-title">WARSZTATY</h4>
-            <p class="schedule-desc">Sekcja B.</p>
-          </article>
-
-          <!-- kafel szeroki (np. jak dolne większe na screenie) -->
-          <article class="schedule-card schedule-card--wide">
-            <div class="schedule-time">19.00</div>
-            <h4 class="schedule-title">BANKIET</h4>
-            <p class="schedule-desc">Uroczysty bankiet – spotkanie networkingowe z prelegentami i uczestnikami.</p>
-          </article>
-        </div>
-      </div>
-    </div>
-
-    <!-- DZIEŃ 2 -->
-    <div class="schedule-stripe day-2">
-      <div class="container">
-        <header class="schedule-head schedule-head--compact">
-          <div class="schedule-kicker">Program Konferencji</div>
-          <h2 class="schedule-main-date">11 X 2026 sobota</h2>
-        </header>
-
-        <div class="schedule-grid">
-          <article class="schedule-card">
-            <div class="schedule-time">09.00</div>
-            <h4 class="schedule-title">OTWARCIE DRUGIEGO DNIA</h4>
-            <p class="schedule-desc">Wprowadzenie.</p>
-          </article>
-
-          <article class="schedule-card">
-            <div class="schedule-time">10.00</div>
-            <h4 class="schedule-title">PANEL DYSKUSYJNY</h4>
-            <p class="schedule-desc">„Inwestycje i finanse”.</p>
-          </article>
-
-          <article class="schedule-card">
-            <div class="schedule-time">11.30</div>
-            <h4 class="schedule-title">PRZERWA NETWORKINGOWA</h4>
-            <p class="schedule-desc">Kawa + rozmowy.</p>
-          </article>
-
-          <article class="schedule-card">
-            <div class="schedule-time">12.00</div>
-            <h4 class="schedule-title">MASTERSKLASY</h4>
-            <p class="schedule-desc">Sekcja C.</p>
-          </article>
-
-          <article class="schedule-card">
-            <div class="schedule-time">13.00</div>
-            <h4 class="schedule-title">LUNCH</h4>
-            <p class="schedule-desc">Przerwa obiadowa.</p>
-          </article>
-
-          <article class="schedule-card">
-            <div class="schedule-time">14.00</div>
-            <h4 class="schedule-title">MASTERSKLASY</h4>
-            <p class="schedule-desc">Sekcja D.</p>
-          </article>
-
-          <article class="schedule-card">
-            <div class="schedule-time">15.30</div>
-            <h4 class="schedule-title">PRZERWA NETWORKINGOWA</h4>
-            <p class="schedule-desc">Zamknięcie dnia.</p>
-          </article>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- BANKIET -->
-  <div class="banquet">
-    <div class="banquet__inner">
-      <div class="banquet__label">BANKIET</div>
-      <div class="banquet__title">CONCORDIA DESIGN</div>
-    </div>
-  </div>
-
-  <!-- BILET 1 -->
-  <div class="tickets-grid">
-    <div class="ticket-card">
-      <div class="ticket-badge">Premium</div>
-      <div class="ticket-name">Bilet Premium</div>
-
-      <div class="ticket-description">
-        <div class="ticket-desc-title">1 dzień konferencji (na żywo)</div>
-        <ul class="ticket-features">
-          <li>Dostęp do wszystkich prelekcji i paneli tego dnia.</li>
-          <li>Networking: przerwy kawowe + strefa rozmów z uczestnikami.</li>
-          <li>Materiały po wydarzeniu (prezentacje/ściągi od partnerów).</li>
-          <li>Certyfikat uczestnictwa.</li>
-        </ul>
-      </div>
-
-      <div class="ticket-price">
-        <div class="old-price">599 PLN</div>
-        <div class="new-price">499 PLN</div>
-      </div>
-      <a class="btn-buy" href="buy_form.html">Kup teraz</a>
-    </div>
-
-    <!-- BILET 2 -->
-    <div class="ticket-card">
-      <div class="ticket-badge">Biznes Plus</div>
-      <div class="ticket-name">Bilet Biznes Plus</div>
-
-      <div class="ticket-description">
-        <div class="ticket-desc-title">2 dni konferencji (na żywo)</div>
-        <ul class="ticket-features">
-          <li>Pełny program 2 dni: więcej strategii, case studies i praktyki.</li>
-          <li>Dostęp do nagrań wybranych wystąpień (po konferencji).</li>
-          <li>Priorytetowe wejście/rejestracja (mniej stania w kolejkach).</li>
-          <li>Bonus: checklista „Plan działania na 30 dni” po wydarzeniu.</li>
-          <li>Networking: przerwy kawowe + strefa rozmów z uczestnikami.</li>
-          <li>Materiały po wydarzeniu (prezentacje/ściągi od partnerów).</li>
-          <li>Certyfikat uczestnictwa.</li>
-        </ul>
-      </div>
-
-      <div class="ticket-price">
-        <div class="old-price">699 PLN</div>
-        <div class="new-price">599 PLN</div>
-      </div>
-      <a class="btn-buy" href="buy_form.html">Kup teraz</a>
-    </div>
-
-    <!-- BILET 3 -->
-    <div class="ticket-card">
-      <div class="ticket-badge">VIP</div>
-      <div class="ticket-name">Bilet VIP</div>
-
-      <div class="ticket-description">
-        <div class="ticket-desc-title">2 dni + bankiet VIP</div>
-        <ul class="ticket-features">
-          <li>Najlepsze miejsca (strefa VIP / przód sali).</li>
-          <li>Bankiet: networking przy stole z przedsiębiorcami i gośćmi.</li>
-          <li>Meet & greet / foto po wybranych prelekcjach (jeśli dostępne).</li>
-          <li>Pakiet VIP: upominek + materiały premium po konferencji.</li>
-          <li>Pełny program 2 dni: więcej strategii, case studies i praktyki.</li>
-          <li>Dostęp do nagrań wybranych wystąpień (po konferencji).</li>
-          <li>Priorytetowe wejście/rejestracja (mniej stania w kolejkach).</li>
-          <li>Bonus: checklista „Plan działania na 30 dni” po wydarzeniu.</li>
-          <li>Networking: przerwy kawowe + strefa rozmów z uczestnikami.</li>
-          <li>Materiały po wydarzeniu (prezentacje/ściągi od partnerów).</li>
-          <li>Certyfikat uczestnictwa.</li>
-        </ul>
-      </div>
-
-      <div class="ticket-price">
-        <div class="old-price">1199 PLN</div>
-        <div class="new-price">999 PLN</div>
-      </div>
-      <a class="btn-buy" href="buy_form.html">Kup teraz</a>
-    </div>
-
-    <!-- BILET 4 -->
-    <div class="ticket-card">
-      <div class="ticket-badge">Online</div>
-      <div class="ticket-name">Premium Online</div>
-
-      <div class="ticket-description">
-        <div class="ticket-desc-title">1 dzień konferencji online</div>
-        <ul class="ticket-features">
-          <li>Transmisja live z domu/biura (bez kosztów dojazdu).</li>
-          <li>Dostęp do nagrania przez 14 dni, żeby nadrobić w swoim tempie.</li>
-          <li>Materiały PDF i linki do narzędzi omawianych na scenie.</li>
-          <li>Q&A na czacie podczas sesji (jeśli przewidziane w programie).</li>
-        </ul>
-      </div>
-
-      <div class="ticket-price">
-        <div class="old-price">299 PLN</div>
-        <div class="new-price">199 PLN</div>
-      </div>
-      <a class="btn-buy" href="buy_form.html">Kup teraz</a>
-    </div>
-
-    <!-- BILET 5 -->
-    <div class="ticket-card">
-      <div class="ticket-badge">Online</div>
-      <div class="ticket-name">Biznes Plus Online</div>
-
-      <div class="ticket-description">
-        <div class="ticket-desc-title">2 dni konferencji online</div>
-        <ul class="ticket-features">
-          <li>Pełne 2 dni transmisji + uporządkowane nagrania po wydarzeniu.</li>
-          <li>Dostęp do nagrań przez 30 dni (wdrażanie krok po kroku).</li>
-          <li>Workbook „wdrożeniowy” do pracy po każdej prelekcji.</li>
-          <li>Bonus: lista rekomendowanych narzędzi i template’y.</li>
-          <li>Materiały PDF i linki do narzędzi omawianych na scenie.</li>
-          <li>Q&A na czacie podczas sesji (jeśli przewidziane w programie).</li>
-        </ul>
-      </div>
-
-      <div class="ticket-price">
-        <div class="old-price">449 PLN</div>
-        <div class="new-price">349 PLN</div>
-      </div>
-      <a class="btn-buy" href="buy_form.html">Kup teraz</a>
-    </div>
-  </div>
-
-  <footer class="site-footer">
-    <div class="footer-bg" aria-hidden="true"></div>
-
-    <div class="container footer-container">
-      <div class="footer-grid">
-        <!-- LEWA KOLUMNA: znak + opis -->
-        <div class="footer-col footer-brand">
-          <div class="footer-mark">
-            <div class="logo_footer">
-              <img src="obrazy/logo.png" alt="logo" />
+        <div class="section hiro">
+          <h2 class="section-title">NASI PRELEGENCI</h2>
+          <div class="speakers-grid">
+            <div class="speaker-card">
+              <img
+                src="obrazy/woman.png"
+                alt="Prelegentka"
+                class="speaker-avatar"
+              />
+            </div>
+            <div class="speaker-card">
+              <img
+                src="obrazy/men.png"
+                alt="Prelegent"
+                class="speaker-avatar"
+              />
+            </div>
+            <div class="speaker-card">
+              <img
+                src="obrazy/ksiadz.png"
+                alt="Prelegent"
+                class="speaker-avatar"
+              />
             </div>
           </div>
-
-          <p class="footer-desc">
-            Duszpasterstwo Przedsiębiorców i Pracodawców Talent w Archidiecezji Poznańskiej
-          </p>
+          <p class="section-subtitle2"></p>
         </div>
+      </div>
+    </section>
+    <!-- HARMONOGRAM -->
+    <section class="harmonogram" id="program">
+      <!-- DZIEŃ 1 -->
+      <div class="schedule-stripe day-1">
+        <div class="container">
+          <header class="schedule-head">
+            <div class="schedule-kicker">Program Konferencji</div>
+            <h2 class="schedule-main-date">10 X 2026 piątek</h2>
+          </header>
 
-        <!-- ŚRODKOWA: adres -->
-        <div class="footer-col">
-          <h3 class="footer-title">Adres</h3>
+          <div class="schedule-grid">
+            <article class="schedule-card">
+              <div class="schedule-time">08.00</div>
+              <h4 class="schedule-title">MSZA ŚWIĘTA</h4>
+              <p class="schedule-desc">
+                Rozpoczęcie konferencji wspólną modlitwą.
+              </p>
+            </article>
 
-          <ul class="footer-list footer-list--icons">
-            <li>
-              <span class="footer-ico" aria-hidden="true">
-                <!-- pin -->
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
-                  <path d="M12 22s7-4.6 7-12a7 7 0 1 0-14 0c0 7.4 7 12 7 12Z" stroke="currentColor"
-                    stroke-width="1.8" />
-                  <path d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke="currentColor" stroke-width="1.8" />
-                </svg>
-              </span>
-              <span>ul. Głogowska 92, Poznań</span>
-            </li>
+            <article class="schedule-card">
+              <div class="schedule-time">08.45</div>
+              <h4 class="schedule-title">REJESTRACJA UCZESTNIKÓW</h4>
+              <p class="schedule-desc">
+                Odbiór identyfikatorów i materiałów konferencyjnych.
+              </p>
+            </article>
 
-            <li>
-              <span class="footer-ico" aria-hidden="true">
-                <!-- mail -->
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
-                  <path d="M4 6h16v12H4V6Z" stroke="currentColor" stroke-width="1.8" />
-                  <path d="m4.5 7 7.5 6 7.5-6" stroke="currentColor" stroke-width="1.8" />
-                </svg>
-              </span>
-              <a href="mailto:konferencja@brh.eu">konferencja@brfh.eu</a>
-            </li>
+            <article class="schedule-card">
+              <div class="schedule-time">09.30</div>
+              <h4 class="schedule-title">OFICJALNE POWITANIE</h4>
+              <p class="schedule-desc">
+                Powitanie uczestników i wprowadzenie organizatorów.
+              </p>
+            </article>
 
-            <li>
-              <span class="footer-ico footer-ico--dot" aria-hidden="true"></span>
-              <span>NIP: 7792461653</span>
-            </li>
-          </ul>
-        </div>
+            <article class="schedule-card">
+              <div class="schedule-time">10.00</div>
+              <h4 class="schedule-title">BLOK PRELEKCJI I</h4>
+              <p class="schedule-desc">
+                Sześć wystąpień różnych prelegentów w bloku wykładowym.
+              </p>
+            </article>
 
-        <!-- MENU -->
-        <div class="footer-col">
-          <h3 class="footer-title">Menu</h3>
+            <article class="schedule-card">
+              <div class="schedule-time">13.00</div>
+              <h4 class="schedule-title">BLOK NETWORKINGOWY</h4>
+              <p class="schedule-desc">
+                Czas na rozmowy, nawiązywanie kontaktów i wymianę doświadczeń.
+              </p>
+            </article>
 
-          <ul class="footer-list">
-            <li><a href="#program">Program</a></li>
-            <li><a href="#prelegenci">Prelegenci</a></li>
-            <li><a href="buy_form.html">Zapisy</a></li>
-            <li class="tooltip">
-  <a href="#reklamacje">Zwroty</a>
-  <span class="tooltip-text">
-    W sprawie zwrotów prosimy o wysyłanie wiadomości na adres email: konferencja@brfh.eu.
-    Czas na zwrot biletu wynosi 14 dni od dnia zakupu.
-  </span>
-</li>
-            <li><a href="polityka-prywatnosci.html">Polityka prywatności</a></li>
-            <li class="tooltip">
-  <a href="#reklamacje">Reklamacje</a>
-  <span class="tooltip-text">
-    W sprawie reklamacji prosimy o wysyłanie wiadomości na adres email: konferencja@brfh.eu
-  </span>
-</li>
-          </ul>
-        </div>
+            <article class="schedule-card">
+              <div class="schedule-time">14.00</div>
+              <h4 class="schedule-title">OBIAD</h4>
+              <p class="schedule-desc">
+                Wspólny posiłek dla uczestników konferencji.
+              </p>
+            </article>
 
-        <!-- ORGANIZATOR -->
-        <div class="footer-col footer-org">
-          <h3 class="footer-title">Organizator</h3>
+            <article class="schedule-card">
+              <div class="schedule-time">15.00</div>
+              <h4 class="schedule-title">PREZENTACJA VIP</h4>
+              <p class="schedule-desc">
+                Specjalne prezentacje dla uczestników.
+              </p>
+            </article>
 
-          <a class="footer-org-card" href="https://talentpoznan.pl/" aria-label="Talent">
-            <!-- Podmień ścieżkę na właściwą w Twoim projekcie -->
-            <img src="obrazy/talent.png" alt="talent" />
-          </a>
+            <article class="schedule-card">
+              <div class="schedule-time">16.00</div>
+              <h4 class="schedule-title">BLOK PRELEKCJI II</h4>
+              <p class="schedule-desc">
+                Drugi blok wykładowy złożony z sześciu wystąpień.
+              </p>
+            </article>
+          </div>
         </div>
       </div>
 
-      <div class="footer-bottom">
-        © 2026 Duszpasterstwo Przedsiębiorców i Pracodawców Talent w Archidiecezji Poznańskiej
+      <!-- BANKIET -->
+      <div class="banquet">
+        <div class="banquet__inner">
+          <div class="banquet__label">
+            <span>BANKIET</span>
+            <span>GODZ. 20:00</span>
+          </div>
+          <div class="banquet__title">CONCORDIA DESIGN</div>
+        </div>
+      </div>
+
+      <!-- DZIEŃ 2 -->
+      <div class="schedule-stripe day-2">
+        <div class="container">
+          <header class="schedule-head schedule-head--compact">
+            <div class="schedule-kicker">Program Konferencji</div>
+            <h2 class="schedule-main-date">11 X 2026 sobota</h2>
+          </header>
+
+          <div class="schedule-grid">
+            <article class="schedule-card">
+              <div class="schedule-time">10.00</div>
+              <h4 class="schedule-title">BLOK PRELEKCJI III</h4>
+              <p class="schedule-desc">
+                Sześć wykładów w formie panelu prezentacji w innym miejscu: sala
+                czerwona na Starym Mieście w Poznaniu.
+              </p>
+            </article>
+
+            <article class="schedule-card">
+              <div class="schedule-time">–</div>
+              <h4 class="schedule-title">ZWIEDZANIE POZNANIA</h4>
+              <p class="schedule-desc">
+                Wspólne zwiedzanie najważniejszych miejsc i atrakcji Poznania
+                (bez stałej godziny rozpoczęcia).
+              </p>
+            </article>
+
+            <article class="schedule-card">
+              <div class="schedule-time">13.00</div>
+              <h4 class="schedule-title">MSZA ŚWIĘTA</h4>
+              <p class="schedule-desc">
+                Eucharystia w intencji uczestników konferencji.
+              </p>
+            </article>
+
+            <article class="schedule-card">
+              <div class="schedule-time">14.00</div>
+              <h4 class="schedule-title">OBIAD</h4>
+              <p class="schedule-desc">
+                Wspólny obiad uczestników drugiego dnia konferencji.
+              </p>
+            </article>
+
+            <article class="schedule-card">
+              <div class="schedule-time">–</div>
+              <h4 class="schedule-title">OGLĄDANIE RELIKWII</h4>
+              <p class="schedule-desc">
+                Oglądanie relikwii z czasów Jezusa – miecza, którym św. Piotr
+                odciął ucho słudze arcykapłana.
+              </p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BILET 1 -->
+    <div class="tickets-grid">
+      <div class="ticket-card">
+        <div class="ticket-badge">Premium</div>
+        <div class="ticket-name">Bilet Premium</div>
+
+        <div class="ticket-description">
+          <div class="ticket-desc-title">1 dzień konferencji (na żywo)</div>
+          <ul class="ticket-features">
+            <li>Dostęp do wszystkich prelekcji i paneli tego dnia.</li>
+            <li>Networking: przerwy kawowe + strefa rozmów z uczestnikami.</li>
+            <li>Materiały po wydarzeniu (prezentacje/ściągi od partnerów).</li>
+            <li>Certyfikat uczestnictwa.</li>
+          </ul>
+        </div>
+
+        <div class="ticket-price">
+          <div class="old-price">599 PLN</div>
+          <div class="new-price">499 PLN</div>
+        </div>
+        <a class="btn-buy" href="buy_form.html">Kup teraz</a>
+      </div>
+
+      <!-- BILET 2 -->
+      <div class="ticket-card">
+        <div class="ticket-badge">Biznes Plus</div>
+        <div class="ticket-name">Bilet Biznes Plus</div>
+
+        <div class="ticket-description">
+          <div class="ticket-desc-title">2 dni konferencji (na żywo)</div>
+          <ul class="ticket-features">
+            <li>
+              Pełny program 2 dni: więcej strategii, case studies i praktyki.
+            </li>
+            <li>Dostęp do nagrań wybranych wystąpień (po konferencji).</li>
+            <li>
+              Priorytetowe wejście/rejestracja (mniej stania w kolejkach).
+            </li>
+            <li>Bonus: checklista „Plan działania na 30 dni” po wydarzeniu.</li>
+            <li>Networking: przerwy kawowe + strefa rozmów z uczestnikami.</li>
+            <li>Materiały po wydarzeniu (prezentacje/ściągi od partnerów).</li>
+            <li>Certyfikat uczestnictwa.</li>
+          </ul>
+        </div>
+
+        <div class="ticket-price">
+          <div class="old-price">699 PLN</div>
+          <div class="new-price">599 PLN</div>
+        </div>
+        <a class="btn-buy" href="buy_form.html">Kup teraz</a>
+      </div>
+
+      <!-- BILET 3 -->
+      <div class="ticket-card">
+        <div class="ticket-badge">VIP</div>
+        <div class="ticket-name">Bilet VIP</div>
+
+        <div class="ticket-description">
+          <div class="ticket-desc-title">2 dni + bankiet VIP</div>
+          <ul class="ticket-features">
+            <li>Najlepsze miejsca (strefa VIP / przód sali).</li>
+            <li>Bankiet: networking przy stole z przedsiębiorcami i gośćmi.</li>
+            <li>
+              Meet & greet / foto po wybranych prelekcjach (jeśli dostępne).
+            </li>
+            <li>Pakiet VIP: upominek + materiały premium po konferencji.</li>
+            <li>
+              Pełny program 2 dni: więcej strategii, case studies i praktyki.
+            </li>
+            <li>Dostęp do nagrań wybranych wystąpień (po konferencji).</li>
+            <li>
+              Priorytetowe wejście/rejestracja (mniej stania w kolejkach).
+            </li>
+            <li>Bonus: checklista „Plan działania na 30 dni” po wydarzeniu.</li>
+            <li>Networking: przerwy kawowe + strefa rozmów z uczestnikami.</li>
+            <li>Materiały po wydarzeniu (prezentacje/ściągi od partnerów).</li>
+            <li>Certyfikat uczestnictwa.</li>
+          </ul>
+        </div>
+
+        <div class="ticket-price">
+          <div class="old-price">1199 PLN</div>
+          <div class="new-price">999 PLN</div>
+        </div>
+        <a class="btn-buy" href="buy_form.html">Kup teraz</a>
+      </div>
+
+      <!-- BILET 4 -->
+      <div class="ticket-card">
+        <div class="ticket-badge">Online</div>
+        <div class="ticket-name">Premium Online</div>
+
+        <div class="ticket-description">
+          <div class="ticket-desc-title">1 dzień konferencji online</div>
+          <ul class="ticket-features">
+            <li>Transmisja live z domu/biura (bez kosztów dojazdu).</li>
+            <li>
+              Dostęp do nagrania przez 14 dni, żeby nadrobić w swoim tempie.
+            </li>
+            <li>Materiały PDF i linki do narzędzi omawianych na scenie.</li>
+            <li>
+              Q&A na czacie podczas sesji (jeśli przewidziane w programie).
+            </li>
+          </ul>
+        </div>
+
+        <div class="ticket-price">
+          <div class="old-price">299 PLN</div>
+          <div class="new-price">199 PLN</div>
+        </div>
+        <a class="btn-buy" href="buy_form.html">Kup teraz</a>
+      </div>
+
+      <!-- BILET 5 -->
+      <div class="ticket-card">
+        <div class="ticket-badge">Online</div>
+        <div class="ticket-name">Biznes Plus Online</div>
+
+        <div class="ticket-description">
+          <div class="ticket-desc-title">2 dni konferencji online</div>
+          <ul class="ticket-features">
+            <li>
+              Pełne 2 dni transmisji + uporządkowane nagrania po wydarzeniu.
+            </li>
+            <li>Dostęp do nagrań przez 30 dni (wdrażanie krok po kroku).</li>
+            <li>Workbook „wdrożeniowy” do pracy po każdej prelekcji.</li>
+            <li>Bonus: lista rekomendowanych narzędzi i template’y.</li>
+            <li>Materiały PDF i linki do narzędzi omawianych na scenie.</li>
+            <li>
+              Q&A na czacie podczas sesji (jeśli przewidziane w programie).
+            </li>
+          </ul>
+        </div>
+
+        <div class="ticket-price">
+          <div class="old-price">449 PLN</div>
+          <div class="new-price">349 PLN</div>
+        </div>
+        <a class="btn-buy" href="buy_form.html">Kup teraz</a>
       </div>
     </div>
-  </footer>
 
+    <footer class="site-footer">
+      <div class="footer-bg" aria-hidden="true"></div>
 
+      <div class="container footer-container">
+        <div class="footer-grid">
+          <!-- LEWA KOLUMNA: znak + opis -->
+          <div class="footer-col footer-brand">
+            <div class="footer-mark">
+              <div class="logo_footer">
+                <img src="obrazy/logo.png" alt="logo" />
+              </div>
+            </div>
 
-  <script src="main.js" defer></script>
-</body>
+            <p class="footer-desc">
+              Duszpasterstwo Przedsiębiorców i Pracodawców Talent w
+              Archidiecezji Poznańskiej
+            </p>
+          </div>
 
+          <!-- ŚRODKOWA: adres -->
+          <div class="footer-col">
+            <h3 class="footer-title">Adres</h3>
+
+            <ul class="footer-list footer-list--icons">
+              <li>
+                <span class="footer-ico" aria-hidden="true">
+                  <!-- pin -->
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+                    <path
+                      d="M12 22s7-4.6 7-12a7 7 0 1 0-14 0c0 7.4 7 12 7 12Z"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    />
+                    <path
+                      d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    />
+                  </svg>
+                </span>
+                <span>ul. Głogowska 92, Poznań</span>
+              </li>
+
+              <li>
+                <span class="footer-ico" aria-hidden="true">
+                  <!-- mail -->
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+                    <path
+                      d="M4 6h16v12H4V6Z"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    />
+                    <path
+                      d="m4.5 7 7.5 6 7.5-6"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    />
+                  </svg>
+                </span>
+                <a href="mailto:konferencja@brh.eu">konferencja@brfh.eu</a>
+              </li>
+
+              <li>
+                <span
+                  class="footer-ico footer-ico--dot"
+                  aria-hidden="true"
+                ></span>
+                <span>NIP: 7792461653</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- MENU -->
+          <div class="footer-col">
+            <h3 class="footer-title">Menu</h3>
+
+            <ul class="footer-list">
+              <li><a href="#program">Program</a></li>
+              <li><a href="#prelegenci">Prelegenci</a></li>
+              <li><a href="buy_form.html">Zapisy</a></li>
+              <li class="tooltip">
+                <a href="#reklamacje">Zwroty</a>
+                <span class="tooltip-text">
+                  W sprawie zwrotów prosimy o wysyłanie wiadomości na adres
+                  email: konferencja@brfh.eu. Czas na zwrot biletu wynosi 14 dni
+                  od dnia zakupu.
+                </span>
+              </li>
+              <li>
+                <a href="polityka-prywatnosci.html">Polityka prywatności</a>
+              </li>
+              <li class="tooltip">
+                <a href="#reklamacje">Reklamacje</a>
+                <span class="tooltip-text">
+                  W sprawie reklamacji prosimy o wysyłanie wiadomości na adres
+                  email: konferencja@brfh.eu
+                </span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- ORGANIZATOR -->
+          <div class="footer-col footer-org">
+            <h3 class="footer-title">Organizator</h3>
+
+            <a
+              class="footer-org-card"
+              href="https://talentpoznan.pl/"
+              aria-label="Talent"
+            >
+              <!-- Podmień ścieżkę na właściwą w Twoim projekcie -->
+              <img src="obrazy/talent.png" alt="talent" />
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          © 2026 Duszpasterstwo Przedsiębiorców i Pracodawców Talent w
+          Archidiecezji Poznańskiej
+        </div>
+      </div>
+    </footer>
+
+    <script src="main.js" defer></script>
+  </body>
 </html>
