@@ -43,25 +43,49 @@ export async function onRequestPost({ request, env }) {
   if (!Number.isFinite(qty))
     return new Response("Bad quantity", { status: 400 });
 
+  // --- Bilety i ceny (grosze) ---
   const tickets = {
-    premium: { name: "Premium", unit: 49900 },
-    biznes_plus: { name: "Biznes Plus", unit: 59900 },
-    vip: { name: "VIP", unit: 99900 },
-    premium_online: { name: "Premium Online", unit: 19900 },
-    biznes_plus_online: { name: "Biznes Plus Online", unit: 34900 },
+    standard:      { name: "Standard – 1 dzień",                unit: 59900 },   // 599 PLN
+    biznesplus:    { name: "Biznes Plus – 2 dni",                unit: 69900 },   // 699 PLN
+    biznesbankiet: { name: "Biznes Plus + Bankiet – 2 dni",      unit: 109900 },  // 1 099 PLN
+    vip:           { name: "VIP z Prezentacją – 2 dni + bankiet", unit: 159900 }, // 1 599 PLN
   };
 
   const t = tickets[String(ticketType || "").toLowerCase()];
   if (!t) return new Response("Unknown ticketType", { status: 400 });
 
-  // Kod promocyjny: "Marzec" do końca marca (czas PL), -50%, bez limitu
+  // --- Walidacja kodów promocyjnych ---
+  // Wszystkie daty graniczne w czasie polskim (CET/CEST).
+  //
+  // KWIECIEN  – 35% zniżki (mnożnik 0.65), bez limitu czasowego
+  // NASKALE   – 50% zniżki (mnożnik 0.50), ważny do 23.03.2026 23:59:59 CET
+  // TALENT    – 50% zniżki (mnożnik 0.50), ważny do 30.04.2026 23:59:59 CEST
   const now = new Date();
-  const year = now.getFullYear();
-  const promoOkUntil = new Date(`${year}-04-01T00:00:00+01:00`);
-  const promo = String(promoCode || "")
-    .trim()
-    .toLowerCase();
-  const discountFactor = promo === "marzec" && now < promoOkUntil ? 0.5 : 1;
+  const promo = String(promoCode || "").trim().toLowerCase();
+
+  let discountFactor = 1;
+
+  if (promo === "kwiecien") {
+    // Ważny do końca kwietnia 2026 (CEST, UTC+2)
+    const deadlineKwiecien = new Date("2026-05-01T00:00:00+02:00");
+    if (now < deadlineKwiecien) {
+      discountFactor = 0.65;
+    }
+  } else if (promo === "naskale") {
+    // Do poniedziałku 23.03.2026 koniec dnia (CET, UTC+1)
+    const deadline = new Date("2026-03-24T00:00:00+01:00");
+    if (now < deadline) {
+      discountFactor = 0.50;
+    }
+    // po terminie – kod ignorowany, discountFactor zostaje 1
+  } else if (promo === "talent") {
+    // Do końca kwietnia 2026 (CEST, UTC+2)
+    const deadline = new Date("2026-05-01T00:00:00+02:00");
+    if (now < deadline) {
+      discountFactor = 0.50;
+    }
+  }
+  // Nieznany lub pusty kod → discountFactor = 1 (brak zniżki)
 
   const unitPrice = Math.round(t.unit * discountFactor);
   const totalAmount = unitPrice * qty; // grosze
@@ -133,7 +157,7 @@ export async function onRequestPost({ request, env }) {
     return new Response("DB insert failed", { status: 500 });
   }
 
-  // 1) OAuth token (PayU: bez x-www-form-urlencoded będzie 401) [page:0]
+  // 1) OAuth token (PayU: bez x-www-form-urlencoded będzie 401)
   let accessToken;
   try {
     const tokenRes = await fetch(
@@ -166,7 +190,7 @@ export async function onRequestPost({ request, env }) {
     return new Response("PayU auth error", { status: 502 });
   }
 
-  // 2) Create order w PayU [page:0]
+  // 2) Create order w PayU
   const orderPayload = {
     notifyUrl,
     continueUrl,

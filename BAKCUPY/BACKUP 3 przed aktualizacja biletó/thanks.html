@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="pl">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dziękujemy za zakup</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        .box {
+            max-width: 760px;
+            margin: 24px auto 60px;
+            padding: 0 16px;
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, .08);
+            border-radius: 14px;
+            padding: 22px;
+        }
+
+        .muted {
+            opacity: .8;
+            font-size: 14px;
+        }
+
+        code {
+            word-break: break-all;
+        }
+
+        .ok {
+            color: #0a7a2f;
+        }
+
+        .bad {
+            color: #b00020;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 14px;
+        }
+
+        .btn {
+            padding: 10px 14px;
+            cursor: pointer;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 0, 0, .18);
+            background: #0f172a;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .btn.secondary {
+            background: #fff;
+            color: #0f172a;
+        }
+
+        .btn:disabled {
+            opacity: .6;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body class="page-short">
+    <!-- Header jak w index.html -->
+    <div class="header">
+        <div class="logo">
+            <a class="logo" href="index.html" aria-label="Strona główna">
+                <img src="obrazy/logo.png" alt="logo" />
+            </a>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="card">
+            <h1>Dziękujemy!</h1>
+            <p id="status">Sprawdzam status płatności…</p>
+            <p class="muted">Zamówienie: <code id="orderId">-</code></p>
+
+            <div class="actions" id="actions" style="display:none;">
+                <button class="btn secondary" id="retry" type="button">Odśwież status</button>
+
+                <!-- NOWE: pobieranie PDFów -->
+                <button class="btn" id="downloadBtn" type="button" style="display:none;">
+                    Pobierz bilety (PDF)
+                </button>
+
+            </div>
+
+            <p id="hint" class="muted"></p>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-bg" aria-hidden="true"></div>
+
+        <div class="container footer-container">
+            <div class="footer-grid">
+                <!-- LEWA KOLUMNA: znak + opis -->
+                <div class="footer-col footer-brand">
+                    <div class="footer-mark">
+                        <div class="logo_footer">
+                            <img src="obrazy/logo.png" alt="logo" />
+                        </div>
+                    </div>
+
+                    <p class="footer-desc">
+                        Duszpasterstwo Przedsiębiorców i Pracodawców Talent w Archidiecezji Poznańskiej
+                    </p>
+                </div>
+
+                <!-- ŚRODKOWA: adres -->
+                <div class="footer-col">
+                    <h3 class="footer-title">Adres</h3>
+
+                    <ul class="footer-list footer-list--icons">
+                        <li>
+                            <span class="footer-ico" aria-hidden="true">
+                                <!-- pin -->
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+                                    <path d="M12 22s7-4.6 7-12a7 7 0 1 0-14 0c0 7.4 7 12 7 12Z" stroke="currentColor"
+                                        stroke-width="1.8" />
+                                    <path d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke="currentColor"
+                                        stroke-width="1.8" />
+                                </svg>
+                            </span>
+                            <span>ul. Głogowska 92, Poznań</span>
+                        </li>
+
+                        <li>
+                            <span class="footer-ico" aria-hidden="true">
+                                <!-- mail -->
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+                                    <path d="M4 6h16v12H4V6Z" stroke="currentColor" stroke-width="1.8" />
+                                    <path d="m4.5 7 7.5 6 7.5-6" stroke="currentColor" stroke-width="1.8" />
+                                </svg>
+                            </span>
+                            <a href="mailto:konferencja@brh.eu">konferencja@brh.eu</a>
+                        </li>
+
+                        <li>
+                            <span class="footer-ico footer-ico--dot" aria-hidden="true"></span>
+                            <span>NIP: 7792461653</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- MENU -->
+                <div class="footer-col">
+                    <h3 class="footer-title">Menu</h3>
+
+                    <ul class="footer-list">
+                        <li><a href="#misja">Misja</a></li>
+                        <li><a href="#program">Program</a></li>
+                        <li><a href="#prelegenci">Prelegenci</a></li>
+                        <li><a href="#zapisy">Zapisy</a></li>
+                        <li><a href="#polityka-prywatnosci">Polityka prywatności</a></li>
+                    </ul>
+                </div>
+
+                <!-- ORGANIZATOR -->
+                <div class="footer-col footer-org">
+                    <h3 class="footer-title">Organizator</h3>
+
+                    <a class="footer-org-card" href="https://talentpoznan.pl/" aria-label="Talent">
+                        <!-- Podmień ścieżkę na właściwą w Twoim projekcie -->
+                        <img src="obrazy/talent.png" alt="talent" />
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                © 2026 Duszpasterstwo Przedsiębiorców i Pracodawców Talent w Archidiecezji Poznańskiej
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const statusEl = document.getElementById("status");
+        const orderEl = document.getElementById("orderId");
+        const actionsEl = document.getElementById("actions");
+        const retryBtn = document.getElementById("retry");
+        const downloadBtn = document.getElementById("downloadBtn");
+        const hintEl = document.getElementById("hint");
+
+        const url = new URL(window.location.href);
+        const extOrderId = url.searchParams.get("order");
+        orderEl.textContent = extOrderId || "(brak)";
+
+        if (!extOrderId) {
+            statusEl.textContent = "Brak parametru order w URL. Wróć do formularza i spróbuj ponownie.";
+            statusEl.className = "bad";
+            actionsEl.style.display = "flex";
+            retryBtn.textContent = "Wróć do formularza";
+            retryBtn.onclick = () => window.location.href = "/buy_form";
+            throw new Error("Missing order param");
+        }
+
+
+        let tries = 0;
+        const maxTries = 40;
+        const intervalMs = 3000;
+
+        async function syncOnce() {
+            tries += 1;
+
+            const r = await fetch(`/api/sync-status?order=${encodeURIComponent(extOrderId)}`, {
+                method: "GET",
+                headers: { "Accept": "application/json" },
+                cache: "no-store",
+            });
+
+            if (!r.ok) throw new Error(`sync-status HTTP ${r.status}`);
+
+            const j = await r.json();
+            if (!j || !j.found) {
+                statusEl.textContent = "Nie znaleziono zamówienia w bazie (found=false).";
+                statusEl.className = "bad";
+                actionsEl.style.display = "flex";
+                return { done: true };
+            }
+
+            const s = String(j.payuStatus || "").toUpperCase();
+
+            if (!s) {
+                statusEl.textContent = "Zamówienie utworzone, czekam na status z PayU…";
+                statusEl.className = "";
+                return { done: false };
+            }
+
+            if (s === "COMPLETED") {
+                statusEl.textContent = "Płatność potwierdzona. Możesz pobrać bilety.";
+                statusEl.className = "ok";
+                actionsEl.style.display = "flex";
+                downloadBtn.style.display = "inline-block";
+                hintEl.textContent = "";
+                return { done: true };
+            }
+
+            if (s === "CANCELED" || s === "REJECTED") {
+                statusEl.textContent = `Płatność nieudana (status: ${s}).`;
+                statusEl.className = "bad";
+                actionsEl.style.display = "flex";
+                hintEl.textContent = "Jeśli pieniądze zeszły, daj znać — sprawdzimy po payu_order_id.";
+                return { done: true };
+            }
+
+            statusEl.textContent = `Czekam na potwierdzenie (status: ${s})…`;
+            statusEl.className = "";
+            return { done: false };
+        }
+
+        async function loop() {
+            try {
+                const { done } = await syncOnce();
+                if (done) return;
+
+                if (tries >= maxTries) {
+                    statusEl.textContent = "To trwa dłużej niż zwykle. Kliknij „Odśwież status” za chwilę.";
+                    statusEl.className = "";
+                    actionsEl.style.display = "flex";
+                    hintEl.textContent = "Jeśli dalej stoi, podeślij extOrderId — sprawdzimy PayU i logi /api/notify.";
+                    return;
+                }
+
+                setTimeout(loop, intervalMs);
+            } catch (e) {
+                statusEl.textContent = "Błąd sprawdzania statusu. Kliknij „Odśwież status”.";
+                statusEl.className = "bad";
+                actionsEl.style.display = "flex";
+                hintEl.textContent = String(e && e.message ? e.message : e);
+            }
+        }
+
+        retryBtn.onclick = () => {
+            tries = 0;
+            statusEl.textContent = "Sprawdzam status płatności…";
+            statusEl.className = "";
+            downloadBtn.style.display = "none";
+            hintEl.textContent = "";
+            loop();
+        };
+
+        // Pobierz wiele PDF (po jednym na bilet)
+        downloadBtn.onclick = async () => {
+            try {
+                downloadBtn.disabled = true;
+                hintEl.textContent = "Przygotowuję bilety…";
+
+                const a = document.createElement("a");
+                a.href = `/api/tickets-pdf-all?order=${encodeURIComponent(extOrderId)}`;
+                a.download = `bilety-${extOrderId}.pdf`;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+
+                hintEl.textContent = "Pobrano.";
+            } catch (e) {
+                hintEl.textContent = "Błąd: " + (e?.message || String(e));
+            } finally {
+                downloadBtn.disabled = false;
+            }
+        };
+
+        loop();
+    </script>
+</body>
+
+</html>

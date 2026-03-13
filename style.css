@@ -33,7 +33,7 @@ body {
 .promo-bar {
   background: var(--accent);
   color: var(--white);
-  padding: 10px 10px;
+  padding: 5px 10px;
   text-align: center;
   font-weight: 600;
   font-size: 28px;
@@ -55,13 +55,13 @@ body {
 .promo-text {
   flex: 1;
   min-width: 250px;
-  font-size: 20px;
+  font-size: 16px;
   line-height: 1.6;
   font-weight: 700;
 }
 
 .timer {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 700;
 }
 
@@ -136,7 +136,7 @@ body {
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 0px;
   max-width: 1200px;
-  margin: 40px auto;
+  margin: 40px auto 0px auto;
   justify-items: center;
 }
 
@@ -688,6 +688,10 @@ img {
 
   .banquet__label {
     margin-left: 50px;
+    display: grid;
+  }
+  .banquet__label > :last-child {
+    text-align: right;
   }
 
   .banquet__title {
@@ -771,10 +775,6 @@ img {
 }
 
 @media (max-width: 360px) {
-  .speakers-grid {
-    grid-template-columns: 1fr;
-  }
-
   .promo-bar {
     font-size: 15px;
   }
@@ -989,6 +989,15 @@ body.page-short .site-footer {
   visibility: visible;
 }
 
+.inne_miejsce {
+  color: rgb(136, 1, 1);
+  font-weight: 500;
+  padding-top: 5px;
+}
+
+.sierpien {
+  font-size: 14px;
+}
 /* Mobile */
 @media (max-width: 900px) {
   .footer-grid {

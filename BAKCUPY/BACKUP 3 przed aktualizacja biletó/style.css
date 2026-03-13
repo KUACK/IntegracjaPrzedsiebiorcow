@@ -1,0 +1,1002 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary: #ef9d4d;
+  --secondary: #305275;
+  --accent: #e36955;
+  --white: #ffffff;
+  --light-bg: #f5f5f5;
+  --text-dark: #333333;
+  --text-light: #666666;
+  --border: #eeeeee;
+}
+
+body {
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    sans-serif;
+  background-color: var(--light-bg);
+  color: var(--text-dark);
+  line-height: 1.6;
+}
+
+/* PROMO BAR */
+.promo-bar {
+  background: var(--accent);
+  color: var(--white);
+  padding: 10px 10px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 28px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.promo-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.promo-text {
+  flex: 1;
+  min-width: 250px;
+  font-size: 20px;
+  line-height: 1.6;
+  font-weight: 700;
+}
+
+.timer {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.logo img {
+  margin: 0 auto;
+}
+
+/* CONTAINER */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* HEADER */
+.header {
+  background: var(--white);
+  padding: 20px 20px;
+  text-align: center;
+  border-bottom: 4px solid var(--primary);
+}
+
+.header h1 {
+  font-size: 48px;
+  color: var(--secondary);
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.header p {
+  font-size: 18px;
+  color: var(--text-light);
+}
+
+/* SEKCJA PRELEGENCI */
+.section {
+  padding: 60px 20px;
+  background: var(--light-bg);
+  border-radius: 8px;
+}
+
+.hero {
+  background: var(--secondary);
+}
+
+.section.hiro {
+  margin-top: 0;
+  background: var(--secondary);
+}
+
+.section-title {
+  text-align: center;
+  font-size: 36px;
+  color: var(--white);
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+.section-title.harm {
+  color: var(--text-dark);
+}
+.section-subtitle {
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-light);
+  margin-bottom: 40px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.speakers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0px;
+  max-width: 1200px;
+  margin: 40px auto;
+  justify-items: center;
+}
+
+.speaker-card {
+  text-align: center;
+}
+
+.speaker-avatar {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background-color: #d0d0d0;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 70px;
+  color: #999999;
+  border: 3px solid var(--primary);
+  position: relative;
+}
+
+.speaker-avatar.priest::after {
+  content: "⛪";
+  position: absolute;
+  font-size: 40px;
+  bottom: 0;
+  right: 0;
+}
+
+/* HARMONOGRAM */
+.harmonogram {
+  overflow-x: clip;
+}
+
+/* full-width pasy */
+.schedule-stripe {
+  width: 100%;
+  padding: 64px 0;
+}
+.schedule-stripe.day-1 {
+  background: #ffffff;
+}
+.schedule-stripe.day-2 {
+  background: #fbf3ea;
+} /* inny kolor dnia 2 */
+
+/* nagłówki jak na screenie */
+.schedule-head {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.schedule-head--compact {
+  margin-top: 8px;
+}
+.schedule-kicker {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #d07b4a; /* możesz podpiąć pod var(--primary) */
+  text-transform: uppercase;
+}
+.schedule-main-date {
+  margin: 10px 0 0;
+  font-size: clamp(28px, 4vw, 44px);
+  line-height: 1.1;
+  font-weight: 800;
+  color: var(--secondary);
+}
+
+/* siatka kafli */
+.schedule-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 28px;
+  align-items: stretch;
+}
+
+/* kafel */
+.schedule-card {
+  background: #f6f1ea;
+  border: 1px solid rgba(31, 41, 55, 0.1);
+  border-radius: 14px;
+  padding: 22px 22px 20px;
+  text-align: center;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.06);
+}
+
+.schedule-time {
+  font-size: 28px;
+  font-weight: 800;
+  color: #d07b4a; /* var(--primary) */
+  margin-bottom: 8px;
+}
+
+.schedule-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  color: var(--secondary);
+  text-transform: uppercase;
+}
+
+.schedule-desc {
+  margin: 10px auto 0;
+  max-width: 34ch;
+  color: #374151;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+/* lista w kaflu (jak te małe punkty po lewej na screenie) */
+.schedule-list {
+  list-style: none;
+  padding: 0;
+  margin: 14px auto 0;
+  max-width: 28ch;
+  display: grid;
+  gap: 10px;
+  text-align: left;
+  color: #6b7280;
+  font-size: 14px;
+}
+.schedule-list li {
+  display: grid;
+  grid-template-columns: 12px 1fr;
+  column-gap: 10px;
+  align-items: start;
+}
+.schedule-list li::before {
+  content: "›";
+  color: #d07b4a;
+  font-weight: 900;
+  line-height: 1;
+  margin-top: 2px;
+}
+/* BILETY */
+.tickets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  align-items: stretch;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.ticket-card {
+  background: var(--white);
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  padding: 30px;
+  text-align: center;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.ticket-card:hover {
+  border-color: var(--primary);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  transform: translateY(-5px);
+}
+
+.ticket-badge {
+  display: inline-block;
+  background: var(--primary);
+  color: var(--white);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+}
+
+.ticket-name {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--secondary);
+}
+
+.ticket-description {
+  font-size: 1rem;
+  color: var(--text-dark);
+  flex-grow: 1;
+  text-align: left;
+  width: 80%;
+  margin: 0 auto 20px auto;
+  font-weight: 500;
+  line-height: 2.2;
+  width: 100%; /* było 80% */
+  max-width: 42ch; /* kontrola długości linii */
+}
+
+.ticket-description ul {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0;
+  display: grid;
+  gap: 12px;
+}
+
+.ticket-description li {
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  column-gap: 12px;
+  align-items: start;
+  text-align: left;
+  font-size: 14px;
+  line-height: 1.1;
+  color: var(--text-dark);
+}
+
+/* „ikonka” jako marker */
+.ticket-description li::before {
+  content: "✓";
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: rgba(239, 157, 77, 0.14); /* pod Twój primary */
+  color: var(--primary);
+  margin-top: 2px;
+  font-weight: 700;
+}
+
+.ticket-desc-title {
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 18px;
+  text-align: center;
+}
+
+.ticket-price {
+  margin-bottom: 20px;
+}
+
+.old-price {
+  font-size: 20px;
+  color: var(--text-dark);
+  text-decoration: line-through;
+}
+
+.new-price {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.btn-buy {
+  background: linear-gradient(135deg, var(--accent) 0%, #e88a3f 100%);
+  color: var(--white);
+  border: none;
+  padding: 14px 28px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: auto;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.btn-buy:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(239, 157, 77, 0.3);
+}
+
+/* FORMULARZ */
+.form-section {
+  background: linear-gradient(135deg, var(--secondary) 0%, #1f3a4d 100%);
+  color: var(--white);
+  padding: 50px 20px;
+  margin: 40px 0;
+  border-radius: 8px;
+}
+
+.form-section h2 {
+  font-size: 32px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.form-wrapper {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+select {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: inherit;
+  margin-bottom: 5px;
+}
+
+input[type="text"]::placeholder,
+input[type="email"]::placeholder,
+input[type="tel"]::placeholder {
+  color: #cccccc;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.btn-submit {
+  width: 100%;
+  background: var(--primary);
+  color: var(--secondary);
+  border: none;
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.btn-submit:hover {
+  background: #e88a3f;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(239, 157, 77, 0.3);
+}
+
+/* BANQUET SECTION */
+
+/* opcjonalnie: tło i dystans od innych sekcji */
+.banquet {
+  padding: 64px 20px;
+  /* background: radial-gradient(
+      1200px 400px at 20% 10%,
+      rgba(239, 157, 77, 0.16),
+      transparent 60%
+    ),
+    linear-gradient(180deg, #ffffff 0%, #fbfbfd 100%); */
+  width: 1200px;
+}
+
+.banquet__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+/* "BANKIET" — mały, mocny akcent */
+.banquet__label {
+  margin-top: 18px;
+  margin-left: clamp(16px, 3.5vw, 56px); /* przesunięcie w prawo */
+  font-size: clamp(34px, 4.2vw, 64px); /* płynna typografia */
+  line-height: 1.05;
+  font-weight: 800;
+  color: var(--secondary);
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  margin-left: 300px;
+}
+
+/* "CONCORDIA DESIGN" — duży tytuł, lekko przesunięty w prawo */
+.banquet__title {
+  margin-top: 100px;
+  margin-left: clamp(16px, 3.5vw, 56px); /* przesunięcie w prawo */
+  font-size: clamp(34px, 4.2vw, 64px); /* płynna typografia */
+  line-height: 1.05;
+  font-weight: 800;
+  color: var(--secondary);
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  text-align: right;
+  margin-right: 00px;
+}
+
+/* jeśli chcesz, żeby "DESIGN" miało subtelny akcent kolorem */
+.banquet__title {
+  text-shadow: 0 14px 30px rgba(0, 0, 0, 0.06);
+}
+
+.banquet__label {
+  font-family:
+    "DM Sans",
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Arial,
+    sans-serif;
+  display: flex;
+  justify-content: space-between;
+}
+.banquet__title {
+  font-family: "DM Serif Display", serif;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.section-subtitle2 {
+  text-align: center;
+  font-size: 24px;
+  color: var(--white);
+  margin: 15px 0;
+  font-weight: 700;
+}
+/* Harmonogram – stały dopisek miejsca po każdym wydarzeniu */
+.schedule-item::after {
+  content: "  MIEJSCE: TARGI POZNAŃSKIE";
+  color: var(--text-dark);
+  font-size: 12px;
+  font-weight: 400;
+}
+/* RESPONSYWNE */
+/* =========================
+   MOBILE (telefony)
+   ========================= */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+@media (max-width: 600px) {
+  /* Ogólne odstępy */
+  .container {
+    padding: 0 16px;
+  }
+
+  .section {
+    padding: 32px 16px;
+    border-radius: 0;
+  }
+
+  /* Promo bar (masz tam bardzo duże fonty) */
+  .promo-bar {
+    padding: 10px 12px;
+    font-size: 16px;
+    line-height: 1.25;
+  }
+
+  .promo-content {
+    gap: 8px;
+  }
+
+  .promo-text {
+    min-width: 0;
+    font-size: 16px;
+    line-height: 1.35;
+  }
+
+  .timer {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  /* Header + logo */
+  .header {
+    padding: 14px 16px;
+  }
+
+  .header h1 {
+    font-size: 28px;
+    line-height: 1.1;
+  }
+
+  .header p {
+    font-size: 14px;
+  }
+
+  .logo img {
+    max-width: 180px;
+    margin: 0 auto;
+  }
+
+  /* Prelegenci */
+  .section-title {
+    font-size: 24px;
+  }
+
+  .speakers-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    justify-items: center;
+    gap: 0px;
+  }
+  .speakers-grid > .speaker-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1; /* zajmuje cały rząd */
+    justify-self: center; /* i jest na środku */
+  }
+
+  .speaker-avatar {
+    width: 96px;
+    height: 96px;
+    font-size: 40px;
+    border-width: 2px;
+  }
+
+  /* Harmonogram */
+  .schedule-stripe {
+    padding: 36px 0;
+  }
+
+  .schedule-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .schedule-card {
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .schedule-time {
+    font-size: 22px;
+  }
+
+  .schedule-title {
+    font-size: 15px;
+  }
+
+  .schedule-desc,
+  .schedule-list {
+    max-width: none;
+  }
+
+  /* Kafel "wide" niech nie próbuje się rozpychać na mobile */
+  .schedule-card--wide {
+    grid-column: auto;
+  }
+
+  .banquet__label {
+    margin-left: 50px;
+  }
+
+  .banquet__title {
+    margin-top: 60px;
+    margin-right: 20px;
+  }
+
+  /* Bilety */
+  .tickets-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 0 16px;
+  }
+
+  .ticket-card {
+    padding: 18px;
+  }
+
+  .ticket-name {
+    font-size: 18px;
+  }
+
+  .ticket-description {
+    line-height: 1.6;
+    max-width: none;
+  }
+
+  .ticket-description li {
+    line-height: 1.3;
+  }
+
+  .old-price {
+    font-size: 16px;
+  }
+
+  .new-price {
+    font-size: 28px;
+  }
+
+  .btn-buy {
+    width: 100%;
+    text-align: center;
+    padding: 14px 18px;
+  }
+
+  /* Formularz */
+  .form-section {
+    padding: 32px 16px;
+    margin: 24px 0;
+    border-radius: 0;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  /* Bankiet – ważne: usuń stałą szerokość 1200px */
+  .banquet {
+    width: 100%;
+    padding: 40px 16px;
+    margin: 0 auto 24px auto;
+  }
+
+  /* Dopasowanie do klas z Twojego HTML */
+  .banquetinner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .banquetlabel {
+    margin-left: 0;
+    font-size: 28px;
+    text-align: left;
+  }
+
+  .banquettitle {
+    margin: 24px 0 0 0;
+    font-size: 30px;
+    text-align: left;
+  }
+}
+
+@media (max-width: 360px) {
+  .speakers-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .promo-bar {
+    font-size: 15px;
+  }
+
+  .header h1 {
+    font-size: 24px;
+  }
+}
+
+/* =========================
+   FOOTER (jak na screenie)
+========================= */
+.site-footer {
+  position: relative;
+  background: #0f1624;
+  color: rgba(255, 255, 255, 0.86);
+  overflow: hidden;
+  margin-top: 40px;
+}
+
+.site-footer .footer-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle at 10% 20%,
+      rgba(255, 255, 255, 0.08) 0 1px,
+      transparent 1px 10px
+    ),
+    radial-gradient(
+      circle at 70% 60%,
+      rgba(255, 255, 255, 0.06) 0 1px,
+      transparent 1px 12px
+    ),
+    linear-gradient(180deg, rgba(8, 12, 20, 0), rgba(8, 12, 20, 0.55));
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.footer-container {
+  position: relative;
+  padding: 56px 20px 22px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 0.9fr 0.9fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.footer-title {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 18px;
+  font-weight: 800;
+  margin: 0 0 14px;
+  display: inline-block;
+  padding-bottom: 10px;
+  border-bottom: 3px solid var(--primary);
+}
+
+.footer-desc {
+  margin-top: 18px;
+  max-width: 34ch;
+  font-size: 14px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.footer-mark {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.footer-cross {
+  width: 34px;
+  height: 34px;
+  position: relative;
+  flex: 0 0 34px;
+}
+
+.footer-cross::before,
+.footer-cross::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  transform: translate(-50%, -50%);
+  border-radius: 2px;
+}
+
+.footer-cross::before {
+  width: 22px;
+  height: 4px;
+}
+.footer-cross::after {
+  width: 4px;
+  height: 28px;
+}
+
+.footer-mark-text {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  font-weight: 800;
+  line-height: 1.35;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.footer-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 14px;
+}
+
+.footer-list a {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+}
+
+.footer-list a:hover {
+  color: rgba(255, 255, 255, 1);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.footer-list--icons li {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  gap: 10px;
+  align-items: start;
+}
+
+.footer-ico {
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 2px;
+}
+
+.footer-ico--dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.55);
+  display: inline-block;
+  margin-top: 6px;
+}
+
+.footer-org-card {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 6px;
+  padding: 24px 36px;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.25);
+  max-width: 320px;
+}
+
+.footer-org-card img {
+  max-width: 210px;
+  height: auto;
+  display: block;
+}
+
+.footer-bottom {
+  margin-top: 38px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 12px;
+  text-align: center;
+}
+
+.logo_footer {
+  filter: grayscale(1) brightness(0) invert(1); /* robi z niego „białe” */
+}
+
+body.page-short .site-footer {
+  margin-top: 174px;
+}
+
+.tooltip {
+  position: relative;
+}
+
+.tooltip-text {
+  position: absolute;
+  bottom: 120%; /* nad linkiem */
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: normal;
+  width: 260px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s;
+  z-index: 10;
+}
+
+.tooltip:hover .tooltip-text {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+
+  .footer-org-card {
+    max-width: 260px;
+  }
+}

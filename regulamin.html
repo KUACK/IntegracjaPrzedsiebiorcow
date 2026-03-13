@@ -1,0 +1,1299 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Regulamin Konferencji | Konferencja Przedsiębiorców</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=DM+Serif+Display&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #f7f3ee;
+        --bg-soft: #fbf8f4;
+        --surface: #ffffff;
+        --surface-2: #f3ede5;
+        --text: #1e1b18;
+        --muted: #6e655d;
+        --line: rgba(30, 27, 24, 0.12);
+        --gold: #b68a56;
+        --gold-dark: #91683e;
+        --brown: #2d2118;
+        --accent: #7f1d1d;
+        --shadow: 0 18px 45px rgba(28, 18, 8, 0.08);
+        --radius: 22px;
+        --radius-sm: 14px;
+        --container: 1180px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: "DM Sans", sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(
+            circle at top right,
+            rgba(182, 138, 86, 0.1),
+            transparent 28%
+          ),
+          linear-gradient(180deg, #f8f4ee 0%, #f5efe8 100%);
+        line-height: 1.65;
+      }
+
+      img {
+        max-width: 100%;
+        display: block;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .container {
+        width: min(var(--container), calc(100% - 32px));
+        margin: 0 auto;
+      }
+
+      .promo-bar {
+        background: linear-gradient(90deg, #2b2119 0%, #4a3728 100%);
+        color: #fff8ef;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .promo-content {
+        min-height: 58px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-size: 14px;
+        padding: 10px 0;
+      }
+
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        backdrop-filter: blur(14px);
+        background: rgba(248, 244, 238, 0.86);
+        border-bottom: 1px solid rgba(30, 27, 24, 0.08);
+      }
+
+      .header-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        min-height: 84px;
+      }
+
+      .logo-wrap {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        min-width: 0;
+      }
+
+      .logo {
+        width: 56px;
+        height: 56px;
+        border-radius: 16px;
+        background: #fff;
+        box-shadow: var(--shadow);
+        padding: 8px;
+        object-fit: contain;
+      }
+
+      .brand-text {
+        min-width: 0;
+      }
+
+      .brand-title {
+        font-size: 17px;
+        font-weight: 800;
+        line-height: 1.15;
+        letter-spacing: -0.02em;
+      }
+
+      .brand-subtitle {
+        font-size: 13px;
+        color: var(--muted);
+        margin-top: 4px;
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+
+      .nav a {
+        padding: 10px 14px;
+        border-radius: 999px;
+        color: var(--muted);
+        font-weight: 700;
+        font-size: 14px;
+        transition: 0.2s ease;
+      }
+
+      .nav a:hover,
+      .nav a.active {
+        background: rgba(182, 138, 86, 0.12);
+        color: var(--brown);
+      }
+
+      .nav .btn {
+        background: linear-gradient(135deg, var(--gold) 0%, #d6b17f 100%);
+        color: #23180e;
+        box-shadow: 0 10px 24px rgba(182, 138, 86, 0.25);
+      }
+
+      .nav .btn:hover {
+        background: linear-gradient(135deg, var(--gold-dark) 0%, #bf9560 100%);
+        color: #fff;
+      }
+
+      .hero {
+        padding: 72px 0 32px;
+      }
+
+      .hero-card {
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(
+          135deg,
+          rgba(45, 33, 24, 0.96),
+          rgba(79, 56, 33, 0.92)
+        );
+        color: #fff8ef;
+        border-radius: 32px;
+        padding: 48px;
+        box-shadow: var(--shadow);
+      }
+
+      .hero-card::before {
+        content: "";
+        position: absolute;
+        inset: auto -60px -90px auto;
+        width: 240px;
+        height: 240px;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.12),
+          transparent 65%
+        );
+        pointer-events: none;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 14px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 12px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-weight: 700;
+        margin-bottom: 18px;
+      }
+
+      .hero h1 {
+        margin: 0;
+        font-family: "DM Serif Display", serif;
+        font-size: clamp(36px, 5vw, 64px);
+        line-height: 1.05;
+        letter-spacing: -0.03em;
+        max-width: 900px;
+      }
+
+      .hero p {
+        font-size: 18px;
+        max-width: 820px;
+        color: rgba(255, 248, 239, 0.82);
+        margin: 18px 0 0;
+      }
+
+      .hero-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-top: 26px;
+      }
+
+      .hero-meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 14px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.1);
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      .content-wrap {
+        padding: 20px 0 80px;
+      }
+
+      .legal-layout {
+        display: grid;
+        grid-template-columns: 300px minmax(0, 1fr);
+        gap: 28px;
+        align-items: start;
+      }
+
+      .sidebar {
+        position: sticky;
+        top: 108px;
+        background: rgba(255, 255, 255, 0.72);
+        border: 1px solid rgba(30, 27, 24, 0.08);
+        border-radius: 24px;
+        padding: 22px;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(10px);
+      }
+
+      .sidebar h2 {
+        margin: 0 0 14px;
+        font-size: 16px;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+      }
+
+      .sidebar nav {
+        display: grid;
+        gap: 8px;
+      }
+
+      .sidebar nav a {
+        padding: 11px 13px;
+        border-radius: 12px;
+        color: var(--muted);
+        background: transparent;
+        font-size: 14px;
+        font-weight: 600;
+        transition: 0.2s ease;
+      }
+
+      .sidebar nav a:hover {
+        background: rgba(182, 138, 86, 0.11);
+        color: var(--text);
+      }
+
+      .sidebar-note {
+        margin-top: 18px;
+        padding-top: 18px;
+        border-top: 1px solid var(--line);
+        font-size: 14px;
+        color: var(--muted);
+      }
+
+      .legal-card {
+        background: rgba(255, 255, 255, 0.82);
+        border: 1px solid rgba(30, 27, 24, 0.08);
+        border-radius: 28px;
+        padding: 34px;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(10px);
+      }
+
+      .legal-intro {
+        margin-bottom: 28px;
+        padding-bottom: 22px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .legal-intro h2 {
+        margin: 0 0 10px;
+        font-size: 28px;
+        line-height: 1.15;
+        letter-spacing: -0.03em;
+      }
+
+      .legal-intro p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 16px;
+      }
+
+      .legal-section {
+        scroll-margin-top: 110px;
+        padding: 24px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .legal-section:last-child {
+        border-bottom: 0;
+        padding-bottom: 0;
+      }
+
+      .legal-section h3 {
+        margin: 0 0 14px;
+        font-size: 22px;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        color: var(--brown);
+      }
+
+      .legal-section ol {
+        margin: 0;
+        padding-left: 20px;
+      }
+
+      .legal-section li {
+        margin: 0 0 12px;
+        color: #2d2a26;
+      }
+
+      .legal-section li:last-child {
+        margin-bottom: 0;
+      }
+
+      .legal-section strong {
+        color: var(--brown);
+      }
+
+      .info-boxes {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+        margin: 26px 0 0;
+      }
+
+      .info-box {
+        background: var(--surface-2);
+        border: 1px solid rgba(182, 138, 86, 0.18);
+        border-radius: 18px;
+        padding: 18px;
+      }
+
+      .info-box .label {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--muted);
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+
+      .info-box .value {
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 1.4;
+        color: var(--text);
+      }
+
+      /* =========================
+   FOOTER (jak na screenie)
+========================= */
+      .site-footer {
+        position: relative;
+        background: #0f1624;
+        color: rgba(255, 255, 255, 0.86);
+        overflow: hidden;
+        margin-top: 40px;
+      }
+
+      .site-footer .footer-bg {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(
+            circle at 10% 20%,
+            rgba(255, 255, 255, 0.08) 0 1px,
+            transparent 1px 10px
+          ),
+          radial-gradient(
+            circle at 70% 60%,
+            rgba(255, 255, 255, 0.06) 0 1px,
+            transparent 1px 12px
+          ),
+          linear-gradient(180deg, rgba(8, 12, 20, 0), rgba(8, 12, 20, 0.55));
+        opacity: 0.55;
+        pointer-events: none;
+      }
+
+      .footer-container {
+        position: relative;
+        padding: 56px 20px 22px;
+      }
+
+      .footer-grid {
+        display: grid;
+        grid-template-columns: 1.3fr 1fr 0.9fr 0.9fr;
+        gap: 20px;
+        align-items: start;
+      }
+
+      .footer-title {
+        color: rgba(255, 255, 255, 0.95);
+        font-size: 18px;
+        font-weight: 800;
+        margin: 0 0 14px;
+        display: inline-block;
+        padding-bottom: 10px;
+        border-bottom: 3px solid var(--primary);
+      }
+
+      .footer-desc {
+        margin-top: 18px;
+        max-width: 34ch;
+        font-size: 14px;
+        line-height: 1.7;
+        color: rgba(255, 255, 255, 0.78);
+      }
+
+      .footer-mark {
+        display: flex;
+        gap: 14px;
+        align-items: center;
+      }
+
+      .footer-cross {
+        width: 34px;
+        height: 34px;
+        position: relative;
+        flex: 0 0 34px;
+      }
+
+      .footer-cross::before,
+      .footer-cross::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        background: rgba(255, 255, 255, 0.95);
+        transform: translate(-50%, -50%);
+        border-radius: 2px;
+      }
+
+      .footer-cross::before {
+        width: 22px;
+        height: 4px;
+      }
+      .footer-cross::after {
+        width: 4px;
+        height: 28px;
+      }
+
+      .footer-mark-text {
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        font-weight: 800;
+        line-height: 1.35;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.92);
+      }
+
+      .footer-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 10px;
+        color: rgba(255, 255, 255, 0.78);
+        font-size: 14px;
+      }
+
+      .footer-list a {
+        color: rgba(255, 255, 255, 0.85);
+        text-decoration: none;
+      }
+
+      .footer-list a:hover {
+        color: rgba(255, 255, 255, 1);
+        text-decoration: underline;
+        text-underline-offset: 4px;
+      }
+
+      .footer-list--icons li {
+        display: grid;
+        grid-template-columns: 20px 1fr;
+        gap: 10px;
+        align-items: start;
+      }
+
+      .footer-ico {
+        color: rgba(255, 255, 255, 0.8);
+        margin-top: 2px;
+      }
+
+      .footer-ico--dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.55);
+        display: inline-block;
+        margin-top: 6px;
+      }
+
+      .footer-org-card {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.92);
+        border-radius: 6px;
+        padding: 24px 36px;
+        box-shadow: 0 10px 26px rgba(0, 0, 0, 0.25);
+        max-width: 320px;
+      }
+
+      .footer-org-card img {
+        max-width: 210px;
+        height: auto;
+        display: block;
+      }
+
+      .footer-bottom {
+        margin-top: 38px;
+        padding-top: 18px;
+        border-top: 1px solid rgba(255, 255, 255, 0.14);
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 12px;
+        text-align: center;
+      }
+
+      .logo_footer {
+        filter: grayscale(1) brightness(0) invert(1); /* robi z niego „białe” */
+      }
+
+      body.page-short .site-footer {
+        margin-top: 174px;
+      }
+
+      .tooltip {
+        position: relative;
+      }
+
+      .tooltip-text {
+        position: absolute;
+        bottom: 120%; /* nad linkiem */
+        left: 50%;
+        transform: translateX(-50%);
+        background: #333;
+        color: #fff;
+        padding: 8px 12px;
+        border-radius: 4px;
+        font-size: 12px;
+        white-space: normal;
+        width: 260px;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.2s;
+        z-index: 10;
+      }
+
+      .tooltip:hover .tooltip-text {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      @media (max-width: 1080px) {
+        .legal-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .sidebar {
+          position: static;
+        }
+
+        .footer-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 760px) {
+        .header-row {
+          flex-direction: column;
+          align-items: stretch;
+          padding: 14px 0;
+        }
+
+        .logo-wrap {
+          justify-content: center;
+        }
+
+        .nav {
+          justify-content: center;
+        }
+
+        .hero {
+          padding-top: 38px;
+        }
+
+        .hero-card {
+          padding: 28px 22px;
+          border-radius: 24px;
+        }
+
+        .hero p {
+          font-size: 16px;
+        }
+
+        .legal-card {
+          padding: 24px 18px;
+          border-radius: 22px;
+        }
+
+        .info-boxes {
+          grid-template-columns: 1fr;
+        }
+
+        .footer-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="promo-bar">
+      <div class="promo-content">
+        <div class="promo-text">
+          🎉 Tylko do końca kwietnia!<br />
+          Kod: <strong>KWIECIEN</strong> – 35% na wszystkie bilety!
+        </div>
+      </div>
+    </div>
+
+    <header class="site-header">
+      <div class="container header-row">
+        <div class="logo-wrap">
+          <a href="index.html" aria-label="Strona główna">
+            <img src="obrazy/logo.png" alt="Logo konferencji" class="logo" />
+          </a>
+          <div class="brand-text">
+            <div class="brand-title">Konferencja Przedsiębiorców</div>
+            <div class="brand-subtitle">Poznań • 10–11 października 2026</div>
+          </div>
+        </div>
+
+        <nav class="nav" aria-label="Menu główne">
+          <a href="index.html">Start</a>
+          <a href="index.html#program">Program</a>
+          <a href="index.html#prelegenci">Prelegenci</a>
+          <a href="polityka-prywatnosci.html">Polityka prywatności</a>
+          <a href="buy_form.html" class="btn">Zapisy</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container">
+          <div class="hero-card">
+            <div class="eyebrow">Dokument formalny</div>
+            <h1>Regulamin Konferencji</h1>
+            <p>
+              Poniższy regulamin określa zasady rejestracji, udziału, płatności,
+              zwrotów, reklamacji oraz organizacji wydarzenia „Konferencja
+              Przedsiębiorców”.
+            </p>
+
+            <div class="hero-meta">
+              <span>10–11 października 2026</span>
+              <span>Poznań</span>
+              <span>Wydarzenie stacjonarne</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-wrap">
+        <div class="container">
+          <div class="legal-layout">
+            <aside class="sidebar">
+              <h2>Spis treści</h2>
+              <nav>
+                <a href="#postanowienia-ogolne">§ 1. Postanowienia ogólne</a>
+                <a href="#definicje">§ 2. Definicje</a>
+                <a href="#rejestracja">§ 3. Rejestracja i uczestnictwo</a>
+                <a href="#oplaty">§ 4. Opłaty i bilety</a>
+                <a href="#zwroty">§ 5. Rezygnacja i zwroty</a>
+                <a href="#program">§ 6. Program i organizacja</a>
+                <a href="#porzadek">§ 7. Zasady porządkowe</a>
+                <a href="#wizerunek">§ 8. Wizerunek i materiały</a>
+                <a href="#odpowiedzialnosc">§ 9. Odpowiedzialność</a>
+                <a href="#reklamacje">§ 10. Reklamacje</a>
+                <a href="#dane">§ 11. Dane osobowe</a>
+                <a href="#koncowe">§ 12. Postanowienia końcowe</a>
+              </nav>
+
+              <div class="sidebar-note">
+                Kontakt organizacyjny:<br />
+                <a href="mailto:konferencja@brfh.eu">konferencja@brfh.eu</a>
+              </div>
+            </aside>
+
+            <article class="legal-card">
+              <div class="legal-intro">
+                <h2>Regulamin udziału w wydarzeniu</h2>
+                <p>
+                  Dokument obowiązuje wszystkich uczestników konferencji,
+                  paneli, części networkingowej, bankietu oraz wydarzeń
+                  towarzyszących.
+                </p>
+
+                <div class="info-boxes">
+                  <div class="info-box">
+                    <div class="label">Organizator</div>
+                    <div class="value">
+                      Duszpasterstwo Przedsiębiorców i Pracodawców Talent w
+                      Archidiecezji Poznańskiej
+                    </div>
+                  </div>
+                  <div class="info-box">
+                    <div class="label">Kontakt</div>
+                    <div class="value">konferencja@brfh.eu</div>
+                  </div>
+                  <div class="info-box">
+                    <div class="label">Adres</div>
+                    <div class="value">ul. Głogowska 92, Poznań</div>
+                  </div>
+                </div>
+              </div>
+
+              <section class="legal-section" id="postanowienia-ogolne">
+                <h3>§ 1. Postanowienia ogólne</h3>
+                <ol>
+                  <li>
+                    Niniejszy Regulamin określa zasady uczestnictwa w wydarzeniu
+                    pod nazwą „Konferencja Przedsiębiorców”, zwanym dalej
+                    „Konferencją”.
+                  </li>
+                  <li>
+                    Organizatorem Konferencji jest Duszpasterstwo
+                    Przedsiębiorców i Pracodawców Talent w Archidiecezji
+                    Poznańskiej, z adresem korespondencyjnym: ul. Głogowska 92,
+                    Poznań, adresem e-mail:
+                    <a href="mailto:konferencja@brfh.eu">konferencja@brfh.eu</a
+                    >, NIP: 7792461653, zwane dalej „Organizatorem”.
+                  </li>
+                  <li>
+                    Konferencja ma charakter stacjonarny i odbywa się w dniach
+                    10–11 października 2026 r. na terenie Poznania, w
+                    lokalizacjach wskazanych przez Organizatora na stronie
+                    internetowej wydarzenia.
+                  </li>
+                  <li>
+                    Regulamin jest dostępny na stronie internetowej Konferencji
+                    i obowiązuje wszystkich Uczestników, w tym osoby biorące
+                    udział w programie, panelach, spotkaniach networkingowych,
+                    części bankietowej oraz wydarzeniach towarzyszących.
+                  </li>
+                  <li>
+                    Dokonanie rejestracji i/lub zakupu biletu oznacza zapoznanie
+                    się z Regulaminem oraz akceptację jego postanowień.
+                  </li>
+                </ol>
+              </section>
+
+              <section class="legal-section" id="definicje">
+                <h3>§ 2. Definicje</h3>
+                <ol>
+                  <li>
+                    <strong>Konferencja</strong> – wydarzenie organizowane przez
+                    Organizatora zgodnie z informacjami opublikowanymi na
+                    stronie internetowej.
+                  </li>
+                  <li>
+                    <strong>Uczestnik</strong> – osoba fizyczna, która
+                    skutecznie zarejestrowała swój udział w Konferencji.
+                  </li>
+                  <li>
+                    <strong>Strona internetowa</strong> – serwis internetowy
+                    Organizatora poświęcony Konferencji.
+                  </li>
+                  <li>
+                    <strong>Formularz rejestracyjny</strong> – formularz online
+                    umożliwiający zgłoszenie udziału w Konferencji.
+                  </li>
+                  <li>
+                    <strong>Bilet</strong> – potwierdzenie uprawnienia do
+                    udziału w Konferencji w zakresie wynikającym z wybranego
+                    pakietu.
+                  </li>
+                  <li>
+                    <strong>Opłata</strong> – cena biletu wskazana na stronie
+                    internetowej Konferencji.
+                  </li>
+                </ol>
+              </section>
+
+              <section class="legal-section" id="rejestracja">
+                <h3>§ 3. Zasady rejestracji i uczestnictwa</h3>
+                <ol>
+                  <li>
+                    Uczestnictwo w Konferencji wymaga prawidłowego wypełnienia
+                    formularza rejestracyjnego, podania danych zgodnych ze
+                    stanem faktycznym, akceptacji Regulaminu oraz dokonania
+                    opłaty, jeżeli udział w danym pakiecie jest odpłatny.
+                  </li>
+                  <li>
+                    O przyjęciu zgłoszenia decyduje kolejność prawidłowo
+                    opłaconych rejestracji, chyba że Organizator postanowi
+                    inaczej.
+                  </li>
+                  <li>
+                    Zakres świadczeń przysługujących Uczestnikowi zależy od
+                    rodzaju zakupionego biletu i opisu pakietu zamieszczonego na
+                    stronie internetowej Konferencji.
+                  </li>
+                  <li>
+                    Organizator może wprowadzić limity miejsc dla całej
+                    Konferencji albo dla wybranych stref, paneli, prezentacji,
+                    bankietu lub innych części programu.
+                  </li>
+                  <li>
+                    Uczestnik zobowiązany jest do odbioru identyfikatora lub
+                    innych materiałów konferencyjnych w sposób wskazany przez
+                    Organizatora.
+                  </li>
+                  <li>
+                    Organizator może odmówić udziału w Konferencji lub anulować
+                    rejestrację Uczestnika w przypadku naruszenia Regulaminu,
+                    podania nieprawdziwych danych albo działania na szkodę
+                    Organizatora lub innych Uczestników.
+                  </li>
+                </ol>
+              </section>
+
+              <section class="legal-section" id="oplaty">
+                <h3>§ 4. Opłaty i bilety</h3>
+                <ol>
+                  <li>
+                    Udział w Konferencji może być odpłatny albo bezpłatny,
+                    zgodnie z aktualną ofertą opublikowaną na stronie
+                    internetowej.
+                  </li>
+                  <li>
+                    Ceny biletów, dostępne pakiety, zakres świadczeń oraz
+                    ewentualne promocje publikowane są na stronie internetowej
+                    Konferencji.
+                  </li>
+                  <li>
+                    Organizator zastrzega sobie prawo do wprowadzania
+                    ograniczonych czasowo promocji, kodów rabatowych i ofert
+                    specjalnych, które nie podlegają łączeniu, chyba że warunki
+                    danej promocji stanowią inaczej.
+                  </li>
+                  <li>
+                    Bilet uprawnia do udziału wyłącznie jedną osobę, chyba że z
+                    opisu oferty wynika inaczej.
+                  </li>
+                  <li>
+                    Uczestnik nie może przenosić uprawnień wynikających z biletu
+                    na inną osobę bez uprzedniej zgody Organizatora wyrażonej co
+                    najmniej drogą mailową.
+                  </li>
+                  <li>
+                    Organizator może dopuścić zmianę danych Uczestnika
+                    przypisanych do biletu najpóźniej na 7 dni przed
+                    rozpoczęciem Konferencji, o ile pozwalają na to względy
+                    organizacyjne.
+                  </li>
+                  <li>
+                    Potwierdzenie zakupu biletu przesyłane jest na adres e-mail
+                    podany podczas rejestracji.
+                  </li>
+                </ol>
+              </section>
+
+              <section class="legal-section" id="zwroty">
+                <h3>§ 5. Rezygnacja, zwroty i odwołanie Konferencji</h3>
+                <ol>
+                  <li>
+                    Uczestnik może zrezygnować z udziału w Konferencji,
+                    przesyłając informację na adres e-mail Organizatora.
+                  </li>
+                  <li>
+                    Zwrot ceny biletu przysługuje w przypadku zgłoszenia
+                    rezygnacji w terminie 14 dni od dnia zakupu biletu, nie
+                    później jednak niż 14 dni przed rozpoczęciem Konferencji.
+                  </li>
+                  <li>
+                    Po upływie terminów wskazanych w ustępie poprzedzającym
+                    opłata za bilet nie podlega zwrotowi, z zastrzeżeniem
+                    przypadków wynikających z bezwzględnie obowiązujących
+                    przepisów prawa.
+                  </li>
+                  <li>
+                    Zwrot środków następuje tą samą metodą płatności, jaką
+                    dokonano zakupu, chyba że Organizator i Uczestnik uzgodnią
+                    inny sposób zwrotu.
+                  </li>
+                  <li>
+                    Organizator ma prawo odwołać Konferencję albo zmienić jej
+                    termin, miejsce, formułę, program, godziny wystąpień,
+                    prelegentów lub poszczególne elementy wydarzenia z przyczyn
+                    organizacyjnych, technicznych, bezpieczeństwa, niskiej
+                    frekwencji lub siły wyższej.
+                  </li>
+                  <li>
+                    W przypadku odwołania Konferencji przez Organizatora i
+                    niezaoferowania Uczestnikowi udziału w nowym terminie albo
+                    wydarzeniu zastępczym, Uczestnikowi przysługuje zwrot ceny
+                    niewykorzystanego biletu.
+                  </li>
+                  <li>
+                    Organizator nie odpowiada za koszty dodatkowe poniesione
+                    przez Uczestnika, w szczególności koszty transportu,
+                    noclegu, parkingu ani utraconych korzyści.
+                  </li>
+                </ol>
+              </section>
+
+              <section class="legal-section" id="program">
+                <h3>§ 6. Program i organizacja wydarzenia</h3>
+                <ol>
+                  <li>
+                    Organizator ustala program Konferencji i zastrzega sobie
+                    prawo do jego zmian, w tym do zmiany kolejności wystąpień,
+                    godzin, zakresu programu, sal, stref, części dodatkowych
+                    oraz planowanych atrakcji.
+                  </li>
+                  <li>
+                    Informacje publikowane na stronie internetowej, w tym
+                    dotyczące prelegentów, godzin i pakietów, mają charakter
+                    organizacyjny i mogą ulegać aktualizacjom.
+                  </li>
+                  <li>
+                    Organizator zapewnia Uczestnikom świadczenia zgodne z
+                    zakresem zakupionego biletu, chyba że wykonanie danego
+                    świadczenia stanie się niemożliwe z przyczyn niezależnych od
+                    Organizatora.
+                  </li>
+                  <li>
+                    Konferencja ma charakter biznesowo-formacyjny i obejmuje
+                    również elementy o charakterze religijnym, dlatego Uczestnik
+                    zobowiązany jest do poszanowania charakteru wydarzenia,
+                    miejsca jego organizacji oraz innych osób biorących udział w
+                    Konferencji.
+                  </li>
+                </ol>
+              </section>
+
+              <section class="legal-section" id="porzadek">
+                <h3>§ 7. Zasady porządkowe</h3>
+                <ol>
+                  <li>
+                    Uczestnik zobowiązany jest do przestrzegania przepisów
+                    prawa, zasad bezpieczeństwa, przepisów przeciwpożarowych,
+                    sanitarnych, porządkowych oraz poleceń Organizatora i
+                    obsługi obiektu.
+                  </li>
+                  <li>
+                    Zabronione jest w szczególności zakłócanie przebiegu
+                    Konferencji, zachowanie agresywne lub obraźliwe, wnoszenie
+                    przedmiotów niebezpiecznych, spożywanie środków odurzających
+                    oraz prowadzenie działań handlowych lub promocyjnych bez
+                    zgody Organizatora.
+                  </li>
+                  <li>
+                    Zabronione jest także nagrywanie całych wystąpień lub
+                    transmisja wydarzenia bez uprzedniej zgody Organizatora.
+                  </li>
+                  <li>
+                    Organizator ma prawo wyprosić z terenu Konferencji osobę
+                    naruszającą Regulamin lub stwarzającą zagrożenie dla
+                    bezpieczeństwa, porządku albo dobrego imienia wydarzenia,
+                    bez prawa do zwrotu opłaty.
+                  </li>
+                  <li>
+                    Uczestnik ponosi odpowiedzialność za szkody wyrządzone przez
+                    siebie Organizatorowi, obiektowi, podwykonawcom lub innym
+                    Uczestnikom.
+                  </li>
+                </ol>
+              </section>
+
+              <section class="legal-section" id="wizerunek">
+                <h3>§ 8. Wizerunek i materiały z wydarzenia</h3>
+                <ol>
+                  <li>
+                    Przebieg Konferencji może być utrwalany przez Organizatora w
+                    formie fotografii, nagrań audio oraz nagrań wideo.
+                  </li>
+                  <li>
+                    Uczestnik przyjmuje do wiadomości, że jego wizerunek może
+                    zostać utrwalony w związku z udziałem w Konferencji i
+                    wykorzystany przez Organizatora do celów informacyjnych,
+                    dokumentacyjnych, archiwalnych i promocyjnych związanych z
+                    Konferencją oraz kolejnymi edycjami wydarzenia, w zakresie
+                    dopuszczalnym przez obowiązujące przepisy prawa.
+                  </li>
+                  <li>
+                    Jeżeli Uczestnik nie wyraża zgody na publikację swojego
+                    wizerunku w ujęciach indywidualnych, powinien zgłosić ten
+                    fakt Organizatorowi najpóźniej w dniu rejestracji na
+                    miejscu.
+                  </li>
+                  <li>
+                    Materiały konferencyjne, prezentacje, nagrania, grafiki i
+                    treści udostępniane Uczestnikom mogą być chronione prawem
+                    autorskim i nie mogą być kopiowane, rozpowszechniane ani
+                    wykorzystywane komercyjnie bez zgody uprawnionych podmiotów.
+                  </li>
+                </ol>
+              </section>
+
+              <section class="legal-section" id="odpowiedzialnosc">
+                <h3>§ 9. Odpowiedzialność</h3>
+                <ol>
+                  <li>
+                    Organizator dokłada należytej staranności, aby zapewnić
+                    prawidłowy przebieg Konferencji, jednak nie ponosi
+                    odpowiedzialności za zdarzenia spowodowane siłą wyższą ani
+                    za okoliczności od niego niezależne.
+                  </li>
+                  <li>
+                    Organizator nie ponosi odpowiedzialności za rzeczy
+                    pozostawione, zagubione lub skradzione podczas Konferencji,
+                    chyba że zostały przyjęte do przechowania na podstawie
+                    odrębnego potwierdzenia.
+                  </li>
+                  <li>
+                    Organizator nie ponosi odpowiedzialności za brak możliwości
+                    udziału w Konferencji wynikający z przyczyn leżących po
+                    stronie Uczestnika, w szczególności z powodu błędnie
+                    podanych danych, problemów z dojazdem, spóźnienia lub braku
+                    wymaganych dokumentów.
+                  </li>
+                </ol>
+              </section>
+
+              <section class="legal-section" id="reklamacje">
+                <h3>§ 10. Reklamacje</h3>
+                <ol>
+                  <li>
+                    Uczestnik ma prawo złożyć reklamację dotyczącą organizacji
+                    Konferencji lub świadczonych usług.
+                  </li>
+                  <li>
+                    Reklamacje należy przesyłać drogą elektroniczną na adres:
+                    <a href="mailto:konferencja@brfh.eu">konferencja@brfh.eu</a>
+                    albo pisemnie na adres korespondencyjny Organizatora.
+                  </li>
+                  <li>
+                    Reklamacja powinna zawierać co najmniej imię i nazwisko
+                    Uczestnika, dane kontaktowe, opis zgłaszanych zastrzeżeń
+                    oraz wskazanie żądania Uczestnika.
+                  </li>
+                  <li>
+                    Reklamację należy złożyć w terminie 14 dni od dnia
+                    zakończenia Konferencji albo od dnia wystąpienia zdarzenia
+                    będącego podstawą reklamacji.
+                  </li>
+                  <li>
+                    Organizator rozpatrzy reklamację w terminie 14 dni od dnia
+                    jej otrzymania; w przypadkach wymagających uzupełnienia
+                    informacji termin może ulec odpowiedniemu przedłużeniu.
+                  </li>
+                </ol>
+              </section>
+
+              <section class="legal-section" id="dane">
+                <h3>§ 11. Dane osobowe</h3>
+                <ol>
+                  <li>
+                    Administratorem danych osobowych Uczestników jest
+                    Organizator.
+                  </li>
+                  <li>
+                    Dane osobowe są przetwarzane w celu rejestracji udziału w
+                    Konferencji, organizacji i obsługi wydarzenia, kontaktu z
+                    Uczestnikiem, realizacji płatności i rozliczeń,
+                    rozpatrywania reklamacji oraz wykonania obowiązków
+                    wynikających z przepisów prawa.
+                  </li>
+                  <li>
+                    Szczegółowe zasady przetwarzania danych osobowych, w tym
+                    informacje o prawach osoby, której dane dotyczą, znajdują
+                    się w Polityce Prywatności dostępnej na stronie internetowej
+                    Konferencji.
+                  </li>
+                  <li>
+                    Uczestnik zobowiązuje się do podania prawdziwych i
+                    aktualnych danych.
+                  </li>
+                </ol>
+              </section>
+
+              <section class="legal-section" id="koncowe">
+                <h3>§ 12. Postanowienia końcowe</h3>
+                <ol>
+                  <li>
+                    Organizator zastrzega sobie prawo do zmiany Regulaminu z
+                    ważnych przyczyn, w szczególności prawnych, organizacyjnych,
+                    technicznych albo związanych z bezpieczeństwem.
+                  </li>
+                  <li>
+                    Zmiany Regulaminu będą publikowane na stronie internetowej
+                    Konferencji i wchodzą w życie w terminie wskazanym przez
+                    Organizatora, z zastrzeżeniem poszanowania praw nabytych
+                    Uczestników.
+                  </li>
+                  <li>
+                    W sprawach nieuregulowanych w Regulaminie zastosowanie mają
+                    przepisy prawa polskiego.
+                  </li>
+                  <li>
+                    Ewentualne spory związane z uczestnictwem w Konferencji będą
+                    rozstrzygane przez właściwy miejscowo sąd powszechny, z
+                    uwzględnieniem przepisów bezwzględnie obowiązujących.
+                  </li>
+                  <li>
+                    Regulamin wchodzi w życie z dniem jego opublikowania na
+                    stronie internetowej Konferencji.
+                  </li>
+                </ol>
+              </section>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-bg" aria-hidden="true"></div>
+
+      <div class="container footer-container">
+        <div class="footer-grid">
+          <!-- LEWA KOLUMNA: znak + opis -->
+          <div class="footer-col footer-brand">
+            <div class="footer-mark">
+              <div class="logo_footer">
+                <img src="obrazy/logo.png" alt="logo" />
+              </div>
+            </div>
+
+            <p class="footer-desc">
+              Duszpasterstwo Przedsiębiorców i Pracodawców Talent w
+              Archidiecezji Poznańskiej
+            </p>
+          </div>
+
+          <!-- ŚRODKOWA: adres -->
+          <div class="footer-col">
+            <h3 class="footer-title">Adres</h3>
+
+            <ul class="footer-list footer-list--icons">
+              <li>
+                <span class="footer-ico" aria-hidden="true">
+                  <!-- pin -->
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+                    <path
+                      d="M12 22s7-4.6 7-12a7 7 0 1 0-14 0c0 7.4 7 12 7 12Z"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    />
+                    <path
+                      d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    />
+                  </svg>
+                </span>
+                <span>ul. Głogowska 92, Poznań</span>
+              </li>
+
+              <li>
+                <span class="footer-ico" aria-hidden="true">
+                  <!-- mail -->
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+                    <path
+                      d="M4 6h16v12H4V6Z"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    />
+                    <path
+                      d="m4.5 7 7.5 6 7.5-6"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    />
+                  </svg>
+                </span>
+                <a href="mailto:konferencja@brh.eu">konferencja@brfh.eu</a>
+              </li>
+
+              <li>
+                <span
+                  class="footer-ico footer-ico--dot"
+                  aria-hidden="true"
+                ></span>
+                <span>NIP: 7792461653</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- MENU -->
+          <div class="footer-col">
+            <h3 class="footer-title">Menu</h3>
+
+            <ul class="footer-list">
+              <li><a href="#program">Program</a></li>
+              <li><a href="#prelegenci">Prelegenci</a></li>
+              <li><a href="buy_form.html">Zapisy</a></li>
+              <li class="tooltip">
+                <a href="#reklamacje">Zwroty</a>
+                <span class="tooltip-text">
+                  W sprawie zwrotów prosimy o wysyłanie wiadomości na adres
+                  email: konferencja@brfh.eu. Czas na zwrot biletu wynosi 14 dni
+                  od dnia zakupu.
+                </span>
+              </li>
+              <li>
+                <a href="regulamin.html">Regulamin Konferencji</a>
+              </li>
+              <li>
+                <a href="polityka-prywatnosci.html">Polityka prywatności</a>
+              </li>
+              <li class="tooltip">
+                <a href="#reklamacje">Reklamacje</a>
+                <span class="tooltip-text">
+                  W sprawie reklamacji prosimy o wysyłanie wiadomości na adres
+                  email: konferencja@brfh.eu
+                </span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- ORGANIZATOR -->
+          <div class="footer-col footer-org">
+            <h3 class="footer-title">Organizator</h3>
+
+            <a
+              class="footer-org-card"
+              href="https://talentpoznan.pl/"
+              aria-label="Talent"
+            >
+              <!-- Podmień ścieżkę na właściwą w Twoim projekcie -->
+              <img src="obrazy/talent.png" alt="talent" />
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          © 2026 Duszpasterstwo Przedsiębiorców i Pracodawców Talent w
+          Archidiecezji Poznańskiej
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

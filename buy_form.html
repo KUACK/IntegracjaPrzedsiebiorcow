@@ -1,289 +1,417 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pl">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Konferencja Przedsiębiorców</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="form_style.css" />
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700;800&family=DM+Serif+Display&display=swap">
-</head>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700;800&family=DM+Serif+Display&display=swap"
+    />
+  </head>
 
-<body>
+  <body>
     <div class="promo-bar">
-        <div class="promo-content">
-            <div class="promo-text">
-                🎉 Tylko do końca Marca!<br />
-                Kod: <strong>MARZEC</strong> - Najniższa cena! 50% zniżki!
-            </div>
-            <div class="timer" id="timer">⏱️ Pozostało: Ładowanie...</div>
+      <div class="promo-content">
+        <div class="promo-text">
+          🎉 Tylko do końca kwietnia!<br />
+          Kod: <strong>KWIECIEN</strong> – 35% na wszystkie bilety!
         </div>
+        <div class="timer" id="timer">⏱️ Pozostało: Ładowanie...</div>
+      </div>
     </div>
 
     <div class="header">
-        <div class="logo">
-            <a class="logo" href="index.html" aria-label="Strona główna">
-                <img src="obrazy/logo.png" alt="logo" />
-            </a>
-        </div>
+      <div class="logo">
+        <a class="logo" href="index.html" aria-label="Strona główna">
+          <img src="obrazy/logo.png" alt="logo" />
+        </a>
+      </div>
     </div>
     <div class="row">
+      <h1>Kup bilet</h1>
 
+      <form id="buy">
+        <label>Imię i Nazwisko</label>
+        <input name="fullName" required autocomplete="name" />
 
-        <h1>Kup bilet</h1>
+        <label>Email</label>
+        <input name="email" type="email" required autocomplete="email" />
 
-        <form id="buy">
-            <label>Imię i Nazwisko</label>
-            <input name="fullName" required autocomplete="name" />
+        <label>Numer telefonu</label>
+        <input name="phone" required autocomplete="tel" />
+        <label>Ulica</label>
+        <input name="street" required />
 
-            <label>Email</label>
-            <input name="email" type="email" required autocomplete="email" />
+        <label>Miasto</label>
+        <input name="city" required />
 
-            <label>Numer telefonu</label>
-            <input name="phone" required autocomplete="tel" />
-            <label>Ulica</label>
-            <input name="street" required />
+        <label>Kod pocztowy</label>
+        <input name="postalCode" required placeholder="00-000" />
 
-            <label>Miasto</label>
-            <input name="city" required />
+        <label>Typ biletu</label>
+        <select name="ticketType" id="ticketType" required>
+          <option value="standard">Standard – 1 dzień (599 PLN)</option>
+          <option value="biznesplus">Biznes Plus – 2 dni (699 PLN)</option>
+          <option value="biznesbankiet">
+            Biznes Plus + Bankiet – 2 dni (1 099 PLN)
+          </option>
+          <option value="vip">
+            VIP z Prezentacją – 2 dni + bankiet (1 599 PLN)
+          </option>
+        </select>
 
-            <label>Kod pocztowy</label>
-            <input name="postalCode" required placeholder="00-000" />
+        <label>Ilość sztuk</label>
+        <input
+          name="quantity"
+          type="number"
+          min="1"
+          max="20"
+          value="1"
+          required
+        />
 
-            <label>Typ biletu</label>
-            <select name="ticketType" required>
-                <option value="premium">Premium (499 PLN)</option>
-                <option value="biznesplus">Biznes Plus (599 PLN)</option>
-                <option value="vip">VIP (999 PLN)</option>
-                <option value="premiumonline">Premium Online (199 PLN)</option>
-                <option value="biznesplusonline">Biznes Plus Online (349 PLN)</option>
-            </select>
+        <label>Kod promocyjny</label>
+        <div class="promo-line">
+          <input name="promoCode" id="promoCode" placeholder=" " />
+          <button type="button" id="applyPromo" class="promo-apply-btn">
+            Zastosuj
+          </button>
+        </div>
+        <div id="promoHint" class="promo-hint"></div>
 
-            <label>Ilość sztuk</label>
-            <input name="quantity" type="number" min="1" max="20" value="1" required />
+        <div class="order-summary" aria-live="polite">
+          <span class="order-summary__label">Razem:</span>
+          <span class="order-summary__value" id="orderTotal">—</span>
+        </div>
 
-            <label>Kod promocyjny</label>
-            <div class="promo-line">
-                <input name="promoCode" id="promoCode" placeholder=" " />
-                <button type="button" id="applyPromo" class="promo-apply-btn">Zastosuj</button>
-            </div>
-            <div id="promoHint" class="promo-hint"></div>
+        <button type="submit" class="payu-btn">
+          <span class="payu-btn__brand">PayU</span>
+          <span class="payu-btn__text">Przejdź do płatności</span>
+        </button>
 
-            <div class="order-summary" aria-live="polite">
-                <span class="order-summary__label">Razem:</span>
-                <span class="order-summary__value" id="orderTotal">—</span>
-            </div>
-
-            <button type="submit" class="payu-btn">
-                <span class="payu-btn__brand">PayU</span>
-                <span class="payu-btn__text">Przejdź do płatności</span>
-            </button>
-
-            <p id="msg"></p>
-        </form>
-        
+        <p id="msg"></p>
+      </form>
     </div>
     <p class="realizacja">Czas realizacji zamówienia - 1 dzień roboczy.</p>
 
     <footer class="site-footer">
-        <div class="footer-bg" aria-hidden="true"></div>
+      <div class="footer-bg" aria-hidden="true"></div>
 
-        <div class="container footer-container">
-            <div class="footer-grid">
-                <!-- LEWA KOLUMNA: znak + opis -->
-                <div class="footer-col footer-brand">
-                    <div class="footer-mark">
-                        <div class="logo_footer">
-                            <img src="obrazy/logo.png" alt="logo" />
-                        </div>
-                    </div>
-
-                    <p class="footer-desc">
-                        Duszpasterstwo Przedsiębiorców i Pracodawców Talent w Archidiecezji Poznańskiej
-                    </p>
-                </div>
-
-                <!-- ŚRODKOWA: adres -->
-                <div class="footer-col">
-                    <h3 class="footer-title">Adres</h3>
-
-                    <ul class="footer-list footer-list--icons">
-                        <li>
-                            <span class="footer-ico" aria-hidden="true">
-                                <!-- pin -->
-                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
-                                    <path d="M12 22s7-4.6 7-12a7 7 0 1 0-14 0c0 7.4 7 12 7 12Z" stroke="currentColor"
-                                        stroke-width="1.8" />
-                                    <path d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke="currentColor"
-                                        stroke-width="1.8" />
-                                </svg>
-                            </span>
-                            <span>ul. Głogowska 92, Poznań</span>
-                        </li>
-
-                        <li>
-                            <span class="footer-ico" aria-hidden="true">
-                                <!-- mail -->
-                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
-                                    <path d="M4 6h16v12H4V6Z" stroke="currentColor" stroke-width="1.8" />
-                                    <path d="m4.5 7 7.5 6 7.5-6" stroke="currentColor" stroke-width="1.8" />
-                                </svg>
-                            </span>
-                            <a href="mailto:konferencja@brh.eu">konferencja@brh.eu</a>
-                        </li>
-
-                        <li>
-                            <span class="footer-ico footer-ico--dot" aria-hidden="true"></span>
-                            <span>NIP: 7792461653</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- MENU -->
-                <div class="footer-col">
-                    <h3 class="footer-title">Menu</h3>
-
-                    <ul class="footer-list">
-                        <li><a href="#misja">Misja</a></li>
-                        <li><a href="#program">Program</a></li>
-                        <li><a href="#prelegenci">Prelegenci</a></li>
-                        <li><a href="#zapisy">Zapisy</a></li>
-                        <li><a href="#polityka-prywatnosci">Polityka prywatności</a></li>
-                    </ul>
-                </div>
-
-                <!-- ORGANIZATOR -->
-                <div class="footer-col footer-org">
-                    <h3 class="footer-title">Organizator</h3>
-
-                    <a class="footer-org-card" href="https://talentpoznan.pl/" aria-label="Talent">
-                        <!-- Podmień ścieżkę na właściwą w Twoim projekcie -->
-                        <img src="obrazy/talent.png" alt="talent" />
-                    </a>
-                </div>
+      <div class="container footer-container">
+        <div class="footer-grid">
+          <!-- LEWA KOLUMNA: znak + opis -->
+          <div class="footer-col footer-brand">
+            <div class="footer-mark">
+              <div class="logo_footer">
+                <img src="obrazy/logo.png" alt="logo" />
+              </div>
             </div>
 
-            <div class="footer-bottom">
-                © 2026 Duszpasterstwo Przedsiębiorców i Pracodawców Talent w Archidiecezji Poznańskiej
-            </div>
+            <p class="footer-desc">
+              Duszpasterstwo Przedsiębiorców i Pracodawców Talent w
+              Archidiecezji Poznańskiej
+            </p>
+          </div>
+
+          <!-- ŚRODKOWA: adres -->
+          <div class="footer-col">
+            <h3 class="footer-title">Adres</h3>
+
+            <ul class="footer-list footer-list--icons">
+              <li>
+                <span class="footer-ico" aria-hidden="true">
+                  <!-- pin -->
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+                    <path
+                      d="M12 22s7-4.6 7-12a7 7 0 1 0-14 0c0 7.4 7 12 7 12Z"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    />
+                    <path
+                      d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    />
+                  </svg>
+                </span>
+                <span>ul. Głogowska 92, Poznań</span>
+              </li>
+
+              <li>
+                <span class="footer-ico" aria-hidden="true">
+                  <!-- mail -->
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+                    <path
+                      d="M4 6h16v12H4V6Z"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    />
+                    <path
+                      d="m4.5 7 7.5 6 7.5-6"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    />
+                  </svg>
+                </span>
+                <a href="mailto:konferencja@brh.eu">konferencja@brh.eu</a>
+              </li>
+
+              <li>
+                <span
+                  class="footer-ico footer-ico--dot"
+                  aria-hidden="true"
+                ></span>
+                <span>NIP: 7792461653</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- MENU -->
+          <div class="footer-col">
+            <h3 class="footer-title">Menu</h3>
+
+            <ul class="footer-list">
+              <li><a href="#program">Program</a></li>
+              <li><a href="#prelegenci">Prelegenci</a></li>
+              <li><a href="buy_form.html">Zapisy</a></li>
+              <li class="tooltip">
+                <a href="#reklamacje">Zwroty</a>
+                <span class="tooltip-text">
+                  W sprawie zwrotów prosimy o wysyłanie wiadomości na adres
+                  email: konferencja@brfh.eu. Czas na zwrot biletu wynosi 14 dni
+                  od dnia zakupu.
+                </span>
+              </li>
+              <li>
+                <a href="regulamin.html">Regulamin Konferencji</a>
+              </li>
+              <li>
+                <a href="polityka-prywatnosci.html">Polityka prywatności</a>
+              </li>
+              <li class="tooltip">
+                <a href="#reklamacje">Reklamacje</a>
+                <span class="tooltip-text">
+                  W sprawie reklamacji prosimy o wysyłanie wiadomości na adres
+                  email: konferencja@brfh.eu
+                </span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- ORGANIZATOR -->
+          <div class="footer-col footer-org">
+            <h3 class="footer-title">Organizator</h3>
+
+            <a
+              class="footer-org-card"
+              href="https://talentpoznan.pl/"
+              aria-label="Talent"
+            >
+              <!-- Podmień ścieżkę na właściwą w Twoim projekcie -->
+              <img src="obrazy/talent.png" alt="talent" />
+            </a>
+          </div>
         </div>
+
+        <div class="footer-bottom">
+          © 2026 Duszpasterstwo Przedsiębiorców i Pracodawców Talent w
+          Archidiecezji Poznańskiej
+        </div>
+      </div>
     </footer>
 
     <script>
-        const msg = document.getElementById("msg");
-        const form = document.getElementById("buy");
+      const msg = document.getElementById("msg");
+      const form = document.getElementById("buy");
 
-        // --- Dynamiczna kwota + promo apply ---
-        const PRICE_GROSZE = {
-            premium: 49900,
-            biznesplus: 59900,
-            vip: 99900,
-            premiumonline: 19900,
-            biznesplusonline: 34900,
-        };
+      // --- Ceny biletów w groszach ---
+      const PRICE_GROSZE = {
+        standard: 59900, // 599 PLN
+        biznesplus: 69900, // 699 PLN
+        biznesbankiet: 109900, // 1 099 PLN
+        vip: 159900, // 1 599 PLN
+      };
 
-        const ticketSel = form.querySelector('select[name="ticketType"]');
-        const qtyInput = form.querySelector('input[name="quantity"]');
+      const ticketSel = form.querySelector('select[name="ticketType"]');
+      const qtyInput = form.querySelector('input[name="quantity"]');
 
-        const promoInput = document.getElementById("promoCode");
-        const applyPromoBtn = document.getElementById("applyPromo");
-        const promoHintEl = document.getElementById("promoHint");
-        const totalEl = document.getElementById("orderTotal");
+      const promoInput = document.getElementById("promoCode");
+      const applyPromoBtn = document.getElementById("applyPromo");
+      const promoHintEl = document.getElementById("promoHint");
+      const totalEl = document.getElementById("orderTotal");
 
-        let promoApplied = false;
-        let appliedCode = "";
-        let discountFactor = 1;
+      let promoApplied = false;
+      let appliedCode = "";
+      let discountFactor = 1;
 
-        function formatPLNFromGrosze(grosze) {
-            return (grosze / 100).toLocaleString("pl-PL", { style: "currency", currency: "PLN" });
-        }
-
-        function getQty() {
-            const q = parseInt(qtyInput.value || "1", 10);
-            return Math.max(1, Math.min(20, Number.isFinite(q) ? q : 1));
-        }
-
-        function getUnit() {
-            const key = (ticketSel.value || "").toLowerCase();
-            return PRICE_GROSZE[key] ?? 0;
-        }
-
-        function renderTotal() {
-            const qty = getQty();
-            const unit = getUnit();
-            const unitAfter = Math.round(unit * (promoApplied ? discountFactor : 1));
-            const total = unitAfter * qty;
-            totalEl.textContent = unit ? formatPLNFromGrosze(total) : "—";
-        }
-
-        function clearPromo() {
-            promoApplied = false;
-            appliedCode = "";
-            discountFactor = 1;
-            promoHintEl.textContent = "";
-            renderTotal();
-        }
-
-        promoInput.addEventListener("input", () => {
-            if (promoApplied) clearPromo(); // zmiana kodu po zastosowaniu = reset
-            applyPromoBtn.disabled = !promoInput.value.trim();
+      function formatPLNFromGrosze(grosze) {
+        return (grosze / 100).toLocaleString("pl-PL", {
+          style: "currency",
+          currency: "PLN",
         });
+      }
 
-        applyPromoBtn.addEventListener("click", () => {
-            const code = (promoInput.value || "").trim().toLowerCase();
+      function getQty() {
+        const q = parseInt(qtyInput.value || "1", 10);
+        return Math.max(1, Math.min(20, Number.isFinite(q) ? q : 1));
+      }
 
-            // UWAGA: to MUSI być spójne z backendem (patrz punkt 5).
-            if (code === "marzec") {
-                promoApplied = true;
-                appliedCode = "MARZEC";
-                discountFactor = 0.5;
-                promoHintEl.textContent = "Kod zastosowany (-50%).";
-            } else {
-                promoApplied = false;
-                appliedCode = "";
-                discountFactor = 1;
-                promoHintEl.textContent = "Nieprawidłowy kod.";
-            }
-            renderTotal();
-        });
+      function getUnit() {
+        const key = (ticketSel.value || "").toLowerCase();
+        return PRICE_GROSZE[key] ?? 0;
+      }
 
-        ticketSel.addEventListener("change", renderTotal);
-        qtyInput.addEventListener("input", renderTotal);
+      function renderTotal() {
+        const qty = getQty();
+        const unit = getUnit();
+        const unitAfter = Math.round(
+          unit * (promoApplied ? discountFactor : 1),
+        );
+        const total = unitAfter * qty;
+        totalEl.textContent = unit ? formatPLNFromGrosze(total) : "—";
+      }
 
-        applyPromoBtn.disabled = !promoInput.value.trim();
+      function clearPromo() {
+        promoApplied = false;
+        appliedCode = "";
+        discountFactor = 1;
+        promoHintEl.textContent = "";
         renderTotal();
+      }
 
-        // --- Twój submit, tylko z jedną zmianą: wysyłaj promoCode tylko gdy applied ---
-        form.addEventListener("submit", async (e) => {
-            e.preventDefault();
-            msg.textContent = "Tworzę zamówienie...";
+      promoInput.addEventListener("input", () => {
+        if (promoApplied) clearPromo(); // zmiana kodu po zastosowaniu = reset
+        applyPromoBtn.disabled = !promoInput.value.trim();
+      });
 
-            const fd = new FormData(form);
-            const payload = Object.fromEntries(fd.entries());
+      /**
+       * Walidacja kodów zniżkowych (frontend - musi być spójna z backendem).
+       *
+       * KWIECIEN  – 35% zniżki (bez limitu czasowego na froncie; backend też waliduje)
+       * NASKALE   – 50% zniżki, ważny do 23.03.2026 23:59:59 czasu polskiego
+       * TALENT    – 50% zniżki, ważny do 30.04.2026 23:59:59 czasu polskiego
+       */
+      function validatePromoCode(code) {
+        const normalized = code.trim().toLowerCase();
+        const now = new Date();
 
-            if (!promoApplied) payload.promoCode = "";
-            else payload.promoCode = appliedCode || payload.promoCode;
+        if (normalized === "kwiecien") {
+          // Ważny do końca kwietnia 2026 (CEST, UTC+2)
+          const deadlineKwiecien = new Date("2026-05-01T00:00:00+02:00");
+          if (now >= deadlineKwiecien) {
+            return { valid: false, label: "Ten kod już wygasł." };
+          }
+          return {
+            valid: true,
+            code: "KWIECIEN",
+            factor: 0.65,
+            label: "Kod zastosowany (–35%).",
+          };
+        }
 
-            const res = await fetch("/api/create-order", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload),
-            });
+        if (normalized === "naskale") {
+          // Ważny do poniedziałku 23.03.2026 23:59:59 CET (UTC+1)
+          // czyli do 2026-03-24T00:00:00+01:00 (początek kolejnego dnia)
+          const deadline = new Date("2026-03-24T00:00:00+01:00");
+          if (now < deadline) {
+            return {
+              valid: true,
+              code: "NASKALE",
+              factor: 0.5,
+              label: "Kod zastosowany (–50%).",
+            };
+          }
+          return { valid: false, label: "Ten kod już wygasł." };
+        }
 
-            if (!res.ok) {
-                const t = await res.text().catch(() => "");
-                msg.textContent = `Błąd tworzenia zamówienia: ${res.status} ${t}`;
-                return;
-            }
+        if (normalized === "talent") {
+          // Ważny do końca kwietnia 2026 (30.04.2026 23:59:59 CEST = UTC+2)
+          // czyli do 2026-05-01T00:00:00+02:00
+          const deadline = new Date("2026-05-01T00:00:00+02:00");
+          if (now < deadline) {
+            return {
+              valid: true,
+              code: "TALENT",
+              factor: 0.5,
+              label: "Kod zastosowany (–50%).",
+            };
+          }
+          return { valid: false, label: "Ten kod już wygasł." };
+        }
 
-            const data = await res.json();
-            window.location.href = data.redirectUri;
+        return { valid: false, label: "Nieprawidłowy kod." };
+      }
+
+      applyPromoBtn.addEventListener("click", () => {
+        const code = (promoInput.value || "").trim();
+        const result = validatePromoCode(code);
+
+        if (result.valid) {
+          promoApplied = true;
+          appliedCode = result.code;
+          discountFactor = result.factor;
+          promoHintEl.textContent = result.label;
+          promoHintEl.style.color = "";
+        } else {
+          promoApplied = false;
+          appliedCode = "";
+          discountFactor = 1;
+          promoHintEl.textContent = result.label;
+          promoHintEl.style.color = "red";
+        }
+        renderTotal();
+      });
+
+      ticketSel.addEventListener("change", renderTotal);
+      qtyInput.addEventListener("input", renderTotal);
+
+      applyPromoBtn.disabled = !promoInput.value.trim();
+
+      // Automatyczne wybranie biletu z parametru URL (?ticket=...)
+      (function () {
+        const params = new URLSearchParams(window.location.search);
+        const ticketParam = params.get("ticket");
+        if (
+          ticketParam &&
+          ticketSel.querySelector('option[value="' + ticketParam + '"]')
+        ) {
+          ticketSel.value = ticketParam;
+        }
+      })();
+
+      renderTotal();
+
+      // --- Submit ---
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        msg.textContent = "Tworzę zamówienie...";
+
+        const fd = new FormData(form);
+        const payload = Object.fromEntries(fd.entries());
+
+        if (!promoApplied) payload.promoCode = "";
+        else payload.promoCode = appliedCode || payload.promoCode;
+
+        const res = await fetch("/api/create-order", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
         });
+
+        if (!res.ok) {
+          const t = await res.text().catch(() => "");
+          msg.textContent = `Błąd tworzenia zamówienia: ${res.status} ${t}`;
+          return;
+        }
+
+        const data = await res.json();
+        window.location.href = data.redirectUri;
+      });
     </script>
 
     <script src="main.js" defer></script>
-</body>
-
+  </body>
 </html>

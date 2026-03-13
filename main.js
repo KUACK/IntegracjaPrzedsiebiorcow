@@ -1,6 +1,7 @@
-// TIMER ODLICZAJĄCY
+// TIMER ODLICZAJĄCY — kod KWIECIEN ważny do końca kwietnia 2026
 function updateTimer() {
-  const endDate = new Date("2026-03-31T23:59:59").getTime();
+  // 30.04.2026 23:59:59 CEST (UTC+2)
+  const endDate = new Date("2026-04-30T23:59:59+02:00").getTime();
   const now = Date.now();
   const distance = endDate - now;
 

@@ -20,7 +20,7 @@
 #buy {
   max-width: 640px;
   margin: 0 auto;
-  padding: 28px 22px;
+  padding: 10px 22px;
   border-radius: 12px;
   background: linear-gradient(135deg, var(--secondary) 0%, #1f3a4d 100%);
   color: var(--white);
@@ -30,8 +30,8 @@
 /* Pola */
 #buy label {
   display: block;
-  margin-top: 14px;
-  margin-bottom: 8px;
+  margin-top: 10px;
+  margin-bottom: 6px;
   font-weight: 600;
   font-size: 14px;
   letter-spacing: 0.02em;
@@ -128,7 +128,7 @@
 #buy textarea {
   width: 100%;
   min-height: 46px;
-  padding: 12px 14px;
+  padding: 6px 14px;
 
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 10px;
@@ -282,9 +282,8 @@
   }
 }
 
-.realizacja{
+.realizacja {
   font-weight: 500;
   font-size: 16px;
   margin: 0px 0px 0px 410px;
-  
 }
