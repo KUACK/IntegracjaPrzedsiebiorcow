@@ -45,10 +45,10 @@ export async function onRequestPost({ request, env }) {
 
   // --- Bilety i ceny (grosze) ---
   const tickets = {
-    standard:      { name: "Standard – 1 dzień",                unit: 59900 },   // 599 PLN
-    biznesplus:    { name: "Biznes Plus – 2 dni",                unit: 69900 },   // 699 PLN
-    biznesbankiet: { name: "VIP + Bankiet – 2 dni",               unit: 109900 },  // 1 099 PLN
-    vip:           { name: "VIP z Prezentacją – 2 dni + bankiet", unit: 159900 }, // 1 599 PLN
+    premium: { name: "Premium – 1 dzień", unit: 59900 }, // 599 PLN
+    biznesplus: { name: "Biznes Plus – 2 dni", unit: 69900 }, // 699 PLN
+    vipbankiet: { name: "VIP – 2 dni + bankiet", unit: 109900 }, // 1 099 PLN
+    vip: { name: "VIP z Prezentacją – 2 dni + bankiet", unit: 159900 }, // 1 599 PLN
   };
 
   const t = tickets[String(ticketType || "").toLowerCase()];
@@ -61,11 +61,13 @@ export async function onRequestPost({ request, env }) {
   // NASKALE   – 50% zniżki (mnożnik 0.50), ważny do 23.03.2026 23:59:59 CET
   // TALENT    – 50% zniżki (mnożnik 0.50), ważny do 30.04.2026 23:59:59 CEST
   const now = new Date();
-  const promo = String(promoCode || "").trim().toLowerCase();
+  const promo = String(promoCode || "")
+    .trim()
+    .toLowerCase();
 
   let discountFactor = 1;
 
-  if (promo === "kwiecien" || promo === "kwiecień") {
+  if (promo === "kwiecien") {
     // Ważny do końca kwietnia 2026 (CEST, UTC+2)
     const deadlineKwiecien = new Date("2026-05-01T00:00:00+02:00");
     if (now < deadlineKwiecien) {
@@ -75,14 +77,14 @@ export async function onRequestPost({ request, env }) {
     // Do poniedziałku 23.03.2026 koniec dnia (CET, UTC+1)
     const deadline = new Date("2026-03-24T00:00:00+01:00");
     if (now < deadline) {
-      discountFactor = 0.50;
+      discountFactor = 0.5;
     }
     // po terminie – kod ignorowany, discountFactor zostaje 1
   } else if (promo === "talent") {
     // Do końca kwietnia 2026 (CEST, UTC+2)
     const deadline = new Date("2026-05-01T00:00:00+02:00");
     if (now < deadline) {
-      discountFactor = 0.50;
+      discountFactor = 0.5;
     }
   }
   // Nieznany lub pusty kod → discountFactor = 1 (brak zniżki)
