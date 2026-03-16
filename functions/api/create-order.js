@@ -67,7 +67,7 @@ export async function onRequestPost({ request, env }) {
 
   let discountFactor = 1;
 
-  if (promo === "kwiecien") {
+  if (promo === "kwiecien" || promo === "kwiecień") {
     // Ważny do końca kwietnia 2026 (CEST, UTC+2)
     const deadlineKwiecien = new Date("2026-05-01T00:00:00+02:00");
     if (now < deadlineKwiecien) {
