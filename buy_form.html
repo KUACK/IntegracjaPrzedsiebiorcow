@@ -66,7 +66,7 @@
           <option value="premium">Premium – 1 dzień (599 PLN)</option>
           <option value="biznesplus">Biznes Plus – 2 dni (699 PLN)</option>
           <option value="biznesbankiet">
-            Biznes Plus + Bankiet – 2 dni (1 099 PLN)
+            VIP – 2 dni + bankiet (1 099 PLN)
           </option>
           <option value="vip">
             VIP z Prezentacją – 2 dni + bankiet (1 599 PLN)
@@ -308,7 +308,7 @@
         const normalized = code.trim().toLowerCase();
         const now = new Date();
 
-        if (normalized === "kwiecien") {
+        if (normalized === "kwiecien" || normalized === "kwiecień") {
           // Ważny do końca kwietnia 2026 (CEST, UTC+2)
           const deadlineKwiecien = new Date("2026-05-01T00:00:00+02:00");
           if (now >= deadlineKwiecien) {

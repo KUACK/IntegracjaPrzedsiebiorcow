@@ -553,7 +553,9 @@ input[type="tel"]::placeholder {
     Arial,
     sans-serif;
   display: flex;
-  justify-content: space-between;
+  /*justify-content: space-between;*/
+  flex-direction: column;
+  gap: 10px;
 }
 .banquet__title {
   font-family: "DM Serif Display", serif;
@@ -1021,6 +1023,12 @@ body.page-short .site-footer {
   font-size: 32px;
   color: var(--secondary);
   margin-top: 20px;
+}
+.bankiet1 {
+  max-width: 900px;
+}
+.godzina {
+  font-size: 32px;
 }
 /* Mobile */
 @media (max-width: 900px) {

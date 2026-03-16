@@ -47,7 +47,7 @@ export async function onRequestPost({ request, env }) {
   const tickets = {
     standard:      { name: "Standard – 1 dzień",                unit: 59900 },   // 599 PLN
     biznesplus:    { name: "Biznes Plus – 2 dni",                unit: 69900 },   // 699 PLN
-    biznesbankiet: { name: "Biznes Plus + Bankiet – 2 dni",      unit: 109900 },  // 1 099 PLN
+    biznesbankiet: { name: "VIP + Bankiet – 2 dni",               unit: 109900 },  // 1 099 PLN
     vip:           { name: "VIP z Prezentacją – 2 dni + bankiet", unit: 159900 }, // 1 599 PLN
   };
 
@@ -65,7 +65,7 @@ export async function onRequestPost({ request, env }) {
 
   let discountFactor = 1;
 
-  if (promo === "kwiecien") {
+  if (promo === "kwiecien" || promo === "kwiecień") {
     // Ważny do końca kwietnia 2026 (CEST, UTC+2)
     const deadlineKwiecien = new Date("2026-05-01T00:00:00+02:00");
     if (now < deadlineKwiecien) {
