@@ -676,6 +676,7 @@ img {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     justify-items: center;
     gap: 0px;
+    margin: 40px auto 0px auto;
   }
   .speakers-grid > .speaker-card:last-child:nth-child(odd) {
     grid-column: 1 / -1; /* zajmuje cały rząd */
@@ -683,8 +684,8 @@ img {
   }
 
   .speaker-avatar {
-    width: 96px;
-    height: 96px;
+    width: 130px;
+    height: 130px;
     font-size: 40px;
     border-width: 2px;
   }
