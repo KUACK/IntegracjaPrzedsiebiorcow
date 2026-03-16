@@ -377,10 +377,11 @@ body {
   margin: 12px 0 0;
   display: grid;
   gap: 12px;
+  max-width: 80%;
+  margin: 20px auto 0 auto;
 }
 
 .ticket-description li {
-  display: grid;
   grid-template-columns: 22px 1fr;
   column-gap: 12px;
   align-items: start;
@@ -388,21 +389,25 @@ body {
   font-size: 14px;
   line-height: 1.1;
   color: var(--text-dark);
+  border-bottom: 1px solid #0f1624a4;
+  padding-bottom: 12px;
+
+  text-align: left;
 }
 
-/* „ikonka” jako marker */
+/* „ikonka” jako marker 
 .ticket-description li::before {
-  content: "✓";
-  width: 22px;
-  height: 22px;
+  content: "-";
+  width: 5px;
+  height: 5px;
   border-radius: 999px;
   display: grid;
   place-items: center;
-  background: rgba(239, 157, 77, 0.14); /* pod Twój primary */
+  background: rgb(239, 158, 77); 
   color: var(--primary);
   margin-top: 2px;
   font-weight: 700;
-}
+}*/
 
 .ticket-desc-title {
   font-weight: 600;
