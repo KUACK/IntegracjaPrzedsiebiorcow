@@ -568,7 +568,7 @@ input[type="tel"]::placeholder {
 
 /* jeśli chcesz, żeby "DESIGN" miało subtelny akcent kolorem */
 .banquet__title {
-  text-shadow: 0 14px 30px rgba(0, 0, 0, 0.06);
+  text-shadow: 0 14px 30px rgba(0, 0, 0, 0.221);
 }
 
 .banquet__label {
@@ -669,7 +669,7 @@ img {
 
   /* Prelegenci */
   .section-title {
-    font-size: 24px;
+    font-size: 36px;
   }
 
   .speakers-grid {
@@ -1066,6 +1066,7 @@ body.page-short .site-footer {
 
 .bankiet1 .banquet__label {
   font-size: 92px;
+  text-shadow: 100px 80px 20px #ffffffb4;
 }
 
 .bankiet1 .banquet__title {
@@ -1111,5 +1112,9 @@ body.page-short .site-footer {
 
   .banquet__title {
     font-size: 32px;
+  }
+  .footer-col {
+    display: flex;
+    flex-direction: column;
   }
 }
