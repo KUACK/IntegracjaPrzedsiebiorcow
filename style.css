@@ -506,7 +506,6 @@ input[type="tel"]::placeholder {
       transparent 60%
     ),
     linear-gradient(180deg, #ffffff 0%, #fbfbfd 100%); */
-  width: 1200px;
 }
 
 .banquet__inner {
@@ -525,7 +524,6 @@ input[type="tel"]::placeholder {
   color: var(--secondary);
   text-transform: uppercase;
   letter-spacing: -0.02em;
-  margin-left: 300px;
 }
 
 /* "CONCORDIA DESIGN" — duży tytuł, lekko przesunięty w prawo */

@@ -3,7 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Konferencja Przedsiębiorców</title>
+    <title>Integracja Przedsiębiorców</title>
+    <link
+      rel="icon"
+      href="obrazy/logo.png"
+      media="(prefers-color-scheme: light)"
+    />
+    <link
+      rel="icon"
+      href="obrazy/logo_biale.png"
+      media="(prefers-color-scheme: dark)"
+    />
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="form_style.css" />
     <link
@@ -53,7 +63,7 @@
 
         <label>Typ biletu</label>
         <select name="ticketType" id="ticketType" required>
-          <option value="standard">Standard – 1 dzień (599 PLN)</option>
+          <option value="premium">Premium – 1 dzień (599 PLN)</option>
           <option value="biznesplus">Biznes Plus – 2 dni (699 PLN)</option>
           <option value="biznesbankiet">
             Biznes Plus + Bankiet – 2 dni (1 099 PLN)
@@ -229,7 +239,7 @@
 
       // --- Ceny biletów w groszach ---
       const PRICE_GROSZE = {
-        standard: 59900, // 599 PLN
+        premium: 59900, // 599 PLN
         biznesplus: 69900, // 699 PLN
         biznesbankiet: 109900, // 1 099 PLN
         vip: 159900, // 1 599 PLN
