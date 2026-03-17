@@ -63,11 +63,11 @@
 
         <label>Typ biletu</label>
         <select name="ticketType" id="ticketType" required>
-          <option value="premium">Premium – 1 dzień (599 PLN)</option>
-          <option value="biznesplus">Biznes Plus – 2 dni (699 PLN)</option>
-          <option value="vipbankiet">VIP – 2 dni + bankiet (1 099 PLN)</option>
+          <option value="premium">Premium – 1 dzień (499 PLN)</option>
+          <option value="biznesplus">Biznes Plus – 2 dni (599 PLN)</option>
+          <option value="vipbankiet">VIP – 2 dni + bankiet (999 PLN)</option>
           <option value="vip">
-            VIP z Prezentacją – 2 dni + bankiet (1 599 PLN)
+            VIP z Prezentacją – 2 dni + bankiet (1 499 PLN)
           </option>
         </select>
 
@@ -237,10 +237,10 @@
 
       // --- Ceny biletów w groszach ---
       const PRICE_GROSZE = {
-        premium: 59900, // 599 PLN
-        biznesplus: 69900, // 699 PLN
-        vipbankiet: 109900, // 1 099 PLN
-        vip: 159900, // 1 599 PLN
+        premium: 49900, // 499 PLN
+        biznesplus: 59900, // 599 PLN
+        vipbankiet: 99900, // 999 PLN
+        vip: 149900, // 1 499 PLN
       };
 
       const ticketSel = form.querySelector('select[name="ticketType"]');

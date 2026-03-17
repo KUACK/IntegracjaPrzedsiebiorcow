@@ -273,18 +273,13 @@ body {
   background: rgba(255, 255, 255, 0.65);
   border: 1px solid rgba(48, 82, 117, 0.25);
   border-radius: 10px;
-  min-height: 160px;
+  min-height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
   transition:
     background 0.2s ease,
     border-color 0.2s ease;
-}
-
-.prelekcja-slot:hover {
-  background: rgba(255, 255, 255, 0.9);
-  border-color: var(--primary);
 }
 
 /* lista w kaflu (jak te małe punkty po lewej na screenie) */
@@ -1083,6 +1078,13 @@ body.page-short .site-footer {
 .mobile-break {
   display: none;
 }
+.prelekcja-slot {
+  font-weight: 700;
+  background-color: var(--secondary);
+  color: var(--border);
+  text-transform: uppercase;
+}
+
 /* Mobile */
 @media (max-width: 600px) {
   .footer-grid {

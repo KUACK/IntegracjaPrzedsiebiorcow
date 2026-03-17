@@ -45,10 +45,10 @@ export async function onRequestPost({ request, env }) {
 
   // --- Bilety i ceny (grosze) ---
   const tickets = {
-    premium: { name: "Premium – 1 dzień", unit: 59900 }, // 599 PLN
-    biznesplus: { name: "Biznes Plus – 2 dni", unit: 69900 }, // 699 PLN
-    vipbankiet: { name: "VIP – 2 dni + bankiet", unit: 109900 }, // 1 099 PLN
-    vip: { name: "VIP z Prezentacją – 2 dni + bankiet", unit: 159900 }, // 1 599 PLN
+    premium: { name: "Premium – 1 dzień", unit: 49900 }, // 499 PLN
+    biznesplus: { name: "Biznes Plus – 2 dni", unit: 59900 }, // 599 PLN
+    vipbankiet: { name: "VIP – 2 dni + bankiet", unit: 99900 }, // 999 PLN
+    vip: { name: "VIP z Prezentacją – 2 dni + bankiet", unit: 149900 }, // 1 499 PLN
   };
 
   const t = tickets[String(ticketType || "").toLowerCase()];
