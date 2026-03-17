@@ -15,6 +15,10 @@
   --border: #eeeeee;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family:
     "Inter",
@@ -29,7 +33,51 @@ body {
   line-height: 1.6;
 }
 
-/* PROMO BAR */
+/* ========================
+   ANIMACJE WEJŚCIA (Scroll)
+   ======================== */
+.fade-in {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.55s ease,
+    transform 0.55s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-in-left {
+  opacity: 0;
+  transform: translateX(-32px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+}
+
+.fade-in-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.fade-in-right {
+  opacity: 0;
+  transform: translateX(32px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+}
+
+.fade-in-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ========================
+   PROMO BAR
+   ======================== */
 .promo-bar {
   background: var(--accent);
   color: var(--white);
@@ -41,6 +89,21 @@ body {
   top: 0;
   z-index: 1000;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Animacja pulsowania na promobar */
+@keyframes promo-pulse {
+  0%,
+  100% {
+    background: var(--accent);
+  }
+  50% {
+    background: #d4513e;
+  }
+}
+
+.promo-bar {
+  animation: promo-pulse 4s ease-in-out infinite;
 }
 
 .promo-content {
@@ -65,8 +128,19 @@ body {
   font-weight: 700;
 }
 
+/* ========================
+   LOGO
+   ======================== */
 .logo img {
   margin: 0 auto;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+}
+
+.logo:hover img {
+  transform: scale(1.05);
+  opacity: 0.85;
 }
 
 /* CONTAINER */
@@ -76,12 +150,19 @@ body {
   padding: 0 20px;
 }
 
-/* HEADER */
+/* ========================
+   HEADER
+   ======================== */
 .header {
   background: var(--white);
   padding: 20px 20px;
   text-align: center;
   border-bottom: 4px solid var(--primary);
+  transition: box-shadow 0.3s ease;
+}
+
+.header:hover {
+  box-shadow: 0 4px 20px rgba(48, 82, 117, 0.08);
 }
 
 .header h1 {
@@ -96,7 +177,9 @@ body {
   color: var(--text-light);
 }
 
-/* SEKCJA PRELEGENCI */
+/* ========================
+   SEKCJA PRELEGENCI
+   ======================== */
 .section {
   padding: 60px 20px;
   background: var(--light-bg);
@@ -140,8 +223,14 @@ body {
   justify-items: center;
 }
 
+/* Hover na kartach prelegentów */
 .speaker-card {
   text-align: center;
+  transition: transform 0.35s ease;
+}
+
+.speaker-card:hover {
+  transform: translateY(-8px);
 }
 
 .speaker-avatar {
@@ -157,6 +246,18 @@ body {
   color: #999999;
   border: 3px solid var(--primary);
   position: relative;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.35s ease;
+}
+
+.speaker-card:hover .speaker-avatar {
+  border-color: #ffffff;
+  box-shadow:
+    0 0 0 5px rgba(239, 157, 77, 0.45),
+    0 16px 40px rgba(0, 0, 0, 0.25);
+  transform: scale(1.04);
 }
 
 .speaker-avatar.priest::after {
@@ -167,7 +268,9 @@ body {
   right: 0;
 }
 
-/* HARMONOGRAM */
+/* ========================
+   HARMONOGRAM
+   ======================== */
 .harmonogram {
   overflow-x: clip;
 }
@@ -182,9 +285,9 @@ body {
 }
 .schedule-stripe.day-2 {
   background: #fbf3ea;
-} /* inny kolor dnia 2 */
+}
 
-/* nagłówki jak na screenie */
+/* nagłówki */
 .schedule-head {
   text-align: center;
   margin-bottom: 28px;
@@ -196,7 +299,7 @@ body {
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.08em;
-  color: #d07b4a; /* możesz podpiąć pod var(--primary) */
+  color: #d07b4a;
   text-transform: uppercase;
 }
 .schedule-main-date {
@@ -225,7 +328,7 @@ body {
   grid-template-columns: repeat(4, 1fr);
 }
 
-/* kafel */
+/* kafel harmonogramu — hover */
 .schedule-card {
   background: #f6f1ea;
   border: 1px solid rgba(31, 41, 55, 0.1);
@@ -233,13 +336,31 @@ body {
   padding: 22px 22px 20px;
   text-align: center;
   box-shadow: 0 10px 26px rgba(0, 0, 0, 0.06);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease,
+    background 0.3s ease;
+  cursor: default;
+}
+
+.schedule-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 18px 40px rgba(48, 82, 117, 0.14);
+  border-color: rgba(208, 123, 74, 0.4);
+  background: #fff8f0;
 }
 
 .schedule-time {
   font-size: 28px;
   font-weight: 800;
-  color: #d07b4a; /* var(--primary) */
+  color: #d07b4a;
   margin-bottom: 8px;
+  transition: color 0.3s ease;
+}
+
+.schedule-card:hover .schedule-time {
+  color: var(--accent);
 }
 
 .schedule-title {
@@ -269,8 +390,12 @@ body {
   padding: 0px 20px 20px 20px;
 }
 
+/* slot prelekcji — hover */
 .prelekcja-slot {
-  background: rgba(255, 255, 255, 0.65);
+  font-weight: 700;
+  background-color: var(--secondary);
+  color: var(--border);
+  text-transform: uppercase;
   border: 1px solid rgba(48, 82, 117, 0.25);
   border-radius: 10px;
   min-height: 50px;
@@ -278,11 +403,21 @@ body {
   align-items: center;
   justify-content: center;
   transition:
-    background 0.2s ease,
-    border-color 0.2s ease;
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+  cursor: pointer;
 }
 
-/* lista w kaflu (jak te małe punkty po lewej na screenie) */
+.prelekcja-slot:hover {
+  border-color: rgba(239, 157, 77, 0.6);
+
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(239, 157, 77, 0.3);
+}
+
+/* lista w kaflu */
 .schedule-list {
   list-style: none;
   padding: 0;
@@ -307,7 +442,10 @@ body {
   line-height: 1;
   margin-top: 2px;
 }
-/* BILETY */
+
+/* ========================
+   BILETY
+   ======================== */
 .tickets-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -320,19 +458,50 @@ body {
 .ticket-card {
   background: var(--white);
   border: 2px solid var(--border);
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 30px;
   text-align: center;
-  transition: all 0.3s ease;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.35s ease,
+    transform 0.35s ease,
+    background 0.3s ease;
   display: flex;
   flex-direction: column;
   min-width: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtelna linia u góry karty — pojawia się przy hover */
+.ticket-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.ticket-card:hover::before {
+  transform: scaleX(1);
 }
 
 .ticket-card:hover {
   border-color: var(--primary);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  transform: translateY(-5px);
+  box-shadow: 0 16px 48px rgba(48, 82, 117, 0.18);
+  transform: translateY(-8px);
+  background: #fffdf9;
+}
+
+/* Wyróżniony VIP card */
+.ticket-card:nth-child(3) {
+  border-color: rgba(239, 157, 77, 0.4);
+  box-shadow: 0 8px 32px rgba(239, 157, 77, 0.12);
 }
 
 .ticket-badge {
@@ -345,12 +514,25 @@ body {
   font-weight: 600;
   margin-bottom: 15px;
   text-transform: uppercase;
+  transition:
+    background 0.3s ease,
+    transform 0.3s ease;
+}
+
+.ticket-card:hover .ticket-badge {
+  background: var(--accent);
+  transform: scale(1.08);
 }
 
 .ticket-name {
   font-size: 22px;
   font-weight: 700;
   color: var(--secondary);
+  transition: color 0.3s ease;
+}
+
+.ticket-card:hover .ticket-name {
+  color: var(--accent);
 }
 
 .ticket-description {
@@ -358,22 +540,20 @@ body {
   color: var(--text-dark);
   flex-grow: 1;
   text-align: left;
-  width: 80%;
   margin: 0 auto 20px auto;
   font-weight: 500;
   line-height: 2.2;
-  width: 100%; /* było 80% */
-  max-width: 42ch; /* kontrola długości linii */
+  width: 100%;
+  max-width: 42ch;
 }
 
 .ticket-description ul {
   list-style: none;
   padding: 0;
-  margin: 12px 0 0;
+  margin: 20px auto 0 auto;
   display: grid;
   gap: 12px;
   max-width: 80%;
-  margin: 20px auto 0 auto;
 }
 
 .ticket-description li {
@@ -386,23 +566,7 @@ body {
   color: var(--text-dark);
   border-bottom: 1px solid #0f1624a4;
   padding-bottom: 12px;
-
-  text-align: left;
 }
-
-/* „ikonka” jako marker 
-.ticket-description li::before {
-  content: "-";
-  width: 5px;
-  height: 5px;
-  border-radius: 999px;
-  display: grid;
-  place-items: center;
-  background: rgb(239, 158, 77); 
-  color: var(--primary);
-  margin-top: 2px;
-  font-weight: 700;
-}*/
 
 .ticket-desc-title {
   font-weight: 600;
@@ -425,8 +589,18 @@ body {
   font-size: 36px;
   font-weight: 700;
   color: var(--primary);
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease;
+  display: inline-block;
 }
 
+.ticket-card:hover .new-price {
+  color: var(--accent);
+  transform: scale(1.05);
+}
+
+/* Przycisk kup teraz */
 .btn-buy {
   background: linear-gradient(135deg, var(--accent) 0%, #e88a3f 100%);
   color: var(--white);
@@ -434,20 +608,56 @@ body {
   padding: 14px 28px;
   font-size: 16px;
   font-weight: 600;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease,
+    letter-spacing 0.25s ease;
   margin-top: auto;
   display: inline-block;
   text-decoration: none;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Shimmer efekt na przycisku */
+.btn-buy::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 255, 255, 0.28),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.btn-buy:hover::after {
+  left: 150%;
 }
 
 .btn-buy:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(239, 157, 77, 0.3);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(227, 105, 85, 0.4);
+  background: linear-gradient(135deg, #d4513e 0%, var(--accent) 100%);
+  letter-spacing: 0.5px;
 }
 
-/* FORMULARZ */
+.btn-buy:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(227, 105, 85, 0.25);
+}
+
+/* ========================
+   FORMULARZ
+   ======================== */
 .form-section {
   background: linear-gradient(135deg, var(--secondary) 0%, #1f3a4d 100%);
   color: var(--white);
@@ -523,17 +733,11 @@ input[type="tel"]::placeholder {
   box-shadow: 0 6px 16px rgba(239, 157, 77, 0.3);
 }
 
-/* BANQUET SECTION */
-
-/* opcjonalnie: tło i dystans od innych sekcji */
+/* ========================
+   BANQUET SECTION
+   ======================== */
 .banquet {
   padding: 64px 20px;
-  /* background: radial-gradient(
-      1200px 400px at 20% 10%,
-      rgba(239, 157, 77, 0.16),
-      transparent 60%
-    ),
-    linear-gradient(180deg, #ffffff 0%, #fbfbfd 100%); */
 }
 
 .banquet__inner {
@@ -542,11 +746,9 @@ input[type="tel"]::placeholder {
   text-align: left;
 }
 
-/* "BANKIET" — mały, mocny akcent */
 .banquet__label {
   margin-top: 18px;
-
-  font-size: clamp(34px, 4.2vw, 64px); /* płynna typografia */
+  font-size: clamp(34px, 4.2vw, 64px);
   line-height: 1.05;
   font-weight: 800;
   color: var(--secondary);
@@ -554,10 +756,9 @@ input[type="tel"]::placeholder {
   letter-spacing: -0.02em;
 }
 
-/* "CONCORDIA DESIGN" — duży tytuł, lekko przesunięty w prawo */
 .banquet__title {
   margin-top: 100px;
-  font-size: clamp(34px, 4.2vw, 64px); /* płynna typografia */
+  font-size: clamp(34px, 4.2vw, 64px);
   line-height: 1.05;
   font-weight: 800;
   color: var(--secondary);
@@ -566,7 +767,6 @@ input[type="tel"]::placeholder {
   text-align: right;
 }
 
-/* jeśli chcesz, żeby "DESIGN" miało subtelny akcent kolorem */
 .banquet__title {
   text-shadow: 0 14px 30px rgba(0, 0, 0, 0.221);
 }
@@ -581,16 +781,24 @@ input[type="tel"]::placeholder {
     Arial,
     sans-serif;
   display: flex;
-  /*justify-content: space-between;*/
   flex-direction: column;
   gap: 10px;
+  transition: color 0.4s ease;
 }
+
 .banquet__title {
   font-family: "DM Serif Display", serif;
   font-weight: 400;
   text-transform: none;
   letter-spacing: 0;
+  transition:
+    letter-spacing 0.5s ease,
+    color 0.4s ease;
 }
+
+/* ========================
+   MISC
+   ======================== */
 .section-subtitle2 {
   text-align: center;
   font-size: 24px;
@@ -598,242 +806,71 @@ input[type="tel"]::placeholder {
   margin: 15px 0;
   font-weight: 700;
 }
-/* Harmonogram – stały dopisek miejsca po każdym wydarzeniu */
+
 .schedule-item::after {
   content: "  MIEJSCE: TARGI POZNAŃSKIE";
   color: var(--text-dark);
   font-size: 12px;
   font-weight: 400;
 }
-/* RESPONSYWNE */
-/* =========================
-   MOBILE (telefony)
-   ========================= */
+
 img {
   max-width: 100%;
   height: auto;
   display: block;
 }
 
-@media (max-width: 600px) {
-  /* Ogólne odstępy */
-  .container {
-    padding: 0 16px;
-  }
-
-  .section {
-    padding: 32px 16px;
-    border-radius: 0;
-  }
-
-  /* Promo bar (masz tam bardzo duże fonty) */
-  .promo-bar {
-    padding: 10px 12px;
-    font-size: 16px;
-    line-height: 1.25;
-  }
-
-  .promo-content {
-    gap: 8px;
-  }
-
-  .promo-text {
-    min-width: 0;
-    font-size: 16px;
-    line-height: 1.35;
-  }
-
-  .timer {
-    width: 100%;
-    font-size: 14px;
-  }
-
-  /* Header + logo */
-  .header {
-    padding: 14px 16px;
-  }
-
-  .header h1 {
-    font-size: 28px;
-    line-height: 1.1;
-  }
-
-  .header p {
-    font-size: 14px;
-  }
-
-  .logo img {
-    max-width: 180px;
-    margin: 0 auto;
-  }
-
-  /* Prelegenci */
-  .section-title {
-    font-size: 36px;
-  }
-
-  .speakers-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    justify-items: center;
-    gap: 0px;
-    margin: 40px auto 0px auto;
-  }
-  .speakers-grid > .speaker-card:last-child:nth-child(odd) {
-    grid-column: 1 / -1; /* zajmuje cały rząd */
-    justify-self: center; /* i jest na środku */
-  }
-
-  .speaker-avatar {
-    width: 130px;
-    height: 130px;
-    font-size: 40px;
-    border-width: 2px;
-  }
-
-  /* Harmonogram */
-  .schedule-stripe {
-    padding: 36px 0;
-  }
-
-  .schedule-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-
-  .schedule-grid--day2 {
-    grid-template-columns: 1fr;
-  }
-
-  .schedule-card {
-    padding: 16px;
-    border-radius: 12px;
-  }
-
-  .schedule-time {
-    font-size: 22px;
-  }
-
-  .schedule-title {
-    font-size: 15px;
-  }
-
-  .schedule-desc,
-  .schedule-list {
-    max-width: none;
-  }
-
-  /* Kafel "wide" niech nie próbuje się rozpychać na mobile */
-  .schedule-card--wide {
-    grid-column: auto;
-  }
-
-  /* siatka prelekcji na mobile: 2 kolumny */
-  .prelekcje-grid {
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    gap: 8px;
-  }
-
-  .prelekcja-slot {
-    min-height: 70px;
-  }
-
-  .banquet__label {
-    display: grid;
-  }
-
-  .banquet__title {
-    margin-top: 40px;
-  }
-
-  /* Bilety */
-  .tickets-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
-    padding: 0 16px;
-  }
-
-  .ticket-card {
-    padding: 18px;
-  }
-
-  .ticket-name {
-    font-size: 18px;
-  }
-
-  .ticket-description {
-    line-height: 1.6;
-    max-width: none;
-  }
-
-  .ticket-description li {
-    line-height: 1.3;
-  }
-
-  .old-price {
-    font-size: 16px;
-  }
-
-  .new-price {
-    font-size: 28px;
-  }
-
-  .btn-buy {
-    width: 100%;
-    text-align: center;
-    padding: 14px 18px;
-  }
-
-  /* Formularz */
-  .form-section {
-    padding: 32px 16px;
-    margin: 24px 0;
-    border-radius: 0;
-  }
-
-  .form-row {
-    grid-template-columns: 1fr;
-  }
-
-  /* Bankiet – ważne: usuń stałą szerokość 1200px */
-  .banquet {
-    width: 100%;
-    padding: 40px 16px;
-    margin: 0 auto;
-  }
-
-  /* Dopasowanie do klas z Twojego HTML */
-  .banquetinner {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .banquetlabel {
-    margin-left: 0;
-    font-size: 28px;
-    text-align: left;
-  }
-
-  .banquettitle {
-    margin: 24px 0 0 0;
-    font-size: 30px;
-    text-align: left;
-  }
+.inne_miejsce {
+  color: rgb(162, 6, 6);
+  font-weight: 700;
+  padding-top: 15px;
+  font-size: 16px;
 }
 
-@media (max-width: 360px) {
-  .promo-bar {
-    font-size: 15px;
-  }
-
-  .header h1 {
-    font-size: 24px;
-  }
+.sierpien {
+  font-size: 14px;
 }
 
-/* =========================
-   FOOTER (jak na screenie)
-========================= */
+.adresss {
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.miejsce_adress {
+  font-weight: 400;
+  font-family: "DM Serif Display", serif;
+  text-transform: none;
+  letter-spacing: 0;
+  text-align: right;
+  font-size: 32px;
+  color: var(--secondary);
+  margin-top: 20px;
+}
+
+.bankiet1 {
+  max-width: 900px;
+}
+
+.bankiet1 .banquet__label {
+  font-size: 92px;
+  text-shadow: 100px 80px 20px #ffffffb4;
+}
+
+.bankiet1 .banquet__title {
+  font-size: 72px;
+}
+
+.godzina {
+  font-size: 32px;
+}
+
+.mobile-break {
+  display: none;
+}
+
+/* ========================
+   FOOTER
+   ======================== */
 .site-footer {
   position: relative;
   background: #0f1624;
@@ -946,12 +983,16 @@ img {
 .footer-list a {
   color: rgba(255, 255, 255, 0.85);
   text-decoration: none;
+  transition:
+    color 0.2s ease,
+    padding-left 0.2s ease;
+  display: inline-block;
 }
 
 .footer-list a:hover {
-  color: rgba(255, 255, 255, 1);
-  text-decoration: underline;
-  text-underline-offset: 4px;
+  color: var(--primary);
+  text-decoration: none;
+  padding-left: 6px;
 }
 
 .footer-list--icons li {
@@ -964,6 +1005,11 @@ img {
 .footer-ico {
   color: rgba(255, 255, 255, 0.8);
   margin-top: 2px;
+  transition: color 0.2s ease;
+}
+
+.footer-list--icons li:hover .footer-ico {
+  color: var(--primary);
 }
 
 .footer-ico--dot {
@@ -975,6 +1021,7 @@ img {
   margin-top: 6px;
 }
 
+/* Logo organizatora — hover */
 .footer-org-card {
   display: inline-flex;
   align-items: center;
@@ -984,6 +1031,16 @@ img {
   padding: 24px 36px;
   box-shadow: 0 10px 26px rgba(0, 0, 0, 0.25);
   max-width: 320px;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    background 0.3s ease;
+}
+
+.footer-org-card:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+  background: rgba(255, 255, 255, 1);
 }
 
 .footer-org-card img {
@@ -1002,20 +1059,31 @@ img {
 }
 
 .logo_footer {
-  filter: grayscale(1) brightness(0) invert(1); /* robi z niego „białe” */
+  filter: grayscale(1) brightness(0) invert(1);
+  transition:
+    filter 0.3s ease,
+    transform 0.3s ease;
+}
+
+.logo_footer:hover {
+  filter: none;
+  transform: scale(1.05);
 }
 
 body.page-short .site-footer {
   margin-top: 174px;
 }
 
+/* ========================
+   TOOLTIP
+   ======================== */
 .tooltip {
   position: relative;
 }
 
 .tooltip-text {
   position: absolute;
-  bottom: 120%; /* nad linkiem */
+  bottom: 120%;
   left: 50%;
   transform: translateX(-50%);
   background: #333;
@@ -1027,65 +1095,232 @@ body.page-short .site-footer {
   width: 260px;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.2s;
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
   z-index: 10;
+  transform: translateX(-50%) translateY(6px);
 }
 
 .tooltip:hover .tooltip-text {
   opacity: 1;
   visibility: visible;
+  transform: translateX(-50%) translateY(0);
 }
 
-.inne_miejsce {
-  color: rgb(162, 6, 6);
-  font-weight: 700;
-  padding-top: 15px;
-  font-size: 16px;
+/* ========================
+   RESPONSYWNE — MOBILE
+   ======================== */
+@media (max-width: 600px) {
+  .container {
+    padding: 0 16px;
+  }
+
+  .section {
+    padding: 32px 16px;
+    border-radius: 0;
+  }
+
+  .promo-bar {
+    padding: 10px 12px;
+    font-size: 16px;
+    line-height: 1.25;
+  }
+
+  .promo-content {
+    gap: 8px;
+  }
+
+  .promo-text {
+    min-width: 0;
+    font-size: 16px;
+    line-height: 1.35;
+  }
+
+  .timer {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .header {
+    padding: 14px 16px;
+  }
+
+  .header h1 {
+    font-size: 28px;
+    line-height: 1.1;
+  }
+
+  .header p {
+    font-size: 14px;
+  }
+
+  .logo img {
+    max-width: 180px;
+    margin: 0 auto;
+  }
+
+  .section-title {
+    font-size: 36px;
+  }
+
+  .speakers-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    justify-items: center;
+    gap: 0px;
+    margin: 40px auto 0px auto;
+  }
+  .speakers-grid > .speaker-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+  }
+
+  .speaker-avatar {
+    width: 130px;
+    height: 130px;
+    font-size: 40px;
+    border-width: 2px;
+  }
+
+  .schedule-stripe {
+    padding: 36px 0;
+  }
+
+  .schedule-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .schedule-grid--day2 {
+    grid-template-columns: 1fr;
+  }
+
+  .schedule-card {
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .schedule-time {
+    font-size: 22px;
+  }
+
+  .schedule-title {
+    font-size: 15px;
+  }
+
+  .schedule-desc,
+  .schedule-list {
+    max-width: none;
+  }
+
+  .schedule-card--wide {
+    grid-column: auto;
+  }
+
+  .prelekcje-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .prelekcja-slot {
+    min-height: 50px;
+  }
+
+  .footer-mark {
+    padding-top: 50px;
+  }
+
+  .banquet__label {
+    display: grid;
+  }
+
+  .banquet__title {
+    margin-top: 40px;
+  }
+
+  .tickets-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 0 16px;
+  }
+
+  .ticket-card {
+    padding: 18px;
+  }
+
+  .ticket-name {
+    font-size: 18px;
+  }
+
+  .ticket-description {
+    line-height: 1.6;
+    max-width: none;
+  }
+
+  .ticket-description li {
+    line-height: 1.3;
+  }
+
+  .old-price {
+    font-size: 16px;
+  }
+
+  .new-price {
+    font-size: 28px;
+  }
+
+  .btn-buy {
+    width: 100%;
+    text-align: center;
+    padding: 14px 18px;
+  }
+
+  .form-section {
+    padding: 32px 16px;
+    margin: 24px 0;
+    border-radius: 0;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .banquet {
+    width: 100%;
+    padding: 40px 16px;
+    margin: 0 auto;
+  }
+
+  .banquetinner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .banquetlabel {
+    margin-left: 0;
+    font-size: 28px;
+    text-align: left;
+  }
+
+  .banquettitle {
+    margin: 24px 0 0 0;
+    font-size: 30px;
+    text-align: left;
+  }
 }
 
-.sierpien {
-  font-size: 14px;
-}
-.adresss {
-  font-size: 14px;
-  margin-top: 10px;
-}
-.miejsce_adress {
-  font-weight: 400;
-  font-family: "DM Serif Display", serif;
-  text-transform: none;
-  letter-spacing: 0;
-  text-align: right;
-  font-size: 32px;
-  color: var(--secondary);
-  margin-top: 20px;
-}
-.bankiet1 {
-  max-width: 900px;
+@media (max-width: 360px) {
+  .promo-bar {
+    font-size: 15px;
+  }
+
+  .header h1 {
+    font-size: 24px;
+  }
 }
 
-.bankiet1 .banquet__label {
-  font-size: 92px;
-  text-shadow: 100px 80px 20px #ffffffb4;
-}
-
-.bankiet1 .banquet__title {
-  font-size: 72px;
-}
-.godzina {
-  font-size: 32px;
-}
-.mobile-break {
-  display: none;
-}
-.prelekcja-slot {
-  font-weight: 700;
-  background-color: var(--secondary);
-  color: var(--border);
-  text-transform: uppercase;
-}
-
-/* Mobile */
+/* Mobile footer */
 @media (max-width: 600px) {
   .footer-grid {
     grid-template-columns: 1fr;
@@ -1099,12 +1334,15 @@ body.page-short .site-footer {
   .banquet__inner {
     padding: 0 20px;
   }
+
   .bankiet1 .banquet__label {
     font-size: 52px;
   }
+
   .godzina {
     font-size: 26px;
   }
+
   .bankiet1 .banquet__title {
     font-size: 42px;
   }
@@ -1113,6 +1351,7 @@ body.page-short .site-footer {
     font-size: 18px;
     margin-top: 5px;
   }
+
   .mobile-break {
     display: inline;
   }
@@ -1120,6 +1359,7 @@ body.page-short .site-footer {
   .banquet__title {
     font-size: 32px;
   }
+
   .footer-col {
     display: flex;
     flex-direction: column;
