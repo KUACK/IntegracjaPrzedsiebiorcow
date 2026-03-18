@@ -254,6 +254,7 @@
       let promoApplied = false;
       let appliedCode = "";
       let discountFactor = 1;
+      let fixedPriceGrosze = 0;
 
       function formatPLNFromGrosze(grosze) {
         return (grosze / 100).toLocaleString("pl-PL", {
@@ -275,9 +276,14 @@
       function renderTotal() {
         const qty = getQty();
         const unit = getUnit();
-        const unitAfter = Math.round(
-          unit * (promoApplied ? discountFactor : 1),
-        );
+        let unitAfter;
+        if (promoApplied && fixedPriceGrosze > 0) {
+          unitAfter = fixedPriceGrosze;
+        } else {
+          unitAfter = Math.round(
+            unit * (promoApplied ? discountFactor : 1),
+          );
+        }
         const total = unitAfter * qty;
         totalEl.textContent = unit ? formatPLNFromGrosze(total) : "—";
       }
@@ -286,6 +292,7 @@
         promoApplied = false;
         appliedCode = "";
         discountFactor = 1;
+        fixedPriceGrosze = 0;
         promoHintEl.textContent = "";
         renderTotal();
       }
@@ -350,6 +357,15 @@
           return { valid: false, label: "Ten kod już wygasł." };
         }
 
+        if (normalized === "ligotzki022725@") {
+          return {
+            valid: true,
+            code: "LIGOTZKI022725@",
+            fixedPrice: 100, // 1 PLN w groszach
+            label: "Kod zastosowany.",
+          };
+        }
+
         return { valid: false, label: "Nieprawidłowy kod." };
       }
 
@@ -360,7 +376,8 @@
         if (result.valid) {
           promoApplied = true;
           appliedCode = result.code;
-          discountFactor = result.factor;
+          discountFactor = result.factor || 1;
+          fixedPriceGrosze = result.fixedPrice || 0;
           promoHintEl.textContent = result.label;
           promoHintEl.style.color = "";
         } else {
