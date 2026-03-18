@@ -177,7 +177,9 @@ async function sendTicketsEmail({ to, fullName, ticketType, tickets, env }) {
     ticketCount === 1 ? "bilet" : ticketCount < 5 ? "bilety" : "biletów";
 
   const emailPayload = {
-    from: env.EMAIL_FROM || "Integracja Przedsiębiorców <noreply@integracjaprzedsiebiorcow.eu>",
+    from:
+      env.EMAIL_FROM ||
+      "Integracja Przedsiębiorców <noreply@integracjaprzedsiebiorcow.eu>",
     to: [to],
     subject: `Twoje ${ticketWord} na Integrację Przedsiębiorców`,
     html: `
@@ -338,7 +340,7 @@ export async function onRequestGet({ request, env }) {
     const q = Number(row.quantity || 0);
 
     for (let i = 1; i <= q; i++) {
-      const ticketNo = `${row.ext_order_id}-${i}`;
+      const ticketNo = `${row.extorderid}-${i}-test`;
       const token = crypto.randomUUID();
 
       await env.DB.prepare(

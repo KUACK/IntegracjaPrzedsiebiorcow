@@ -181,7 +181,9 @@ async function sendTicketsEmail({ to, fullName, ticketType, tickets, env }) {
     ticketCount === 1 ? "bilet" : ticketCount < 5 ? "bilety" : "biletów";
 
   const emailPayload = {
-    from: env.EMAIL_FROM || "Integracja Przedsiębiorców <noreply@integracjaprzedsiebiorcow.eu>",
+    from:
+      env.EMAIL_FROM ||
+      "Integracja Przedsiębiorców <noreply@integracjaprzedsiebiorcow.eu>",
     to: [to],
     subject: `Twoje ${ticketWord} na Integrację Przedsiębiorców`,
     html: `
@@ -340,7 +342,7 @@ export async function onRequestPost({ request, env }) {
 
         // 1) Tworzenie biletów z ticket_token
         for (let i = 1; i <= q; i++) {
-          const ticketNo = `${row.ext_order_id}-${i}`;
+          const ticketNo = `${row.extorderid}-${i}-test`;
           const token = crypto.randomUUID();
 
           const ins = await env.DB.prepare(
@@ -422,7 +424,10 @@ export async function onRequestPost({ request, env }) {
                 .bind(extOrderId)
                 .run();
 
-              console.log("PAYU_NOTIFY_EMAIL_SENT", JSON.stringify({ extOrderId }));
+              console.log(
+                "PAYU_NOTIFY_EMAIL_SENT",
+                JSON.stringify({ extOrderId }),
+              );
             } else {
               console.log(
                 "PAYU_NOTIFY_EMAIL_FAILED",
@@ -431,9 +436,15 @@ export async function onRequestPost({ request, env }) {
             }
           }
         } else if (row.email_sent) {
-          console.log("PAYU_NOTIFY_EMAIL_ALREADY_SENT", JSON.stringify({ extOrderId }));
+          console.log(
+            "PAYU_NOTIFY_EMAIL_ALREADY_SENT",
+            JSON.stringify({ extOrderId }),
+          );
         } else if (!env.RESEND_API_KEY) {
-          console.log("PAYU_NOTIFY_NO_RESEND_KEY", "Missing RESEND_API_KEY env var");
+          console.log(
+            "PAYU_NOTIFY_NO_RESEND_KEY",
+            "Missing RESEND_API_KEY env var",
+          );
         }
       }
     } catch (e) {
