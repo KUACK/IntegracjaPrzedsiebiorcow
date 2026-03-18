@@ -256,22 +256,60 @@ export async function onRequestPost({ request, env }) {
       path: url.pathname,
       host: url.host,
       ua: request.headers.get("user-agent"),
-      cfRay: request.headers.get("cf-ray"),
       ip: request.headers.get("cf-connecting-ip"),
-      ct: request.headers.get("content-type"),
     }),
   );
 
   if (!env.DB) {
-    console.log("PAYU_NOTIFY_ERROR", "Missing D1 binding: DB");
-    return new Response("Missing D1 binding: DB", { status: 500 });
+    return new Response("Missing D1 binding", { status: 500 });
   }
 
+  // Pobranie czystej treści żądania
   const raw = await request.text();
-  console.log(
-    "PAYU_NOTIFY_RAW",
-    raw.length > 4000 ? raw.slice(0, 4000) + "…(truncated)" : raw,
-  );
+  console.log("PAYU_NOTIFY_RAW_LENGTH", raw.length);
+
+  // --- POCZĄTEK NOWEGO KODU: WERYFIKACJA PODPISU PAYU ---
+  const signatureHeader = request.headers.get("openpayu-signature") || "";
+  const sigMatch = signatureHeader.match(/signature=([a-zA-Z0-9]+)/i);
+  const algMatch = signatureHeader.match(/algorithm=([a-zA-Z0-9-]+)/i);
+
+  if (!sigMatch || !env.PAYU_MD5_KEY) {
+    console.log(
+      "PAYU_NOTIFY_ERROR",
+      "Brak nagłówka podpisu lub klucza PAYU_MD5_KEY",
+    );
+    return new Response("Unauthorized", { status: 401 });
+  }
+
+  const incomingSignature = sigMatch[1].toLowerCase();
+  // Zabezpieczenie zadziała automatycznie dla algorytmu MD5 jak i nowszego SHA-256
+  const algorithm = algMatch ? algMatch[1].toUpperCase() : "MD5";
+
+  try {
+    // Łączymy surową treść webhooka z naszym tajnym kluczem
+    const dataToHash = new TextEncoder().encode(raw + env.PAYU_MD5_KEY);
+    // Cloudflare Workers posiada wbudowaną w silnik obsługę szyfrowania
+    const hashBuffer = await crypto.subtle.digest(algorithm, dataToHash);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const expectedSignature = hashArray
+      .map((b) => b.toString(16).padStart(2, "0"))
+      .join("");
+
+    if (incomingSignature !== expectedSignature) {
+      console.log(
+        "PAYU_NOTIFY_ERROR",
+        `Błędny podpis. Oczekiwano: ${expectedSignature}, otrzymano: ${incomingSignature}`,
+      );
+      return new Response("Invalid signature", { status: 401 });
+    }
+  } catch (e) {
+    console.log(
+      "PAYU_NOTIFY_ERROR",
+      "Błąd weryfikacji kryptograficznej: " + String(e),
+    );
+    return new Response("Internal Error", { status: 500 });
+  }
+  // --- KONIEC NOWEGO KODU: WERYFIKACJA PODPISU PAYU ---
 
   let payload = null;
   try {
