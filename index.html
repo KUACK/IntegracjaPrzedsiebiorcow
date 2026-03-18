@@ -544,54 +544,10 @@
     <script src="main.js" defer></script>
     <script>
       /* ======= Animacje wejścia przy scrollowaniu ======= */
-      document.addEventListener('DOMContentLoaded', () => {
+      document.addEventListener("DOMContentLoaded", () => {
         const targets = document.querySelectorAll(
-          '.schedule-card, .ticket-card, .speaker-card, .banquet__inner, .schedule-head'
+          ".schedule-card, .ticket-card, .speaker-card, .banquet__inner, .schedule-head",
         );
-
-        // Przypisz klasę fade-in i opóźnienia
-        targets.forEach((el, i) => {
-          el.classList.add('fade-in');
-          // Karty w jednym kontenerze dostają stopniowane opóźnienia
-          const siblings = el.parentElement ? el.parentElement.children.length : 1;
-          const delay = (i % siblings) * 80;
-          el.style.transitionDelay = delay + 'ms';
-        });
-
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                observer.unobserve(entry.target);
-              }
-            });
-          },
-          { threshold: 0.12 }
-        );
-
-        targets.forEach((el) => observer.observe(el));
-
-        /* ======= Wyróżnienie aktywnej sekcji w footer menu ======= */
-        const sections = document.querySelectorAll('section[id], div[id]');
-        const footerLinks = document.querySelectorAll('.footer-list a[href^="#"]');
-
-        const sectionObserver = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                footerLinks.forEach((link) => {
-                  link.style.color = link.getAttribute('href') === '#' + entry.target.id
-                    ? 'var(--primary)'
-                    : '';
-                });
-              }
-            });
-          },
-          { threshold: 0.4 }
-        );
-
-        sections.forEach((s) => sectionObserver.observe(s));
       });
     </script>
   </body>

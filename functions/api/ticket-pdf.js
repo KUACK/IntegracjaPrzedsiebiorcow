@@ -115,7 +115,8 @@ function makeTicketPdf({ ticketNo, fullName, ticketType, email, verifyUrl }) {
   doc.setFontSize(11);
   doc.setFont("DejaVuSans", dejavuBoldBase64 ? "bold" : "normal");
 
-  const no = safeOneLine(ticketNo, 80);
+  //const no = safeOneLine(ticketNo, 80); stary numer bez -test
+  const no = `${safeOneLine(ticketNo, 80)}-test`;
   const name = safeOneLine(fullName, 80);
   const emailSafe = safeOneLine(email, 80);
 
