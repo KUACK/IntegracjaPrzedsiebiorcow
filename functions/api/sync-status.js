@@ -340,7 +340,7 @@ export async function onRequestGet({ request, env }) {
     const q = Number(row.quantity || 0);
 
     for (let i = 1; i <= q; i++) {
-      const ticketNo = `${row.extorderid}-${i}-test`;
+      const ticketNo = `${row.extorderid}-${i}`;
       const token = crypto.randomUUID();
 
       await env.DB.prepare(

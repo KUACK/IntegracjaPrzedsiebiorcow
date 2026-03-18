@@ -380,7 +380,7 @@ export async function onRequestPost({ request, env }) {
 
         // 1) Tworzenie biletów z ticket_token
         for (let i = 1; i <= q; i++) {
-          const ticketNo = `${row.extorderid}-${i}-test`;
+          const ticketNo = `${row.extorderid}-${i}`;
           const token = crypto.randomUUID();
 
           const ins = await env.DB.prepare(
