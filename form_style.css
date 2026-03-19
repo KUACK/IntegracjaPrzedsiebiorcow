@@ -30,8 +30,8 @@
 /* Pola */
 #buy label {
   display: block;
-  margin-top: 10px;
-  margin-bottom: 6px;
+  margin-top: 6px;
+  margin-bottom: 2px;
   font-weight: 600;
   font-size: 14px;
   letter-spacing: 0.02em;
@@ -127,7 +127,7 @@
 #buy select,
 #buy textarea {
   width: 100%;
-  min-height: 46px;
+  min-height: 30px;
   padding: 6px 14px;
 
   border: 1px solid rgba(255, 255, 255, 0.18);
