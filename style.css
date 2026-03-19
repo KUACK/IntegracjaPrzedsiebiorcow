@@ -1161,7 +1161,7 @@ body.page-short .site-footer {
   font-weight: 500;
   font-size: 18px;
   background-color: var(--primary);
-  color: var(--white);
+  color: var(--text-dark);
   border: 0px;
   transition:
     background-color 0.3s ease,
