@@ -89,11 +89,14 @@ export async function onRequestPost({ request, env }) {
     }
   } else if (promo === "ligotzki022725@") {
     // Stała cena 1 PLN (100 groszy) niezależnie od biletu
-    fixedPriceGrosze = 100;
+    fixedPriceGrosze = 33;
   }
   // Nieznany lub pusty kod → discountFactor = 1 (brak zniżki)
 
-  const unitPrice = fixedPriceGrosze > 0 ? fixedPriceGrosze : Math.round(t.unit * discountFactor);
+  const unitPrice =
+    fixedPriceGrosze > 0
+      ? fixedPriceGrosze
+      : Math.round(t.unit * discountFactor);
   const totalAmount = unitPrice * qty; // grosze
 
   const parts = String(fullName).trim().split(/\s+/);

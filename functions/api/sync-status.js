@@ -49,7 +49,7 @@ function textWrap(doc, text, maxWidth) {
   return [text];
 }
 
-function makeTicketPdf({ ticketNo, fullName, ticketType, email, verifyUrl }) {
+function makeTicketPdf({ ticketNo, fullName, ticketType, email, verifyUrl, devCopy = false }) {
   const doc = new jsPDF({ unit: "mm", format: "a4" });
   registerFonts(doc);
 
@@ -76,7 +76,13 @@ function makeTicketPdf({ ticketNo, fullName, ticketType, email, verifyUrl }) {
   doc.setTextColor(255, 255, 255);
   doc.setFont("DejaVuSans", dejavuBoldBase64 ? "bold" : "normal");
   doc.setFontSize(16);
-  doc.text("Bilet wstępu", cardX + 10, cardY + 12);
+
+  if (devCopy) {
+    doc.setFontSize(13);
+    doc.text("Bilet wstępu - wersja developerska", cardX + 10, cardY + 12);
+  } else {
+    doc.text("Bilet wstępu", cardX + 10, cardY + 12);
+  }
 
   const typeText = safeOneLine(ticketType, 50);
   doc.setFontSize(11);
@@ -177,9 +183,7 @@ async function sendTicketsEmail({ to, fullName, ticketType, tickets, env }) {
     ticketCount === 1 ? "bilet" : ticketCount < 5 ? "bilety" : "biletów";
 
   const emailPayload = {
-    from:
-      env.EMAIL_FROM ||
-      "Integracja Przedsiębiorców <noreply@integracjaprzedsiebiorcow.eu>",
+    from: env.EMAIL_FROM || "Integracja Przedsiębiorców <noreply@integracjaprzedsiebiorcow.eu>",
     to: [to],
     subject: `Twoje ${ticketWord} na Integrację Przedsiębiorców`,
     html: `
@@ -240,6 +244,130 @@ async function sendTicketsEmail({ to, fullName, ticketType, tickets, env }) {
   return { ok: res.ok, status: res.status, id: resJson.id || null };
 }
 
+// ─── Powiadomienie do organizatora o nowym zakupie ──────────────────────────
+
+async function sendAdminNotification({ order, ticketCount, tickets, env }) {
+  const adminEmail = env.ADMIN_EMAIL || "konferencja@brfh.eu";
+  const base =
+    env.PUBLIC_BASE_URL || "https://integracjaprzedsiebiorcow.pages.dev";
+
+  // Generuj kopie biletów PDF z dopiskiem "wersja developerska"
+  const attachments = tickets.map((t) => {
+    const verifyUrl = `${base}/verify?t=${encodeURIComponent(t.ticket_token)}`;
+    const pdfBuf = makeTicketPdf({
+      ticketNo: t.ticket_no,
+      fullName: t.full_name,
+      ticketType: t.ticket_type,
+      email: t.email,
+      verifyUrl,
+      devCopy: true,
+    });
+
+    const bytes = new Uint8Array(pdfBuf);
+    let binary = "";
+    for (let i = 0; i < bytes.length; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    const base64Content = btoa(binary);
+
+    return {
+      filename: `kopia-bilet-${safeOneLine(t.ticket_no, 60)}.pdf`,
+      content: base64Content,
+    };
+  });
+
+  const unitPricePLN = (Number(order.unit_price || 0) / 100).toFixed(2);
+  const totalPLN = (Number(order.total_amount || 0) / 100).toFixed(2);
+  const promoInfo = order.promo_applied
+    ? `<strong>${safeOneLine(order.promo_code, 30)}</strong>`
+    : "brak";
+
+  const emailPayload = {
+    from: env.EMAIL_FROM || "Integracja Przedsiębiorców <noreply@integracjaprzedsiebiorcow.eu>",
+    to: [adminEmail],
+    subject: `🎟️ Nowy zakup: ${safeOneLine(order.full_name, 50)} — ${safeOneLine(order.ticket_type, 40)}`,
+    attachments,
+    html: `
+      <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; color: #111827;">
+        <div style="background: #0f172a; padding: 24px 32px; border-radius: 8px 8px 0 0;">
+          <h1 style="color: #ffffff; margin: 0; font-size: 20px;">🎟️ Nowy zakup biletu</h1>
+        </div>
+        <div style="padding: 32px; background: #ffffff; border: 1px solid #e5e7eb; border-top: none; border-radius: 0 0 8px 8px;">
+          <p style="font-size: 15px; margin-top: 0; line-height: 1.6;">
+            Ktoś właśnie zakupił bilet na Twoją konferencję. Oto szczegóły:
+          </p>
+
+          <table style="width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px;">
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+              <td style="padding: 10px 0; color: #6b7280; width: 140px;">Imię i nazwisko</td>
+              <td style="padding: 10px 0; font-weight: 600;">${safeOneLine(order.full_name, 80)}</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+              <td style="padding: 10px 0; color: #6b7280;">Email</td>
+              <td style="padding: 10px 0;">${safeOneLine(order.email, 80)}</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+              <td style="padding: 10px 0; color: #6b7280;">Telefon</td>
+              <td style="padding: 10px 0;">${safeOneLine(order.phone, 30)}</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+              <td style="padding: 10px 0; color: #6b7280;">Adres</td>
+              <td style="padding: 10px 0;">${safeOneLine(order.street, 80)}, ${safeOneLine(order.postal_code, 10)} ${safeOneLine(order.city, 40)}</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+              <td style="padding: 10px 0; color: #6b7280;">Typ biletu</td>
+              <td style="padding: 10px 0; font-weight: 600;">${safeOneLine(order.ticket_type, 60)}</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+              <td style="padding: 10px 0; color: #6b7280;">Ilość</td>
+              <td style="padding: 10px 0;">${ticketCount}</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+              <td style="padding: 10px 0; color: #6b7280;">Cena/szt.</td>
+              <td style="padding: 10px 0;">${unitPricePLN} PLN</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+              <td style="padding: 10px 0; color: #6b7280;">Łącznie</td>
+              <td style="padding: 10px 0; font-weight: 600; font-size: 16px;">${totalPLN} PLN</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+              <td style="padding: 10px 0; color: #6b7280;">Kod promo</td>
+              <td style="padding: 10px 0;">${promoInfo}</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px 0; color: #6b7280;">ID zamówienia</td>
+              <td style="padding: 10px 0; font-size: 12px; font-family: monospace;">${safeOneLine(order.ext_order_id, 60)}</td>
+            </tr>
+          </table>
+
+          <p style="font-size: 13px; color: #9ca3af; margin-bottom: 0;">
+            Bilety zostały wygenerowane i wysłane automatycznie na adres kupującego.
+          </p>
+        </div>
+      </div>
+    `,
+  };
+
+  try {
+    const res = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${env.RESEND_API_KEY}`,
+      },
+      body: JSON.stringify(emailPayload),
+    });
+
+    const resJson = await res.json().catch(() => ({}));
+    console.log(
+      "ADMIN_EMAIL_RESULT",
+      JSON.stringify({ ok: res.ok, status: res.status, id: resJson.id || null }),
+    );
+  } catch (e) {
+    console.log("ADMIN_EMAIL_ERROR", String(e));
+  }
+}
+
 // ─── Główna funkcja sync-status ─────────────────────────────────────────────
 
 export async function onRequestGet({ request, env }) {
@@ -250,7 +378,8 @@ export async function onRequestGet({ request, env }) {
 
   const row = await env.DB.prepare(
     `
-    SELECT ext_order_id, payu_order_id, status, email, full_name, ticket_type, quantity, email_sent
+    SELECT ext_order_id, payu_order_id, status, email, full_name, phone, street, city, postal_code,
+           ticket_type, quantity, unit_price, total_amount, promo_code, promo_applied, email_sent
     FROM orders
     WHERE ext_order_id = ?
     LIMIT 1
@@ -340,7 +469,7 @@ export async function onRequestGet({ request, env }) {
     const q = Number(row.quantity || 0);
 
     for (let i = 1; i <= q; i++) {
-      const ticketNo = `${row.extorderid}-${i}`;
+      const ticketNo = `${row.ext_order_id}-${i}`;
       const token = crypto.randomUUID();
 
       await env.DB.prepare(
@@ -429,6 +558,14 @@ export async function onRequestGet({ request, env }) {
             JSON.stringify({ extOrderId, status: emailResult.status }),
           );
         }
+
+        // Powiadomienie do organizatora (z kopią biletów)
+        await sendAdminNotification({
+          order: row,
+          ticketCount: tickets.length,
+          tickets,
+          env,
+        });
       }
     }
   }
