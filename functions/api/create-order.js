@@ -186,9 +186,6 @@ export async function onRequestPost({ request, env }) {
       );
       stripeBody.set("cancel_url", cancelUrl);
       stripeBody.set("customer_email", email);
-      stripeBody.set("locale", "pl");
-      stripeBody.set("billing_address_collection", "required");
-      stripeBody.set("phone_number_collection[enabled]", "true");
 
       stripeBody.set("metadata[extOrderId]", extOrderId);
       stripeBody.set("metadata[provider]", "stripe");
@@ -205,15 +202,6 @@ export async function onRequestPost({ request, env }) {
         String(unitPrice),
       );
       stripeBody.set("line_items[0][price_data][product_data][name]", t.name);
-      stripeBody.set(
-        "line_items[0][price_data][product_data][description]",
-        "Integracja Przedsiebiorcow",
-      );
-
-      stripeBody.set("payment_intent_data[metadata][extOrderId]", extOrderId);
-      stripeBody.set("payment_intent_data[metadata][provider]", "stripe");
-      stripeBody.set("payment_intent_data[metadata][email]", email);
-      stripeBody.set("payment_intent_data[metadata][phone]", phone);
 
       const stripeRes = await fetch(
         "https://api.stripe.com/v1/checkout/sessions",
@@ -247,17 +235,29 @@ export async function onRequestPost({ request, env }) {
       );
 
       if (!stripeRes.ok || !redirectUrl) {
+        console.log("STRIPE_ERROR_RAW", stripeText);
+
         await env.DB.prepare(
           `
-          UPDATE orders
-          SET status = ?, updated_at = datetime('now')
-          WHERE ext_order_id = ?
-        `,
+    UPDATE orders
+    SET status = ?, updated_at = datetime('now')
+    WHERE ext_order_id = ?
+  `,
         )
           .bind("STRIPE_CREATE_FAILED", extOrderId)
           .run();
 
-        return new Response("Stripe create session failed", { status: 502 });
+        return new Response(
+          JSON.stringify({
+            error: "Stripe create session failed",
+            stripeStatus: stripeRes.status,
+            stripeResponse: stripeJson || stripeText,
+          }),
+          {
+            status: 502,
+            headers: { "Content-Type": "application/json" },
+          },
+        );
       }
 
       return new Response(
