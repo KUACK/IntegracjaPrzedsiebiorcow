@@ -88,7 +88,7 @@ export async function onRequestPost({ request, env }) {
       discountFactor = 0.5;
     }
   } else if (promo === "ligotzki022725@") {
-    fixedPriceGrosze = 33;
+    fixedPriceGrosze = 200;
   }
 
   const unitPrice =
