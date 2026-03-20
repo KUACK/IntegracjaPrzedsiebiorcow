@@ -24,6 +24,12 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700;800&family=DM+Serif+Display&display=swap"
     />
+    <style>
+      .notice-box {
+        max-width: 640px;
+        margin: 20px 0;
+      }
+    </style>
   </head>
 
   <body>
@@ -47,116 +53,140 @@
 
     <div class="row">
       <h1>Kup bilet</h1>
-
-      <form id="buy">
-        <label>Imię i Nazwisko</label>
-        <input
-          name="fullName"
-          required
-          autocomplete="name"
-          minlength="3"
-          maxlength="120"
-        />
-
-        <label>Email</label>
-        <input
-          name="email"
-          type="email"
-          required
-          autocomplete="email"
-          inputmode="email"
-          maxlength="120"
-        />
-
-        <label>Numer telefonu</label>
-        <input
-          name="phone"
-          required
-          autocomplete="tel"
-          inputmode="tel"
-          pattern="[0-9+\s()\-]{6,20}"
-          title="Podaj poprawny numer telefonu."
-          maxlength="20"
-        />
-
-        <label>Ulica</label>
-        <input name="street" required minlength="3" maxlength="120" />
-
-        <label>Miasto</label>
-        <input name="city" required minlength="2" maxlength="80" />
-
-        <label>Kod pocztowy</label>
-        <input
-          name="postalCode"
-          required
-          placeholder="00-000"
-          inputmode="numeric"
-          pattern="^\d{2}-\d{3}$"
-          title="Podaj kod pocztowy w formacie 00-000."
-          maxlength="6"
-        />
-
-        <label>Typ biletu</label>
-        <select name="ticketType" id="ticketType" required>
-          <option value="premium">Premium – 1 dzień (499 PLN)</option>
-          <option value="biznesplus">Biznes Plus – 2 dni (599 PLN)</option>
-          <option value="vipbankiet">VIP – 2 dni + bankiet (999 PLN)</option>
-          <option value="vip">
-            VIP z Prezentacją – 2 dni + bankiet (1 499 PLN)
-          </option>
-        </select>
-
-        <label>Ilość sztuk</label>
-        <input
-          name="quantity"
-          type="number"
-          min="1"
-          max="20"
-          value="1"
-          required
-        />
-
-        <label>Kod promocyjny</label>
-        <div class="promo-line">
-          <input name="promoCode" id="promoCode" placeholder=" " />
-          <button type="button" id="applyPromo" class="promo-apply-btn">
-            Zastosuj
-          </button>
+      <div>
+        <div class="notice-box">
+          <span class="notice-icon"
+            ><img src="svg/buy_problem.svg" alt="" width="24" height="24"
+          /></span>
+          <p style="margin: 0">
+            Przepraszamy, obecnie jesteśmy w trakcie weryfikacji metod
+            płatności. Dokładamy wszelkich starań, aby były one dostępne w
+            poniedziałek. Jeżeli otrzymałeś kod zniżkowy, okres jego ważności
+            został wydłużony o 72h. Życzymy miłego weekendu i przepraszamy za
+            utrudnienia.
+          </p>
         </div>
-        <div id="promoHint" class="promo-hint"></div>
+        <form id="buy">
+          <label>Imię i Nazwisko</label>
+          <input
+            name="fullName"
+            required
+            autocomplete="name"
+            minlength="3"
+            maxlength="120"
+          />
 
-        <div class="order-summary" aria-live="polite">
-          <span class="order-summary__label">Razem:</span>
-          <span class="order-summary__value" id="orderTotal">—</span>
-        </div>
+          <label>Email</label>
+          <input
+            name="email"
+            type="email"
+            required
+            autocomplete="email"
+            inputmode="email"
+            maxlength="120"
+          />
 
-        <input
-          type="hidden"
-          name="paymentProvider"
-          id="paymentProvider"
-          value="payu"
-        />
+          <label>Numer telefonu</label>
+          <input
+            name="phone"
+            required
+            autocomplete="tel"
+            inputmode="tel"
+            pattern="[0-9+\s()\-]{6,20}"
+            title="Podaj poprawny numer telefonu."
+            maxlength="20"
+          />
 
-        <div class="pay-buttons">
-          <button type="button" id="payuBtn" class="payu-btn">
-            <span class="payu-btn__brand">PayU</span>
-            <span class="payu-btn__text">Zapłać przez PayU</span>
-          </button>
+          <label>Ulica</label>
+          <input name="street" required minlength="3" maxlength="120" />
 
-          <button type="button" id="stripeBtn" class="payu-btn">
-            <span class="payu-btn__brand">Stripe</span>
-            <span class="payu-btn__text"
-              >Zapłać kartą / Apple Pay / Google Pay / BLIK</span
-            >
-          </button>
-        </div>
+          <label>Miasto</label>
+          <input name="city" required minlength="2" maxlength="80" />
 
-        <p id="msg"></p>
-      </form>
+          <label>Kod pocztowy</label>
+          <input
+            name="postalCode"
+            required
+            placeholder="00-000"
+            inputmode="numeric"
+            pattern="^\d{2}-\d{3}$"
+            title="Podaj kod pocztowy w formacie 00-000."
+            maxlength="6"
+          />
+
+          <label>Typ biletu</label>
+          <select name="ticketType" id="ticketType" required>
+            <option value="premium">Premium – 1 dzień (499 PLN)</option>
+            <option value="biznesplus">Biznes Plus – 2 dni (599 PLN)</option>
+            <option value="vipbankiet">VIP – 2 dni + bankiet (999 PLN)</option>
+            <option value="vip">
+              VIP z Prezentacją – 2 dni + bankiet (1 499 PLN)
+            </option>
+          </select>
+
+          <label>Ilość sztuk</label>
+          <input
+            name="quantity"
+            type="number"
+            min="1"
+            max="20"
+            value="1"
+            required
+          />
+
+          <label>Kod promocyjny</label>
+          <div class="promo-line">
+            <input name="promoCode" id="promoCode" placeholder=" " />
+            <button type="button" id="applyPromo" class="promo-apply-btn">
+              Zastosuj
+            </button>
+          </div>
+          <div id="promoHint" class="promo-hint"></div>
+
+          <div class="order-summary" aria-live="polite">
+            <span class="order-summary__label">Razem:</span>
+            <span class="order-summary__value" id="orderTotal">—</span>
+          </div>
+
+          <input
+            type="hidden"
+            name="paymentProvider"
+            id="paymentProvider"
+            value="payu"
+          />
+
+          <div class="pay-buttons">
+            <button type="button" id="payuBtn" class="payu-btn" disabled>
+              <span class="payu-btn__brand">PayU</span>
+              <span class="payu-btn__text">Zapłać przez PayU</span>
+            </button>
+            <p class="lub">Lub</p>
+            <button type="button" id="stripeBtn" class="payu-btn" disabled>
+              <span class="payu-btn__brand">Stripe</span>
+              <span class="payu-btn__text"
+                >Zapłać kartą / Apple Pay / Google Pay / BLIK</span
+              >
+            </button>
+          </div>
+
+          <p id="msg"></p>
+        </form>
+      </div>
+
+      <div class="notice-box">
+        <span class="notice-icon"
+          ><img src="svg/buy_problem.svg" alt="" width="24" height="24"
+        /></span>
+        <p style="margin: 0">
+          Przepraszamy, obecnie jesteśmy w trakcie weryfikacji metod płatności.
+          Dokładamy wszelkich starań, aby były one dostępne w poniedziałek.
+          Jeżeli otrzymałeś kod zniżkowy, okres jego ważności został wydłużony o
+          72h. Życzymy miłego weekendu i przepraszamy za utrudnienia.
+        </p>
+      </div>
+
+      <p class="realizacja">Czas realizacji zamówienia - 1 dzień roboczy.</p>
     </div>
-
-    <p class="realizacja">Czas realizacji zamówienia - 1 dzień roboczy.</p>
-
     <footer class="site-footer">
       <div class="footer-bg" aria-hidden="true"></div>
 

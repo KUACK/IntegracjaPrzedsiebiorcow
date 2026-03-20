@@ -3,9 +3,11 @@
    ========================= */
 
 .row {
-  max-width: 1200px;
+  max-width: 640px;
   margin: 0 auto;
   padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 .row > h1 {
@@ -173,8 +175,8 @@
   width: 100%;
   margin-top: 18px;
 
-  background: #8cc63e; /* płaski zielony */
-  color: #ffffff;
+  background: #d1d5db; /* płaski zielony */
+  color: #6b7280;
 
   border: 0;
   border-radius: 14px; /* zaokrąglenie */
@@ -196,7 +198,7 @@
   box-shadow: none; /* płaski = bez cienia */
 }
 
-#buy .payu-btn__brand {
+#buy .payu-btn__text {
   font-weight: 700;
 }
 
@@ -214,10 +216,37 @@
   box-shadow: 0 0 0 4px rgba(239, 157, 77, 0.22); /* spójny focus z resztą */
 }
 
+#buy .payu-btn:not(:disabled):hover {
+  background: #c3c8d1;
+  color: #4b5563;
+  border-color: #b7bdc7;
+}
+
+#buy .payu-btn:disabled {
+  background: #d1d5db;
+  color: #6b7280;
+  border-color: #c4c9d1;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+#buy .payu-btn:disabled:hover {
+  background: #d1d5db;
+  color: #6b7280;
+  border-color: #c4c9d1;
+}
+
+#buy .payu-btn:last-child {
+  margin-top: 10px;
+}
+
 .promo-bar {
   width: 100%;
 }
-
+.lub {
+  text-align: center;
+  margin-top: 10px;
+}
 /* Promo input + button in one line */
 #buy .promo-line {
   display: flex;
