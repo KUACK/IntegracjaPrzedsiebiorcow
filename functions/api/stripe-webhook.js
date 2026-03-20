@@ -1,5 +1,5 @@
 // functions/api/stripe-webhook.js
-import { finalizePaidOrder } from "../lib/finalize-paid-order.js";
+import { finalizePaidOrder } from "./finalize-paid-order.js";
 
 function parseStripeSignature(header) {
   const out = {};

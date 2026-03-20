@@ -1,5 +1,5 @@
 // functions/api/notify.js
-import { finalizePaidOrder } from "../lib/finalize-paid-order.js";
+import { finalizePaidOrder } from "./finalize-paid-order.js";
 
 export async function onRequestPost({ request, env }) {
   const url = new URL(request.url);
