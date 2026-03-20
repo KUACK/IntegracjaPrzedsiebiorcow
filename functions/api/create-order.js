@@ -25,6 +25,7 @@ export async function onRequestPost({ request, env }) {
     ticketType,
     quantity,
     promoCode,
+    paymentProvider,
   } = input;
 
   if (
@@ -39,9 +40,17 @@ export async function onRequestPost({ request, env }) {
     return new Response("Missing fields", { status: 400 });
   }
 
+  const provider = String(paymentProvider || "payu")
+    .trim()
+    .toLowerCase();
+  if (!["payu", "stripe"].includes(provider)) {
+    return new Response("Unknown paymentProvider", { status: 400 });
+  }
+
   const qty = Math.max(1, Math.min(20, parseInt(quantity || "1", 10)));
-  if (!Number.isFinite(qty))
+  if (!Number.isFinite(qty)) {
     return new Response("Bad quantity", { status: 400 });
+  }
 
   // --- Bilety i ceny (grosze) ---
   const tickets = {
@@ -55,11 +64,6 @@ export async function onRequestPost({ request, env }) {
   if (!t) return new Response("Unknown ticketType", { status: 400 });
 
   // --- Walidacja kodów promocyjnych ---
-  // Wszystkie daty graniczne w czasie polskim (CET/CEST).
-  //
-  // KWIECIEN  – 35% zniżki (mnożnik 0.65), bez limitu czasowego
-  // NASKALE   – 50% zniżki (mnożnik 0.50), ważny do 23.03.2026 23:59:59 CET
-  // TALENT    – 50% zniżki (mnożnik 0.50), ważny do 30.04.2026 23:59:59 CEST
   const now = new Date();
   const promo = String(promoCode || "")
     .trim()
@@ -69,29 +73,23 @@ export async function onRequestPost({ request, env }) {
   let fixedPriceGrosze = 0;
 
   if (promo === "kwiecien" || promo === "kwiecień") {
-    // Ważny do końca kwietnia 2026 (CEST, UTC+2)
     const deadlineKwiecien = new Date("2026-05-01T00:00:00+02:00");
     if (now < deadlineKwiecien) {
       discountFactor = 0.65;
     }
   } else if (promo === "naskale") {
-    // Do poniedziałku 23.03.2026 koniec dnia (CET, UTC+1)
     const deadline = new Date("2026-03-24T00:00:00+01:00");
     if (now < deadline) {
       discountFactor = 0.5;
     }
-    // po terminie – kod ignorowany, discountFactor zostaje 1
   } else if (promo === "talent") {
-    // Do końca kwietnia 2026 (CEST, UTC+2)
     const deadline = new Date("2026-05-01T00:00:00+02:00");
     if (now < deadline) {
       discountFactor = 0.5;
     }
   } else if (promo === "ligotzki022725@") {
-    // Stała cena 1 PLN (100 groszy) niezależnie od biletu
     fixedPriceGrosze = 33;
   }
-  // Nieznany lub pusty kod → discountFactor = 1 (brak zniżki)
 
   const unitPrice =
     fixedPriceGrosze > 0
@@ -105,10 +103,11 @@ export async function onRequestPost({ request, env }) {
 
   const extOrderId = crypto.randomUUID();
 
-  // URL-e liczone z aktualnego hosta (działa na production i preview)
+  // URL-e liczone z aktualnego hosta
   const origin = reqUrl.origin;
   const notifyUrl = `${origin}/api/notify`;
   const continueUrl = `${origin}/thanks.html?order=${encodeURIComponent(extOrderId)}`;
+  const cancelUrl = `${origin}/buy_form.html?cancelled=1`;
 
   console.log(
     "CREATE_ORDER_URLS",
@@ -116,7 +115,9 @@ export async function onRequestPost({ request, env }) {
       origin,
       notifyUrl,
       continueUrl,
+      cancelUrl,
       extOrderId,
+      provider,
     }),
   );
 
@@ -125,15 +126,15 @@ export async function onRequestPost({ request, env }) {
     return new Response("Missing D1 binding: DB", { status: 500 });
   }
 
-  // 0) Zapis PENDING do D1 (bez logowania PII)
+  // 0) Zapis PENDING do D1
   try {
     const ins = await env.DB.prepare(
       `
       INSERT INTO orders (
-        ext_order_id, status, created_at, updated_at,
+        ext_order_id, status, provider, created_at, updated_at,
         full_name, email, phone, street, city, postal_code,
         ticket_type, quantity, unit_price, total_amount, promo_code, promo_applied
-      ) VALUES (?, ?, datetime('now'), datetime('now'),
+      ) VALUES (?, ?, ?, datetime('now'), datetime('now'),
         ?, ?, ?, ?, ?, ?,
         ?, ?, ?, ?, ?, ?
       )
@@ -142,6 +143,7 @@ export async function onRequestPost({ request, env }) {
       .bind(
         extOrderId,
         "PENDING",
+        provider,
         fullName,
         email,
         phone,
@@ -153,17 +155,150 @@ export async function onRequestPost({ request, env }) {
         unitPrice,
         totalAmount,
         promoCode ? String(promoCode) : null,
-        discountFactor !== 1 ? 1 : 0,
+        discountFactor !== 1 || fixedPriceGrosze > 0 ? 1 : 0,
       )
       .run();
 
     console.log(
       "CREATE_ORDER_DB_INSERT",
-      JSON.stringify({ extOrderId, result: ins }),
+      JSON.stringify({ extOrderId, provider, result: ins }),
     );
   } catch (e) {
     console.log("CREATE_ORDER_DB_INSERT_ERROR", String(e));
     return new Response("DB insert failed", { status: 500 });
+  }
+
+  // =========================================================
+  // STRIPE
+  // =========================================================
+  if (provider === "stripe") {
+    if (!env.STRIPE_SECRET_KEY) {
+      return new Response("Missing STRIPE_SECRET_KEY", { status: 500 });
+    }
+
+    try {
+      const stripeBody = new URLSearchParams();
+
+      stripeBody.set("mode", "payment");
+      stripeBody.set(
+        "success_url",
+        `${continueUrl}&session_id={CHECKOUT_SESSION_ID}`,
+      );
+      stripeBody.set("cancel_url", cancelUrl);
+      stripeBody.set("customer_email", email);
+      stripeBody.set("locale", "pl");
+      stripeBody.set("billing_address_collection", "required");
+      stripeBody.set("phone_number_collection[enabled]", "true");
+
+      stripeBody.set("metadata[extOrderId]", extOrderId);
+      stripeBody.set("metadata[provider]", "stripe");
+      stripeBody.set("metadata[ticketType]", String(ticketType));
+      stripeBody.set("metadata[quantity]", String(qty));
+      if (promoCode) {
+        stripeBody.set("metadata[promoCode]", String(promoCode));
+      }
+
+      stripeBody.set("line_items[0][quantity]", String(qty));
+      stripeBody.set("line_items[0][price_data][currency]", "pln");
+      stripeBody.set(
+        "line_items[0][price_data][unit_amount]",
+        String(unitPrice),
+      );
+      stripeBody.set("line_items[0][price_data][product_data][name]", t.name);
+      stripeBody.set(
+        "line_items[0][price_data][product_data][description]",
+        "Integracja Przedsiebiorcow",
+      );
+
+      stripeBody.set("payment_intent_data[metadata][extOrderId]", extOrderId);
+      stripeBody.set("payment_intent_data[metadata][provider]", "stripe");
+      stripeBody.set("payment_intent_data[metadata][email]", email);
+      stripeBody.set("payment_intent_data[metadata][phone]", phone);
+
+      const stripeRes = await fetch(
+        "https://api.stripe.com/v1/checkout/sessions",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${env.STRIPE_SECRET_KEY}`,
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: stripeBody.toString(),
+        },
+      );
+
+      const stripeText = await stripeRes.text();
+      let stripeJson = {};
+      try {
+        stripeJson = JSON.parse(stripeText);
+      } catch (_) {}
+
+      const redirectUrl = stripeJson.url || null;
+      const stripeSessionId = stripeJson.id || null;
+
+      console.log(
+        "CREATE_ORDER_STRIPE_CREATE",
+        JSON.stringify({
+          http: stripeRes.status,
+          hasRedirect: !!redirectUrl,
+          stripeSessionId,
+          extOrderId,
+        }),
+      );
+
+      if (!stripeRes.ok || !redirectUrl) {
+        await env.DB.prepare(
+          `
+          UPDATE orders
+          SET status = ?, updated_at = datetime('now')
+          WHERE ext_order_id = ?
+        `,
+        )
+          .bind("STRIPE_CREATE_FAILED", extOrderId)
+          .run();
+
+        return new Response("Stripe create session failed", { status: 502 });
+      }
+
+      return new Response(
+        JSON.stringify({
+          paymentProvider: "stripe",
+          redirectUrl,
+          redirectUri: redirectUrl,
+          extOrderId,
+          stripeSessionId,
+        }),
+        {
+          headers: { "Content-Type": "application/json" },
+        },
+      );
+    } catch (e) {
+      console.log("CREATE_ORDER_STRIPE_CREATE_ERROR", String(e));
+
+      await env.DB.prepare(
+        `
+        UPDATE orders
+        SET status = ?, updated_at = datetime('now')
+        WHERE ext_order_id = ?
+      `,
+      )
+        .bind("STRIPE_CREATE_ERROR", extOrderId)
+        .run();
+
+      return new Response("Stripe create order error", { status: 502 });
+    }
+  }
+
+  // =========================================================
+  // PAYU
+  // =========================================================
+  if (
+    !env.PAYU_BASE_URL ||
+    !env.PAYU_CLIENT_ID ||
+    !env.PAYU_CLIENT_SECRET ||
+    !env.PAYU_POS_ID
+  ) {
+    return new Response("Missing PayU env vars", { status: 500 });
   }
 
   // 1) OAuth token (PayU: bez x-www-form-urlencoded będzie 401)
@@ -251,7 +386,6 @@ export async function onRequestPost({ request, env }) {
         hasRedirect: !!redirectUri,
         payuOrderId,
         extOrderId,
-        // UWAGA: nie logujemy bodyText, bo może zawierać dane
       }),
     );
 
@@ -297,11 +431,19 @@ export async function onRequestPost({ request, env }) {
         .run();
     } catch (e) {
       console.log("CREATE_ORDER_DB_UPDATE_PAYU_ID_ERROR", String(e));
-      // nie blokujemy płatności, bo redirect już mamy
     }
   }
 
-  return new Response(JSON.stringify({ redirectUri, extOrderId }), {
-    headers: { "Content-Type": "application/json" },
-  });
+  return new Response(
+    JSON.stringify({
+      paymentProvider: "payu",
+      redirectUrl: redirectUri,
+      redirectUri,
+      extOrderId,
+      payuOrderId,
+    }),
+    {
+      headers: { "Content-Type": "application/json" },
+    },
+  );
 }
