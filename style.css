@@ -501,9 +501,9 @@ body {
 }
 
 /* Wyróżniony VIP card */
-.ticket-card:nth-child(3) {
-  border-color: rgba(239, 157, 77, 0.4);
-  box-shadow: 0 8px 32px rgba(239, 157, 77, 0.12);
+.ticket-card:last-child {
+  border-color: rgba(242, 124, 7, 0.601);
+  box-shadow: 0 8px 32px rgba(239, 158, 77, 0.414);
 }
 
 .ticket-badge {
