@@ -29,6 +29,31 @@
         max-width: 640px;
         margin: 20px 0;
       }
+
+      .book-btn {
+        background: linear-gradient(135deg, #065f46, #047857);
+        color: #fff;
+        border: 0;
+      }
+
+      .book-btn .payu-btn__brand,
+      .book-btn .payu-btn__text {
+        color: #fff;
+      }
+
+      .pay-note {
+        margin-top: 12px;
+        font-size: 0.95rem;
+        color: #92400e;
+      }
+
+      #msg {
+        margin-top: 14px;
+      }
+      #buy #bookBtn {
+        background-color: #ef9d4d;
+        color: white;
+      }
     </style>
   </head>
 
@@ -53,14 +78,17 @@
 
     <div class="row">
       <h1>Kup bilet</h1>
+
       <div>
         <div class="notice-box">
-          <span class="notice-icon"
-            ><img src="svg/buy_problem.svg" alt="" width="24" height="24"
-          /></span>
+          <span class="notice-icon">
+            <img src="svg/buy_problem.svg" alt="" width="24" height="24" />
+          </span>
           <p style="margin: 0">
             Przepraszamy, obecnie płatności są chwilowo niedostępne. Prosimy o
-            cierpliwość, dokładamy wszelkich starań, aby wróciły jak najszyciej.
+            cierpliwość, dokładamy wszelkich starań, aby wróciły jak
+            najszybciej. Mogą państwo skorzystać z opcji zapisania się, a link
+            do płatności zostanie wysłany mailem, po przywróceniu ich działania.
             W razie potrzeby zapraszamy do kontaktu mailowego:
             <a
               href="mailto:konferencja@brfh.eu"
@@ -70,6 +98,7 @@
             >.
           </p>
         </div>
+
         <form id="buy">
           <label>Imię i Nazwisko</label>
           <input
@@ -160,16 +189,25 @@
           />
 
           <div class="pay-buttons">
-            <button type="button" id="payuBtn" class="payu-btn" disabled>
+            <button type="button" id="bookBtn" class="payu-btn book-btn">
+              <span class="payu-btn__brand">Rezerwacja</span>
+              <span class="payu-btn__text">
+                Zapisz się teraz, link do płatności wyślemy później
+              </span>
+            </button>
+
+            <button type="button" id="payuBtn" class="payu-btn">
               <span class="payu-btn__brand">PayU</span>
               <span class="payu-btn__text">Zapłać przez PayU</span>
             </button>
+
             <p class="lub">Lub</p>
-            <button type="button" id="stripeBtn" class="payu-btn" disabled>
+
+            <button type="button" id="stripeBtn" class="payu-btn">
               <span class="payu-btn__brand">Stripe</span>
-              <span class="payu-btn__text"
-                >Zapłać kartą / Apple Pay / Google Pay / BLIK</span
-              >
+              <span class="payu-btn__text">
+                Zapłać kartą / Apple Pay / Google Pay / BLIK
+              </span>
             </button>
           </div>
 
@@ -178,13 +216,15 @@
       </div>
 
       <div class="notice-box">
-        <span class="notice-icon"
-          ><img src="svg/buy_problem.svg" alt="" width="24" height="24"
-        /></span>
+        <span class="notice-icon">
+          <img src="svg/buy_problem.svg" alt="" width="24" height="24" />
+        </span>
         <p style="margin: 0">
           Przepraszamy, obecnie płatności są chwilowo niedostępne. Prosimy o
-          cierpliwość, dokładamy wszelkich starań, aby wróciły jak najszyciej. W
-          razie potrzeby zapraszamy do kontaktu mailowego:
+          cierpliwość, dokładamy wszelkich starań, aby wróciły jak najszybciej.
+          Mogą państwo skorzystać z opcji zapisania się, a link do płatności
+          zostanie wysłany mailem, po przywróceniu ich działania. W razie
+          potrzeby zapraszamy do kontaktu mailowego:
           <a
             href="mailto:konferencja@brfh.eu"
             style="color: #92400e; font-weight: 600"
@@ -196,6 +236,7 @@
 
       <p class="realizacja">Czas realizacji zamówienia - 1 dzień roboczy.</p>
     </div>
+
     <footer class="site-footer">
       <div class="footer-bg" aria-hidden="true"></div>
 
@@ -251,7 +292,7 @@
                     />
                   </svg>
                 </span>
-                <a href="mailto:konferencja@brh.eu">konferencja@brh.eu</a>
+                <a href="mailto:konferencja@brfh.eu">konferencja@brfh.eu</a>
               </li>
 
               <li>
@@ -316,10 +357,13 @@
     </footer>
 
     <script>
+      const PAYMENTS_AVAILABLE = false;
+
       const msg = document.getElementById("msg");
       const form = document.getElementById("buy");
 
       const providerInput = document.getElementById("paymentProvider");
+      const bookBtn = document.getElementById("bookBtn");
       const payuBtn = document.getElementById("payuBtn");
       const stripeBtn = document.getElementById("stripeBtn");
 
@@ -330,7 +374,6 @@
       const cityInput = form.querySelector('input[name="city"]');
       const postalCodeInput = form.querySelector('input[name="postalCode"]');
 
-      // --- Ceny biletów w groszach ---
       const PRICE_GROSZE = {
         premium: 49900,
         biznesplus: 59900,
@@ -350,6 +393,7 @@
       let appliedCode = "";
       let discountFactor = 1;
       let fixedPriceGrosze = 0;
+      let submitMode = "book";
 
       function formatPLNFromGrosze(grosze) {
         return (grosze / 100).toLocaleString("pl-PL", {
@@ -481,45 +525,6 @@
         return null;
       }
 
-      promoInput.addEventListener("input", () => {
-        if (promoApplied) clearPromo();
-        applyPromoBtn.disabled = !promoInput.value.trim();
-      });
-
-      phoneInput.addEventListener("input", () => {
-        phoneInput.setCustomValidity("");
-      });
-
-      postalCodeInput.addEventListener("input", () => {
-        postalCodeInput.setCustomValidity("");
-      });
-
-      fullNameInput.addEventListener("input", () => {
-        fullNameInput.setCustomValidity("");
-      });
-
-      emailInput.addEventListener("input", () => {
-        emailInput.setCustomValidity("");
-      });
-
-      streetInput.addEventListener("input", () => {
-        streetInput.setCustomValidity("");
-      });
-
-      cityInput.addEventListener("input", () => {
-        cityInput.setCustomValidity("");
-      });
-
-      qtyInput.addEventListener("input", () => {
-        qtyInput.setCustomValidity("");
-        renderTotal();
-      });
-
-      ticketSel.addEventListener("change", () => {
-        ticketSel.setCustomValidity("");
-        renderTotal();
-      });
-
       function validatePromoCode(code) {
         const normalized = code.trim().toLowerCase();
         const now = new Date();
@@ -575,6 +580,52 @@
         return { valid: false, label: "Nieprawidłowy kod." };
       }
 
+      function setButtonsDisabled(disabled) {
+        bookBtn.disabled = disabled;
+        payuBtn.disabled = disabled || !PAYMENTS_AVAILABLE;
+        stripeBtn.disabled = disabled || !PAYMENTS_AVAILABLE;
+        applyPromoBtn.disabled = disabled || !promoInput.value.trim();
+      }
+
+      promoInput.addEventListener("input", () => {
+        if (promoApplied) clearPromo();
+        applyPromoBtn.disabled = !promoInput.value.trim();
+      });
+
+      phoneInput.addEventListener("input", () => {
+        phoneInput.setCustomValidity("");
+      });
+
+      postalCodeInput.addEventListener("input", () => {
+        postalCodeInput.setCustomValidity("");
+      });
+
+      fullNameInput.addEventListener("input", () => {
+        fullNameInput.setCustomValidity("");
+      });
+
+      emailInput.addEventListener("input", () => {
+        emailInput.setCustomValidity("");
+      });
+
+      streetInput.addEventListener("input", () => {
+        streetInput.setCustomValidity("");
+      });
+
+      cityInput.addEventListener("input", () => {
+        cityInput.setCustomValidity("");
+      });
+
+      qtyInput.addEventListener("input", () => {
+        qtyInput.setCustomValidity("");
+        renderTotal();
+      });
+
+      ticketSel.addEventListener("change", () => {
+        ticketSel.setCustomValidity("");
+        renderTotal();
+      });
+
       applyPromoBtn.addEventListener("click", () => {
         const code = (promoInput.value || "").trim();
         const result = validatePromoCode(code);
@@ -612,26 +663,30 @@
       })();
 
       renderTotal();
+      setButtonsDisabled(false);
 
-      function setButtonsDisabled(disabled) {
-        payuBtn.disabled = disabled;
-        stripeBtn.disabled = disabled;
-        applyPromoBtn.disabled = disabled || !promoInput.value.trim();
-      }
+      bookBtn.addEventListener("click", () => {
+        submitMode = "book";
+        form.requestSubmit();
+      });
 
       payuBtn.addEventListener("click", () => {
+        submitMode = "payu";
         providerInput.value = "payu";
         form.requestSubmit();
       });
 
       stripeBtn.addEventListener("click", () => {
+        submitMode = "stripe";
         providerInput.value = "stripe";
         form.requestSubmit();
       });
 
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
+
         msg.textContent = "";
+        msg.style.color = "";
         setButtonsDisabled(true);
 
         const fd = new FormData(form);
@@ -644,35 +699,67 @@
           return;
         }
 
-        msg.textContent = "Tworzę zamówienie...";
+        payload.phone = normalizePhone(payload.phone);
+        payload.postalCode = normalizePostalCode(payload.postalCode);
+
+        if (!promoApplied) {
+          payload.promoCode = "";
+        } else {
+          payload.promoCode = appliedCode || payload.promoCode;
+        }
+
+        const endpoint =
+          submitMode === "book" ? "/api/book-order" : "/api/create-order";
+
+        msg.textContent =
+          submitMode === "book"
+            ? "Zapisuję rezerwację..."
+            : "Tworzę zamówienie...";
 
         try {
-          payload.phone = normalizePhone(payload.phone);
-          payload.postalCode = normalizePostalCode(payload.postalCode);
-
-          if (!promoApplied) {
-            payload.promoCode = "";
-          } else {
-            payload.promoCode = appliedCode || payload.promoCode;
-          }
-
-          const res = await fetch("/api/create-order", {
+          const res = await fetch(endpoint, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload),
           });
 
+          const raw = await res.text();
+          let data = null;
+
+          try {
+            data = raw ? JSON.parse(raw) : null;
+          } catch (_) {}
+
           if (!res.ok) {
-            const t = await res.text().catch(() => "");
-            msg.textContent = `Błąd tworzenia zamówienia: ${res.status} ${t}`;
+            const errText =
+              (data && (data.error || data.message)) || raw || "Nieznany błąd.";
+            msg.style.color = "red";
+            msg.textContent = `Błąd: ${res.status} ${errText}`;
             setButtonsDisabled(false);
             return;
           }
 
-          const data = await res.json();
-          const paymentUrl = data.redirectUrl || data.redirectUri || null;
+          if (submitMode === "book") {
+            msg.style.color = "#065f46";
+            msg.textContent =
+              (data && data.message) ||
+              "Dziękujemy, zapis został przyjęty. Link do płatności wyślemy mailowo.";
+
+            form.reset();
+            providerInput.value = "payu";
+            clearPromo();
+            ticketSel.value = "premium";
+            qtyInput.value = "1";
+            renderTotal();
+            setButtonsDisabled(false);
+            return;
+          }
+
+          const paymentUrl =
+            (data && (data.redirectUrl || data.redirectUri)) || null;
 
           if (!paymentUrl) {
+            msg.style.color = "red";
             msg.textContent = "Brak adresu przekierowania do płatności.";
             setButtonsDisabled(false);
             return;
@@ -680,8 +767,11 @@
 
           window.location.href = paymentUrl;
         } catch (err) {
+          msg.style.color = "red";
           msg.textContent =
-            "Nie udało się utworzyć zamówienia. Spróbuj ponownie.";
+            submitMode === "book"
+              ? "Nie udało się zapisać rezerwacji. Spróbuj ponownie."
+              : "Nie udało się utworzyć zamówienia. Spróbuj ponownie.";
           setButtonsDisabled(false);
         }
       });
