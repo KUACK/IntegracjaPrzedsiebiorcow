@@ -54,6 +54,10 @@
         background-color: #ef9d4d;
         color: white;
       }
+      #buy #bookBtn:hover {
+        background-color: #cc7219;
+        color: white;
+      }
     </style>
   </head>
 
@@ -195,7 +199,7 @@
                 Zapisz się teraz, link do płatności wyślemy później
               </span>
             </button>
-
+            <p id="msg"></p>
             <button type="button" id="payuBtn" class="payu-btn">
               <span class="payu-btn__brand">PayU</span>
               <span class="payu-btn__text">Zapłać przez PayU</span>
@@ -733,14 +737,14 @@
           if (!res.ok) {
             const errText =
               (data && (data.error || data.message)) || raw || "Nieznany błąd.";
-            msg.style.color = "red";
+            msg.style.color = "#ffffff";
             msg.textContent = `Błąd: ${res.status} ${errText}`;
             setButtonsDisabled(false);
             return;
           }
 
           if (submitMode === "book") {
-            msg.style.color = "#065f46";
+            msg.style.color = "#ffffff";
             msg.textContent =
               (data && data.message) ||
               "Dziękujemy, zapis został przyjęty. Link do płatności wyślemy mailowo.";
@@ -759,7 +763,7 @@
             (data && (data.redirectUrl || data.redirectUri)) || null;
 
           if (!paymentUrl) {
-            msg.style.color = "red";
+            msg.style.color = "#ffffff";
             msg.textContent = "Brak adresu przekierowania do płatności.";
             setButtonsDisabled(false);
             return;
@@ -767,7 +771,7 @@
 
           window.location.href = paymentUrl;
         } catch (err) {
-          msg.style.color = "red";
+          msg.style.color = "#ffffff";
           msg.textContent =
             submitMode === "book"
               ? "Nie udało się zapisać rezerwacji. Spróbuj ponownie."
