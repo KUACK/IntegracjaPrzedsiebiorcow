@@ -216,7 +216,7 @@
   box-shadow: 0 0 0 4px rgba(239, 157, 77, 0.22); /* spójny focus z resztą */
 }
 
-#buy .payu-btn:not(:disabled):hover {
+/*#buy .payu-btn:not(:disabled):hover {
   background: #c3c8d1;
   color: #4b5563;
   border-color: #b7bdc7;
@@ -228,7 +228,7 @@
   border-color: #c4c9d1;
   cursor: not-allowed;
   pointer-events: none;
-}
+}*/
 
 #buy .payu-btn:disabled:hover {
   background: #d1d5db;
