@@ -24,43 +24,6 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700;800&family=DM+Serif+Display&display=swap"
     />
-    <style>
-      .notice-box {
-        max-width: 640px;
-        margin: 20px 0;
-      }
-
-      .book-btn {
-        background: linear-gradient(135deg, #065f46, #047857);
-        color: #fff;
-        border: 0;
-      }
-
-      .book-btn .payu-btn__brand,
-      .book-btn .payu-btn__text {
-        color: #fff;
-      }
-
-      .pay-note {
-        margin-top: 12px;
-        font-size: 0.95rem;
-        color: #92400e;
-      }
-
-      #msg {
-        margin-top: 14px;
-      }
-
-      #buy #bookBtn {
-        background-color: #ef9d4d;
-        color: white;
-      }
-
-      #buy #bookBtn:hover {
-        background-color: #cc7219;
-        color: white;
-      }
-    </style>
   </head>
 
   <body>
@@ -81,166 +44,77 @@
         </a>
       </div>
     </div>
-
     <div class="row">
       <h1>Kup bilet</h1>
 
-      <div>
-        <div class="notice-box">
-          <span class="notice-icon">
-            <img src="svg/buy_problem.svg" alt="" width="24" height="24" />
-          </span>
-          <p style="margin: 0">
-            Przepraszamy, obecnie płatności są chwilowo niedostępne. Prosimy o
-            cierpliwość, dokładamy wszelkich starań, aby wróciły jak
-            najszybciej. Mogą państwo skorzystać z opcji zapisania się, a link
-            do płatności zostanie wysłany mailem, po przywróceniu ich działania.
-            W razie potrzeby zapraszamy do kontaktu mailowego:
-            <a
-              href="mailto:konferencja@brfh.eu"
-              style="color: #92400e; font-weight: 600"
-            >
-              konferencja@brfh.eu </a
-            >.
-          </p>
+      <form id="buy">
+        <label>Imię i Nazwisko</label>
+        <input name="fullName" required autocomplete="name" />
+
+        <label>Email</label>
+        <input name="email" type="email" required autocomplete="email" />
+
+        <label>Numer telefonu</label>
+        <input name="phone" required autocomplete="tel" />
+        <label>Ulica</label>
+        <input name="street" required />
+
+        <label>Miasto</label>
+        <input name="city" required />
+
+        <label>Kod pocztowy</label>
+        <input name="postalCode" required placeholder="00-000" />
+
+        <label>Typ biletu</label>
+        <select name="ticketType" id="ticketType" required>
+          <option value="premium">Premium – 1 dzień (499 PLN)</option>
+          <option value="biznesplus">Biznes Plus – 2 dni (599 PLN)</option>
+          <option value="vipbankiet">VIP – 2 dni + bankiet (999 PLN)</option>
+          <option value="vip">
+            VIP z Prezentacją – 2 dni + bankiet (1 499 PLN)
+          </option>
+        </select>
+
+        <label>Ilość sztuk</label>
+        <input
+          name="quantity"
+          type="number"
+          min="1"
+          max="20"
+          value="1"
+          required
+        />
+
+        <label>Kod promocyjny</label>
+        <div class="promo-line">
+          <input name="promoCode" id="promoCode" placeholder=" " />
+          <button type="button" id="applyPromo" class="promo-apply-btn">
+            Zastosuj
+          </button>
+        </div>
+        <div id="promoHint" class="promo-hint"></div>
+
+        <div class="order-summary" aria-live="polite">
+          <span class="order-summary__label">Razem:</span>
+          <span class="order-summary__value" id="orderTotal">—</span>
         </div>
 
-        <form id="buy">
-          <label>Imię i Nazwisko</label>
-          <input
-            name="fullName"
-            required
-            autocomplete="name"
-            minlength="3"
-            maxlength="120"
-          />
+        <button type="submit" class="payu-btn">
+          <span class="payu-btn__brand">PayU</span>
+          <span class="payu-btn__text">Przejdź do płatności</span>
+        </button>
 
-          <label>Email</label>
-          <input
-            name="email"
-            type="email"
-            required
-            autocomplete="email"
-            inputmode="email"
-            maxlength="120"
-          />
-
-          <label>Numer telefonu</label>
-          <input
-            name="phone"
-            required
-            autocomplete="tel"
-            inputmode="tel"
-            pattern="[0-9+\s()\-]{6,20}"
-            title="Podaj poprawny numer telefonu."
-            maxlength="20"
-          />
-
-          <label>Ulica</label>
-          <input name="street" required minlength="3" maxlength="120" />
-
-          <label>Miasto</label>
-          <input name="city" required minlength="2" maxlength="80" />
-
-          <label>Kod pocztowy</label>
-          <input
-            name="postalCode"
-            required
-            placeholder="00-000"
-            inputmode="numeric"
-            pattern="^\d{2}-\d{3}$"
-            title="Podaj kod pocztowy w formacie 00-000."
-            maxlength="6"
-          />
-
-          <label>Typ biletu</label>
-          <select name="ticketType" id="ticketType" required>
-            <option value="premium">Premium – 1 dzień (499 PLN)</option>
-            <option value="biznesplus">Biznes Plus – 2 dni (599 PLN)</option>
-            <option value="vipbankiet">VIP – 2 dni + bankiet (999 PLN)</option>
-            <option value="vip">
-              VIP z Prezentacją – 2 dni + bankiet (1 499 PLN)
-            </option>
-          </select>
-
-          <label>Ilość sztuk</label>
-          <input
-            name="quantity"
-            type="number"
-            min="1"
-            max="20"
-            value="1"
-            required
-          />
-
-          <label>Kod promocyjny</label>
-          <div class="promo-line">
-            <input name="promoCode" id="promoCode" placeholder=" " />
-            <button type="button" id="applyPromo" class="promo-apply-btn">
-              Zastosuj
-            </button>
-          </div>
-          <div id="promoHint" class="promo-hint"></div>
-
-          <div class="order-summary" aria-live="polite">
-            <span class="order-summary__label">Razem:</span>
-            <span class="order-summary__value" id="orderTotal">—</span>
-          </div>
-
-          <div class="pay-buttons">
-            <button type="button" id="bookBtn" class="payu-btn book-btn">
-              <span class="payu-btn__brand">Rezerwacja</span>
-              <span class="payu-btn__text">
-                Zapisz się teraz, link do płatności wyślemy później
-              </span>
-            </button>
-
-            <p class="lub">Lub</p>
-
-            <button type="button" id="payuBtn" class="payu-btn">
-              <span class="payu-btn__brand">PayU</span>
-              <span class="payu-btn__text">Zapłać przez PayU</span>
-            </button>
-
-            <button type="button" id="stripeBtn" class="payu-btn">
-              <span class="payu-btn__brand">Stripe</span>
-              <span class="payu-btn__text">
-                Zapłać kartą / Apple Pay / Google Pay / BLIK
-              </span>
-            </button>
-          </div>
-
-          <p id="msg"></p>
-        </form>
-      </div>
-
-      <div class="notice-box">
-        <span class="notice-icon">
-          <img src="svg/buy_problem.svg" alt="" width="24" height="24" />
-        </span>
-        <p style="margin: 0">
-          Przepraszamy, obecnie płatności są chwilowo niedostępne. Prosimy o
-          cierpliwość, dokładamy wszelkich starań, aby wróciły jak najszybciej.
-          Mogą państwo skorzystać z opcji zapisania się, a link do płatności
-          zostanie wysłany mailem, po przywróceniu ich działania. W razie
-          potrzeby zapraszamy do kontaktu mailowego:
-          <a
-            href="mailto:konferencja@brfh.eu"
-            style="color: #92400e; font-weight: 600"
-          >
-            konferencja@brfh.eu </a
-          >.
-        </p>
-      </div>
-
-      <p class="realizacja">Czas realizacji zamówienia - 1 dzień roboczy.</p>
+        <p id="msg"></p>
+      </form>
     </div>
+    <p class="realizacja">Czas realizacji zamówienia - 1 dzień roboczy.</p>
 
     <footer class="site-footer">
       <div class="footer-bg" aria-hidden="true"></div>
 
       <div class="container footer-container">
         <div class="footer-grid">
+          <!-- LEWA KOLUMNA: znak + opis -->
           <div class="footer-col footer-brand">
             <div class="footer-mark">
               <div class="logo_footer">
@@ -254,12 +128,14 @@
             </p>
           </div>
 
+          <!-- ŚRODKOWA: adres -->
           <div class="footer-col">
             <h3 class="footer-title">Adres</h3>
 
             <ul class="footer-list footer-list--icons">
               <li>
                 <span class="footer-ico" aria-hidden="true">
+                  <!-- pin -->
                   <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
                     <path
                       d="M12 22s7-4.6 7-12a7 7 0 1 0-14 0c0 7.4 7 12 7 12Z"
@@ -278,6 +154,7 @@
 
               <li>
                 <span class="footer-ico" aria-hidden="true">
+                  <!-- mail -->
                   <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
                     <path
                       d="M4 6h16v12H4V6Z"
@@ -291,7 +168,7 @@
                     />
                   </svg>
                 </span>
-                <a href="mailto:konferencja@brfh.eu">konferencja@brfh.eu</a>
+                <a href="mailto:konferencja@brh.eu">konferencja@brh.eu</a>
               </li>
 
               <li>
@@ -304,6 +181,7 @@
             </ul>
           </div>
 
+          <!-- MENU -->
           <div class="footer-col">
             <h3 class="footer-title">Menu</h3>
 
@@ -335,6 +213,7 @@
             </ul>
           </div>
 
+          <!-- ORGANIZATOR -->
           <div class="footer-col footer-org">
             <h3 class="footer-title">Organizator</h3>
 
@@ -343,6 +222,7 @@
               href="https://talentpoznan.pl/"
               aria-label="Talent"
             >
+              <!-- Podmień ścieżkę na właściwą w Twoim projekcie -->
               <img src="obrazy/talent.png" alt="talent" />
             </a>
           </div>
@@ -358,20 +238,13 @@
     <script>
       const msg = document.getElementById("msg");
       const form = document.getElementById("buy");
-      const bookBtn = document.getElementById("bookBtn");
 
-      const fullNameInput = form.querySelector('input[name="fullName"]');
-      const emailInput = form.querySelector('input[name="email"]');
-      const phoneInput = form.querySelector('input[name="phone"]');
-      const streetInput = form.querySelector('input[name="street"]');
-      const cityInput = form.querySelector('input[name="city"]');
-      const postalCodeInput = form.querySelector('input[name="postalCode"]');
-
+      // --- Ceny biletów w groszach ---
       const PRICE_GROSZE = {
-        premium: 49900,
-        biznesplus: 59900,
-        vipbankiet: 99900,
-        vip: 149900,
+        premium: 49900, // 499 PLN
+        biznesplus: 59900, // 599 PLN
+        vipbankiet: 99900, // 999 PLN
+        vip: 149900, // 1 499 PLN
       };
 
       const ticketSel = form.querySelector('select[name="ticketType"]');
@@ -408,13 +281,11 @@
         const qty = getQty();
         const unit = getUnit();
         let unitAfter;
-
         if (promoApplied && fixedPriceGrosze > 0) {
           unitAfter = fixedPriceGrosze;
         } else {
           unitAfter = Math.round(unit * (promoApplied ? discountFactor : 1));
         }
-
         const total = unitAfter * qty;
         totalEl.textContent = unit ? formatPLNFromGrosze(total) : "—";
       }
@@ -425,103 +296,27 @@
         discountFactor = 1;
         fixedPriceGrosze = 0;
         promoHintEl.textContent = "";
-        promoHintEl.style.color = "";
         renderTotal();
       }
 
-      function normalizePhone(value) {
-        return String(value || "")
-          .trim()
-          .replace(/\s+/g, " ");
-      }
+      promoInput.addEventListener("input", () => {
+        if (promoApplied) clearPromo(); // zmiana kodu po zastosowaniu = reset
+        applyPromoBtn.disabled = !promoInput.value.trim();
+      });
 
-      function normalizePostalCode(value) {
-        return String(value || "")
-          .trim()
-          .replace(/\s+/g, "")
-          .replace(/^(\d{2})(\d{3})$/, "$1-$2");
-      }
-
-      function clearFieldErrors() {
-        [
-          fullNameInput,
-          emailInput,
-          phoneInput,
-          streetInput,
-          cityInput,
-          postalCodeInput,
-          qtyInput,
-          ticketSel,
-        ].forEach((el) => el.setCustomValidity(""));
-      }
-
-      function validateBeforeSubmit(payload) {
-        clearFieldErrors();
-
-        const fullName = String(payload.fullName || "").trim();
-        const email = String(payload.email || "").trim();
-        const phone = normalizePhone(payload.phone);
-        const street = String(payload.street || "").trim();
-        const city = String(payload.city || "").trim();
-        const postalCode = normalizePostalCode(payload.postalCode);
-        const ticketType = String(payload.ticketType || "")
-          .trim()
-          .toLowerCase();
-        const qty = parseInt(payload.quantity || "1", 10);
-
-        phoneInput.value = phone;
-        postalCodeInput.value = postalCode;
-
-        if (fullName.length < 3) {
-          fullNameInput.setCustomValidity("Podaj imię i nazwisko.");
-          return fullNameInput;
-        }
-
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-          emailInput.setCustomValidity("Podaj poprawny adres e-mail.");
-          return emailInput;
-        }
-
-        if (!/^[0-9+\s()\-]{6,20}$/.test(phone)) {
-          phoneInput.setCustomValidity("Podaj poprawny numer telefonu.");
-          return phoneInput;
-        }
-
-        if (street.length < 3) {
-          streetInput.setCustomValidity("Podaj ulicę.");
-          return streetInput;
-        }
-
-        if (city.length < 2) {
-          cityInput.setCustomValidity("Podaj miasto.");
-          return cityInput;
-        }
-
-        if (!/^\d{2}-\d{3}$/.test(postalCode)) {
-          postalCodeInput.setCustomValidity(
-            "Podaj kod pocztowy w formacie 00-000.",
-          );
-          return postalCodeInput;
-        }
-
-        if (!PRICE_GROSZE[ticketType]) {
-          ticketSel.setCustomValidity("Wybierz poprawny typ biletu.");
-          return ticketSel;
-        }
-
-        if (!Number.isFinite(qty) || qty < 1 || qty > 20) {
-          qtyInput.setCustomValidity("Ilość biletów musi być od 1 do 20.");
-          return qtyInput;
-        }
-
-        return null;
-      }
-
+      /**
+       * Walidacja kodów zniżkowych (frontend - musi być spójna z backendem).
+       *
+       * KWIECIEN  – 35% zniżki (bez limitu czasowego na froncie; backend też waliduje)
+       * NASKALE   – 50% zniżki, ważny do 23.03.2026 23:59:59 czasu polskiego
+       * TALENT    – 50% zniżki, ważny do 30.04.2026 23:59:59 czasu polskiego
+       */
       function validatePromoCode(code) {
         const normalized = code.trim().toLowerCase();
         const now = new Date();
 
         if (normalized === "kwiecien" || normalized === "kwiecień") {
+          // Ważny do końca kwietnia 2026 (CEST, UTC+2)
           const deadlineKwiecien = new Date("2026-05-01T00:00:00+02:00");
           if (now >= deadlineKwiecien) {
             return { valid: false, label: "Ten kod już wygasł." };
@@ -535,7 +330,9 @@
         }
 
         if (normalized === "naskale") {
-          const deadline = new Date("2026-03-30T00:00:00+01:00");
+          // Ważny do poniedziałku 23.03.2026 23:59:59 CET (UTC+1)
+          // czyli do 2026-03-24T00:00:00+01:00 (początek kolejnego dnia)
+          const deadline = new Date("2026-03-24T00:00:00+01:00");
           if (now < deadline) {
             return {
               valid: true,
@@ -548,6 +345,8 @@
         }
 
         if (normalized === "talent") {
+          // Ważny do końca kwietnia 2026 (30.04.2026 23:59:59 CEST = UTC+2)
+          // czyli do 2026-05-01T00:00:00+02:00
           const deadline = new Date("2026-05-01T00:00:00+02:00");
           if (now < deadline) {
             return {
@@ -564,57 +363,13 @@
           return {
             valid: true,
             code: "LIGOTZKI022725@",
-            fixedPrice: 200,
+            fixedPrice: 33, // 1 PLN w groszach
             label: "Kod zastosowany.",
           };
         }
 
         return { valid: false, label: "Nieprawidłowy kod." };
       }
-
-      function setButtonsDisabled(disabled) {
-        bookBtn.disabled = disabled;
-        applyPromoBtn.disabled = disabled || !promoInput.value.trim();
-      }
-
-      promoInput.addEventListener("input", () => {
-        if (promoApplied) clearPromo();
-        applyPromoBtn.disabled = !promoInput.value.trim();
-      });
-
-      phoneInput.addEventListener("input", () => {
-        phoneInput.setCustomValidity("");
-      });
-
-      postalCodeInput.addEventListener("input", () => {
-        postalCodeInput.setCustomValidity("");
-      });
-
-      fullNameInput.addEventListener("input", () => {
-        fullNameInput.setCustomValidity("");
-      });
-
-      emailInput.addEventListener("input", () => {
-        emailInput.setCustomValidity("");
-      });
-
-      streetInput.addEventListener("input", () => {
-        streetInput.setCustomValidity("");
-      });
-
-      cityInput.addEventListener("input", () => {
-        cityInput.setCustomValidity("");
-      });
-
-      qtyInput.addEventListener("input", () => {
-        qtyInput.setCustomValidity("");
-        renderTotal();
-      });
-
-      ticketSel.addEventListener("change", () => {
-        ticketSel.setCustomValidity("");
-        renderTotal();
-      });
 
       applyPromoBtn.addEventListener("click", () => {
         const code = (promoInput.value || "").trim();
@@ -631,16 +386,18 @@
           promoApplied = false;
           appliedCode = "";
           discountFactor = 1;
-          fixedPriceGrosze = 0;
           promoHintEl.textContent = result.label;
           promoHintEl.style.color = "red";
         }
-
         renderTotal();
       });
 
+      ticketSel.addEventListener("change", renderTotal);
+      qtyInput.addEventListener("input", renderTotal);
+
       applyPromoBtn.disabled = !promoInput.value.trim();
 
+      // Automatyczne wybranie biletu z parametru URL (?ticket=...)
       (function () {
         const params = new URLSearchParams(window.location.search);
         const ticketParam = params.get("ticket");
@@ -653,82 +410,32 @@
       })();
 
       renderTotal();
-      setButtonsDisabled(false);
 
-      bookBtn.addEventListener("click", () => {
-        form.requestSubmit();
-      });
-
+      // --- Submit ---
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
-
-        msg.textContent = "";
-        msg.style.color = "";
-        setButtonsDisabled(true);
+        msg.textContent = "Tworzę zamówienie...";
 
         const fd = new FormData(form);
         const payload = Object.fromEntries(fd.entries());
 
-        const invalidField = validateBeforeSubmit(payload);
-        if (invalidField) {
-          invalidField.reportValidity();
-          setButtonsDisabled(false);
+        if (!promoApplied) payload.promoCode = "";
+        else payload.promoCode = appliedCode || payload.promoCode;
+
+        const res = await fetch("/api/create-order", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        if (!res.ok) {
+          const t = await res.text().catch(() => "");
+          msg.textContent = `Błąd tworzenia zamówienia: ${res.status} ${t}`;
           return;
         }
 
-        payload.phone = normalizePhone(payload.phone);
-        payload.postalCode = normalizePostalCode(payload.postalCode);
-
-        if (!promoApplied) {
-          payload.promoCode = "";
-        } else {
-          payload.promoCode = appliedCode || payload.promoCode;
-        }
-
-        const endpoint = "/api/book-order";
-
-        msg.textContent = "Zapisuję rezerwację...";
-
-        try {
-          const res = await fetch(endpoint, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload),
-          });
-
-          const raw = await res.text();
-          let data = null;
-
-          try {
-            data = raw ? JSON.parse(raw) : null;
-          } catch (_) {}
-
-          if (!res.ok) {
-            const errText =
-              (data && (data.error || data.message)) || raw || "Nieznany błąd.";
-            msg.style.color = "#ffffff";
-            msg.textContent = `Błąd: ${res.status} ${errText}`;
-            setButtonsDisabled(false);
-            return;
-          }
-
-          msg.style.color = "#ffffff";
-          msg.textContent =
-            (data && data.message) ||
-            "Dziękujemy, zapis został przyjęty. Link do płatności wyślemy mailowo.";
-
-          form.reset();
-          clearPromo();
-          ticketSel.value = "premium";
-          qtyInput.value = "1";
-          renderTotal();
-          setButtonsDisabled(false);
-        } catch (err) {
-          msg.style.color = "#ffffff";
-          msg.textContent =
-            "Nie udało się zapisać rezerwacji. Spróbuj ponownie.";
-          setButtonsDisabled(false);
-        }
+        const data = await res.json();
+        window.location.href = data.redirectUri;
       });
     </script>
 
