@@ -58,6 +58,53 @@
         background-color: #cc7219;
         color: white;
       }
+      #buy #tpayBtn {
+        position: relative; /* Wymagane dla pseudoelementu */
+        z-index: 1; /* Tworzy nowy kontekst, by tło nie uciekło pod spód */
+
+        /* Początkowy granatowy gradient */
+        background: linear-gradient(90deg, #2953c6 0%, #072653 100%);
+        color: white;
+        box-shadow: 0px 1px 20px #ffffff16;
+        border: none;
+        font-family: "Aktiv Grotesk", Helvetica, Arial, sans-serif;
+        font-weight: 500;
+
+        /* Pamiętaj o przecinkach w transition! Animujemy tu tylko transform i cień */
+        transition:
+          transform 0.5s ease,
+          box-shadow 0.5s ease;
+      }
+
+      /* Tworzymy niewidoczną warstwę z zielonym gradientem */
+      #buy #tpayBtn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        /* Gradient po najechaniu (hover) */
+        background: linear-gradient(90deg, #8dffb0 0%, #30d366 100%);
+
+        z-index: -1; /* Warstwa ląduje pod tekstem */
+        opacity: 0; /* Domyślnie niewidoczna */
+        transition: opacity 0.5s ease; /* Płynne pojawianie się zielonego koloru */
+        border-radius: inherit; /* Dziedziczy zaokrąglenie rogów z głównego przycisku */
+      }
+
+      /* Zmiana cienia i pozycji po najechaniu na przycisk */
+      #buy #tpayBtn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(7, 38, 83, 0.3);
+        color: #072653;
+      }
+
+      /* Po najechaniu na przycisk, zielona warstwa staje się widoczna */
+      #buy #tpayBtn:hover::before {
+        opacity: 1;
+      }
     </style>
   </head>
 
@@ -200,27 +247,8 @@
               </span>
             </button>
             <p id="msg"></p>
-            <button
-              type="button"
-              id="tpayBtn"
-              class="payu-btn"
-              style="visibility: hidden; max-height: 1px"
-            >
-              <span class="payu-btn__brand">Tpay</span>
-              <span class="payu-btn__text">Zapłać przez Tpay</span>
-            </button>
-            <button type="button" id="payuBtn" class="payu-btn">
-              <span class="payu-btn__brand">PayU</span>
-              <span class="payu-btn__text">Zapłać przez PayU</span>
-            </button>
-
-            <p class="lub">Lub</p>
-
-            <button type="button" id="stripeBtn" class="payu-btn">
-              <span class="payu-btn__brand">Stripe</span>
-              <span class="payu-btn__text">
-                Zapłać kartą / Apple Pay / Google Pay / BLIK
-              </span>
+            <button type="button" id="tpayBtn" class="payu-btn">
+              <span class="payu-btn__text">Zapłać przez tpay</span>
             </button>
           </div>
 

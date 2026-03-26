@@ -1178,6 +1178,58 @@ body.page-short .site-footer {
   margin: 0 auto;
   margin-top: 60px;
 }
+
+.promoinfobox {
+  margin: 0 auto;
+  background-color: var(--accent);
+}
+.boxinbox {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+}
+.promoinfo {
+  max-width: 70%;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 100px 50px 50px 50px;
+  color: var(--white);
+}
+
+.trawa img {
+  /* Zmienia dowolny kolor SVG na czarny, a potem odwraca go na biały */
+  filter: brightness(0) invert(1);
+}
+
+dialog {
+  padding: 20px;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+
+  text-align: center;
+
+  /* DODANE: Wymuszenie wyśrodkowania na ekranie */
+  margin: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+#close-modal {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 /* ========================
    RESPONSYWNE — MOBILE
    ======================== */
@@ -1186,6 +1238,10 @@ body.page-short .site-footer {
     padding: 0 16px;
   }
 
+  dialog {
+    margin: 0;
+    width: 90%;
+  }
   .section {
     padding: 32px 16px;
     border-radius: 0;
@@ -1437,5 +1493,27 @@ body.page-short .site-footer {
   .footer-col {
     display: flex;
     flex-direction: column;
+  }
+  .zoba {
+    font-size: 16px;
+  }
+  .guzikhiro {
+    margin-top: 30px;
+  }
+  .brfh {
+    text-align: center;
+  }
+  .boxinbox {
+    flex-direction: column;
+  }
+
+  .promoinfo {
+    font-size: 14px;
+    max-width: 100%;
+    padding: 40px;
+  }
+  .trawa {
+    visibility: hidden;
+    max-height: 1px;
   }
 }
