@@ -338,26 +338,26 @@ export async function finalizePaidOrder({
   payuOrderId = null,
   stripeSessionId = null,
   stripePaymentIntentId = null,
+  tpayTransactionId = null, // <- Twoja nowa linijka
   env,
 }) {
-  if (!env.DB) {
-    throw new Error("Missing D1 binding: DB");
-  }
+  if (!env.DB) throw new Error("Missing D1 binding DB");
 
+  // Dodaliśmy tpay_transaction_id do komendy SQL
   await env.DB.prepare(
     `
     UPDATE orders
-    SET
-      status = COALESCE(?, status),
-      provider = COALESCE(?, provider),
-      payu_order_id = COALESCE(?, payu_order_id),
-      stripe_session_id = COALESCE(?, stripe_session_id),
-      stripe_payment_intent_id = COALESCE(?, stripe_payment_intent_id),
-      paid_at = CASE
-        WHEN COALESCE(?, status) = 'COMPLETED' AND paid_at IS NULL THEN datetime('now')
-        ELSE paid_at
-      END,
-      updated_at = datetime('now')
+    SET status = COALESCE(?, status),
+        provider = COALESCE(?, provider),
+        payu_order_id = COALESCE(?, payu_order_id),
+        stripe_session_id = COALESCE(?, stripe_session_id),
+        stripe_payment_intent_id = COALESCE(?, stripe_payment_intent_id),
+        tpay_transaction_id = COALESCE(?, tpay_transaction_id), 
+        paid_at = CASE 
+          WHEN COALESCE(?, status) = 'COMPLETED' AND paid_at IS NULL THEN datetime('now')
+          ELSE paid_at
+        END,
+        updated_at = datetime('now')
     WHERE ext_order_id = ?
     `,
   )
@@ -367,6 +367,7 @@ export async function finalizePaidOrder({
       payuOrderId,
       stripeSessionId,
       stripePaymentIntentId,
+      tpayTransactionId, // <- Tutaj wysyłamy ID z Tpay do bazy
       status || null,
       extOrderId,
     )
