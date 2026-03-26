@@ -307,7 +307,7 @@
           return { done: true };
         }
 
-        const s = String(j.payuStatus || "").toUpperCase();
+        const s = String(j.status || j.payuStatus || "").toUpperCase();
 
         if (!s) {
           statusEl.textContent =
