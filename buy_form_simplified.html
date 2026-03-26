@@ -25,11 +25,6 @@
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700;800&family=DM+Serif+Display&display=swap"
     />
     <style>
-      .notice-box {
-        max-width: 640px;
-        margin: 20px 0;
-      }
-
       .book-btn {
         background: linear-gradient(135deg, #065f46, #047857);
         color: #fff;
@@ -84,25 +79,6 @@
       <h1>Kup bilet</h1>
 
       <div>
-        <div class="notice-box">
-          <span class="notice-icon">
-            <img src="svg/buy_problem.svg" alt="" width="24" height="24" />
-          </span>
-          <p style="margin: 0">
-            Przepraszamy, obecnie płatności są chwilowo niedostępne. Prosimy o
-            cierpliwość, dokładamy wszelkich starań, aby wróciły jak
-            najszybciej. Mogą państwo skorzystać z opcji zapisania się, a link
-            do płatności zostanie wysłany mailem, po przywróceniu ich działania.
-            W razie potrzeby zapraszamy do kontaktu mailowego:
-            <a
-              href="mailto:konferencja@brfh.eu"
-              style="color: #92400e; font-weight: 600"
-            >
-              konferencja@brfh.eu </a
-            >.
-          </p>
-        </div>
-
         <form id="buy">
           <label>Imię i Nazwisko</label>
           <input
@@ -223,25 +199,6 @@
         </form>
       </div>
 
-      <div class="notice-box">
-        <span class="notice-icon">
-          <img src="svg/buy_problem.svg" alt="" width="24" height="24" />
-        </span>
-        <p style="margin: 0">
-          Przepraszamy, obecnie płatności są chwilowo niedostępne. Prosimy o
-          cierpliwość, dokładamy wszelkich starań, aby wróciły jak najszybciej.
-          Mogą państwo skorzystać z opcji zapisania się, a link do płatności
-          zostanie wysłany mailem, po przywróceniu ich działania. W razie
-          potrzeby zapraszamy do kontaktu mailowego:
-          <a
-            href="mailto:konferencja@brfh.eu"
-            style="color: #92400e; font-weight: 600"
-          >
-            konferencja@brfh.eu </a
-          >.
-        </p>
-      </div>
-
       <p class="realizacja">Czas realizacji zamówienia - 1 dzień roboczy.</p>
     </div>
 
@@ -324,8 +281,8 @@
                 <a href="#reklamacje">Zwroty</a>
                 <span class="tooltip-text">
                   W sprawie zwrotów prosimy o wysyłanie wiadomości na adres
-                  email: konferencja@brfh.eu. Czas na zwrot biletu wynosi 14 dni
-                  od dnia zakupu.
+                  email: [konferencja@brfh.eu](mailto:konferencja@brfh.eu). Czas
+                  na zwrot biletu wynosi 14 dni od dnia zakupu.
                 </span>
               </li>
               <li>
@@ -338,7 +295,7 @@
                 <a href="#reklamacje">Reklamacje</a>
                 <span class="tooltip-text">
                   W sprawie reklamacji prosimy o wysyłanie wiadomości na adres
-                  email: konferencja@brfh.eu
+                  email: [konferencja@brfh.eu](mailto:konferencja@brfh.eu)
                 </span>
               </li>
             </ul>
@@ -365,8 +322,6 @@
     </footer>
 
     <script>
-      const PAYMENTS_AVAILABLE = false;
-
       const msg = document.getElementById("msg");
       const form = document.getElementById("buy");
 
@@ -591,9 +546,9 @@
 
       function setButtonsDisabled(disabled) {
         bookBtn.disabled = disabled;
-        payuBtn.disabled = disabled || !PAYMENTS_AVAILABLE;
-        stripeBtn.disabled = disabled || !PAYMENTS_AVAILABLE;
-        tpayBtn.disabled = disabled || !PAYMENTS_AVAILABLE;
+        payuBtn.disabled = disabled;
+        stripeBtn.disabled = disabled;
+        tpayBtn.disabled = disabled;
         applyPromoBtn.disabled = disabled || !promoInput.value.trim();
       }
 
