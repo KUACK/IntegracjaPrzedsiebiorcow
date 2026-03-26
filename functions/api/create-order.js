@@ -349,6 +349,8 @@ export async function onRequestPost({ request, env }) {
     }
 
     // 2) Create transaction w Tpay
+    const tpayNotifyUrl = origin + "/api/tpay-webhook";
+
     const tpayPayload = {
       amount: Number(totalAmountFloat),
       description: `Integracja Przedsiębiorców - ${t.name}`,
@@ -368,7 +370,7 @@ export async function onRequestPost({ request, env }) {
           error: cancelUrl,
         },
         notification: {
-          url: notifyUrl,
+          url: tpayNotifyUrl, // Zmienione z notifyUrl na nową zmienną
         },
       },
     };
