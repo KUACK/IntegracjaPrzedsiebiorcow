@@ -200,6 +200,15 @@
               </span>
             </button>
             <p id="msg"></p>
+            <button
+              type="button"
+              id="tpayBtn"
+              class="payu-btn"
+              style="visibility: hidden"
+            >
+              <span class="payu-btn__brand">Tpay</span>
+              <span class="payu-btn__text">Zapłać przez Tpay</span>
+            </button>
             <button type="button" id="payuBtn" class="payu-btn">
               <span class="payu-btn__brand">PayU</span>
               <span class="payu-btn__text">Zapłać przez PayU</span>
@@ -370,6 +379,7 @@
       const bookBtn = document.getElementById("bookBtn");
       const payuBtn = document.getElementById("payuBtn");
       const stripeBtn = document.getElementById("stripeBtn");
+      const tpayBtn = document.getElementById("tpayBtn");
 
       const fullNameInput = form.querySelector('input[name="fullName"]');
       const emailInput = form.querySelector('input[name="email"]');
@@ -588,6 +598,7 @@
         bookBtn.disabled = disabled;
         payuBtn.disabled = disabled || !PAYMENTS_AVAILABLE;
         stripeBtn.disabled = disabled || !PAYMENTS_AVAILABLE;
+        tpayBtn.disabled = disabled || !PAYMENTS_AVAILABLE;
         applyPromoBtn.disabled = disabled || !promoInput.value.trim();
       }
 
@@ -651,6 +662,12 @@
         }
 
         renderTotal();
+      });
+
+      tpayBtn.addEventListener("click", () => {
+        submitMode = "tpay";
+        providerInput.value = "tpay";
+        form.requestSubmit();
       });
 
       applyPromoBtn.disabled = !promoInput.value.trim();
