@@ -1230,6 +1230,12 @@ dialog::backdrop {
   border-radius: 5px;
   cursor: pointer;
 }
+.extend {
+  font-weight: 700;
+  margin-top: 20px;
+  font-size: 17px;
+  text-decoration: underline;
+}
 /* ========================
    RESPONSYWNE — MOBILE
    ======================== */
@@ -1241,6 +1247,10 @@ dialog::backdrop {
   dialog {
     margin: 0;
     width: 90%;
+  }
+
+  .dtekst {
+    font-size: 12px;
   }
   .section {
     padding: 32px 16px;

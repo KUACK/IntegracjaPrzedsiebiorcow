@@ -585,7 +585,7 @@
         }
 
         if (normalized === "naskale") {
-          const deadline = new Date("2026-03-30T00:00:00+01:00");
+          const deadline = new Date("2026-04-08T00:00:00+01:00");
           if (now < deadline) {
             return {
               valid: true,
@@ -610,10 +610,10 @@
           return { valid: false, label: "Ten kod już wygasł." };
         }
 
-        if (normalized === "ligotzki022725@") {
+        if (normalized === "asknet12#") {
           return {
             valid: true,
-            code: "LIGOTZKI022725@",
+            code: "asknet12#",
             fixedPrice: 200,
             label: "Kod zastosowany.",
           };
