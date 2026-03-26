@@ -1,4 +1,4 @@
-import { finalizePaidOrder } from "../lib/finalize-paid-order.js";
+import { finalizePaidOrder } from "../finalize-paid-order.js";
 
 // Funkcja weryfikująca podpis MD5 z Tpay
 async function verifyTpaySignature(
