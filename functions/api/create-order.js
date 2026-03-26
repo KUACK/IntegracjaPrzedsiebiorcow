@@ -327,8 +327,22 @@ export async function onRequestPost({ request, env }) {
         }),
       );
 
-      if (!accessToken)
-        return new Response("Tpay auth failed", { status: 502 });
+      if (!accessToken) {
+        return new Response(
+          JSON.stringify({
+            error: "Tpay auth failed",
+            status: tokenRes.status,
+            tpay_response: tokenJson,
+            client_id_used: env.TPAY_CLIENT_ID
+              ? env.TPAY_CLIENT_ID.substring(0, 5) + "..."
+              : "missing",
+          }),
+          {
+            status: 502,
+            headers: { "Content-Type": "application/json" },
+          },
+        );
+      }
     } catch (e) {
       console.log("CREATE_ORDER_TPAY_AUTH_ERROR", String(e));
       return new Response("Tpay auth error", { status: 502 });
