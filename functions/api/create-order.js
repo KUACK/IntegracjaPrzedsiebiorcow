@@ -301,7 +301,7 @@ export async function onRequestPost({ request, env }) {
 
     // Ustawienie środowiska Tpay na podstawie CLIENT_ID:
     // API produkcyjne (zaczynające się od tpay...) lub sandbox API.
-    const tpayBaseUrl = "https://openapi.tpay.com";
+    const tpayBaseUrl = "https://api.tpay.com";
 
     // 1) OAuth token Tpay (client_credentials)
     let accessToken;
