@@ -455,6 +455,7 @@ body {
   align-items: stretch;
   max-width: 1200px;
   margin: 0 auto;
+  margin-top: 50px;
 }
 
 .ticket-card {
@@ -1193,7 +1194,7 @@ body.page-short .site-footer {
   max-width: 70%;
   font-size: 18px;
   font-weight: 500;
-  padding: 100px 50px 50px 50px;
+  padding: 100px 50px;
   color: var(--white);
 }
 
