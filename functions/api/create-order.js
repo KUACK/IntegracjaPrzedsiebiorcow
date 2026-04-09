@@ -76,7 +76,7 @@ export async function onRequestPost({ request, env }) {
       discountFactor = 0.65;
     }
   } else if (promo === "naskale") {
-    const deadline = new Date("2026-04-10T00:00:00+01:00");
+    const deadline = new Date("2026-05-01T00:00:00+01:00");
     if (now < deadline) {
       discountFactor = 0.5;
     }
