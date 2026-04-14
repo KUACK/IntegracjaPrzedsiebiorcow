@@ -24,6 +24,11 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700;800&family=DM+Serif+Display&display=swap"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/intl-tel-input@26.7.5/build/css/intlTelInput.css"
+    />
+
     <style>
       .notice-box {
         max-width: 640px;
@@ -89,6 +94,18 @@
         background-color: #cc7219;
         color: white;
       }
+
+      .iti {
+        width: 100%;
+      }
+
+      .iti__tel-input {
+        width: 100%;
+      }
+
+      .iti__country-container {
+        z-index: 3;
+      }
     </style>
   </head>
 
@@ -129,12 +146,15 @@
               href="mailto:konferencja@brfh.eu"
               style="color: #92400e; font-weight: 600"
             >
-              konferencja@brfh.eu </a
-            >.
+              konferencja@brfh.eu
+            </a>
+            .
           </p>
         </div>
 
         <form id="buy">
+          <h3>Dane osobowe</h3>
+
           <label>Imię i Nazwisko</label>
           <input
             name="fullName"
@@ -157,13 +177,13 @@
           <label>Numer telefonu</label>
           <input
             name="phone"
+            id="phone"
+            type="tel"
             required
             autocomplete="tel"
-            inputmode="tel"
-            pattern="[0-9+\s()\-]{6,20}"
-            title="Podaj poprawny numer telefonu."
-            maxlength="20"
+            maxlength="25"
           />
+          <input type="hidden" name="phoneCountry" id="phoneCountry" />
 
           <label>Ulica</label>
           <input name="street" required minlength="3" maxlength="120" />
@@ -183,6 +203,8 @@
             title="Podaj kod pocztowy w formacie 00-000."
             maxlength="6"
           />
+
+          <h3>Bilety</h3>
 
           <label>Typ biletu</label>
           <select name="ticketType" id="ticketType" required>
@@ -286,8 +308,9 @@
             href="mailto:konferencja@brfh.eu"
             style="color: #92400e; font-weight: 600"
           >
-            konferencja@brfh.eu </a
-          >.
+            konferencja@brfh.eu
+          </a>
+          .
         </p>
       </div>
 
@@ -421,6 +444,8 @@
       </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@26.7.5/build/js/intlTelInput.min.js"></script>
+
     <script>
       const PAYMENTS_AVAILABLE = true;
 
@@ -435,6 +460,7 @@
       const fullNameInput = form.querySelector('input[name="fullName"]');
       const emailInput = form.querySelector('input[name="email"]');
       const phoneInput = form.querySelector('input[name="phone"]');
+      const phoneCountryHidden = document.getElementById("phoneCountry");
       const streetInput = form.querySelector('input[name="street"]');
       const cityInput = form.querySelector('input[name="city"]');
       const postalCodeInput = form.querySelector('input[name="postalCode"]');
@@ -454,11 +480,44 @@
       const promoHintEl = document.getElementById("promoHint");
       const totalEl = document.getElementById("orderTotal");
 
+      const iti = window.intlTelInput(phoneInput, {
+        initialCountry: "pl",
+        nationalMode: true,
+        separateDialCode: true,
+        autoPlaceholder: "polite",
+        formatAsYouType: true,
+        preferredCountries: [
+          "pl",
+          "de",
+          "gb",
+          "cz",
+          "sk",
+          "ua",
+          "lt",
+          "lv",
+          "ee",
+          "fr",
+          "es",
+          "it",
+          "nl",
+          "us",
+          "ca",
+        ],
+        loadUtils: () =>
+          import("https://cdn.jsdelivr.net/npm/intl-tel-input@26.7.5/build/js/utils.js"),
+      });
+
       let promoApplied = false;
       let appliedCode = "";
       let discountFactor = 1;
       let fixedPriceGrosze = 0;
       let submitMode = "book";
+
+      function syncPhoneCountry() {
+        const data = iti.getSelectedCountryData();
+        phoneCountryHidden.value =
+          data && data.iso2 ? data.iso2.toUpperCase() : "";
+      }
 
       function formatPLNFromGrosze(grosze) {
         return (grosze / 100).toLocaleString("pl-PL", {
@@ -500,12 +559,6 @@
         promoHintEl.textContent = "";
         promoHintEl.style.color = "";
         renderTotal();
-      }
-
-      function normalizePhone(value) {
-        return String(value || "")
-          .trim()
-          .replace(/\s+/g, " ");
       }
 
       function formatPostalCodeLive(value) {
@@ -556,7 +609,7 @@
 
         const fullName = String(payload.fullName || "").trim();
         const email = String(payload.email || "").trim();
-        const phone = normalizePhone(payload.phone);
+        const phone = String(payload.phone || "").trim();
         const street = String(payload.street || "").trim();
         const city = String(payload.city || "").trim();
         const postalCode = normalizePostalCode(payload.postalCode);
@@ -566,7 +619,6 @@
         const qty = parseInt(payload.quantity || "1", 10);
         const consent = payload.consent === "1";
 
-        phoneInput.value = phone;
         postalCodeInput.value = postalCode;
 
         if (fullName.length < 3) {
@@ -579,7 +631,16 @@
           return emailInput;
         }
 
-        if (!/^[0-9+\s()\-]{6,20}$/.test(phone)) {
+        if (!phone) {
+          phoneInput.setCustomValidity("Podaj numer telefonu.");
+          return phoneInput;
+        }
+
+        if (
+          typeof iti.isValidNumber === "function" &&
+          typeof window.intlTelInputUtils !== "undefined" &&
+          !iti.isValidNumber()
+        ) {
           phoneInput.setCustomValidity("Podaj poprawny numer telefonu.");
           return phoneInput;
         }
@@ -739,6 +800,11 @@
         }
       });
 
+      phoneInput.addEventListener("countrychange", () => {
+        phoneInput.setCustomValidity("");
+        syncPhoneCountry();
+      });
+
       phoneInput.addEventListener("input", () => {
         phoneInput.setCustomValidity("");
       });
@@ -793,6 +859,7 @@
         }
       })();
 
+      syncPhoneCountry();
       renderTotal();
       setButtonsDisabled(false);
 
@@ -815,6 +882,14 @@
         msg.style.color = "";
         setButtonsDisabled(true);
 
+        syncPhoneCountry();
+
+        const intlPhone =
+          typeof iti.getNumber === "function" ? iti.getNumber() : "";
+        if (intlPhone) {
+          phoneInput.value = intlPhone;
+        }
+
         const fd = new FormData(form);
         const payload = Object.fromEntries(fd.entries());
 
@@ -825,8 +900,9 @@
           return;
         }
 
-        payload.phone = normalizePhone(payload.phone);
         payload.postalCode = normalizePostalCode(payload.postalCode);
+        payload.phoneCountry =
+          phoneCountryHidden.value || payload.phoneCountry || "";
 
         if (!promoApplied) {
           payload.promoCode = "";
@@ -878,6 +954,9 @@
             clearPromo();
             ticketSel.value = "premium";
             qtyInput.value = "1";
+            iti.setCountry("pl");
+            phoneInput.value = "";
+            syncPhoneCountry();
             renderTotal();
             setButtonsDisabled(false);
             return;

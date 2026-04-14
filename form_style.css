@@ -329,3 +329,80 @@
   margin: 0px auto;
   text-align: center;
 }
+.phone-row {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 0px;
+}
+
+.phone-row select,
+.phone-row input {
+  width: 100%;
+}
+
+h3 {
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    sans-serif;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 20px;
+  margin-top: 10px;
+}
+@media (max-width: 640px) {
+  .phone-row {
+    grid-template-columns: 96px 1fr;
+    gap: 10px;
+  }
+}
+/* całe pole telefonu */
+.iti,
+.iti input,
+.iti__tel-input {
+  color: #111 !important;
+}
+
+/* wpisywany numer */
+#phone {
+  color: #111 !important;
+  background-color: #fff !important;
+}
+
+/* prefix przy fladze, np. +48 */
+.iti .iti__selected-dial-code,
+.iti .iti__selected-country,
+.iti .iti__selected-country-primary {
+  color: #111 !important;
+}
+
+/* dropdown z krajami */
+.iti__dropdown-content,
+.iti__country-list {
+  background: #fff !important;
+  color: #111 !important;
+}
+
+/* wyszukiwarka w dropdownie */
+.iti__search-input {
+  color: #111 !important;
+  background: #fff !important;
+}
+
+/* nazwy krajów i kody */
+.iti__country,
+.iti__country-name,
+.iti__dial-code {
+  color: #111 !important;
+}
+
+/* placeholder */
+#phone::placeholder,
+.iti__tel-input::placeholder,
+.iti__search-input::placeholder {
+  color: #666 !important;
+}
