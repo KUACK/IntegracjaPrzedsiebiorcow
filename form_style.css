@@ -197,7 +197,10 @@
     background 0.15s ease;
   box-shadow: none; /* płaski = bez cienia */
 }
-
+.img-fluid {
+  margin: 0 auto;
+  max-width: 640px;
+}
 #buy .payu-btn__text {
   font-weight: 700;
 }
@@ -309,8 +312,17 @@
   #buy .promo-line {
     flex-direction: column;
   }
+  #buy .payu-btn__text {
+    font-weight: 700;
+    font-size: 13px;
+  }
+  .img-fluid {
+    max-width: 100%;
+  }
 }
-
+#buy .payu-btn__text {
+  font-weight: 700;
+}
 .realizacja {
   font-weight: 500;
   font-size: 16px;

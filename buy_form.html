@@ -175,9 +175,11 @@
           <input
             name="postalCode"
             required
+            type="text"
             placeholder="00-000"
+            autocomplete="postal-code"
             inputmode="numeric"
-            pattern="^\d{2}-\d{3}$"
+            pattern="\d{2}-\d{3}"
             title="Podaj kod pocztowy w formacie 00-000."
             maxlength="6"
           />
@@ -291,6 +293,12 @@
 
       <p class="realizacja">Czas realizacji zamówienia - 1 dzień roboczy.</p>
     </div>
+
+    <img
+      class="img-fluid"
+      src="https://developers.autopay.pl/storage/loga/blik-karty-portfele_elektroniczne-PIS-przelew-platnosci_odroczone-raty/647x162-bankpay.png"
+      alt="Blik + karty + portfele elektroniczne + PIS + przelew + płatności odroczone + raty 647x162 bank pay"
+    />
 
     <footer class="site-footer">
       <div class="footer-bg" aria-hidden="true"></div>
@@ -500,11 +508,33 @@
           .replace(/\s+/g, " ");
       }
 
+      function formatPostalCodeLive(value) {
+        const raw = String(value || "").trim();
+
+        if (raw.includes("-")) {
+          const cleaned = raw.replace(/[^\d-]/g, "");
+          const parts = cleaned.split("-");
+          const left = (parts[0] || "").replace(/\D/g, "").slice(0, 2);
+          const right = parts.slice(1).join("").replace(/\D/g, "").slice(0, 3);
+          const hadDashAtEnd = cleaned.endsWith("-");
+
+          if (left.length === 2 && (hadDashAtEnd || right.length >= 0)) {
+            return right ? `${left}-${right}` : `${left}-`;
+          }
+
+          return left;
+        }
+
+        const digits = raw.replace(/\D/g, "").slice(0, 5);
+
+        if (digits.length < 2) return digits;
+        if (digits.length === 2) return `${digits}-`;
+
+        return `${digits.slice(0, 2)}-${digits.slice(2)}`;
+      }
+
       function normalizePostalCode(value) {
-        return String(value || "")
-          .trim()
-          .replace(/\s+/g, "")
-          .replace(/^(\d{2})(\d{3})$/, "$1-$2");
+        return formatPostalCodeLive(value).trim();
       }
 
       function clearFieldErrors() {
@@ -674,9 +704,39 @@
         payForm.submit();
       }
 
+      function applyPromoCode() {
+        const code = (promoInput.value || "").trim();
+        const result = validatePromoCode(code);
+
+        if (result.valid) {
+          promoApplied = true;
+          appliedCode = result.code;
+          discountFactor = result.factor || 1;
+          fixedPriceGrosze = result.fixedPrice || 0;
+          promoHintEl.textContent = result.label;
+          promoHintEl.style.color = "";
+        } else {
+          promoApplied = false;
+          appliedCode = "";
+          discountFactor = 1;
+          fixedPriceGrosze = 0;
+          promoHintEl.textContent = result.label;
+          promoHintEl.style.color = "red";
+        }
+
+        renderTotal();
+      }
+
       promoInput.addEventListener("input", () => {
         if (promoApplied) clearPromo();
         applyPromoBtn.disabled = !promoInput.value.trim();
+      });
+
+      promoInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          applyPromoCode();
+        }
       });
 
       phoneInput.addEventListener("input", () => {
@@ -685,6 +745,7 @@
 
       postalCodeInput.addEventListener("input", () => {
         postalCodeInput.setCustomValidity("");
+        postalCodeInput.value = formatPostalCodeLive(postalCodeInput.value);
       });
 
       fullNameInput.addEventListener("input", () => {
@@ -717,28 +778,7 @@
         consentInput.setCustomValidity("");
       });
 
-      applyPromoBtn.addEventListener("click", () => {
-        const code = (promoInput.value || "").trim();
-        const result = validatePromoCode(code);
-
-        if (result.valid) {
-          promoApplied = true;
-          appliedCode = result.code;
-          discountFactor = result.factor || 1;
-          fixedPriceGrosze = result.fixedPrice || 0;
-          promoHintEl.textContent = result.label;
-          promoHintEl.style.color = "";
-        } else {
-          promoApplied = false;
-          appliedCode = "";
-          discountFactor = 1;
-          fixedPriceGrosze = 0;
-          promoHintEl.textContent = result.label;
-          promoHintEl.style.color = "red";
-        }
-
-        renderTotal();
-      });
+      applyPromoBtn.addEventListener("click", applyPromoCode);
 
       applyPromoBtn.disabled = !promoInput.value.trim();
 
