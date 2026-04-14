@@ -1,32 +1,79 @@
+async function sha256Hex(input) {
+  const data = new TextEncoder().encode(input);
+  const digest = await crypto.subtle.digest("SHA-256", data);
+  return [...new Uint8Array(digest)]
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+function createAutopayOrderId() {
+  const ts = Date.now().toString(36).toUpperCase();
+  const rand = crypto.randomUUID().replace(/-/g, "").toUpperCase();
+  return `${ts}${rand}`.slice(0, 32);
+}
+
+function sanitizeAutopayDescription(text) {
+  return String(text || "")
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[–—]/g, "-")
+    .replace(/\+/g, " ")
+    .replace(/[^\x20-\x7E]/g, "")
+    .replace(/[^A-Za-z0-9 .:,\-]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 79);
+}
+
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email || "").trim());
+}
+
+function normalizeText(value, max = 255) {
+  return String(value || "")
+    .trim()
+    .replace(/\s+/g, " ")
+    .slice(0, max);
+}
+
+function json(data, status = 200) {
+  return new Response(JSON.stringify(data), {
+    status,
+    headers: { "Content-Type": "application/json; charset=UTF-8" },
+  });
+}
+
 export async function onRequestPost({ request, env }) {
-  // --- request meta (bez PII) ---
-  const reqUrl = new URL(request.url);
-  console.log(
-    "CREATE_ORDER_REQUEST",
-    JSON.stringify({
-      method: request.method,
-      host: reqUrl.host,
-      path: reqUrl.pathname,
-      ct: request.headers.get("content-type"),
-      cfRay: request.headers.get("cf-ray"),
-    }),
-  );
+  if (!env.DB) {
+    return new Response("Missing D1 binding: DB", { status: 500 });
+  }
 
-  const input = await request.json().catch(() => null);
-  if (!input) return new Response("Bad JSON", { status: 400 });
+  if (
+    !env.AUTOPAY_SERVICE_ID ||
+    !env.AUTOPAY_SHARED_KEY ||
+    !env.AUTOPAY_GATEWAY_URL
+  ) {
+    return new Response(
+      "Missing AUTOPAY_SERVICE_ID / AUTOPAY_SHARED_KEY / AUTOPAY_GATEWAY_URL",
+      { status: 500 },
+    );
+  }
 
-  const {
-    fullName,
-    email,
-    phone,
-    street,
-    city,
-    postalCode,
-    ticketType,
-    quantity,
-    promoCode,
-    paymentProvider,
-  } = input;
+  let input;
+  try {
+    input = await request.json();
+  } catch {
+    return new Response("Bad JSON", { status: 400 });
+  }
+
+  const fullName = normalizeText(input?.fullName, 120);
+  const email = normalizeText(input?.email, 255).toLowerCase();
+  const phone = normalizeText(input?.phone, 40);
+  const street = normalizeText(input?.street, 120);
+  const city = normalizeText(input?.city, 80);
+  const postalCode = normalizeText(input?.postalCode, 20);
+  const ticketType = normalizeText(input?.ticketType, 50).toLowerCase();
+  const promoCodeRaw = normalizeText(input?.promoCode, 50);
 
   if (
     !fullName ||
@@ -40,51 +87,58 @@ export async function onRequestPost({ request, env }) {
     return new Response("Missing fields", { status: 400 });
   }
 
-  const provider = String(paymentProvider).trim().toLowerCase();
-  if (!["payu", "stripe", "tpay"].includes(provider)) {
-    return new Response("Unknown paymentProvider", { status: 400 });
+  if (!isValidEmail(email)) {
+    return new Response("Bad email", { status: 400 });
   }
 
-  const qty = Math.max(1, Math.min(20, parseInt(quantity || "1", 10)));
-  if (!Number.isFinite(qty)) {
+  const parsedQty = parseInt(String(input?.quantity ?? "1"), 10);
+  if (!Number.isFinite(parsedQty)) {
     return new Response("Bad quantity", { status: 400 });
   }
+  const qty = Math.max(1, Math.min(20, parsedQty));
 
-  // --- Bilety i ceny (grosze) ---
   const tickets = {
-    premium: { name: "Premium – 1 dzień", unit: 49900 }, // 499 PLN
-    biznesplus: { name: "Biznes Plus – 2 dni", unit: 59900 }, // 599 PLN
-    vipbankiet: { name: "VIP – 2 dni + bankiet", unit: 99900 }, // 999 PLN
-    vip: { name: "VIP z Prezentacją – 2 dni + bankiet", unit: 149900 }, // 1 499 PLN
+    premium: {
+      dbName: "Premium – 1 dzień",
+      autopayName: "Premium - 1 dzien",
+      unit: 49900,
+    },
+    biznesplus: {
+      dbName: "Biznes Plus – 2 dni",
+      autopayName: "Biznes Plus - 2 dni",
+      unit: 59900,
+    },
+    vipbankiet: {
+      dbName: "VIP – 2 dni + bankiet",
+      autopayName: "VIP - 2 dni bankiet",
+      unit: 99900,
+    },
+    vip: {
+      dbName: "VIP z Prezentacją – 2 dni + bankiet",
+      autopayName: "VIP prezentacja - 2 dni bankiet",
+      unit: 149900,
+    },
   };
 
-  const t = tickets[String(ticketType || "").toLowerCase()];
-  if (!t) return new Response("Unknown ticketType", { status: 400 });
+  const t = tickets[ticketType];
+  if (!t) {
+    return new Response("Unknown ticketType", { status: 400 });
+  }
 
-  // --- Walidacja kodów promocyjnych ---
   const now = new Date();
-  const promo = String(promoCode || "")
-    .trim()
-    .toLowerCase();
+  const promo = promoCodeRaw.toLowerCase();
 
   let discountFactor = 1;
   let fixedPriceGrosze = 0;
 
+  const promoDeadline = new Date("2026-05-01T00:00:00+02:00");
+
   if (promo === "kwiecien" || promo === "kwiecień") {
-    const deadlineKwiecien = new Date("2026-05-01T00:00:00+02:00");
-    if (now < deadlineKwiecien) {
-      discountFactor = 0.65;
-    }
+    if (now < promoDeadline) discountFactor = 0.65;
   } else if (promo === "naskale") {
-    const deadline = new Date("2026-05-01T00:00:00+01:00");
-    if (now < deadline) {
-      discountFactor = 0.5;
-    }
+    if (now < promoDeadline) discountFactor = 0.5;
   } else if (promo === "talent") {
-    const deadline = new Date("2026-05-01T00:00:00+02:00");
-    if (now < deadline) {
-      discountFactor = 0.5;
-    }
+    if (now < promoDeadline) discountFactor = 0.5;
   } else if (promo === "asknet12#") {
     fixedPriceGrosze = 200;
   }
@@ -93,40 +147,58 @@ export async function onRequestPost({ request, env }) {
     fixedPriceGrosze > 0
       ? fixedPriceGrosze
       : Math.round(t.unit * discountFactor);
-  const totalAmount = unitPrice * qty; // grosze
 
-  const parts = String(fullName).trim().split(/\s+/);
-  const firstName = parts[0] || "Klient";
-  const lastName = parts.slice(1).join(" ") || "-";
-
-  const extOrderId = crypto.randomUUID();
-
-  // URL-e liczone z aktualnego hosta
-  const origin = reqUrl.origin;
-  const notifyUrl = `${origin}/api/notify`;
-  const continueUrl = `${origin}/thanks.html?order=${encodeURIComponent(extOrderId)}`;
-  const cancelUrl = `${origin}/buy_form.html?cancelled=1`;
-
-  console.log(
-    "CREATE_ORDER_URLS",
-    JSON.stringify({
-      origin,
-      notifyUrl,
-      continueUrl,
-      cancelUrl,
-      extOrderId,
-      provider,
-    }),
-  );
-
-  if (!env.DB) {
-    console.log("CREATE_ORDER_ERROR", "Missing D1 binding: DB");
-    return new Response("Missing D1 binding: DB", { status: 500 });
+  const totalAmount = unitPrice * qty;
+  if (!Number.isFinite(totalAmount) || totalAmount <= 0) {
+    return new Response("Bad amount", { status: 400 });
   }
 
-  // 0) Zapis PENDING do D1
+  const extOrderId = createAutopayOrderId();
+  const amountForAutopay = (totalAmount / 100).toFixed(2);
+
+  const redirectFields = {
+    ServiceID: String(env.AUTOPAY_SERVICE_ID).trim(),
+    OrderID: extOrderId,
+    Amount: amountForAutopay,
+    Description: sanitizeAutopayDescription(
+      `Bilet konferencyjny - ${t.autopayName}`,
+    ),
+    Currency: String(env.AUTOPAY_CURRENCY || "PLN").trim(),
+    CustomerEmail: email,
+  };
+
+  if (env.AUTOPAY_GATEWAY_ID) {
+    redirectFields.GatewayID = String(env.AUTOPAY_GATEWAY_ID).trim();
+  }
+
+  if (env.AUTOPAY_VALIDITY_TIME) {
+    redirectFields.ValidityTime = String(env.AUTOPAY_VALIDITY_TIME).trim();
+  }
+
+  if (env.AUTOPAY_LINK_VALIDITY_TIME) {
+    redirectFields.LinkValidityTime = String(
+      env.AUTOPAY_LINK_VALIDITY_TIME,
+    ).trim();
+  }
+
+  const hashParts = [
+    redirectFields.ServiceID,
+    redirectFields.OrderID,
+    redirectFields.Amount,
+    redirectFields.Description,
+    redirectFields.GatewayID,
+    redirectFields.Currency,
+    redirectFields.CustomerEmail,
+    redirectFields.ValidityTime,
+    redirectFields.LinkValidityTime,
+  ].filter((v) => v !== undefined && v !== null && String(v).trim() !== "");
+
+  redirectFields.Hash = await sha256Hex(
+    `${hashParts.join("|")}|${String(env.AUTOPAY_SHARED_KEY)}`,
+  );
+
   try {
-    const ins = await env.DB.prepare(
+    await env.DB.prepare(
       `
       INSERT INTO orders (
         ext_order_id, status, provider, created_at, updated_at,
@@ -136,492 +208,39 @@ export async function onRequestPost({ request, env }) {
         ?, ?, ?, ?, ?, ?,
         ?, ?, ?, ?, ?, ?
       )
-    `,
+      `,
     )
       .bind(
         extOrderId,
         "PENDING",
-        provider,
+        "autopay",
         fullName,
         email,
         phone,
         street,
         city,
         postalCode,
-        t.name,
+        t.dbName,
         qty,
         unitPrice,
         totalAmount,
-        promoCode ? String(promoCode) : null,
+        promoCodeRaw || null,
         discountFactor !== 1 || fixedPriceGrosze > 0 ? 1 : 0,
       )
       .run();
-
-    console.log(
-      "CREATE_ORDER_DB_INSERT",
-      JSON.stringify({ extOrderId, provider, result: ins }),
-    );
   } catch (e) {
-    console.log("CREATE_ORDER_DB_INSERT_ERROR", String(e));
-    return new Response("DB insert failed", { status: 500 });
+    return new Response(`DB insert failed: ${String(e)}`, { status: 500 });
   }
 
-  // =========================================================
-  // STRIPE
-  // =========================================================
-  if (provider === "stripe") {
-    if (!env.STRIPE_SECRET_KEY) {
-      return new Response("Missing STRIPE_SECRET_KEY", { status: 500 });
-    }
-
-    try {
-      const stripeBody = new URLSearchParams();
-
-      stripeBody.set("mode", "payment");
-      stripeBody.set(
-        "success_url",
-        `${continueUrl}&session_id={CHECKOUT_SESSION_ID}`,
-      );
-      stripeBody.set("cancel_url", cancelUrl);
-      stripeBody.set("customer_email", email);
-
-      stripeBody.set("metadata[extOrderId]", extOrderId);
-      stripeBody.set("metadata[provider]", "stripe");
-      stripeBody.set("metadata[ticketType]", String(ticketType));
-      stripeBody.set("metadata[quantity]", String(qty));
-      if (promoCode) {
-        stripeBody.set("metadata[promoCode]", String(promoCode));
-      }
-
-      stripeBody.set("line_items[0][quantity]", String(qty));
-      stripeBody.set("line_items[0][price_data][currency]", "pln");
-      stripeBody.set(
-        "line_items[0][price_data][unit_amount]",
-        String(unitPrice),
-      );
-      stripeBody.set("line_items[0][price_data][product_data][name]", t.name);
-
-      const stripeRes = await fetch(
-        "https://api.stripe.com/v1/checkout/sessions",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${env.STRIPE_SECRET_KEY}`,
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: stripeBody.toString(),
-        },
-      );
-
-      const stripeText = await stripeRes.text();
-      let stripeJson = {};
-      try {
-        stripeJson = JSON.parse(stripeText);
-      } catch (_) {}
-
-      const redirectUrl = stripeJson.url || null;
-      const stripeSessionId = stripeJson.id || null;
-
-      console.log(
-        "CREATE_ORDER_STRIPE_CREATE",
-        JSON.stringify({
-          http: stripeRes.status,
-          hasRedirect: !!redirectUrl,
-          stripeSessionId,
-          extOrderId,
-        }),
-      );
-
-      if (!stripeRes.ok || !redirectUrl) {
-        console.log("STRIPE_ERROR_RAW", stripeText);
-
-        await env.DB.prepare(
-          `
-    UPDATE orders
-    SET status = ?, updated_at = datetime('now')
-    WHERE ext_order_id = ?
-  `,
-        )
-          .bind("STRIPE_CREATE_FAILED", extOrderId)
-          .run();
-
-        return new Response(
-          JSON.stringify({
-            error: "Stripe create session failed",
-            stripeStatus: stripeRes.status,
-            stripeResponse: stripeJson || stripeText,
-          }),
-          {
-            status: 502,
-            headers: { "Content-Type": "application/json" },
-          },
-        );
-      }
-
-      return new Response(
-        JSON.stringify({
-          paymentProvider: "stripe",
-          redirectUrl,
-          redirectUri: redirectUrl,
-          extOrderId,
-          stripeSessionId,
-        }),
-        {
-          headers: { "Content-Type": "application/json" },
-        },
-      );
-    } catch (e) {
-      console.log("CREATE_ORDER_STRIPE_CREATE_ERROR", String(e));
-
-      await env.DB.prepare(
-        `
-        UPDATE orders
-        SET status = ?, updated_at = datetime('now')
-        WHERE ext_order_id = ?
-      `,
-      )
-        .bind("STRIPE_CREATE_ERROR", extOrderId)
-        .run();
-
-      return new Response("Stripe create order error", { status: 502 });
-    }
-  }
-  // =========================================================
-  // TPAY
-  // =========================================================
-  if (provider === "tpay") {
-    // zmień w górnej części kodu dopuszczenie "tpay" obok "stripe" i usuń "payu"
-    if (!env.TPAY_CLIENT_ID || !env.TPAY_CLIENT_SECRET) {
-      return new Response("Missing Tpay env vars", { status: 500 });
-    }
-
-    // W Tpay kwoty przesyłane są jako wartości zmiennoprzecinkowe (np. "499.00")
-    // Z uwagi na to, że przechowujesz grosze, dzielimy totalAmount przez 100
-    const totalAmountFloat = (totalAmount / 100).toFixed(2);
-
-    // Ustawienie środowiska Tpay na podstawie CLIENT_ID:
-    // API produkcyjne (zaczynające się od tpay...) lub sandbox API.
-    const tpayBaseUrl = "https://api.tpay.com";
-
-    // 1) OAuth token Tpay (client_credentials)
-    let accessToken;
-    try {
-      const tokenRes = await fetch(`${tpayBaseUrl}/oauth/auth`, {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({
-          grant_type: "client_credentials",
-          client_id: env.TPAY_CLIENT_ID,
-          client_secret: env.TPAY_CLIENT_SECRET,
-        }),
-      });
-
-      const tokenJson = await tokenRes.json().catch(() => ({}));
-      accessToken = tokenJson.access_token;
-
-      console.log(
-        "CREATE_ORDER_TPAY_AUTH",
-        JSON.stringify({
-          ok: !!accessToken,
-          http: tokenRes.status,
-        }),
-      );
-
-      if (!accessToken) {
-        return new Response(
-          JSON.stringify({
-            error: "Tpay auth failed",
-            status: tokenRes.status,
-            tpay_response: tokenJson,
-            client_id_used: env.TPAY_CLIENT_ID
-              ? env.TPAY_CLIENT_ID.substring(0, 5) + "..."
-              : "missing",
-          }),
-          {
-            status: 502,
-            headers: { "Content-Type": "application/json" },
-          },
-        );
-      }
-    } catch (e) {
-      console.log("CREATE_ORDER_TPAY_AUTH_ERROR", String(e));
-      return new Response("Tpay auth error", { status: 502 });
-    }
-
-    // 2) Create transaction w Tpay
-    const tpayNotifyUrl = origin + "/api/tpay-webhook";
-
-    const tpayPayload = {
-      amount: Number(totalAmountFloat),
-      description: `Integracja Przedsiębiorców - ${t.name}`,
-      hiddenDescription: extOrderId, // ID z Twojej bazy, zwrócone w notyfikacji webhook
-      lang: "pl",
-      payer: {
-        email: email,
-        name: `${firstName} ${lastName}`,
-        phone: phone,
-        address: street,
-        city: city,
-        postalCode: postalCode,
-      },
-      callbacks: {
-        payerUrls: {
-          success: continueUrl,
-          error: cancelUrl,
-        },
-        notification: {
-          url: tpayNotifyUrl, // Zmienione z notifyUrl na nową zmienną
-        },
-      },
-    };
-
-    let redirectUri = null;
-    let tpayTransactionId = null;
-
-    try {
-      const orderRes = await fetch(`${tpayBaseUrl}/transactions`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-        body: JSON.stringify(tpayPayload),
-      });
-
-      const orderJson = await orderRes.json().catch(() => ({}));
-
-      // Zgodnie z dokumentacją Tpay - link do płatności znajduje się pod kluczem `transactionPaymentUrl`
-      redirectUri = orderJson.transactionPaymentUrl || null;
-      tpayTransactionId = orderJson.transactionId || null;
-
-      console.log(
-        "CREATE_ORDER_TPAY_CREATE",
-        JSON.stringify({
-          http: orderRes.status,
-          hasRedirect: !!redirectUri,
-          tpayTransactionId,
-          extOrderId,
-        }),
-      );
-
-      if (!redirectUri || orderJson.result !== "success") {
-        await env.DB.prepare(
-          `
-          UPDATE orders
-          SET status = ?, updated_at = datetime('now')
-          WHERE ext_order_id = ?
-        `,
-        )
-          .bind("TPAY_CREATE_FAILED", extOrderId)
-          .run();
-
-        return new Response("No redirectUri from Tpay", { status: 502 });
-      }
-    } catch (e) {
-      console.log("CREATE_ORDER_TPAY_CREATE_ERROR", String(e));
-      await env.DB.prepare(
-        `
-        UPDATE orders
-        SET status = ?, updated_at = datetime('now')
-        WHERE ext_order_id = ?
-      `,
-      )
-        .bind("TPAY_CREATE_ERROR", extOrderId)
-        .run();
-
-      return new Response("Tpay create order error", { status: 502 });
-    }
-
-    // Zapisz tpay_transaction_id do swojej bazy zamówień, aby w webhooku potwierdzić opłacenie (podmień nazwy pól na swoje własne)
-    if (tpayTransactionId) {
-      try {
-        await env.DB.prepare(
-          `
-          UPDATE orders
-          SET tpay_transaction_id = ?, updated_at = datetime('now') 
-          WHERE ext_order_id = ?
-        `,
-        )
-          .bind(tpayTransactionId, extOrderId)
-          .run();
-
-        console.log(
-          "CREATE_ORDER_DB_UPDATE_TPAY_ID_SUCCESS",
-          tpayTransactionId,
-        );
-      } catch (e) {
-        console.log("CREATE_ORDER_DB_UPDATE_TPAY_ID_ERROR", String(e));
-      }
-    }
-
-    // Na koniec zwracamy link przekierowujący
-    return new Response(
-      JSON.stringify({
-        paymentProvider: "tpay",
-        redirectUrl: redirectUri,
-        extOrderId,
-        tpayTransactionId,
-      }),
-      {
-        headers: { "Content-Type": "application/json" },
-      },
-    );
-  }
-  // =========================================================
-  // PAYU
-  // =========================================================
-  if (
-    !env.PAYU_BASE_URL ||
-    !env.PAYU_CLIENT_ID ||
-    !env.PAYU_CLIENT_SECRET ||
-    !env.PAYU_POS_ID
-  ) {
-    return new Response("Missing PayU env vars", { status: 500 });
-  }
-
-  // 1) OAuth token (PayU: bez x-www-form-urlencoded będzie 401)
-  let accessToken;
-  try {
-    const tokenRes = await fetch(
-      `${env.PAYU_BASE_URL}/pl/standard/user/oauth/authorize`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({
-          grant_type: "client_credentials",
-          client_id: env.PAYU_CLIENT_ID,
-          client_secret: env.PAYU_CLIENT_SECRET,
-        }),
-      },
-    );
-
-    const tokenJson = await tokenRes.json().catch(() => ({}));
-    accessToken = tokenJson.access_token;
-
-    console.log(
-      "CREATE_ORDER_PAYU_AUTH",
-      JSON.stringify({
-        ok: !!accessToken,
-        http: tokenRes.status,
-      }),
-    );
-
-    if (!accessToken) return new Response("PayU auth failed", { status: 502 });
-  } catch (e) {
-    console.log("CREATE_ORDER_PAYU_AUTH_ERROR", String(e));
-    return new Response("PayU auth error", { status: 502 });
-  }
-
-  // 2) Create order w PayU
-  const orderPayload = {
-    notifyUrl,
-    continueUrl,
-    customerIp: request.headers.get("cf-connecting-ip") || "127.0.0.1",
-    merchantPosId: env.PAYU_POS_ID,
-    description: `Integracja Przedsiebiorcow - ${t.name}`,
-    currencyCode: "PLN",
-    totalAmount: String(totalAmount),
+  return json({
+    ok: true,
+    paymentProvider: "autopay",
     extOrderId,
-    buyer: {
-      email,
-      phone,
-      firstName,
-      lastName,
-      language: "pl",
-    },
-    products: [
-      { name: t.name, unitPrice: String(unitPrice), quantity: String(qty) },
-    ],
-  };
-
-  let redirectUri = null;
-  let payuOrderId = null;
-
-  try {
-    const orderRes = await fetch(`${env.PAYU_BASE_URL}/api/v2_1/orders`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
-      },
-      redirect: "manual",
-      body: JSON.stringify(orderPayload),
-    });
-
-    const bodyText = await orderRes.text();
-    let orderJson = {};
-    try {
-      orderJson = JSON.parse(bodyText);
-    } catch (_) {}
-
-    redirectUri = orderJson.redirectUri || orderRes.headers.get("location");
-    payuOrderId = orderJson.orderId || null;
-
-    console.log(
-      "CREATE_ORDER_PAYU_CREATE",
-      JSON.stringify({
-        http: orderRes.status,
-        hasRedirect: !!redirectUri,
-        payuOrderId,
-        extOrderId,
-      }),
-    );
-
-    if (!redirectUri) {
-      await env.DB.prepare(
-        `
-        UPDATE orders
-        SET status = ?, updated_at = datetime('now')
-        WHERE ext_order_id = ?
-      `,
-      )
-        .bind("PAYU_CREATE_FAILED", extOrderId)
-        .run();
-
-      return new Response("No redirectUri from PayU", { status: 502 });
-    }
-  } catch (e) {
-    console.log("CREATE_ORDER_PAYU_CREATE_ERROR", String(e));
-    await env.DB.prepare(
-      `
-      UPDATE orders
-      SET status = ?, updated_at = datetime('now')
-      WHERE ext_order_id = ?
-    `,
-    )
-      .bind("PAYU_CREATE_ERROR", extOrderId)
-      .run();
-
-    return new Response("PayU create order error", { status: 502 });
-  }
-
-  // Zapisz payu_order_id
-  if (payuOrderId) {
-    try {
-      await env.DB.prepare(
-        `
-        UPDATE orders
-        SET payu_order_id = ?, updated_at = datetime('now')
-        WHERE ext_order_id = ?
-      `,
-      )
-        .bind(payuOrderId, extOrderId)
-        .run();
-    } catch (e) {
-      console.log("CREATE_ORDER_DB_UPDATE_PAYU_ID_ERROR", String(e));
-    }
-  }
-
-  return new Response(
-    JSON.stringify({
-      paymentProvider: "payu",
-      redirectUrl: redirectUri,
-      redirectUri,
-      extOrderId,
-      payuOrderId,
-    }),
-    {
-      headers: { "Content-Type": "application/json" },
-    },
-  );
+    redirectUrl: String(env.AUTOPAY_GATEWAY_URL).trim(),
+    redirectMethod: "POST",
+    redirectFields,
+    amountGrosze: totalAmount,
+    amount: amountForAutopay,
+    currency: redirectFields.Currency,
+  });
 }

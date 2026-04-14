@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Regulamin integracji | Integracja Przedsiębiorców</title>
+    <title>Regulamin Konferencji | Konferencja Przedsiębiorców</title>
+
     <link
       rel="icon"
       href="obrazy/logo.png"
@@ -11,15 +12,17 @@
     />
     <link
       rel="icon"
-      href="obrazy/logo_biale.png"
+      href="obrazy/logobiale.png"
       media="(prefers-color-scheme: dark)"
     />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=DM+Serif+Display&display=swap"
       rel="stylesheet"
     />
+
     <style>
       :root {
         --bg: #f7f3ee;
@@ -32,7 +35,6 @@
         --gold: #b68a56;
         --gold-dark: #91683e;
         --brown: #2d2118;
-        --accent: #7f1d1d;
         --shadow: 0 18px 45px rgba(28, 18, 8, 0.08);
         --radius: 22px;
         --radius-sm: 14px;
@@ -42,11 +44,9 @@
       * {
         box-sizing: border-box;
       }
-
       html {
         scroll-behavior: smooth;
       }
-
       body {
         margin: 0;
         font-family: "DM Sans", sans-serif;
@@ -57,31 +57,27 @@
             rgba(182, 138, 86, 0.1),
             transparent 28%
           ),
-          linear-gradient(180deg, #f8f4ee 0%, #f5efe8 100%);
+          linear-gradient(180deg, #f8f4ee 0, #f5efe8 100%);
         line-height: 1.65;
       }
-
       img {
         max-width: 100%;
         display: block;
       }
-
       a {
         color: inherit;
         text-decoration: none;
       }
-
       .container {
         width: min(var(--container), calc(100% - 32px));
         margin: 0 auto;
       }
 
       .promo-bar {
-        background: linear-gradient(90deg, #2b2119 0%, #4a3728 100%);
+        background: linear-gradient(90deg, #2b2119 0, #4a3728 100%);
         color: #fff8ef;
         border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       }
-
       .promo-content {
         min-height: 58px;
         display: flex;
@@ -100,7 +96,6 @@
         background: rgba(248, 244, 238, 0.86);
         border-bottom: 1px solid rgba(30, 27, 24, 0.08);
       }
-
       .header-row {
         display: flex;
         align-items: center;
@@ -108,14 +103,12 @@
         gap: 24px;
         min-height: 84px;
       }
-
       .logo-wrap {
         display: flex;
         align-items: center;
         gap: 14px;
         min-width: 0;
       }
-
       .logo {
         width: 56px;
         height: 56px;
@@ -125,24 +118,20 @@
         padding: 8px;
         object-fit: contain;
       }
-
       .brand-text {
         min-width: 0;
       }
-
       .brand-title {
         font-size: 17px;
         font-weight: 800;
         line-height: 1.15;
         letter-spacing: -0.02em;
       }
-
       .brand-subtitle {
         font-size: 13px;
         color: var(--muted);
         margin-top: 4px;
       }
-
       .nav {
         display: flex;
         align-items: center;
@@ -150,7 +139,6 @@
         flex-wrap: wrap;
         justify-content: flex-end;
       }
-
       .nav a {
         padding: 10px 14px;
         border-radius: 999px;
@@ -159,28 +147,24 @@
         font-size: 14px;
         transition: 0.2s ease;
       }
-
       .nav a:hover,
       .nav a.active {
         background: rgba(182, 138, 86, 0.12);
         color: var(--brown);
       }
-
       .nav .btn {
-        background: linear-gradient(135deg, var(--gold) 0%, #d6b17f 100%);
+        background: linear-gradient(135deg, var(--gold) 0, #d6b17f 100%);
         color: #23180e;
         box-shadow: 0 10px 24px rgba(182, 138, 86, 0.25);
       }
-
       .nav .btn:hover {
-        background: linear-gradient(135deg, var(--gold-dark) 0%, #bf9560 100%);
+        background: linear-gradient(135deg, var(--gold-dark) 0, #bf9560 100%);
         color: #fff;
       }
 
       .hero {
         padding: 72px 0 32px;
       }
-
       .hero-card {
         position: relative;
         overflow: hidden;
@@ -194,7 +178,6 @@
         padding: 48px;
         box-shadow: var(--shadow);
       }
-
       .hero-card::before {
         content: "";
         position: absolute;
@@ -208,7 +191,6 @@
         );
         pointer-events: none;
       }
-
       .eyebrow {
         display: inline-flex;
         align-items: center;
@@ -223,7 +205,6 @@
         font-weight: 700;
         margin-bottom: 18px;
       }
-
       .hero h1 {
         margin: 0;
         font-family: "DM Serif Display", serif;
@@ -232,21 +213,18 @@
         letter-spacing: -0.03em;
         max-width: 900px;
       }
-
       .hero p {
         font-size: 18px;
-        max-width: 820px;
+        max-width: 860px;
         color: rgba(255, 248, 239, 0.82);
         margin: 18px 0 0;
       }
-
       .hero-meta {
         display: flex;
         flex-wrap: wrap;
         gap: 14px;
         margin-top: 26px;
       }
-
       .hero-meta span {
         display: inline-flex;
         align-items: center;
@@ -261,14 +239,12 @@
       .content-wrap {
         padding: 20px 0 80px;
       }
-
       .legal-layout {
         display: grid;
         grid-template-columns: 300px minmax(0, 1fr);
         gap: 28px;
         align-items: start;
       }
-
       .sidebar {
         position: sticky;
         top: 108px;
@@ -279,19 +255,16 @@
         box-shadow: var(--shadow);
         backdrop-filter: blur(10px);
       }
-
       .sidebar h2 {
         margin: 0 0 14px;
         font-size: 16px;
         font-weight: 800;
         letter-spacing: -0.02em;
       }
-
       .sidebar nav {
         display: grid;
         gap: 8px;
       }
-
       .sidebar nav a {
         padding: 11px 13px;
         border-radius: 12px;
@@ -301,12 +274,10 @@
         font-weight: 600;
         transition: 0.2s ease;
       }
-
       .sidebar nav a:hover {
         background: rgba(182, 138, 86, 0.11);
         color: var(--text);
       }
-
       .sidebar-note {
         margin-top: 18px;
         padding-top: 18px;
@@ -323,37 +294,32 @@
         box-shadow: var(--shadow);
         backdrop-filter: blur(10px);
       }
-
       .legal-intro {
         margin-bottom: 28px;
         padding-bottom: 22px;
         border-bottom: 1px solid var(--line);
       }
-
       .legal-intro h2 {
         margin: 0 0 10px;
         font-size: 28px;
         line-height: 1.15;
         letter-spacing: -0.03em;
+        color: var(--brown);
       }
-
       .legal-intro p {
         margin: 0;
         color: var(--muted);
         font-size: 16px;
       }
-
       .legal-section {
         scroll-margin-top: 110px;
         padding: 24px 0;
         border-bottom: 1px solid var(--line);
       }
-
       .legal-section:last-child {
         border-bottom: 0;
         padding-bottom: 0;
       }
-
       .legal-section h3 {
         margin: 0 0 14px;
         font-size: 22px;
@@ -361,21 +327,17 @@
         letter-spacing: -0.02em;
         color: var(--brown);
       }
-
       .legal-section ol {
         margin: 0;
         padding-left: 20px;
       }
-
       .legal-section li {
         margin: 0 0 12px;
         color: #2d2a26;
       }
-
       .legal-section li:last-child {
         margin-bottom: 0;
       }
-
       .legal-section strong {
         color: var(--brown);
       }
@@ -386,14 +348,12 @@
         gap: 16px;
         margin: 26px 0 0;
       }
-
       .info-box {
         background: var(--surface-2);
         border: 1px solid rgba(182, 138, 86, 0.18);
         border-radius: 18px;
         padding: 18px;
       }
-
       .info-box .label {
         font-size: 12px;
         text-transform: uppercase;
@@ -402,17 +362,13 @@
         font-weight: 700;
         margin-bottom: 8px;
       }
-
       .info-box .value {
         font-size: 15px;
         font-weight: 700;
-        line-height: 1.4;
+        line-height: 1.5;
         color: var(--text);
       }
 
-      /* =========================
-   FOOTER (jak na screenie)
-========================= */
       .site-footer {
         position: relative;
         background: #0f1624;
@@ -420,7 +376,6 @@
         overflow: hidden;
         margin-top: 40px;
       }
-
       .site-footer .footer-bg {
         position: absolute;
         inset: 0;
@@ -439,19 +394,16 @@
         opacity: 0.55;
         pointer-events: none;
       }
-
       .footer-container {
         position: relative;
         padding: 56px 20px 22px;
       }
-
       .footer-grid {
         display: grid;
         grid-template-columns: 1.3fr 1fr 0.9fr 0.9fr;
         gap: 20px;
         align-items: start;
       }
-
       .footer-title {
         color: rgba(255, 255, 255, 0.95);
         font-size: 18px;
@@ -459,9 +411,8 @@
         margin: 0 0 14px;
         display: inline-block;
         padding-bottom: 10px;
-        border-bottom: 3px solid var(--primary);
+        border-bottom: 3px solid var(--gold);
       }
-
       .footer-desc {
         margin-top: 18px;
         max-width: 34ch;
@@ -469,49 +420,17 @@
         line-height: 1.7;
         color: rgba(255, 255, 255, 0.78);
       }
-
       .footer-mark {
         display: flex;
         gap: 14px;
         align-items: center;
       }
-
-      .footer-cross {
-        width: 34px;
-        height: 34px;
-        position: relative;
-        flex: 0 0 34px;
+      .logofooter img {
+        width: 56px;
+        height: 56px;
+        object-fit: contain;
+        filter: grayscale(1) brightness(0) invert(1);
       }
-
-      .footer-cross::before,
-      .footer-cross::after {
-        content: "";
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        background: rgba(255, 255, 255, 0.95);
-        transform: translate(-50%, -50%);
-        border-radius: 2px;
-      }
-
-      .footer-cross::before {
-        width: 22px;
-        height: 4px;
-      }
-      .footer-cross::after {
-        width: 4px;
-        height: 28px;
-      }
-
-      .footer-mark-text {
-        font-size: 10px;
-        letter-spacing: 0.1em;
-        font-weight: 800;
-        line-height: 1.35;
-        text-transform: uppercase;
-        color: rgba(255, 255, 255, 0.92);
-      }
-
       .footer-list {
         list-style: none;
         padding: 0;
@@ -521,56 +440,15 @@
         color: rgba(255, 255, 255, 0.78);
         font-size: 14px;
       }
-
       .footer-list a {
         color: rgba(255, 255, 255, 0.85);
         text-decoration: none;
       }
-
       .footer-list a:hover {
-        color: rgba(255, 255, 255, 1);
+        color: #fff;
         text-decoration: underline;
         text-underline-offset: 4px;
       }
-
-      .footer-list--icons li {
-        display: grid;
-        grid-template-columns: 20px 1fr;
-        gap: 10px;
-        align-items: start;
-      }
-
-      .footer-ico {
-        color: rgba(255, 255, 255, 0.8);
-        margin-top: 2px;
-      }
-
-      .footer-ico--dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.55);
-        display: inline-block;
-        margin-top: 6px;
-      }
-
-      .footer-org-card {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        background: rgba(255, 255, 255, 0.92);
-        border-radius: 6px;
-        padding: 24px 36px;
-        box-shadow: 0 10px 26px rgba(0, 0, 0, 0.25);
-        max-width: 320px;
-      }
-
-      .footer-org-card img {
-        max-width: 210px;
-        height: auto;
-        display: block;
-      }
-
       .footer-bottom {
         margin-top: 38px;
         padding-top: 18px;
@@ -580,92 +458,46 @@
         text-align: center;
       }
 
-      .logo_footer {
-        filter: grayscale(1) brightness(0) invert(1); /* robi z niego „białe” */
-      }
-
-      body.page-short .site-footer {
-        margin-top: 174px;
-      }
-
-      .tooltip {
-        position: relative;
-      }
-
-      .tooltip-text {
-        position: absolute;
-        bottom: 120%; /* nad linkiem */
-        left: 50%;
-        transform: translateX(-50%);
-        background: #333;
-        color: #fff;
-        padding: 8px 12px;
-        border-radius: 4px;
-        font-size: 12px;
-        white-space: normal;
-        width: 260px;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.2s;
-        z-index: 10;
-      }
-
-      .tooltip:hover .tooltip-text {
-        opacity: 1;
-        visibility: visible;
-      }
-
       @media (max-width: 1080px) {
         .legal-layout {
           grid-template-columns: 1fr;
         }
-
         .sidebar {
           position: static;
         }
-
         .footer-grid {
           grid-template-columns: repeat(2, minmax(0, 1fr));
         }
       }
-
       @media (max-width: 760px) {
         .header-row {
           flex-direction: column;
           align-items: stretch;
           padding: 14px 0;
         }
-
         .logo-wrap {
           justify-content: center;
         }
-
         .nav {
           justify-content: center;
         }
-
         .hero {
           padding-top: 38px;
         }
-
         .hero-card {
           padding: 28px 22px;
           border-radius: 24px;
         }
-
         .hero p {
           font-size: 16px;
         }
-
         .legal-card {
           padding: 24px 18px;
           border-radius: 22px;
         }
-
         .info-boxes {
           grid-template-columns: 1fr;
         }
-
         .footer-grid {
           grid-template-columns: 1fr;
         }
@@ -676,8 +508,8 @@
     <div class="promo-bar">
       <div class="promo-content">
         <div class="promo-text">
-          🎉 Tylko do końca kwietnia!<br />
-          Kod: <strong>KWIECIEN</strong> – 35% na wszystkie bilety!
+          Tylko do końca kwietnia!<br />
+          Kod <strong>KWIECIEN</strong> -35% na wszystkie bilety!
         </div>
       </div>
     </div>
@@ -690,7 +522,7 @@
           </a>
           <div class="brand-text">
             <div class="brand-title">Konferencja Przedsiębiorców</div>
-            <div class="brand-subtitle">Poznań • 9–10 października 2026</div>
+            <div class="brand-subtitle">Poznań, 9-10 października 2026</div>
           </div>
         </div>
 
@@ -699,7 +531,7 @@
           <a href="index.html#program">Program</a>
           <a href="index.html#prelegenci">Prelegenci</a>
           <a href="polityka-prywatnosci.html">Polityka prywatności</a>
-          <a href="buy_form.html" class="btn">Zapisy</a>
+          <a href="buyform.html" class="btn">Zapisy</a>
         </nav>
       </div>
     </header>
@@ -711,13 +543,12 @@
             <div class="eyebrow">Dokument formalny</div>
             <h1>Regulamin Konferencji</h1>
             <p>
-              Poniższy regulamin określa zasady rejestracji, udziału, płatności,
-              zwrotów, reklamacji oraz organizacji wydarzenia „Konferencja
-              Przedsiębiorców”.
+              Poniższy regulamin określa zasady rejestracji, uczestnictwa,
+              płatności, zwrotów, reklamacji, przetwarzania danych osobowych
+              oraz organizacji wydarzenia „Konferencja Przedsiębiorców”.
             </p>
-
             <div class="hero-meta">
-              <span>9–10 października 2026</span>
+              <span>9-10 października 2026</span>
               <span>Poznań</span>
               <span>Wydarzenie stacjonarne</span>
             </div>
@@ -734,8 +565,8 @@
                 <a href="#postanowienia-ogolne">§ 1. Postanowienia ogólne</a>
                 <a href="#definicje">§ 2. Definicje</a>
                 <a href="#rejestracja">§ 3. Rejestracja i uczestnictwo</a>
-                <a href="#oplaty">§ 4. Opłaty i bilety</a>
-                <a href="#zwroty">§ 5. Rezygnacja i zwroty</a>
+                <a href="#oplaty">§ 4. Opłaty i płatności</a>
+                <a href="#zwroty">§ 5. Zwroty i rezygnacja</a>
                 <a href="#program">§ 6. Program i organizacja</a>
                 <a href="#porzadek">§ 7. Zasady porządkowe</a>
                 <a href="#wizerunek">§ 8. Wizerunek i materiały</a>
@@ -744,10 +575,11 @@
                 <a href="#dane">§ 11. Dane osobowe</a>
                 <a href="#koncowe">§ 12. Postanowienia końcowe</a>
               </nav>
-
               <div class="sidebar-note">
                 Kontakt organizacyjny:<br />
-                <a href="mailto:konferencja@brfh.eu">konferencja@brfh.eu</a>
+                <a href="mailto:konferencja@brfh.eu">konferencja@brfh.eu</a
+                ><br />
+                <a href="tel:+48798765282">798 765 282</a>
               </div>
             </aside>
 
@@ -764,17 +596,25 @@
                   <div class="info-box">
                     <div class="label">Organizator</div>
                     <div class="value">
-                      Duszpasterstwo Przedsiębiorców i Pracodawców Talent w
-                      Archidiecezji Poznańskiej
+                      Kościół Katolicki – Duszpasterstwo Przedsiębiorców i
+                      Pracodawców Talent w Archidiecezji Poznańskiej
                     </div>
                   </div>
+
                   <div class="info-box">
                     <div class="label">Kontakt</div>
-                    <div class="value">konferencja@brfh.eu</div>
+                    <div class="value">
+                      konferencja@brfh.eu<br />
+                      798 765 282
+                    </div>
                   </div>
+
                   <div class="info-box">
                     <div class="label">Adres</div>
-                    <div class="value">ul. Głogowska 92, Poznań</div>
+                    <div class="value">
+                      ul. Głogowska 92<br />
+                      60-262 Poznań
+                    </div>
                   </div>
                 </div>
               </div>
@@ -788,16 +628,18 @@
                     „Konferencją”.
                   </li>
                   <li>
-                    Organizatorem Konferencji jest Duszpasterstwo
-                    Przedsiębiorców i Pracodawców Talent w Archidiecezji
-                    Poznańskiej, z adresem korespondencyjnym: ul. Głogowska 92,
-                    Poznań, adresem e-mail:
+                    Organizatorem Konferencji jest Kościół Katolicki –
+                    Duszpasterstwo Przedsiębiorców i Pracodawców Talent w
+                    Archidiecezji Poznańskiej, z siedzibą przy ul. Głogowskiej
+                    92, 60-262 Poznań, adresem e-mail:
                     <a href="mailto:konferencja@brfh.eu">konferencja@brfh.eu</a
-                    >, NIP: 7792461653, zwane dalej „Organizatorem”.
+                    >, numerem telefonu:
+                    <a href="tel:+48798765282">798 765 282</a>, NIP: 7792461653,
+                    REGON: 367168175, zwany dalej „Organizatorem”.
                   </li>
                   <li>
                     Konferencja ma charakter stacjonarny i odbywa się w dniach
-                    9–10 października 2026 r. na terenie Poznania, w
+                    9-10 października 2026 r. na terenie Poznania, w
                     lokalizacjach wskazanych przez Organizatora na stronie
                     internetowej wydarzenia.
                   </li>
@@ -808,8 +650,14 @@
                     części bankietowej oraz wydarzeniach towarzyszących.
                   </li>
                   <li>
+                    Uczestnik zobowiązany jest do zapoznania się z Regulaminem
+                    oraz Polityką Prywatności przed dokonaniem rejestracji lub
+                    zakupu biletu.
+                  </li>
+                  <li>
                     Dokonanie rejestracji i/lub zakupu biletu oznacza zapoznanie
-                    się z Regulaminem oraz akceptację jego postanowień.
+                    się z Regulaminem, akceptację jego postanowień oraz
+                    akceptację Polityki Prywatności.
                   </li>
                 </ol>
               </section>
@@ -824,23 +672,30 @@
                   </li>
                   <li>
                     <strong>Uczestnik</strong> – osoba fizyczna, która
-                    skutecznie zarejestrowała swój udział w Konferencji.
+                    skutecznie zarejestrowała swój udział w Konferencji lub
+                    nabyła bilet.
                   </li>
                   <li>
                     <strong>Strona internetowa</strong> – serwis internetowy
                     Organizatora poświęcony Konferencji.
                   </li>
                   <li>
-                    <strong>Formularz rejestracyjny</strong> – formularz online
-                    umożliwiający zgłoszenie udziału w Konferencji.
+                    <strong>Formularz rejestracyjny / Formularz zakupu</strong>
+                    – formularz online umożliwiający zgłoszenie udziału w
+                    Konferencji oraz zakup biletu.
                   </li>
                   <li>
-                    <strong>Bilet</strong> – potwierdzenie uprawnienia do
-                    udziału w Konferencji w zakresie wynikającym z wybranego
-                    pakietu.
+                    <strong>Bilet</strong> – elektroniczne potwierdzenie
+                    uprawnienia do udziału w Konferencji w zakresie wynikającym
+                    z wybranego pakietu.
                   </li>
                   <li>
                     <strong>Opłata</strong> – cena biletu wskazana na stronie
+                    internetowej Konferencji.
+                  </li>
+                  <li>
+                    <strong>Płatność online</strong> – płatność dokonywana za
+                    pośrednictwem operatora płatności dostępnego na stronie
                     internetowej Konferencji.
                   </li>
                 </ol>
@@ -851,9 +706,10 @@
                 <ol>
                   <li>
                     Uczestnictwo w Konferencji wymaga prawidłowego wypełnienia
-                    formularza rejestracyjnego, podania danych zgodnych ze
-                    stanem faktycznym, akceptacji Regulaminu oraz dokonania
-                    opłaty, jeżeli udział w danym pakiecie jest odpłatny.
+                    Formularza rejestracyjnego lub Formularza zakupu, podania
+                    danych zgodnych ze stanem faktycznym, akceptacji Regulaminu
+                    oraz Polityki Prywatności, a także dokonania Opłaty, jeżeli
+                    udział w danym pakiecie jest odpłatny.
                   </li>
                   <li>
                     O przyjęciu zgłoszenia decyduje kolejność prawidłowo
@@ -871,6 +727,10 @@
                     bankietu lub innych części programu.
                   </li>
                   <li>
+                    Uczestnik zobowiązany jest do podania prawdziwych,
+                    kompletnych i aktualnych danych wymaganych w formularzu.
+                  </li>
+                  <li>
                     Uczestnik zobowiązany jest do odbioru identyfikatora lub
                     innych materiałów konferencyjnych w sposób wskazany przez
                     Organizatora.
@@ -885,7 +745,18 @@
               </section>
 
               <section class="legal-section" id="oplaty">
-                <h3>§ 4. Opłaty i bilety</h3>
+                <h3>§ 4. Opłaty, płatności i dostarczenie biletu</h3>
+                <div
+                  class="payment-banner"
+                  style="margin: 0 0 18px; text-align: center"
+                >
+                  <img
+                    class="img-fluid"
+                    src="https://developers.autopay.pl/storage/loga/blik-karty-portfele_elektroniczne-PIS-przelew-platnosci_odroczone-raty/820x45-bankpay.png"
+                    alt="Blik + karty + portfele elektroniczne + PIS + przelew + płatności odroczone + raty 820x45 bank pay"
+                    style="max-width: 100%; height: auto; display: inline-block"
+                  />
+                </div>
                 <ol>
                   <li>
                     Udział w Konferencji może być odpłatny albo bezpłatny,
@@ -896,6 +767,39 @@
                     Ceny biletów, dostępne pakiety, zakres świadczeń oraz
                     ewentualne promocje publikowane są na stronie internetowej
                     Konferencji.
+                  </li>
+                  <li>
+                    Ceny podawane na stronie internetowej wyrażone są w złotych
+                    polskich i obejmują wszystkie należne podatki, chyba że z
+                    oferty wyraźnie wynika inaczej.
+                  </li>
+                  <li>
+                    Dostępne formy płatności obejmują płatności elektroniczne, w
+                    tym BLIK, szybkie przelewy oraz płatności kartami
+                    płatniczymi.
+                  </li>
+                  <li>
+                    Dostępne formy płatności kartą obejmują: Visa, Visa
+                    Electron, Mastercard, MasterCard Electronic oraz Maestro.
+                  </li>
+                  <li>
+                    Podmiotem świadczącym obsługę płatności online jest Autopay
+                    S.A.
+                  </li>
+                  <li>
+                    Czas realizacji zamówienia liczony jest od momentu uzyskania
+                    pozytywnej autoryzacji płatności albo potwierdzenia
+                    dokonania płatności przez operatora płatności.
+                  </li>
+                  <li>
+                    Po otrzymaniu potwierdzenia skutecznej płatności Organizator
+                    przesyła bilet lub potwierdzenie zakupu na adres e-mail
+                    podany przez Uczestnika w Formularzu zakupu.
+                  </li>
+                  <li>
+                    Bilet dostarczany jest w formie elektronicznej na adres
+                    e-mail Uczestnika i jego dostarczenie nie wiąże się z
+                    dodatkowymi kosztami.
                   </li>
                   <li>
                     Organizator zastrzega sobie prawo do wprowadzania
@@ -918,10 +822,6 @@
                     rozpoczęciem Konferencji, o ile pozwalają na to względy
                     organizacyjne.
                   </li>
-                  <li>
-                    Potwierdzenie zakupu biletu przesyłane jest na adres e-mail
-                    podany podczas rejestracji.
-                  </li>
                 </ol>
               </section>
 
@@ -933,20 +833,28 @@
                     przesyłając informację na adres e-mail Organizatora.
                   </li>
                   <li>
-                    Zwrot ceny biletu przysługuje w przypadku zgłoszenia
-                    rezygnacji w terminie 14 dni od dnia zakupu biletu, nie
-                    później jednak niż 14 dni przed rozpoczęciem Konferencji.
+                    Organizator przyznaje możliwość rezygnacji i zwrotu ceny
+                    biletu w przypadku zgłoszenia rezygnacji w terminie 14 dni
+                    od dnia zakupu biletu, nie później jednak niż 14 dni przed
+                    rozpoczęciem Konferencji.
                   </li>
                   <li>
                     Po upływie terminów wskazanych w ustępie poprzedzającym
-                    opłata za bilet nie podlega zwrotowi, z zastrzeżeniem
+                    Opłata za bilet nie podlega zwrotowi, z zastrzeżeniem
                     przypadków wynikających z bezwzględnie obowiązujących
                     przepisów prawa.
                   </li>
                   <li>
-                    Zwrot środków następuje tą samą metodą płatności, jaką
-                    dokonano zakupu, chyba że Organizator i Uczestnik uzgodnią
-                    inny sposób zwrotu.
+                    W przypadku wystąpienia konieczności zwrotu środków za
+                    transakcję dokonaną przez Uczestnika kartą płatniczą
+                    Sprzedający dokonuje zwrotu na rachunek bankowy przypisany
+                    do karty płatniczej Uczestnika.
+                  </li>
+                  <li>
+                    Sprzedawca dokonuje zwrotu płatności przy użyciu takiego
+                    samego sposobu płatności, jakiego użył Uczestnik, chyba że
+                    Uczestnik wyraźnie zgodzi się na inny sposób zwrotu, który
+                    nie wiąże się dla niego z żadnymi kosztami.
                   </li>
                   <li>
                     Organizator ma prawo odwołać Konferencję albo zmienić jej
@@ -1023,7 +931,7 @@
                     Organizator ma prawo wyprosić z terenu Konferencji osobę
                     naruszającą Regulamin lub stwarzającą zagrożenie dla
                     bezpieczeństwa, porządku albo dobrego imienia wydarzenia,
-                    bez prawa do zwrotu opłaty.
+                    bez prawa do zwrotu Opłaty.
                   </li>
                   <li>
                     Uczestnik ponosi odpowiedzialność za szkody wyrządzone przez
@@ -1069,7 +977,7 @@
                   </li>
                   <li>
                     Organizator ma prawo udostępniać relacje z Konferencji, w
-                    tym fotografie i nagrania, Patronom Medialnym oraz Partnerom
+                    tym fotografie i nagrania, patronom medialnym oraz partnerom
                     wydarzenia, w zakresie związanym z informowaniem o
                     Konferencji, jej promocją oraz dokumentacją wydarzenia.
                   </li>
@@ -1098,6 +1006,16 @@
                     podanych danych, problemów z dojazdem, spóźnienia lub braku
                     wymaganych dokumentów.
                   </li>
+                  <li>
+                    W zakresie usług świadczonych przez Organizatora
+                    Uczestnikowi przysługują uprawnienia wynikające z
+                    bezwzględnie obowiązujących przepisów prawa.
+                  </li>
+                  <li>
+                    Organizator nie udziela odrębnej gwarancji na usługi objęte
+                    Regulaminem, chyba że co innego wyraźnie wynika z oferty
+                    opublikowanej na stronie internetowej.
+                  </li>
                 </ol>
               </section>
 
@@ -1106,12 +1024,13 @@
                 <ol>
                   <li>
                     Uczestnik ma prawo złożyć reklamację dotyczącą organizacji
-                    Konferencji lub świadczonych usług.
+                    Konferencji, procesu rejestracji, płatności lub świadczonych
+                    usług.
                   </li>
                   <li>
-                    Reklamacje należy przesyłać drogą elektroniczną na adres:
+                    Reklamacje należy przesyłać drogą elektroniczną na adres
                     <a href="mailto:konferencja@brfh.eu">konferencja@brfh.eu</a>
-                    albo pisemnie na adres korespondencyjny Organizatora.
+                    albo pisemnie na adres siedziby Organizatora.
                   </li>
                   <li>
                     Reklamacja powinna zawierać co najmniej imię i nazwisko
@@ -1125,8 +1044,9 @@
                   </li>
                   <li>
                     Organizator rozpatrzy reklamację w terminie 14 dni od dnia
-                    jej otrzymania; w przypadkach wymagających uzupełnienia
-                    informacji termin może ulec odpowiedniemu przedłużeniu.
+                    jej otrzymania. W przypadkach wymagających uzupełnienia
+                    informacji termin może ulec odpowiedniemu przedłużeniu, o
+                    czym Uczestnik zostanie poinformowany.
                   </li>
                 </ol>
               </section>
@@ -1135,25 +1055,85 @@
                 <h3>§ 11. Dane osobowe</h3>
                 <ol>
                   <li>
-                    Administratorem danych osobowych Uczestników jest
-                    Organizator.
+                    Administratorem danych osobowych Uczestników jest Kościół
+                    Katolicki – Duszpasterstwo Przedsiębiorców i Pracodawców
+                    Talent w Archidiecezji Poznańskiej, ul. Głogowska 92, 60-262
+                    Poznań, e-mail:
+                    <a href="mailto:konferencja@brfh.eu">konferencja@brfh.eu</a
+                    >.
                   </li>
                   <li>
-                    Dane osobowe są przetwarzane w celu rejestracji udziału w
-                    Konferencji, organizacji i obsługi wydarzenia, kontaktu z
-                    Uczestnikiem, realizacji płatności i rozliczeń,
-                    rozpatrywania reklamacji oraz wykonania obowiązków
-                    wynikających z przepisów prawa.
+                    Dane osobowe przetwarzane są w celu przyjęcia zgłoszenia na
+                    wydarzenie, zawarcia i wykonania umowy udziału w wydarzeniu,
+                    obsługi płatności za bilet, wygenerowania i doręczenia
+                    biletu elektronicznego, kontaktu organizacyjnego, obsługi
+                    reklamacji, wykonania obowiązków podatkowych i rachunkowych
+                    oraz ustalenia, dochodzenia lub obrony przed roszczeniami.
                   </li>
                   <li>
-                    Szczegółowe zasady przetwarzania danych osobowych, w tym
-                    informacje o prawach osoby, której dane dotyczą, znajdują
-                    się w Polityce Prywatności dostępnej na stronie internetowej
+                    Zakres przetwarzanych danych może obejmować w szczególności
+                    imię i nazwisko, adres e-mail, numer telefonu, dane podane w
+                    formularzu zapisu lub formularzu zakupu biletu, dane
+                    dotyczące płatności, dane do faktury, dane zawarte w
+                    korespondencji e-mailowej, metadane związane z wysyłką
+                    wiadomości i biletów elektronicznych oraz wizerunek
+                    utrwalony na zdjęciach lub nagraniach z wydarzenia.
+                  </li>
+                  <li>
+                    Podstawą prawną przetwarzania danych osobowych jest art. 6
+                    ust. 1 lit. b RODO w zakresie niezbędnym do podjęcia działań
+                    przed zawarciem umowy oraz wykonania umowy, art. 6 ust. 1
+                    lit. c RODO w zakresie obowiązków prawnych ciążących na
+                    Administratorze, art. 6 ust. 1 lit. f RODO w zakresie
+                    prawnie uzasadnionego interesu Administratora oraz art. 6
+                    ust. 1 lit. a RODO, jeżeli przetwarzanie odbywa się na
+                    podstawie zgody.
+                  </li>
+                  <li>
+                    Dane osobowe mogą być przekazywane podmiotom świadczącym
+                    usługi niezbędne do działania strony i organizacji
+                    wydarzenia, w szczególności operatorowi płatności Autopay
+                    S.A., dostawcom infrastruktury technicznej i bezpieczeństwa,
+                    w tym Cloudflare, podmiotowi obsługującemu wysyłkę
+                    wiadomości transakcyjnych i biletów elektronicznych, w tym
+                    Resend.com, a także podmiotom świadczącym usługi IT,
+                    hostingowe, księgowe, prawne i organizacyjne oraz podmiotom
+                    uprawnionym do otrzymania danych na podstawie przepisów
+                    prawa.
+                  </li>
+                  <li>
+                    W związku z korzystaniem z niektórych usług technicznych
+                    niektóre dane osobowe lub dane techniczne mogą być
+                    przekazywane poza Europejski Obszar Gospodarczy, w
+                    szczególności do Stanów Zjednoczonych, przy zastosowaniu
+                    zabezpieczeń wymaganych przez RODO.
+                  </li>
+                  <li>
+                    Dane uczestników wydarzeń i kupujących bilety są
+                    przechowywane przez okres 2 lat od dnia zakończenia
+                    wydarzenia albo od dnia zakończenia ostatniego kontaktu
+                    związanego z obsługą zgłoszenia, a dane przetwarzane dla
+                    celów podatkowych, rachunkowych lub dokumentacyjnych przez
+                    okres wymagany przez przepisy prawa.
+                  </li>
+                  <li>
+                    Każdej osobie, której dane dotyczą, przysługuje prawo
+                    dostępu do danych, ich sprostowania, usunięcia, ograniczenia
+                    przetwarzania, przenoszenia danych, wniesienia sprzeciwu
+                    wobec przetwarzania, cofnięcia zgody, jeżeli była podstawą
+                    przetwarzania, oraz wniesienia skargi do Prezesa Urzędu
+                    Ochrony Danych Osobowych.
+                  </li>
+                  <li>
+                    Podanie danych osobowych jest dobrowolne, jednak w zakresie
+                    wymaganym przez formularz zapisu lub zakupu biletu jest
+                    niezbędne do dokonania rejestracji, zawarcia umowy, obsługi
+                    płatności, wygenerowania biletu oraz udziału w wydarzeniu.
+                  </li>
+                  <li>
+                    Szczegółowe zasady przetwarzania danych osobowych określa
+                    Polityka Prywatności dostępna na stronie internetowej
                     Konferencji.
-                  </li>
-                  <li>
-                    Uczestnik zobowiązuje się do podania prawdziwych i
-                    aktualnych danych.
                   </li>
                 </ol>
               </section>
@@ -1183,7 +1163,7 @@
                   </li>
                   <li>
                     Regulamin wchodzi w życie z dniem jego opublikowania na
-                    stronie internetowej Konferencji.
+                    stronie internetowej.
                   </li>
                 </ol>
               </section>
@@ -1195,126 +1175,63 @@
 
     <footer class="site-footer">
       <div class="footer-bg" aria-hidden="true"></div>
-
       <div class="container footer-container">
         <div class="footer-grid">
-          <!-- LEWA KOLUMNA: znak + opis -->
           <div class="footer-col footer-brand">
             <div class="footer-mark">
-              <div class="logo_footer">
-                <img src="obrazy/logo.png" alt="logo" />
+              <div class="logofooter">
+                <img src="obrazy/logo.png" alt="Logo" />
+              </div>
+              <div>
+                <p class="footer-desc">
+                  Kościół Katolicki – Duszpasterstwo Przedsiębiorców i
+                  Pracodawców Talent w Archidiecezji Poznańskiej
+                </p>
               </div>
             </div>
-
-            <p class="footer-desc">
-              Duszpasterstwo Przedsiębiorców i Pracodawców Talent w
-              Archidiecezji Poznańskiej
-            </p>
           </div>
 
-          <!-- ŚRODKOWA: adres -->
           <div class="footer-col">
-            <h3 class="footer-title">Adres</h3>
-
-            <ul class="footer-list footer-list--icons">
+            <h3 class="footer-title">Dane</h3>
+            <ul class="footer-list">
+              <li>ul. Głogowska 92, 60-262 Poznań</li>
               <li>
-                <span class="footer-ico" aria-hidden="true">
-                  <!-- pin -->
-                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
-                    <path
-                      d="M12 22s7-4.6 7-12a7 7 0 1 0-14 0c0 7.4 7 12 7 12Z"
-                      stroke="currentColor"
-                      stroke-width="1.8"
-                    />
-                    <path
-                      d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
-                      stroke="currentColor"
-                      stroke-width="1.8"
-                    />
-                  </svg>
-                </span>
-                <span>ul. Głogowska 92, Poznań</span>
+                <a href="mailto:konferencja@brfh.eu">konferencja@brfh.eu</a>
               </li>
-
-              <li>
-                <span class="footer-ico" aria-hidden="true">
-                  <!-- mail -->
-                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
-                    <path
-                      d="M4 6h16v12H4V6Z"
-                      stroke="currentColor"
-                      stroke-width="1.8"
-                    />
-                    <path
-                      d="m4.5 7 7.5 6 7.5-6"
-                      stroke="currentColor"
-                      stroke-width="1.8"
-                    />
-                  </svg>
-                </span>
-                <a href="mailto:konferencja@brh.eu">konferencja@brfh.eu</a>
-              </li>
-
-              <li>
-                <span
-                  class="footer-ico footer-ico--dot"
-                  aria-hidden="true"
-                ></span>
-                <span>NIP: 7792461653</span>
-              </li>
+              <li><a href="tel:+48798765282">798 765 282</a></li>
+              <li>NIP: 7792461653</li>
+              <li>REGON: 367168175</li>
             </ul>
           </div>
 
-          <!-- MENU -->
           <div class="footer-col">
             <h3 class="footer-title">Menu</h3>
-
             <ul class="footer-list">
-              <li><a href="#program">Program</a></li>
-              <li><a href="#prelegenci">Prelegenci</a></li>
-              <li><a href="buy_form.html">Zapisy</a></li>
-              <li class="tooltip">
-                <a href="#reklamacje">Zwroty</a>
-                <span class="tooltip-text">
-                  W sprawie zwrotów prosimy o wysyłanie wiadomości na adres
-                  email: konferencja@brfh.eu. Czas na zwrot biletu wynosi 14 dni
-                  od dnia zakupu.
-                </span>
-              </li>
-              <li>
-                <a href="regulamin.html">Regulamin Konferencji</a>
-              </li>
+              <li><a href="index.html#program">Program</a></li>
+              <li><a href="index.html#prelegenci">Prelegenci</a></li>
+              <li><a href="buyform.html">Zapisy</a></li>
+              <li><a href="regulamin.html">Regulamin Konferencji</a></li>
               <li>
                 <a href="polityka-prywatnosci.html">Polityka prywatności</a>
               </li>
-              <li class="tooltip">
-                <a href="#reklamacje">Reklamacje</a>
-                <span class="tooltip-text">
-                  W sprawie reklamacji prosimy o wysyłanie wiadomości na adres
-                  email: konferencja@brfh.eu
-                </span>
-              </li>
             </ul>
           </div>
 
-          <!-- ORGANIZATOR -->
           <div class="footer-col footer-org">
-            <h3 class="footer-title">Organizator</h3>
-
-            <a
-              class="footer-org-card"
-              href="https://talentpoznan.pl/"
-              aria-label="Talent"
-            >
-              <!-- Podmień ścieżkę na właściwą w Twoim projekcie -->
-              <img src="obrazy/talent.png" alt="talent" />
-            </a>
+            <h3 class="footer-title">Płatności</h3>
+            <ul class="footer-list">
+              <li>Operator płatności online: Autopay S.A.</li>
+              <li>BLIK</li>
+              <li>Szybkie przelewy</li>
+              <li>Visa, Visa Electron</li>
+              <li>Mastercard, MasterCard Electronic, Maestro</li>
+            </ul>
           </div>
         </div>
 
         <div class="footer-bottom">
-          © 2026 Duszpasterstwo Przedsiębiorców i Pracodawców Talent w
-          Archidiecezji Poznańskiej
+          © 2026 Kościół Katolicki – Duszpasterstwo Przedsiębiorców i
+          Pracodawców Talent w Archidiecezji Poznańskiej
         </div>
       </div>
     </footer>
