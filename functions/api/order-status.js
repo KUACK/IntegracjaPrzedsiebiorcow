@@ -2,8 +2,8 @@
 export async function onRequestGet({ request, env }) {
   const url = new URL(request.url);
   const order = url.searchParams.get("order");
-  if (!order) return new Response("Missing order", { status: 400 });
 
+  if (!order) return new Response("Missing order", { status: 400 });
   if (!env.DB) return new Response("Missing D1 binding: DB", { status: 500 });
 
   const row = await env.DB.prepare(
@@ -12,9 +12,8 @@ export async function onRequestGet({ request, env }) {
       ext_order_id,
       status,
       provider,
-      payu_order_id,
-      stripe_session_id,
-      stripe_payment_intent_id,
+      autopay_remote_id,
+      autopay_payment_status,
       ticket_type,
       quantity,
       paid_at,
@@ -39,9 +38,8 @@ export async function onRequestGet({ request, env }) {
       extOrderId: row.ext_order_id,
       status: row.status,
       provider: row.provider,
-      payuOrderId: row.payu_order_id,
-      stripeSessionId: row.stripe_session_id,
-      stripePaymentIntentId: row.stripe_payment_intent_id,
+      autopayRemoteId: row.autopay_remote_id,
+      autopayPaymentStatus: row.autopay_payment_status,
       ticketType: row.ticket_type,
       quantity: row.quantity,
       paidAt: row.paid_at,
