@@ -126,7 +126,7 @@
           href="mailto:konferencja@brfh.eu"
           style="color: #92400e; font-weight: 600"
         >
-          konferencja@brfh.eu
+          [konferencja@brfh.eu](mailto:konferencja@brfh.eu)
         </a>
         . Wyślij maila z adresu podanego w formularzu i zawrzyj w nim numer
         zamówienia.
@@ -216,8 +216,8 @@
                 <a href="#reklamacje">Zwroty</a>
                 <span class="tooltip-text">
                   W sprawie zwrotów prosimy o wysyłanie wiadomości na adres
-                  email: konferencja@brfh.eu. Czas na zwrot biletu wynosi 14 dni
-                  od dnia zakupu.
+                  email: [konferencja@brfh.eu](mailto:konferencja@brfh.eu). Czas
+                  na zwrot biletu wynosi 14 dni od dnia zakupu.
                 </span>
               </li>
               <li>
@@ -230,7 +230,7 @@
                 <a href="#reklamacje">Reklamacje</a>
                 <span class="tooltip-text">
                   W sprawie reklamacji prosimy o wysyłanie wiadomości na adres
-                  email: konferencja@brfh.eu
+                  email: [konferencja@brfh.eu](mailto:konferencja@brfh.eu)
                 </span>
               </li>
             </ul>
@@ -267,134 +267,149 @@
       const hintEl = document.getElementById("hint");
 
       const url = new URL(window.location.href);
-      const extOrderId = url.searchParams.get("order");
+
+      // Obsługa różnych nazw parametrów (order, orderId, OrderID itp.)
+      const extOrderId =
+        url.searchParams.get("order") ||
+        url.searchParams.get("OrderID") ||
+        url.searchParams.get("hash");
+
       orderEl.textContent = extOrderId || "(brak)";
 
       if (!extOrderId) {
         statusEl.textContent =
-          "Brak parametru order w URL. Wróć do formularza i spróbuj ponownie.";
+          "Brak numeru zamówienia w adresie. Wróć do formularza i spróbuj ponownie.";
         statusEl.className = "bad";
         actionsEl.style.display = "flex";
         retryBtn.textContent = "Wróć do formularza";
-        retryBtn.onclick = () => (window.location.href = "/buy_form");
-        throw new Error("Missing order param");
-      }
+        retryBtn.onclick = () => (window.location.href = "/buy_form.html");
+      } else {
+        let tries = 0;
+        const maxTries = 40;
+        const intervalMs = 3000;
 
-      let tries = 0;
-      const maxTries = 40;
-      const intervalMs = 3000;
+        async function checkStatusOnce() {
+          tries += 1;
 
-      async function syncOnce() {
-        tries += 1;
+          try {
+            // Zamiana na order-status.js zamiast sync-status.js
+            const r = await fetch(
+              `/api/order-status?order=${encodeURIComponent(extOrderId)}`,
+              {
+                method: "GET",
+                headers: { Accept: "application/json" },
+                cache: "no-store",
+              },
+            );
 
-        const r = await fetch(
-          `/api/sync-status?order=${encodeURIComponent(extOrderId)}`,
-          {
-            method: "GET",
-            headers: { Accept: "application/json" },
-            cache: "no-store",
-          },
-        );
+            if (!r.ok) throw new Error(`order-status HTTP ${r.status}`);
 
-        if (!r.ok) throw new Error(`sync-status HTTP ${r.status}`);
+            const j = await r.json();
 
-        const j = await r.json();
-        if (!j || !j.found) {
-          statusEl.textContent =
-            "Nie znaleziono zamówienia w bazie (found=false).";
-          statusEl.className = "bad";
-          actionsEl.style.display = "flex";
-          return { done: true };
-        }
+            if (!j || !j.found) {
+              statusEl.textContent = "Nie znaleziono zamówienia w bazie.";
+              statusEl.className = "bad";
+              actionsEl.style.display = "flex";
+              return { done: true };
+            }
 
-        const s = String(j.status || j.payuStatus || "").toUpperCase();
+            const s = String(j.status || "").toUpperCase();
 
-        if (!s) {
-          statusEl.textContent =
-            "Zamówienie utworzone, czekam na status od operatora płatnośći…";
-          statusEl.className = "";
-          return { done: false };
-        }
+            if (!s || s === "PENDING" || s === "WAITING") {
+              statusEl.textContent =
+                "Zamówienie utworzone, czekam na potwierdzenie z banku…";
+              statusEl.className = "";
+              return { done: false };
+            }
 
-        if (s === "COMPLETED") {
-          statusEl.textContent = "Płatność potwierdzona. Możesz pobrać bilety.";
-          statusEl.className = "ok";
-          actionsEl.style.display = "flex";
-          downloadBtn.style.display = "inline-block";
-          hintEl.textContent = "";
-          return { done: true };
-        }
+            if (s === "COMPLETED" || s === "SUCCESS") {
+              statusEl.textContent =
+                "Płatność potwierdzona. Możesz pobrać bilety.";
+              statusEl.className = "ok";
+              actionsEl.style.display = "flex";
+              downloadBtn.style.display = "inline-block";
+              hintEl.textContent = "";
+              return { done: true };
+            }
 
-        if (s === "CANCELED" || s === "REJECTED") {
-          statusEl.textContent = `Płatność nieudana (status: ${s}).`;
-          statusEl.className = "bad";
-          actionsEl.style.display = "flex";
-          hintEl.textContent =
-            "Jeśli pieniądze zeszły, daj znać — sprawdzimy po payu_order_id.";
-          return { done: true };
-        }
+            if (s === "CANCELED" || s === "REJECTED" || s === "FAILED") {
+              statusEl.textContent = `Płatność nieudana (status: ${s}).`;
+              statusEl.className = "bad";
+              actionsEl.style.display = "flex";
+              hintEl.textContent =
+                "Jeśli pieniądze zeszły z konta, skontaktuj się z nami podając numer zamówienia.";
+              return { done: true };
+            }
 
-        statusEl.textContent = `Czekam na potwierdzenie (status: ${s})…`;
-        statusEl.className = "";
-        return { done: false };
-      }
-
-      async function loop() {
-        try {
-          const { done } = await syncOnce();
-          if (done) return;
-
-          if (tries >= maxTries) {
-            statusEl.textContent =
-              "To trwa dłużej niż zwykle. Kliknij „Odśwież status” za chwilę.";
+            statusEl.textContent = `Aktualny status: ${s}`;
             statusEl.className = "";
+            return { done: false };
+          } catch (e) {
+            throw e;
+          }
+        }
+
+        async function loop() {
+          try {
+            const { done } = await checkStatusOnce();
+            if (done) return;
+
+            if (tries >= maxTries) {
+              statusEl.textContent =
+                "To trwa dłużej niż zwykle. Kliknij „Odśwież status” za chwilę.";
+              statusEl.className = "";
+              actionsEl.style.display = "flex";
+              hintEl.textContent =
+                "Jeżeli nadal nie otrzymałeś biletu, wyślij mail na adres konferencja@brfh.eu podając numer zamówienia.";
+              return;
+            }
+
+            setTimeout(loop, intervalMs);
+          } catch (e) {
+            statusEl.textContent =
+              "Błąd sprawdzania statusu. Kliknij „Odśwież status”.";
+            statusEl.className = "bad";
             actionsEl.style.display = "flex";
-            hintEl.textContent =
-              "Jeżeli nadal nie otrzymałeś biletu, wyślij mail na adres konferencja@brfh.eu z maila podanego w formularzu, zawierający numer zamówienia.";
+            hintEl.textContent = String(e && e.message ? e.message : e);
+          }
+        }
+
+        retryBtn.onclick = () => {
+          if (retryBtn.textContent === "Wróć do formularza") {
+            window.location.href = "/buy_form.html";
             return;
           }
+          tries = 0;
+          statusEl.textContent = "Sprawdzam status płatności…";
+          statusEl.className = "";
+          downloadBtn.style.display = "none";
+          hintEl.textContent = "";
+          loop();
+        };
 
-          setTimeout(loop, intervalMs);
-        } catch (e) {
-          statusEl.textContent =
-            "Błąd sprawdzania statusu. Kliknij „Odśwież status”.";
-          statusEl.className = "bad";
-          actionsEl.style.display = "flex";
-          hintEl.textContent = String(e && e.message ? e.message : e);
-        }
-      }
+        // Pobierz wiele PDF (po jednym na bilet)
+        downloadBtn.onclick = async () => {
+          try {
+            downloadBtn.disabled = true;
+            hintEl.textContent = "Przygotowuję bilety…";
 
-      retryBtn.onclick = () => {
-        tries = 0;
-        statusEl.textContent = "Sprawdzam status płatności…";
-        statusEl.className = "";
-        downloadBtn.style.display = "none";
-        hintEl.textContent = "";
+            const a = document.createElement("a");
+            a.href = `/api/tickets-pdf-all?order=${encodeURIComponent(extOrderId)}`;
+            a.download = `bilety-${extOrderId}.pdf`;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+
+            hintEl.textContent = "Pobrano.";
+          } catch (e) {
+            hintEl.textContent = "Błąd: " + (e?.message || String(e));
+          } finally {
+            downloadBtn.disabled = false;
+          }
+        };
+
         loop();
-      };
-
-      // Pobierz wiele PDF (po jednym na bilet)
-      downloadBtn.onclick = async () => {
-        try {
-          downloadBtn.disabled = true;
-          hintEl.textContent = "Przygotowuję bilety…";
-
-          const a = document.createElement("a");
-          a.href = `/api/tickets-pdf-all?order=${encodeURIComponent(extOrderId)}`;
-          a.download = `bilety-${extOrderId}.pdf`;
-          document.body.appendChild(a);
-          a.click();
-          a.remove();
-
-          hintEl.textContent = "Pobrano.";
-        } catch (e) {
-          hintEl.textContent = "Błąd: " + (e?.message || String(e));
-        } finally {
-          downloadBtn.disabled = false;
-        }
-      };
-
-      loop();
+      }
     </script>
   </body>
 </html>
