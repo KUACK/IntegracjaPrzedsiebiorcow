@@ -140,7 +140,7 @@ export async function onRequestPost({ request, env }) {
   } else if (promo === "talent") {
     if (now < promoDeadline) discountFactor = 0.5;
   } else if (promo === "asknet12#") {
-    fixedPriceGrosze = 200;
+    fixedPriceGrosze = 600;
   }
 
   const unitPrice =
