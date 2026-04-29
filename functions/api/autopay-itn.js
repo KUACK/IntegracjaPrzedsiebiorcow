@@ -54,6 +54,15 @@ function mapAutopayStatus(paymentStatus) {
   const s = String(paymentStatus || "")
     .trim()
     .toUpperCase();
+
+  console.log(
+    "AUTOPAY_ITN_MAP_STATUS",
+    JSON.stringify({
+      raw: paymentStatus,
+      normalized: s,
+    }),
+  );
+
   if (s === "SUCCESS") return "COMPLETED";
   if (s === "FAILURE") return "CANCELED";
   return "PENDING";
@@ -90,6 +99,16 @@ async function buildConfirmationResponse({
     hash: responseHash,
   });
 
+  console.log(
+    "AUTOPAY_ITN_RESPONSE",
+    JSON.stringify({
+      serviceID,
+      orderID,
+      confirmation,
+      responseHash,
+    }),
+  );
+
   return new Response(xml, {
     status: 200,
     headers: {
@@ -105,8 +124,7 @@ function normalizeAmount(value) {
   return n.toFixed(2);
 }
 
-export async function onRequestPost(context) {
-  const { request, env } = context;
+export async function onRequestPost({ request, env }) {
   const url = new URL(request.url);
 
   console.log(
@@ -142,6 +160,14 @@ export async function onRequestPost(context) {
     return new Response("Missing transactions", { status: 400 });
   }
 
+  console.log(
+    "AUTOPAY_ITN_TRANSACTIONS_PARAM",
+    JSON.stringify({
+      length: String(transactionsParam).length,
+      preview: String(transactionsParam).slice(0, 120),
+    }),
+  );
+
   let xml = "";
   try {
     xml = decodeBase64Utf8(transactionsParam);
@@ -154,7 +180,7 @@ export async function onRequestPost(context) {
     "AUTOPAY_ITN_XML",
     JSON.stringify({
       length: xml.length,
-      preview: xml.slice(0, 500),
+      preview: xml.slice(0, 1200),
     }),
   );
 
@@ -185,10 +211,22 @@ export async function onRequestPost(context) {
     }),
   );
 
+  console.log(
+    "AUTOPAY_ITN_STATUS_RAW",
+    JSON.stringify({
+      paymentStatus,
+      paymentStatusDetails,
+    }),
+  );
+
   if (!serviceID || !orderID || !incomingHash) {
     console.log(
       "AUTOPAY_ITN_MISSING_XML_FIELDS",
-      JSON.stringify({ serviceID, orderID, hasHash: !!incomingHash }),
+      JSON.stringify({
+        serviceID,
+        orderID,
+        hasHash: !!incomingHash,
+      }),
     );
     return new Response("Missing required XML fields", { status: 400 });
   }
@@ -272,10 +310,21 @@ export async function onRequestPost(context) {
     .bind(orderID)
     .first();
 
+  console.log(
+    "AUTOPAY_ITN_ORDER_ROW",
+    JSON.stringify({
+      orderID,
+      dbOrder: order,
+    }),
+  );
+
   if (!order) {
     console.log(
       "AUTOPAY_ITN_ORDER_NOT_FOUND",
-      JSON.stringify({ orderID, remoteID }),
+      JSON.stringify({
+        orderID,
+        remoteID,
+      }),
     );
 
     return buildConfirmationResponse({
@@ -294,6 +343,21 @@ export async function onRequestPost(context) {
   const receivedCurrency = String(currency || "")
     .trim()
     .toUpperCase();
+
+  console.log(
+    "AUTOPAY_ITN_AMOUNT_DEBUG",
+    JSON.stringify({
+      orderID,
+      remoteID,
+      amount,
+      receivedAmount,
+      dbTotalAmount: order.total_amount,
+      expectedAmount,
+      currency,
+      receivedCurrency,
+      expectedCurrency,
+    }),
+  );
 
   if (
     receivedAmount !== expectedAmount ||
@@ -323,8 +387,16 @@ export async function onRequestPost(context) {
 
   const localStatus = mapAutopayStatus(paymentStatus);
 
+  console.log(
+    "AUTOPAY_ITN_LOCAL_STATUS",
+    JSON.stringify({
+      paymentStatus,
+      localStatus,
+    }),
+  );
+
   try {
-    await env.DB.prepare(
+    const metaUpdate = await env.DB.prepare(
       `
       UPDATE orders
       SET
@@ -344,6 +416,15 @@ export async function onRequestPost(context) {
         orderID,
       )
       .run();
+
+    console.log(
+      "AUTOPAY_ITN_META_UPDATE_RESULT",
+      JSON.stringify({
+        orderID,
+        remoteID,
+        meta: metaUpdate?.meta || null,
+      }),
+    );
   } catch (e) {
     console.log("AUTOPAY_ITN_META_UPDATE_SKIPPED", String(e));
   }
@@ -354,6 +435,16 @@ export async function onRequestPost(context) {
     const currentStatus = String(order.status || "")
       .trim()
       .toUpperCase();
+
+    console.log(
+      "AUTOPAY_ITN_FINALIZE_CALL",
+      JSON.stringify({
+        orderID,
+        remoteID,
+        currentStatus,
+        localStatus,
+      }),
+    );
 
     if (currentStatus === "COMPLETED" && localStatus !== "COMPLETED") {
       finalized = {
@@ -369,6 +460,8 @@ export async function onRequestPost(context) {
         env,
       });
     }
+
+    console.log("AUTOPAY_ITN_FINALIZE_RESULT", JSON.stringify(finalized));
   } catch (e) {
     console.log("AUTOPAY_ITN_FINALIZE_ERROR", String(e));
   }
@@ -393,6 +486,7 @@ export async function onRequestPost(context) {
 
 export async function onRequestGet({ request }) {
   const url = new URL(request.url);
+
   return new Response(
     JSON.stringify({
       ok: true,
