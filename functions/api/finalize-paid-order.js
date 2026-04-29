@@ -195,9 +195,15 @@ async function sendTicketsEmail({ to, fullName, ticketType, tickets, env }) {
           <h1 style="color:#fff;margin:0;font-size:22px;">Integracja Przedsiębiorców</h1>
         </div>
         <div style="padding:32px;background:#fff;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 8px 8px;">
-          <p style="font-size:16px;margin-top:0;">Cześć <strong>${safeOneLine(fullName, 80)}</strong>,</p>
+          <p style="font-size:16px;margin-top:0;">Cześć <strong>${safeOneLine(
+            fullName,
+            80,
+          )}</strong>,</p>
           <p style="font-size:15px;line-height:1.6;">Dziękujemy za zakup! Twoja płatność została potwierdzona.</p>
-          <p style="font-size:15px;line-height:1.6;">W załączniku znajdziesz <strong>${ticketCount} ${ticketWord}</strong> typu <strong>${safeOneLine(ticketType, 80)}</strong>.</p>
+          <p style="font-size:15px;line-height:1.6;">W załączniku znajdziesz <strong>${ticketCount} ${ticketWord}</strong> typu <strong>${safeOneLine(
+            ticketType,
+            80,
+          )}</strong>.</p>
           <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:16px 20px;margin:24px 0;">
             <p style="margin:0 0 8px 0;font-size:14px;color:#64748b;">📋 Co dalej?</p>
             <ul style="margin:0;padding-left:20px;font-size:14px;line-height:1.8;color:#334155;">
@@ -276,7 +282,10 @@ async function sendAdminNotification({ order, ticketCount, tickets, env }) {
       env.EMAIL_FROM ||
       "Integracja Przedsiębiorców <noreply@integracjaprzedsiebiorcow.eu>",
     to: [adminEmail],
-    subject: `🎟️ Nowy zakup: ${safeOneLine(order.full_name, 50)} — ${safeOneLine(order.ticket_type, 40)}`,
+    subject: `🎟️ Nowy zakup: ${safeOneLine(
+      order.full_name,
+      50,
+    )} — ${safeOneLine(order.ticket_type, 40)}`,
     attachments,
     html: `
       <div style="font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;max-width:600px;margin:0 auto;color:#111827;">
@@ -286,16 +295,37 @@ async function sendAdminNotification({ order, ticketCount, tickets, env }) {
         <div style="padding:32px;background:#ffffff;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 8px 8px;">
           <p style="font-size:15px;margin-top:0;line-height:1.6;">Ktoś właśnie zakupił bilet na Twoją konferencję. Oto szczegóły:</p>
           <table style="width:100%;border-collapse:collapse;margin:20px 0;font-size:14px;">
-            <tr style="border-bottom:1px solid #e5e7eb;"><td style="padding:10px 0;color:#6b7280;width:140px;">Imię i nazwisko</td><td style="padding:10px 0;font-weight:600;">${safeOneLine(order.full_name, 80)}</td></tr>
-            <tr style="border-bottom:1px solid #e5e7eb;"><td style="padding:10px 0;color:#6b7280;">Email</td><td style="padding:10px 0;">${safeOneLine(order.email, 80)}</td></tr>
-            <tr style="border-bottom:1px solid #e5e7eb;"><td style="padding:10px 0;color:#6b7280;">Telefon</td><td style="padding:10px 0;">${safeOneLine(order.phone, 30)}</td></tr>
-            <tr style="border-bottom:1px solid #e5e7eb;"><td style="padding:10px 0;color:#6b7280;">Adres</td><td style="padding:10px 0;">${safeOneLine(order.street, 80)}, ${safeOneLine(order.postal_code, 10)} ${safeOneLine(order.city, 40)}</td></tr>
-            <tr style="border-bottom:1px solid #e5e7eb;"><td style="padding:10px 0;color:#6b7280;">Typ biletu</td><td style="padding:10px 0;font-weight:600;">${safeOneLine(order.ticket_type, 60)}</td></tr>
+            <tr style="border-bottom:1px solid #e5e7eb;"><td style="padding:10px 0;color:#6b7280;width:140px;">Imię i nazwisko</td><td style="padding:10px 0;font-weight:600;">${safeOneLine(
+              order.full_name,
+              80,
+            )}</td></tr>
+            <tr style="border-bottom:1px solid #e5e7eb;"><td style="padding:10px 0;color:#6b7280;">Email</td><td style="padding:10px 0;">${safeOneLine(
+              order.email,
+              80,
+            )}</td></tr>
+            <tr style="border-bottom:1px solid #e5e7eb;"><td style="padding:10px 0;color:#6b7280;">Telefon</td><td style="padding:10px 0;">${safeOneLine(
+              order.phone,
+              30,
+            )}</td></tr>
+            <tr style="border-bottom:1px solid #e5e7eb;"><td style="padding:10px 0;color:#6b7280;">Adres</td><td style="padding:10px 0;">${safeOneLine(
+              order.street,
+              80,
+            )}, ${safeOneLine(order.postal_code, 10)} ${safeOneLine(
+              order.city,
+              40,
+            )}</td></tr>
+            <tr style="border-bottom:1px solid #e5e7eb;"><td style="padding:10px 0;color:#6b7280;">Typ biletu</td><td style="padding:10px 0;font-weight:600;">${safeOneLine(
+              order.ticket_type,
+              60,
+            )}</td></tr>
             <tr style="border-bottom:1px solid #e5e7eb;"><td style="padding:10px 0;color:#6b7280;">Ilość</td><td style="padding:10px 0;">${ticketCount}</td></tr>
             <tr style="border-bottom:1px solid #e5e7eb;"><td style="padding:10px 0;color:#6b7280;">Cena/szt.</td><td style="padding:10px 0;">${unitPricePLN} PLN</td></tr>
             <tr style="border-bottom:1px solid #e5e7eb;"><td style="padding:10px 0;color:#6b7280;">Łącznie</td><td style="padding:10px 0;font-weight:600;font-size:16px;">${totalPLN} PLN</td></tr>
             <tr style="border-bottom:1px solid #e5e7eb;"><td style="padding:10px 0;color:#6b7280;">Kod promo</td><td style="padding:10px 0;">${promoInfo}</td></tr>
-            <tr><td style="padding:10px 0;color:#6b7280;">ID zamówienia</td><td style="padding:10px 0;font-size:12px;font-family:monospace;">${safeOneLine(order.ext_order_id, 60)}</td></tr>
+            <tr><td style="padding:10px 0;color:#6b7280;">ID zamówienia</td><td style="padding:10px 0;font-size:12px;font-family:monospace;">${safeOneLine(
+              order.ext_order_id,
+              60,
+            )}</td></tr>
           </table>
           <p style="font-size:13px;color:#9ca3af;margin-bottom:0;">Bilety zostały wygenerowane i wysłane automatycznie na adres kupującego.</p>
         </div>
@@ -331,28 +361,14 @@ async function sendAdminNotification({ order, ticketCount, tickets, env }) {
   }
 }
 
-export async function finalizePaidOrder({
-  extOrderId,
-  provider = null,
-  status = null,
-  payuOrderId = null,
-  stripeSessionId = null,
-  stripePaymentIntentId = null,
-  tpayTransactionId = null, // <- Twoja nowa linijka
-  env,
-}) {
+export async function finalizePaidOrder({ extOrderId, status = null, env }) {
   if (!env.DB) throw new Error("Missing D1 binding DB");
 
-  // Dodaliśmy tpay_transaction_id do komendy SQL
+  // prosta aktualizacja statusu + paid_at
   await env.DB.prepare(
     `
     UPDATE orders
     SET status = COALESCE(?, status),
-        provider = COALESCE(?, provider),
-        payu_order_id = COALESCE(?, payu_order_id),
-        stripe_session_id = COALESCE(?, stripe_session_id),
-        stripe_payment_intent_id = COALESCE(?, stripe_payment_intent_id),
-        tpay_transaction_id = COALESCE(?, tpay_transaction_id), 
         paid_at = CASE 
           WHEN COALESCE(?, status) = 'COMPLETED' AND paid_at IS NULL THEN datetime('now')
           ELSE paid_at
@@ -361,16 +377,7 @@ export async function finalizePaidOrder({
     WHERE ext_order_id = ?
     `,
   )
-    .bind(
-      status || null,
-      provider || null,
-      payuOrderId,
-      stripeSessionId,
-      stripePaymentIntentId,
-      tpayTransactionId, // <- Tutaj wysyłamy ID z Tpay do bazy
-      status || null,
-      extOrderId,
-    )
+    .bind(status || null, status || null, extOrderId)
     .run();
 
   if (status !== "COMPLETED") {
@@ -385,7 +392,7 @@ export async function finalizePaidOrder({
       promo_code, promo_applied,
       email_sent, email_sent_at,
       admin_email_sent, admin_email_sent_at,
-      provider, payu_order_id, stripe_session_id, stripe_payment_intent_id, paid_at
+      paid_at
     FROM orders
     WHERE ext_order_id = ?
     LIMIT 1
