@@ -15,6 +15,12 @@ function getTagValue(xml, tag) {
   return m ? m[1].trim() : null;
 }
 
+function decodeBase64Utf8(base64) {
+  const binary = atob(String(base64 || ""));
+  const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
+  return new TextDecoder("utf-8").decode(bytes);
+}
+
 async function sha256Hex(input) {
   const data = new TextEncoder().encode(String(input));
   const digest = await crypto.subtle.digest("SHA-256", data);
@@ -31,10 +37,15 @@ async function readTransactionsParam(request) {
     ct.includes("multipart/form-data")
   ) {
     const form = await request.formData().catch(() => null);
-    if (form) return form.get("transactions");
+    if (form) {
+      const val = form.get("transactions");
+      if (val) return String(val);
+    }
   }
 
   const raw = await request.text().catch(() => "");
+  if (!raw) return null;
+
   const params = new URLSearchParams(raw);
   return params.get("transactions");
 }
@@ -68,7 +79,7 @@ async function buildConfirmationResponse({
   confirmation,
   env,
 }) {
-  const hash = await sha256Hex(
+  const responseHash = await sha256Hex(
     `${serviceID}|${orderID}|${confirmation}|${String(env.AUTOPAY_SHARED_KEY)}`,
   );
 
@@ -76,16 +87,26 @@ async function buildConfirmationResponse({
     serviceID,
     orderID,
     confirmation,
-    hash,
+    hash: responseHash,
   });
 
   return new Response(xml, {
     status: 200,
-    headers: { "Content-Type": "application/xml; charset=UTF-8" },
+    headers: {
+      "Content-Type": "application/xml; charset=UTF-8",
+      "Cache-Control": "no-store",
+    },
   });
 }
 
-export async function onRequestPost({ request, env }) {
+function normalizeAmount(value) {
+  const n = Number(value);
+  if (!Number.isFinite(n)) return null;
+  return n.toFixed(2);
+}
+
+export async function onRequestPost(context) {
+  const { request, env } = context;
   const url = new URL(request.url);
 
   console.log(
@@ -95,31 +116,47 @@ export async function onRequestPost({ request, env }) {
       path: url.pathname,
       ip: request.headers.get("cf-connecting-ip"),
       ct: request.headers.get("content-type"),
+      ua: request.headers.get("user-agent"),
     }),
   );
 
   if (!env.DB) {
+    console.log("AUTOPAY_ITN_CONFIG_ERROR", "Missing D1 binding: DB");
     return new Response("Missing D1 binding: DB", { status: 500 });
   }
 
   if (!env.AUTOPAY_SERVICE_ID || !env.AUTOPAY_SHARED_KEY) {
+    console.log(
+      "AUTOPAY_ITN_CONFIG_ERROR",
+      "Missing AUTOPAY_SERVICE_ID or AUTOPAY_SHARED_KEY",
+    );
     return new Response("Missing AUTOPAY_SERVICE_ID / AUTOPAY_SHARED_KEY", {
       status: 500,
     });
   }
 
   const transactionsParam = await readTransactionsParam(request);
+
   if (!transactionsParam) {
+    console.log("AUTOPAY_ITN_BAD_REQUEST", "Missing transactions");
     return new Response("Missing transactions", { status: 400 });
   }
 
   let xml = "";
   try {
-    xml = atob(String(transactionsParam));
+    xml = decodeBase64Utf8(transactionsParam);
   } catch (e) {
     console.log("AUTOPAY_ITN_BASE64_ERROR", String(e));
     return new Response("Bad transactions payload", { status: 400 });
   }
+
+  console.log(
+    "AUTOPAY_ITN_XML",
+    JSON.stringify({
+      length: xml.length,
+      preview: xml.slice(0, 500),
+    }),
+  );
 
   const serviceID = getTagValue(xml, "serviceID");
   const orderID = getTagValue(xml, "orderID");
@@ -149,13 +186,20 @@ export async function onRequestPost({ request, env }) {
   );
 
   if (!serviceID || !orderID || !incomingHash) {
+    console.log(
+      "AUTOPAY_ITN_MISSING_XML_FIELDS",
+      JSON.stringify({ serviceID, orderID, hasHash: !!incomingHash }),
+    );
     return new Response("Missing required XML fields", { status: 400 });
   }
 
   if (String(serviceID).trim() !== String(env.AUTOPAY_SERVICE_ID).trim()) {
     console.log(
       "AUTOPAY_ITN_BAD_SERVICE_ID",
-      JSON.stringify({ serviceID, expected: String(env.AUTOPAY_SERVICE_ID) }),
+      JSON.stringify({
+        serviceID,
+        expected: String(env.AUTOPAY_SERVICE_ID),
+      }),
     );
 
     return buildConfirmationResponse({
@@ -178,8 +222,19 @@ export async function onRequestPost({ request, env }) {
     paymentStatusDetails,
   ].filter((v) => v !== undefined && v !== null && String(v) !== "");
 
-  const expectedHash = await sha256Hex(
-    `${verifyParts.join("|")}|${String(env.AUTOPAY_SHARED_KEY)}`,
+  const verifyString = `${verifyParts.join("|")}|${String(env.AUTOPAY_SHARED_KEY)}`;
+  const expectedHash = await sha256Hex(verifyString);
+
+  console.log(
+    "AUTOPAY_ITN_HASH_DEBUG",
+    JSON.stringify({
+      orderID,
+      remoteID,
+      verifyParts,
+      verifyString,
+      expectedHash,
+      incomingHash,
+    }),
   );
 
   if (
@@ -187,7 +242,12 @@ export async function onRequestPost({ request, env }) {
   ) {
     console.log(
       "AUTOPAY_ITN_HASH_MISMATCH",
-      JSON.stringify({ orderID, remoteID, expectedHash, incomingHash }),
+      JSON.stringify({
+        orderID,
+        remoteID,
+        expectedHash,
+        incomingHash,
+      }),
     );
 
     return buildConfirmationResponse({
@@ -226,14 +286,18 @@ export async function onRequestPost({ request, env }) {
     });
   }
 
-  const expectedAmount = (Number(order.total_amount || 0) / 100).toFixed(2);
-  const expectedCurrency = String(env.AUTOPAY_CURRENCY || "PLN").trim();
+  const expectedAmount = normalizeAmount(Number(order.total_amount || 0) / 100);
+  const receivedAmount = normalizeAmount(amount);
+  const expectedCurrency = String(env.AUTOPAY_CURRENCY || "PLN")
+    .trim()
+    .toUpperCase();
+  const receivedCurrency = String(currency || "")
+    .trim()
+    .toUpperCase();
 
   if (
-    String(amount || "").trim() !== expectedAmount ||
-    String(currency || "")
-      .trim()
-      .toUpperCase() !== expectedCurrency.toUpperCase()
+    receivedAmount !== expectedAmount ||
+    receivedCurrency !== expectedCurrency
   ) {
     console.log(
       "AUTOPAY_ITN_AMOUNT_OR_CURRENCY_MISMATCH",
@@ -241,8 +305,10 @@ export async function onRequestPost({ request, env }) {
         orderID,
         remoteID,
         amount,
+        receivedAmount,
         expectedAmount,
         currency,
+        receivedCurrency,
         expectedCurrency,
       }),
     );
@@ -313,7 +379,7 @@ export async function onRequestPost({ request, env }) {
       orderID,
       remoteID,
       localStatus,
-      finalized: !!finalized?.finalized,
+      finalized,
     }),
   );
 
@@ -323,4 +389,24 @@ export async function onRequestPost({ request, env }) {
     confirmation: "CONFIRMED",
     env,
   });
+}
+
+export async function onRequestGet({ request }) {
+  const url = new URL(request.url);
+  return new Response(
+    JSON.stringify({
+      ok: true,
+      endpoint: "autopay-itn",
+      method: "GET",
+      path: url.pathname,
+      note: "Use POST for Autopay ITN",
+    }),
+    {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json; charset=UTF-8",
+        "Cache-Control": "no-store",
+      },
+    },
+  );
 }
