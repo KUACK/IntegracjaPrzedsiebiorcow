@@ -1210,12 +1210,7 @@ dialog {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 
   text-align: center;
-
-  /* DODANE: Wymuszenie wyśrodkowania na ekranie */
   margin: auto;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 }
 
 dialog::backdrop {

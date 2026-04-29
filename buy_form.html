@@ -113,8 +113,11 @@
     <div class="promo-bar">
       <div class="promo-content">
         <div class="promo-text">
-          🎉 Tylko do końca kwietnia!<br />
-          Kod: <strong>KWIECIEN</strong> – 35% na wszystkie bilety!
+          Drodzy Uczestnicy! Po długiej batalii z serwisami bramek płatniczych,
+          broniąc dokumentów kościelnych<br />udało nam się uruchomić płatności
+          online. Z tej okazji przedłużamy dla was WSZYSTKIE kody do końca maja!
+          <br />
+          Kod: <strong>MAJ</strong> – 35% na wszystkie bilety!
         </div>
         <div class="timer" id="timer">⏱️ Pozostało: Ładowanie...</div>
       </div>
@@ -132,26 +135,6 @@
       <h1>Kup bilet</h1>
 
       <div>
-        <div class="notice-box">
-          <span class="notice-icon">
-            <img src="svg/buy_problem.svg" alt="" width="24" height="24" />
-          </span>
-          <p style="margin: 0">
-            Przepraszamy, obecnie płatności są chwilowo niedostępne. Prosimy o
-            cierpliwość, dokładamy wszelkich starań, aby wróciły jak
-            najszybciej. Mogą państwo skorzystać z opcji zapisania się, a link
-            do płatności zostanie wysłany mailem, po przywróceniu ich działania.
-            W razie potrzeby zapraszamy do kontaktu mailowego:
-            <a
-              href="mailto:konferencja@brfh.eu"
-              style="color: #92400e; font-weight: 600"
-            >
-              konferencja@brfh.eu
-            </a>
-            .
-          </p>
-        </div>
-
         <form id="buy">
           <h3>Dane osobowe</h3>
 
@@ -271,13 +254,6 @@
           </div>
 
           <div class="pay-buttons">
-            <button type="button" id="bookBtn" class="payu-btn book-btn">
-              <span class="payu-btn__brand">Rezerwacja</span>
-              <span class="payu-btn__text">
-                Zapisz się teraz, link do płatności wyślemy później
-              </span>
-            </button>
-
             <button type="button" id="autopayBtn" class="payu-btn">
               <span class="payu-btn__text">Zapłać przez</span>
               <img
@@ -294,34 +270,15 @@
         </form>
       </div>
 
-      <div class="notice-box">
-        <span class="notice-icon">
-          <img src="svg/buy_problem.svg" alt="" width="24" height="24" />
-        </span>
-        <p style="margin: 0">
-          Przepraszamy, obecnie płatności są chwilowo niedostępne. Prosimy o
-          cierpliwość, dokładamy wszelkich starań, aby wróciły jak najszybciej.
-          Mogą państwo skorzystać z opcji zapisania się, a link do płatności
-          zostanie wysłany mailem, po przywróceniu ich działania. W razie
-          potrzeby zapraszamy do kontaktu mailowego:
-          <a
-            href="mailto:konferencja@brfh.eu"
-            style="color: #92400e; font-weight: 600"
-          >
-            konferencja@brfh.eu
-          </a>
-          .
-        </p>
-      </div>
-
-      <p class="realizacja">Czas realizacji zamówienia - 1 dzień roboczy.</p>
+      <p class="realizacja" style="margin: 20px 0">
+        Czas realizacji zamówienia - 1 dzień roboczy.
+      </p>
+      <img
+        class="img-fluid"
+        src="https://developers.autopay.pl/storage/loga/blik-karty-portfele_elektroniczne-PIS-przelew-platnosci_odroczone-raty/647x162-bankpay.png"
+        alt="Blik + karty + portfele elektroniczne + PIS + przelew + płatności odroczone + raty 647x162 bank pay"
+      />
     </div>
-
-    <img
-      class="img-fluid"
-      src="https://developers.autopay.pl/storage/loga/blik-karty-portfele_elektroniczne-PIS-przelew-platnosci_odroczone-raty/647x162-bankpay.png"
-      alt="Blik + karty + portfele elektroniczne + PIS + przelew + płatności odroczone + raty 647x162 bank pay"
-    />
 
     <footer class="site-footer">
       <div class="footer-bg" aria-hidden="true"></div>
@@ -686,21 +643,21 @@
         const normalized = code.trim().toLowerCase();
         const now = new Date();
 
-        if (normalized === "kwiecien" || normalized === "kwiecień") {
-          const deadlineKwiecien = new Date("2026-05-01T00:00:00+02:00");
+        if (normalized === "maj") {
+          const deadlineKwiecien = new Date("2026-06-01T00:00:00+02:00");
           if (now >= deadlineKwiecien) {
             return { valid: false, label: "Ten kod już wygasł." };
           }
           return {
             valid: true,
-            code: "KWIECIEN",
+            code: "MAJ",
             factor: 0.65,
             label: "Kod zastosowany (–35%).",
           };
         }
 
         if (normalized === "naskale") {
-          const deadline = new Date("2026-05-01T00:00:00+02:00");
+          const deadline = new Date("2026-06-01T00:00:00+02:00");
           if (now < deadline) {
             return {
               valid: true,
@@ -713,7 +670,7 @@
         }
 
         if (normalized === "talent") {
-          const deadline = new Date("2026-05-01T00:00:00+02:00");
+          const deadline = new Date("2026-06-01T00:00:00+02:00");
           if (now < deadline) {
             return {
               valid: true,

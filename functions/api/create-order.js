@@ -131,9 +131,9 @@ export async function onRequestPost({ request, env }) {
   let discountFactor = 1;
   let fixedPriceGrosze = 0;
 
-  const promoDeadline = new Date("2026-05-01T00:00:00+02:00");
+  const promoDeadline = new Date("2026-06-01T00:00:00+02:00");
 
-  if (promo === "kwiecien" || promo === "kwiecień") {
+  if (promo === "maj") {
     if (now < promoDeadline) discountFactor = 0.65;
   } else if (promo === "naskale") {
     if (now < promoDeadline) discountFactor = 0.5;
