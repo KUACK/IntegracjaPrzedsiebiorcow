@@ -134,16 +134,17 @@ export async function onRequestPost({ request, env }) {
         env.EMAIL_FROM ||
         "Integracja Przedsiębiorców <noreply@integracjaprzedsiebiorcow.eu>",
       to: [booked.email],
-      subject: `Dokończ zakup na Integrację Przedsiębiorców`,
+      subject: `Dokończ zakup biletów na Integracje Przedsiębiorców`,
       html: `
         <div style="font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;max-width:600px;margin:0 auto;color:#111827;">
-          <div style="background:#0f172a;padding:24px 32px;border-radius:8px 8px 0 0;">
+          <div style="background:#0f172a;padding:24px 32px;border-radius:8px 8px 0 0;text-align:center;">
+            <img src="${base}/obrazy/logo.png" alt="Integracja Przedsiębiorców" style="max-width:200px; height:auto; margin-bottom:16px;">
             <h1 style="color:#fff;margin:0;font-size:22px;">Integracja Przedsiębiorców</h1>
           </div>
           <div style="padding:32px;background:#fff;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 8px 8px;">
             <p style="font-size:16px;margin-top:0;">Cześć <strong>${safeOneLine(booked.full_name, 80)}</strong>,</p>
             <p style="font-size:15px;line-height:1.6;">
-              Dziękujemy za wcześniejszą rejestrację i cierpliwość! Zakończyliśmy przerwę techniczną u naszego operatora płatności (Autopay).
+              Dziękujemy za wcześniejszą rejestrację i cierpliwość! Udało nam się rozwiązać problemy związane z bramką płatniczą.
             </p>
             <p style="font-size:15px;line-height:1.6;">
               Przepraszamy za wszelkie niedogodności. Twoja rezerwacja na <strong>${ticketCount} ${ticketWord}</strong> typu <strong>${safeOneLine(booked.ticket_name, 80)}</strong> nadal na Ciebie czeka.
