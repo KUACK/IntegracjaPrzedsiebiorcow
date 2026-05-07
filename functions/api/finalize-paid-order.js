@@ -244,7 +244,14 @@ async function sendTicketsEmail({ to, fullName, ticketType, tickets, env }) {
 }
 
 async function sendAdminNotification({ order, ticketCount, tickets, env }) {
-  const adminEmail = env.ADMIN_EMAIL || "konferencja@brfh.eu";
+  // NOWE: lista adresów adminów z ADMIN_EMAILS, fallback na ADMIN_EMAIL i domyślny
+  const adminEmails = String(
+    env.ADMIN_EMAILS || env.ADMIN_EMAIL || "konferencja@brfh.eu",
+  )
+    .split(",")
+    .map((e) => e.trim())
+    .filter(Boolean);
+
   const base =
     env.PUBLIC_BASE_URL || "https://integracjaprzedsiebiorcow.pages.dev";
 
@@ -281,7 +288,7 @@ async function sendAdminNotification({ order, ticketCount, tickets, env }) {
     from:
       env.EMAIL_FROM ||
       "Integracja Przedsiębiorców <noreply@integracjaprzedsiebiorcow.eu>",
-    to: [adminEmail],
+    to: adminEmails,
     subject: `🎟️ Nowy zakup: ${safeOneLine(
       order.full_name,
       50,

@@ -138,7 +138,7 @@ export async function onRequestPost({ request, env }) {
       html: `
         <div style="font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;max-width:600px;margin:0 auto;color:#111827;">
           <div style="background:#0f172a;padding:24px 32px;border-radius:8px 8px 0 0;text-align:center;">
-            <img src="${base}/obrazy/logo.png" alt="Integracja Przedsiębiorców" style="max-width:200px; height:auto; margin-bottom:16px;">
+            <img src="${base}/obrazy/logo_biale.png" alt="Integracja Przedsiębiorców" style="max-width:200px; height:auto; margin-bottom:16px;">
             <h1 style="color:#fff;margin:0;font-size:22px;">Integracja Przedsiębiorców</h1>
           </div>
           <div style="padding:32px;background:#fff;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 8px 8px;">
