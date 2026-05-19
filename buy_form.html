@@ -1,955 +1,816 @@
 <!doctype html>
 <html lang="pl">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Integracja Przedsiębiorców</title>
-    <meta
-      name="description"
-      content="Kup bilet na Integrację Przedsiębiorców - konferencję opartą na wartościach: Bóg, rodzina, firma, hojność."
-    />
-    <link
-      rel="icon"
-      href="obrazy/logo.png"
-      media="(prefers-color-scheme: light)"
-    />
-    <link
-      rel="icon"
-      href="obrazy/logo_biale.png"
-      media="(prefers-color-scheme: dark)"
-    />
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="form_style.css" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700;800&family=DM+Serif+Display&display=swap"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/intl-tel-input@26.7.5/build/css/intlTelInput.css"
-    />
 
-    <style>
-      .notice-box {
-        max-width: 640px;
-        margin: 20px 0;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Integracja Przedsiębiorców</title>
+  <meta name="description"
+    content="Kup bilet na Integrację Przedsiębiorców - konferencję opartą na wartościach: Bóg, rodzina, firma, hojność." />
+  <link rel="icon" href="obrazy/logo.png" media="(prefers-color-scheme: light)" />
+  <link rel="icon" href="obrazy/logo_biale.png" media="(prefers-color-scheme: dark)" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="form_style.css" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700;800&family=DM+Serif+Display&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@26.7.5/build/css/intlTelInput.css" />
 
-      .book-btn {
-        background: linear-gradient(135deg, #065f46, #047857);
-        color: #fff;
-        border: 0;
-      }
+  <style>
+    .notice-box {
+      max-width: 640px;
+      margin: 20px 0;
+    }
 
-      .book-btn .payu-btn__brand,
-      .book-btn .payu-btn__text {
-        color: #fff;
-      }
+    .book-btn {
+      background: linear-gradient(135deg, #065f46, #047857);
+      color: #fff;
+      border: 0;
+    }
 
-      .pay-note {
-        margin-top: 12px;
-        font-size: 0.95rem;
-        color: #92400e;
-      }
+    .book-btn .payu-btn__brand,
+    .book-btn .payu-btn__text {
+      color: #fff;
+    }
 
-      .consent-box {
-        display: flex;
-        align-items: flex-start;
-        gap: 10px;
-        margin: 18px 0 10px;
-        padding: 14px 16px;
-        border: 1px solid rgba(0, 0, 0, 0.12);
-        border-radius: 12px;
-        background: rgba(239, 157, 77, 0.08);
-      }
+    .pay-note {
+      margin-top: 12px;
+      font-size: 0.95rem;
+      color: #92400e;
+    }
 
-      .consent-box input[type="checkbox"] {
-        width: 18px;
-        height: 18px;
-        margin-top: 2px;
-        flex: 0 0 auto;
-      }
+    .consent-box {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin: 18px 0 10px;
+      padding: 14px 16px;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      border-radius: 12px;
+      background: rgba(239, 157, 77, 0.08);
+    }
 
-      .consent-box label {
-        margin: 0;
-        font-size: 0.95rem;
-        line-height: 1.5;
-      }
+    .consent-box input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      flex: 0 0 auto;
+    }
 
-      .consent-box a {
-        color: inherit;
-        font-weight: 700;
-      }
+    .consent-box label {
+      margin: 0;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
 
-      #msg {
-        margin-top: 14px;
-      }
+    .consent-box a {
+      color: inherit;
+      font-weight: 700;
+    }
 
-      #buy #bookBtn {
-        background-color: #ef9d4d;
-        color: white;
-      }
+    #msg {
+      margin-top: 14px;
+    }
 
-      #buy #bookBtn:hover {
-        background-color: #cc7219;
-        color: white;
-      }
+    #buy #autopayBtn {
+      background-color: #ef9d4d;
+      color: white;
+    }
 
-      .iti {
-        width: 100%;
-      }
+    #buy #autopayBtn:hover {
+      background-color: #cc7219;
+      color: white;
+    }
 
-      .iti__tel-input {
-        width: 100%;
-      }
+    .iti {
+      width: 100%;
+    }
 
-      .iti__country-container {
-        z-index: 3;
-      }
-    </style>
-  </head>
+    .iti__tel-input {
+      width: 100%;
+    }
 
-  <body>
-    <div class="promo-bar">
-      <div class="promo-content">
-        <div class="promo-text">
-          Drodzy Uczestnicy! Po długiej batalii z serwisami bramek płatniczych,
-          broniąc dokumentów kościelnych<br />udało nam się uruchomić płatności
-          online. Z tej okazji przedłużamy dla was WSZYSTKIE kody do końca maja!
-          <br />
-          Kod: <strong>MAJ</strong> – 35% na wszystkie bilety!
+    .iti__country-container {
+      z-index: 3;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="promo-bar">
+    <div class="promo-content">
+      <div class="promo-text">
+        Drodzy Uczestnicy! Po długiej batalii z serwisami bramek płatniczych,
+        broniąc dokumentów kościelnych<br />udało nam się uruchomić płatności
+        online. Z tej okazji przedłużamy dla was WSZYSTKIE kody do końca maja!
+        <br />
+        Kod: <strong>MAJ</strong> – 35% na wszystkie bilety!
+      </div>
+      <div class="timer" id="timer">⏱️ Pozostało: Ładowanie...</div>
+    </div>
+  </div>
+
+  <div class="header">
+    <div class="logo">
+      <a class="logo" href="index.html" aria-label="Strona główna">
+        <img src="obrazy/logo.png" alt="logo" />
+      </a>
+    </div>
+  </div>
+
+  <div class="row">
+    <h1>Kup bilet</h1>
+
+    <div>
+      <form id="buy">
+        <h3>Dane osobowe</h3>
+
+        <label>Imię i Nazwisko</label>
+        <input name="fullName" required autocomplete="name" minlength="3" maxlength="120" />
+
+        <label>Email</label>
+        <input name="email" type="email" required autocomplete="email" inputmode="email" maxlength="120" />
+
+        <label>Numer telefonu</label>
+        <input name="phone" id="phone" type="tel" required autocomplete="tel" maxlength="25" />
+        <input type="hidden" name="phoneCountry" id="phoneCountry" />
+
+        <label>Ulica</label>
+        <input name="street" required minlength="3" maxlength="120" />
+
+        <label>Miasto</label>
+        <input name="city" required minlength="2" maxlength="80" />
+
+        <label>Kod pocztowy</label>
+        <input name="postalCode" required type="text" placeholder="00-000" autocomplete="postal-code"
+          inputmode="numeric" pattern="\d{2}-\d{3}" title="Podaj kod pocztowy w formacie 00-000." maxlength="6" />
+
+        <h3>Bilety</h3>
+
+        <label>Typ biletu</label>
+        <select name="ticketType" id="ticketType" required>
+          <option value="premium">Premium – 1 dzień (499 PLN)</option>
+          <option value="biznesplus">Biznes Plus – 2 dni (599 PLN)</option>
+          <option value="vipbankiet">VIP – 2 dni + bankiet (999 PLN)</option>
+          <option value="vip">
+            VIP z Prezentacją – 2 dni + bankiet (1 499 PLN)
+          </option>
+        </select>
+
+        <label>Ilość sztuk</label>
+        <input name="quantity" type="number" min="1" max="20" value="1" required />
+
+        <label>Kod promocyjny</label>
+        <div class="promo-line">
+          <input name="promoCode" id="promoCode" placeholder=" " />
+          <button type="button" id="applyPromo" class="promo-apply-btn">
+            Zastosuj
+          </button>
         </div>
-        <div class="timer" id="timer">⏱️ Pozostało: Ładowanie...</div>
-      </div>
+        <div id="promoHint" class="promo-hint"></div>
+
+        <div class="order-summary" aria-live="polite">
+          <span class="order-summary__label">Razem:</span>
+          <span class="order-summary__value" id="orderTotal">—</span>
+        </div>
+
+        <input type="hidden" name="paymentProvider" id="paymentProvider" value="autopay" />
+
+        <div class="consent-box">
+          <input type="checkbox" id="consent" name="consent" value="1" required />
+          <label for="consent">
+            Zapoznałem się i akceptuję
+            <a href="regulamin.html" target="_blank" rel="noopener noreferrer">Regulamin</a>
+            oraz
+            <a href="polityka-prywatnosci.html" target="_blank" rel="noopener noreferrer">Politykę prywatności</a>.
+          </label>
+        </div>
+
+        <div class="pay-buttons">
+          <button type="button" id="autopayBtn" class="payu-btn">
+            <span class="payu-btn__text">Zapłać przez</span>
+            <img src="svg/Logo-full-black.svg" alt="" class="payu-btn__logo" width="90" height="24" />
+          </button>
+
+          <p id="msg"></p>
+        </div>
+      </form>
     </div>
 
-    <div class="header">
-      <div class="logo">
-        <a class="logo" href="index.html" aria-label="Strona główna">
-          <img src="obrazy/logo.png" alt="logo" />
-        </a>
-      </div>
-    </div>
+    <p class="realizacja" style="margin: 20px 0">
+      Czas realizacji zamówienia - 1 dzień roboczy.
+    </p>
+    <img class="img-fluid"
+      src="https://developers.autopay.pl/storage/loga/blik-karty-portfele_elektroniczne-PIS-przelew-platnosci_odroczone-raty/647x162-bankpay.png"
+      alt="Blik + karty + portfele elektroniczne + PIS + przelew + płatności odroczone + raty 647x162 bank pay" />
+  </div>
 
-    <div class="row">
-      <h1>Kup bilet</h1>
+  <footer class="site-footer">
+    <div class="footer-bg" aria-hidden="true"></div>
 
-      <div>
-        <form id="buy">
-          <h3>Dane osobowe</h3>
-
-          <label>Imię i Nazwisko</label>
-          <input
-            name="fullName"
-            required
-            autocomplete="name"
-            minlength="3"
-            maxlength="120"
-          />
-
-          <label>Email</label>
-          <input
-            name="email"
-            type="email"
-            required
-            autocomplete="email"
-            inputmode="email"
-            maxlength="120"
-          />
-
-          <label>Numer telefonu</label>
-          <input
-            name="phone"
-            id="phone"
-            type="tel"
-            required
-            autocomplete="tel"
-            maxlength="25"
-          />
-          <input type="hidden" name="phoneCountry" id="phoneCountry" />
-
-          <label>Ulica</label>
-          <input name="street" required minlength="3" maxlength="120" />
-
-          <label>Miasto</label>
-          <input name="city" required minlength="2" maxlength="80" />
-
-          <label>Kod pocztowy</label>
-          <input
-            name="postalCode"
-            required
-            type="text"
-            placeholder="00-000"
-            autocomplete="postal-code"
-            inputmode="numeric"
-            pattern="\d{2}-\d{3}"
-            title="Podaj kod pocztowy w formacie 00-000."
-            maxlength="6"
-          />
-
-          <h3>Bilety</h3>
-
-          <label>Typ biletu</label>
-          <select name="ticketType" id="ticketType" required>
-            <option value="premium">Premium – 1 dzień (499 PLN)</option>
-            <option value="biznesplus">Biznes Plus – 2 dni (599 PLN)</option>
-            <option value="vipbankiet">VIP – 2 dni + bankiet (999 PLN)</option>
-            <option value="vip">
-              VIP z Prezentacją – 2 dni + bankiet (1 499 PLN)
-            </option>
-          </select>
-
-          <label>Ilość sztuk</label>
-          <input
-            name="quantity"
-            type="number"
-            min="1"
-            max="20"
-            value="1"
-            required
-          />
-
-          <label>Kod promocyjny</label>
-          <div class="promo-line">
-            <input name="promoCode" id="promoCode" placeholder=" " />
-            <button type="button" id="applyPromo" class="promo-apply-btn">
-              Zastosuj
-            </button>
-          </div>
-          <div id="promoHint" class="promo-hint"></div>
-
-          <div class="order-summary" aria-live="polite">
-            <span class="order-summary__label">Razem:</span>
-            <span class="order-summary__value" id="orderTotal">—</span>
-          </div>
-
-          <input
-            type="hidden"
-            name="paymentProvider"
-            id="paymentProvider"
-            value="autopay"
-          />
-
-          <div class="consent-box">
-            <input
-              type="checkbox"
-              id="consent"
-              name="consent"
-              value="1"
-              required
-            />
-            <label for="consent">
-              Zapoznałem się i akceptuję
-              <a href="regulamin.html" target="_blank" rel="noopener noreferrer"
-                >Regulamin</a
-              >
-              oraz
-              <a
-                href="polityka-prywatnosci.html"
-                target="_blank"
-                rel="noopener noreferrer"
-                >Politykę prywatności</a
-              >.
-            </label>
-          </div>
-
-          <div class="pay-buttons">
-            <button type="button" id="autopayBtn" class="payu-btn">
-              <span class="payu-btn__text">Zapłać przez</span>
-              <img
-                src="svg/Logo-full-black.svg"
-                alt=""
-                class="payu-btn__logo"
-                width="90"
-                height="24"
-              />
-            </button>
-
-            <p id="msg"></p>
-          </div>
-        </form>
-      </div>
-
-      <p class="realizacja" style="margin: 20px 0">
-        Czas realizacji zamówienia - 1 dzień roboczy.
-      </p>
-      <img
-        class="img-fluid"
-        src="https://developers.autopay.pl/storage/loga/blik-karty-portfele_elektroniczne-PIS-przelew-platnosci_odroczone-raty/647x162-bankpay.png"
-        alt="Blik + karty + portfele elektroniczne + PIS + przelew + płatności odroczone + raty 647x162 bank pay"
-      />
-    </div>
-
-    <footer class="site-footer">
-      <div class="footer-bg" aria-hidden="true"></div>
-
-      <div class="container footer-container">
-        <div class="footer-grid">
-          <div class="footer-col footer-brand">
-            <div class="footer-mark">
-              <div class="logo_footer">
-                <img src="obrazy/logo.png" alt="logo" />
-              </div>
+    <div class="container footer-container">
+      <div class="footer-grid">
+        <div class="footer-col footer-brand">
+          <div class="footer-mark">
+            <div class="logo_footer">
+              <img src="obrazy/logo.png" alt="logo" />
             </div>
-
-            <p class="footer-desc">
-              Duszpasterstwo Przedsiębiorców i Pracodawców Talent w
-              Archidiecezji Poznańskiej
-            </p>
           </div>
 
-          <div class="footer-col">
-            <h3 class="footer-title">Adres</h3>
-
-            <ul class="footer-list footer-list--icons">
-              <li>
-                <span class="footer-ico" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
-                    <path
-                      d="M12 22s7-4.6 7-12a7 7 0 1 0-14 0c0 7.4 7 12 7 12Z"
-                      stroke="currentColor"
-                      stroke-width="1.8"
-                    />
-                    <path
-                      d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
-                      stroke="currentColor"
-                      stroke-width="1.8"
-                    />
-                  </svg>
-                </span>
-                <span>ul. Głogowska 92, Poznań</span>
-              </li>
-
-              <li>
-                <span class="footer-ico" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
-                    <path
-                      d="M4 6h16v12H4V6Z"
-                      stroke="currentColor"
-                      stroke-width="1.8"
-                    />
-                    <path
-                      d="m4.5 7 7.5 6 7.5-6"
-                      stroke="currentColor"
-                      stroke-width="1.8"
-                    />
-                  </svg>
-                </span>
-                <a href="mailto:konferencja@brfh.eu">konferencja@brfh.eu</a>
-              </li>
-
-              <li>
-                <span
-                  class="footer-ico footer-ico--dot"
-                  aria-hidden="true"
-                ></span>
-                <span>NIP: 7792461653</span>
-              </li>
-            </ul>
-          </div>
-
-          <div class="footer-col">
-            <h3 class="footer-title">Menu</h3>
-
-            <ul class="footer-list">
-              <li><a href="#program">Program</a></li>
-              <li><a href="#prelegenci">Prelegenci</a></li>
-              <li><a href="buy_form.html">Zapisy</a></li>
-              <li class="tooltip">
-                <a href="#reklamacje">Zwroty</a>
-                <span class="tooltip-text">
-                  W sprawie zwrotów prosimy o wysyłanie wiadomości na adres
-                  email: konferencja@brfh.eu. Czas na zwrot biletu wynosi 14 dni
-                  od dnia zakupu.
-                </span>
-              </li>
-              <li>
-                <a href="regulamin.html">Regulamin Konferencji</a>
-              </li>
-              <li>
-                <a href="polityka-prywatnosci.html">Polityka prywatności</a>
-              </li>
-              <li class="tooltip">
-                <a href="#reklamacje">Reklamacje</a>
-                <span class="tooltip-text">
-                  W sprawie reklamacji prosimy o wysyłanie wiadomości na adres
-                  email: konferencja@brfh.eu
-                </span>
-              </li>
-            </ul>
-          </div>
-
-          <div class="footer-col footer-org">
-            <h3 class="footer-title">Organizator</h3>
-
-            <a
-              class="footer-org-card"
-              href="https://talentpoznan.pl/"
-              aria-label="Talent"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img src="obrazy/talent.png" alt="talent" />
-            </a>
-          </div>
+          <p class="footer-desc">
+            Duszpasterstwo Przedsiębiorców i Pracodawców Talent w
+            Archidiecezji Poznańskiej
+          </p>
         </div>
 
-        <div class="footer-bottom">
-          © 2026 Duszpasterstwo Przedsiębiorców i Pracodawców Talent w
-          Archidiecezji Poznańskiej
+        <div class="footer-col">
+          <h3 class="footer-title">Adres</h3>
+
+          <ul class="footer-list footer-list--icons">
+            <li>
+              <span class="footer-ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+                  <path d="M12 22s7-4.6 7-12a7 7 0 1 0-14 0c0 7.4 7 12 7 12Z" stroke="currentColor"
+                    stroke-width="1.8" />
+                  <path d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke="currentColor" stroke-width="1.8" />
+                </svg>
+              </span>
+              <span>ul. Głogowska 92, Poznań</span>
+            </li>
+
+            <li>
+              <span class="footer-ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+                  <path d="M4 6h16v12H4V6Z" stroke="currentColor" stroke-width="1.8" />
+                  <path d="m4.5 7 7.5 6 7.5-6" stroke="currentColor" stroke-width="1.8" />
+                </svg>
+              </span>
+              <a href="mailto:konferencja@brfh.eu">konferencja@brfh.eu</a>
+            </li>
+
+            <li>
+              <span class="footer-ico footer-ico--dot" aria-hidden="true"></span>
+              <span>NIP: 7792461653</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h3 class="footer-title">Menu</h3>
+
+          <ul class="footer-list">
+            <li><a href="#program">Program</a></li>
+            <li><a href="#prelegenci">Prelegenci</a></li>
+            <li><a href="buy_form.html">Zapisy</a></li>
+            <li class="tooltip">
+              <a href="#reklamacje">Zwroty</a>
+              <span class="tooltip-text">
+                W sprawie zwrotów prosimy o wysyłanie wiadomości na adres
+                email: konferencja@brfh.eu. Czas na zwrot biletu wynosi 14 dni
+                od dnia zakupu.
+              </span>
+            </li>
+            <li>
+              <a href="regulamin.html">Regulamin Konferencji</a>
+            </li>
+            <li>
+              <a href="polityka-prywatnosci.html">Polityka prywatności</a>
+            </li>
+            <li class="tooltip">
+              <a href="#reklamacje">Reklamacje</a>
+              <span class="tooltip-text">
+                W sprawie reklamacji prosimy o wysyłanie wiadomości na adres
+                email: konferencja@brfh.eu
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-col footer-org">
+          <h3 class="footer-title">Organizator</h3>
+
+          <a class="footer-org-card" href="https://talentpoznan.pl/" aria-label="Talent" target="_blank"
+            rel="noopener noreferrer">
+            <img src="obrazy/talent.png" alt="talent" />
+          </a>
         </div>
       </div>
-    </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@26.7.5/build/js/intlTelInput.min.js"></script>
+      <div class="footer-bottom">
+        © 2026 Duszpasterstwo Przedsiębiorców i Pracodawców Talent w
+        Archidiecezji Poznańskiej
+      </div>
+    </div>
+  </footer>
 
-    <script>
-      const PAYMENTS_AVAILABLE = true;
+  <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@26.7.5/build/js/intlTelInput.min.js"></script>
 
-      const msg = document.getElementById("msg");
-      const form = document.getElementById("buy");
+  <script>
+    const PAYMENTS_AVAILABLE = true;
 
-      const providerInput = document.getElementById("paymentProvider");
-      const bookBtn = document.getElementById("bookBtn");
-      const autopayBtn = document.getElementById("autopayBtn");
-      const consentInput = document.getElementById("consent");
+    const msg = document.getElementById("msg");
+    const form = document.getElementById("buy");
 
-      const fullNameInput = form.querySelector('input[name="fullName"]');
-      const emailInput = form.querySelector('input[name="email"]');
-      const phoneInput = form.querySelector('input[name="phone"]');
-      const phoneCountryHidden = document.getElementById("phoneCountry");
-      const streetInput = form.querySelector('input[name="street"]');
-      const cityInput = form.querySelector('input[name="city"]');
-      const postalCodeInput = form.querySelector('input[name="postalCode"]');
+    const providerInput = document.getElementById("paymentProvider");
+    const autopayBtn = document.getElementById("autopayBtn");
+    const consentInput = document.getElementById("consent");
 
-      const PRICE_GROSZE = {
-        premium: 49900,
-        biznesplus: 59900,
-        vipbankiet: 99900,
-        vip: 149900,
-      };
+    const fullNameInput = form.querySelector('input[name="fullName"]');
+    const emailInput = form.querySelector('input[name="email"]');
+    const phoneInput = form.querySelector('input[name="phone"]');
+    const phoneCountryHidden = document.getElementById("phoneCountry");
+    const streetInput = form.querySelector('input[name="street"]');
+    const cityInput = form.querySelector('input[name="city"]');
+    const postalCodeInput = form.querySelector('input[name="postalCode"]');
 
-      const ticketSel = form.querySelector('select[name="ticketType"]');
-      const qtyInput = form.querySelector('input[name="quantity"]');
+    const PRICE_GROSZE = {
+      premium: 49900,
+      biznesplus: 59900,
+      vipbankiet: 99900,
+      vip: 149900,
+    };
 
-      const promoInput = document.getElementById("promoCode");
-      const applyPromoBtn = document.getElementById("applyPromo");
-      const promoHintEl = document.getElementById("promoHint");
-      const totalEl = document.getElementById("orderTotal");
+    const ticketSel = form.querySelector('select[name="ticketType"]');
+    const qtyInput = form.querySelector('input[name="quantity"]');
 
-      const iti = window.intlTelInput(phoneInput, {
-        initialCountry: "pl",
-        nationalMode: true,
-        separateDialCode: true,
-        autoPlaceholder: "polite",
-        formatAsYouType: true,
-        preferredCountries: [
-          "pl",
-          "de",
-          "gb",
-          "cz",
-          "sk",
-          "ua",
-          "lt",
-          "lv",
-          "ee",
-          "fr",
-          "es",
-          "it",
-          "nl",
-          "us",
-          "ca",
-        ],
-        loadUtils: () =>
-          import("https://cdn.jsdelivr.net/npm/intl-tel-input@26.7.5/build/js/utils.js"),
+    const promoInput = document.getElementById("promoCode");
+    const applyPromoBtn = document.getElementById("applyPromo");
+    const promoHintEl = document.getElementById("promoHint");
+    const totalEl = document.getElementById("orderTotal");
+
+    const iti = window.intlTelInput(phoneInput, {
+      initialCountry: "pl",
+      nationalMode: true,
+      separateDialCode: true,
+      autoPlaceholder: "polite",
+      formatAsYouType: true,
+      preferredCountries: [
+        "pl",
+        "de",
+        "gb",
+        "cz",
+        "sk",
+        "ua",
+        "lt",
+        "lv",
+        "ee",
+        "fr",
+        "es",
+        "it",
+        "nl",
+        "us",
+        "ca",
+      ],
+      loadUtils: () =>
+        import("https://cdn.jsdelivr.net/npm/intl-tel-input@26.7.5/build/js/utils.js"),
+    });
+
+    let promoApplied = false;
+    let appliedCode = "";
+    let discountFactor = 1;
+    let fixedPriceGrosze = 0;
+
+    function syncPhoneCountry() {
+      const data = iti.getSelectedCountryData();
+      phoneCountryHidden.value =
+        data && data.iso2 ? data.iso2.toUpperCase() : "";
+    }
+
+    function formatPLNFromGrosze(grosze) {
+      return (grosze / 100).toLocaleString("pl-PL", {
+        style: "currency",
+        currency: "PLN",
       });
+    }
 
-      let promoApplied = false;
-      let appliedCode = "";
-      let discountFactor = 1;
-      let fixedPriceGrosze = 0;
-      let submitMode = "book";
+    function getQty() {
+      const q = parseInt(qtyInput.value || "1", 10);
+      return Math.max(1, Math.min(20, Number.isFinite(q) ? q : 1));
+    }
 
-      function syncPhoneCountry() {
-        const data = iti.getSelectedCountryData();
-        phoneCountryHidden.value =
-          data && data.iso2 ? data.iso2.toUpperCase() : "";
+    function getUnit() {
+      const key = (ticketSel.value || "").toLowerCase();
+      return PRICE_GROSZE[key] ?? 0;
+    }
+
+    function renderTotal() {
+      const qty = getQty();
+      const unit = getUnit();
+      let unitAfter;
+
+      if (promoApplied && fixedPriceGrosze > 0) {
+        unitAfter = fixedPriceGrosze;
+      } else {
+        unitAfter = Math.round(unit * (promoApplied ? discountFactor : 1));
       }
 
-      function formatPLNFromGrosze(grosze) {
-        return (grosze / 100).toLocaleString("pl-PL", {
-          style: "currency",
-          currency: "PLN",
-        });
-      }
+      const total = unitAfter * qty;
+      totalEl.textContent = unit ? formatPLNFromGrosze(total) : "—";
+    }
 
-      function getQty() {
-        const q = parseInt(qtyInput.value || "1", 10);
-        return Math.max(1, Math.min(20, Number.isFinite(q) ? q : 1));
-      }
+    function clearPromo() {
+      promoApplied = false;
+      appliedCode = "";
+      discountFactor = 1;
+      fixedPriceGrosze = 0;
+      promoHintEl.textContent = "";
+      promoHintEl.style.color = "";
+      renderTotal();
+    }
 
-      function getUnit() {
-        const key = (ticketSel.value || "").toLowerCase();
-        return PRICE_GROSZE[key] ?? 0;
-      }
+    function formatPostalCodeLive(value) {
+      const raw = String(value || "").trim();
 
-      function renderTotal() {
-        const qty = getQty();
-        const unit = getUnit();
-        let unitAfter;
+      if (raw.includes("-")) {
+        const cleaned = raw.replace(/[^\d-]/g, "");
+        const parts = cleaned.split("-");
+        const left = (parts[0] || "").replace(/\D/g, "").slice(0, 2);
+        const right = parts.slice(1).join("").replace(/\D/g, "").slice(0, 3);
+        const hadDashAtEnd = cleaned.endsWith("-");
 
-        if (promoApplied && fixedPriceGrosze > 0) {
-          unitAfter = fixedPriceGrosze;
-        } else {
-          unitAfter = Math.round(unit * (promoApplied ? discountFactor : 1));
+        if (left.length === 2 && (hadDashAtEnd || right.length >= 0)) {
+          return right ? `${left}-${right}` : `${left}-`;
         }
 
-        const total = unitAfter * qty;
-        totalEl.textContent = unit ? formatPLNFromGrosze(total) : "—";
+        return left;
       }
 
-      function clearPromo() {
+      const digits = raw.replace(/\D/g, "").slice(0, 5);
+
+      if (digits.length < 2) return digits;
+      if (digits.length === 2) return `${digits}-`;
+
+      return `${digits.slice(0, 2)}-${digits.slice(2)}`;
+    }
+
+    function normalizePostalCode(value) {
+      return formatPostalCodeLive(value).trim();
+    }
+
+    function clearFieldErrors() {
+      [
+        fullNameInput,
+        emailInput,
+        phoneInput,
+        streetInput,
+        cityInput,
+        postalCodeInput,
+        qtyInput,
+        ticketSel,
+        consentInput,
+      ].forEach((el) => el.setCustomValidity(""));
+    }
+
+    function validateBeforeSubmit(payload) {
+      clearFieldErrors();
+
+      const fullName = String(payload.fullName || "").trim();
+      const email = String(payload.email || "").trim();
+      const phone = String(payload.phone || "").trim();
+      const street = String(payload.street || "").trim();
+      const city = String(payload.city || "").trim();
+      const postalCode = normalizePostalCode(payload.postalCode);
+      const ticketType = String(payload.ticketType || "")
+        .trim()
+        .toLowerCase();
+      const qty = parseInt(payload.quantity || "1", 10);
+      const consent = payload.consent === "1";
+
+      postalCodeInput.value = postalCode;
+
+      if (fullName.length < 3) {
+        fullNameInput.setCustomValidity("Podaj imię i nazwisko.");
+        return fullNameInput;
+      }
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        emailInput.setCustomValidity("Podaj poprawny adres e-mail.");
+        return emailInput;
+      }
+
+      if (!phone) {
+        phoneInput.setCustomValidity("Podaj numer telefonu.");
+        return phoneInput;
+      }
+
+      if (
+        typeof iti.isValidNumber === "function" &&
+        typeof window.intlTelInputUtils !== "undefined" &&
+        !iti.isValidNumber()
+      ) {
+        phoneInput.setCustomValidity("Podaj poprawny numer telefonu.");
+        return phoneInput;
+      }
+
+      if (street.length < 3) {
+        streetInput.setCustomValidity("Podaj ulicę.");
+        return streetInput;
+      }
+
+      if (city.length < 2) {
+        cityInput.setCustomValidity("Podaj miasto.");
+        return cityInput;
+      }
+
+      if (!/^\d{2}-\d{3}$/.test(postalCode)) {
+        postalCodeInput.setCustomValidity(
+          "Podaj kod pocztowy w formacie 00-000."
+        );
+        return postalCodeInput;
+      }
+
+      if (!PRICE_GROSZE[ticketType]) {
+        ticketSel.setCustomValidity("Wybierz poprawny typ biletu.");
+        return ticketSel;
+      }
+
+      if (!Number.isFinite(qty) || qty < 1 || qty > 20) {
+        qtyInput.setCustomValidity("Ilość biletów musi być od 1 do 20.");
+        return qtyInput;
+      }
+
+      if (!consent) {
+        consentInput.setCustomValidity(
+          "Zaakceptuj Regulamin oraz Politykę prywatności."
+        );
+        return consentInput;
+      }
+
+      return null;
+    }
+
+    function validatePromoCode(code) {
+      const normalized = code.trim().toLowerCase();
+      const now = new Date();
+
+      if (normalized === "maj") {
+        const deadline = new Date("2026-06-01T00:00:00+02:00");
+        if (now >= deadline) {
+          return { valid: false, label: "Ten kod już wygasł." };
+        }
+        return {
+          valid: true,
+          code: "MAJ",
+          factor: 0.65,
+          label: "Kod zastosowany (–35%).",
+        };
+      }
+
+      if (normalized === "naskale") {
+        const deadline = new Date("2026-06-01T00:00:00+02:00");
+        if (now < deadline) {
+          return {
+            valid: true,
+            code: "NASKALE",
+            factor: 0.5,
+            label: "Kod zastosowany (–50%).",
+          };
+        }
+        return { valid: false, label: "Ten kod już wygasł." };
+      }
+
+      if (normalized === "talent") {
+        const deadline = new Date("2026-06-01T00:00:00+02:00");
+        if (now < deadline) {
+          return {
+            valid: true,
+            code: "TALENT",
+            factor: 0.5,
+            label: "Kod zastosowany (–50%).",
+          };
+        }
+        return { valid: false, label: "Ten kod już wygasł." };
+      }
+
+      if (normalized === "asknet12#") {
+        return {
+          valid: true,
+          code: "asknet12#",
+          fixedPrice: 300,
+          label: "Kod zastosowany.",
+        };
+      }
+
+      return { valid: false, label: "Nieprawidłowy kod." };
+    }
+
+    function setButtonsDisabled(disabled) {
+      autopayBtn.disabled = disabled || !PAYMENTS_AVAILABLE;
+      applyPromoBtn.disabled = disabled || !promoInput.value.trim();
+    }
+
+    function redirectToAutopay(
+      paymentUrl,
+      redirectFields,
+      redirectMethod = "POST"
+    ) {
+      const payForm = document.createElement("form");
+      payForm.method = String(redirectMethod || "POST").toUpperCase();
+      payForm.action = paymentUrl;
+      payForm.style.display = "none";
+
+      for (const [key, value] of Object.entries(redirectFields || {})) {
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = key;
+        input.value = String(value ?? "");
+        payForm.appendChild(input);
+      }
+
+      document.body.appendChild(payForm);
+      payForm.submit();
+    }
+
+    function applyPromoCode() {
+      const code = (promoInput.value || "").trim();
+      const result = validatePromoCode(code);
+
+      if (result.valid) {
+        promoApplied = true;
+        appliedCode = result.code;
+        discountFactor = result.factor || 1;
+        fixedPriceGrosze = result.fixedPrice || 0;
+        promoHintEl.textContent = result.label;
+        promoHintEl.style.color = "";
+      } else {
         promoApplied = false;
         appliedCode = "";
         discountFactor = 1;
         fixedPriceGrosze = 0;
-        promoHintEl.textContent = "";
-        promoHintEl.style.color = "";
-        renderTotal();
+        promoHintEl.textContent = result.label;
+        promoHintEl.style.color = "red";
       }
 
-      function formatPostalCodeLive(value) {
-        const raw = String(value || "").trim();
+      renderTotal();
+    }
 
-        if (raw.includes("-")) {
-          const cleaned = raw.replace(/[^\d-]/g, "");
-          const parts = cleaned.split("-");
-          const left = (parts[0] || "").replace(/\D/g, "").slice(0, 2);
-          const right = parts.slice(1).join("").replace(/\D/g, "").slice(0, 3);
-          const hadDashAtEnd = cleaned.endsWith("-");
-
-          if (left.length === 2 && (hadDashAtEnd || right.length >= 0)) {
-            return right ? `${left}-${right}` : `${left}-`;
-          }
-
-          return left;
-        }
-
-        const digits = raw.replace(/\D/g, "").slice(0, 5);
-
-        if (digits.length < 2) return digits;
-        if (digits.length === 2) return `${digits}-`;
-
-        return `${digits.slice(0, 2)}-${digits.slice(2)}`;
-      }
-
-      function normalizePostalCode(value) {
-        return formatPostalCodeLive(value).trim();
-      }
-
-      function clearFieldErrors() {
-        [
-          fullNameInput,
-          emailInput,
-          phoneInput,
-          streetInput,
-          cityInput,
-          postalCodeInput,
-          qtyInput,
-          ticketSel,
-          consentInput,
-        ].forEach((el) => el.setCustomValidity(""));
-      }
-
-      function validateBeforeSubmit(payload) {
-        clearFieldErrors();
-
-        const fullName = String(payload.fullName || "").trim();
-        const email = String(payload.email || "").trim();
-        const phone = String(payload.phone || "").trim();
-        const street = String(payload.street || "").trim();
-        const city = String(payload.city || "").trim();
-        const postalCode = normalizePostalCode(payload.postalCode);
-        const ticketType = String(payload.ticketType || "")
-          .trim()
-          .toLowerCase();
-        const qty = parseInt(payload.quantity || "1", 10);
-        const consent = payload.consent === "1";
-
-        postalCodeInput.value = postalCode;
-
-        if (fullName.length < 3) {
-          fullNameInput.setCustomValidity("Podaj imię i nazwisko.");
-          return fullNameInput;
-        }
-
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-          emailInput.setCustomValidity("Podaj poprawny adres e-mail.");
-          return emailInput;
-        }
-
-        if (!phone) {
-          phoneInput.setCustomValidity("Podaj numer telefonu.");
-          return phoneInput;
-        }
-
-        if (
-          typeof iti.isValidNumber === "function" &&
-          typeof window.intlTelInputUtils !== "undefined" &&
-          !iti.isValidNumber()
-        ) {
-          phoneInput.setCustomValidity("Podaj poprawny numer telefonu.");
-          return phoneInput;
-        }
-
-        if (street.length < 3) {
-          streetInput.setCustomValidity("Podaj ulicę.");
-          return streetInput;
-        }
-
-        if (city.length < 2) {
-          cityInput.setCustomValidity("Podaj miasto.");
-          return cityInput;
-        }
-
-        if (!/^\d{2}-\d{3}$/.test(postalCode)) {
-          postalCodeInput.setCustomValidity(
-            "Podaj kod pocztowy w formacie 00-000.",
-          );
-          return postalCodeInput;
-        }
-
-        if (!PRICE_GROSZE[ticketType]) {
-          ticketSel.setCustomValidity("Wybierz poprawny typ biletu.");
-          return ticketSel;
-        }
-
-        if (!Number.isFinite(qty) || qty < 1 || qty > 20) {
-          qtyInput.setCustomValidity("Ilość biletów musi być od 1 do 20.");
-          return qtyInput;
-        }
-
-        if (!consent) {
-          consentInput.setCustomValidity(
-            "Zaakceptuj Regulamin oraz Politykę prywatności.",
-          );
-          return consentInput;
-        }
-
-        return null;
-      }
-
-      function validatePromoCode(code) {
-        const normalized = code.trim().toLowerCase();
-        const now = new Date();
-
-        if (normalized === "maj") {
-          const deadlineKwiecien = new Date("2026-06-01T00:00:00+02:00");
-          if (now >= deadlineKwiecien) {
-            return { valid: false, label: "Ten kod już wygasł." };
-          }
-          return {
-            valid: true,
-            code: "MAJ",
-            factor: 0.65,
-            label: "Kod zastosowany (–35%).",
-          };
-        }
-
-        if (normalized === "naskale") {
-          const deadline = new Date("2026-06-01T00:00:00+02:00");
-          if (now < deadline) {
-            return {
-              valid: true,
-              code: "NASKALE",
-              factor: 0.5,
-              label: "Kod zastosowany (–50%).",
-            };
-          }
-          return { valid: false, label: "Ten kod już wygasł." };
-        }
-
-        if (normalized === "talent") {
-          const deadline = new Date("2026-06-01T00:00:00+02:00");
-          if (now < deadline) {
-            return {
-              valid: true,
-              code: "TALENT",
-              factor: 0.5,
-              label: "Kod zastosowany (–50%).",
-            };
-          }
-          return { valid: false, label: "Ten kod już wygasł." };
-        }
-
-        if (normalized === "asknet12#") {
-          return {
-            valid: true,
-            code: "asknet12#",
-            fixedPrice: 300,
-            label: "Kod zastosowany.",
-          };
-        }
-
-        return { valid: false, label: "Nieprawidłowy kod." };
-      }
-
-      function setButtonsDisabled(disabled) {
-        bookBtn.disabled = disabled;
-        autopayBtn.disabled = disabled || !PAYMENTS_AVAILABLE;
-        applyPromoBtn.disabled = disabled || !promoInput.value.trim();
-      }
-
-      function redirectToAutopay(
-        paymentUrl,
-        redirectFields,
-        redirectMethod = "POST",
-      ) {
-        const payForm = document.createElement("form");
-        payForm.method = String(redirectMethod || "POST").toUpperCase();
-        payForm.action = paymentUrl;
-        payForm.style.display = "none";
-
-        for (const [key, value] of Object.entries(redirectFields || {})) {
-          const input = document.createElement("input");
-          input.type = "hidden";
-          input.name = key;
-          input.value = String(value ?? "");
-          payForm.appendChild(input);
-        }
-
-        document.body.appendChild(payForm);
-        payForm.submit();
-      }
-
-      function applyPromoCode() {
-        const code = (promoInput.value || "").trim();
-        const result = validatePromoCode(code);
-
-        if (result.valid) {
-          promoApplied = true;
-          appliedCode = result.code;
-          discountFactor = result.factor || 1;
-          fixedPriceGrosze = result.fixedPrice || 0;
-          promoHintEl.textContent = result.label;
-          promoHintEl.style.color = "";
-        } else {
-          promoApplied = false;
-          appliedCode = "";
-          discountFactor = 1;
-          fixedPriceGrosze = 0;
-          promoHintEl.textContent = result.label;
-          promoHintEl.style.color = "red";
-        }
-
-        renderTotal();
-      }
-
-      promoInput.addEventListener("input", () => {
-        if (promoApplied) clearPromo();
-        applyPromoBtn.disabled = !promoInput.value.trim();
-      });
-
-      promoInput.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") {
-          e.preventDefault();
-          applyPromoCode();
-        }
-      });
-
-      phoneInput.addEventListener("countrychange", () => {
-        phoneInput.setCustomValidity("");
-        syncPhoneCountry();
-      });
-
-      phoneInput.addEventListener("input", () => {
-        phoneInput.setCustomValidity("");
-      });
-
-      postalCodeInput.addEventListener("input", () => {
-        postalCodeInput.setCustomValidity("");
-        postalCodeInput.value = formatPostalCodeLive(postalCodeInput.value);
-      });
-
-      fullNameInput.addEventListener("input", () => {
-        fullNameInput.setCustomValidity("");
-      });
-
-      emailInput.addEventListener("input", () => {
-        emailInput.setCustomValidity("");
-      });
-
-      streetInput.addEventListener("input", () => {
-        streetInput.setCustomValidity("");
-      });
-
-      cityInput.addEventListener("input", () => {
-        cityInput.setCustomValidity("");
-      });
-
-      qtyInput.addEventListener("input", () => {
-        qtyInput.setCustomValidity("");
-        renderTotal();
-      });
-
-      ticketSel.addEventListener("change", () => {
-        ticketSel.setCustomValidity("");
-        renderTotal();
-      });
-
-      consentInput.addEventListener("input", () => {
-        consentInput.setCustomValidity("");
-      });
-
-      applyPromoBtn.addEventListener("click", applyPromoCode);
-
+    promoInput.addEventListener("input", () => {
+      if (promoApplied) clearPromo();
       applyPromoBtn.disabled = !promoInput.value.trim();
+    });
 
-      (function () {
-        const params = new URLSearchParams(window.location.search);
-        const ticketParam = params.get("ticket");
-        if (
-          ticketParam &&
-          ticketSel.querySelector('option[value="' + ticketParam + '"]')
-        ) {
-          ticketSel.value = ticketParam;
-        }
-      })();
+    promoInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        applyPromoCode();
+      }
+    });
+
+    phoneInput.addEventListener("countrychange", () => {
+      phoneInput.setCustomValidity("");
+      syncPhoneCountry();
+    });
+
+    phoneInput.addEventListener("input", () => {
+      phoneInput.setCustomValidity("");
+    });
+
+    postalCodeInput.addEventListener("input", () => {
+      postalCodeInput.setCustomValidity("");
+      postalCodeInput.value = formatPostalCodeLive(postalCodeInput.value);
+    });
+
+    fullNameInput.addEventListener("input", () => {
+      fullNameInput.setCustomValidity("");
+    });
+
+    emailInput.addEventListener("input", () => {
+      emailInput.setCustomValidity("");
+    });
+
+    streetInput.addEventListener("input", () => {
+      streetInput.setCustomValidity("");
+    });
+
+    cityInput.addEventListener("input", () => {
+      cityInput.setCustomValidity("");
+    });
+
+    qtyInput.addEventListener("input", () => {
+      qtyInput.setCustomValidity("");
+      renderTotal();
+    });
+
+    ticketSel.addEventListener("change", () => {
+      ticketSel.setCustomValidity("");
+      renderTotal();
+    });
+
+    consentInput.addEventListener("input", () => {
+      consentInput.setCustomValidity("");
+    });
+
+    applyPromoBtn.addEventListener("click", applyPromoCode);
+    applyPromoBtn.disabled = !promoInput.value.trim();
+
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      const ticketParam = params.get("ticket");
+      if (
+        ticketParam &&
+        ticketSel.querySelector('option[value="' + ticketParam + '"]')
+      ) {
+        ticketSel.value = ticketParam;
+      }
+    })();
+
+    syncPhoneCountry();
+    renderTotal();
+    setButtonsDisabled(false);
+
+    autopayBtn.addEventListener("click", () => {
+      providerInput.value = "autopay";
+      form.requestSubmit();
+    });
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      msg.textContent = "";
+      msg.style.color = "";
+      setButtonsDisabled(true);
 
       syncPhoneCountry();
-      renderTotal();
-      setButtonsDisabled(false);
 
-      bookBtn.addEventListener("click", () => {
-        submitMode = "book";
-        providerInput.value = "autopay";
-        form.requestSubmit();
-      });
+      const intlPhone =
+        typeof iti.getNumber === "function" ? iti.getNumber() : "";
+      if (intlPhone) {
+        phoneInput.value = intlPhone;
+      }
 
-      autopayBtn.addEventListener("click", () => {
-        submitMode = "autopay";
-        providerInput.value = "autopay";
-        form.requestSubmit();
-      });
+      const fd = new FormData(form);
+      const payload = Object.fromEntries(fd.entries());
 
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
+      const invalidField = validateBeforeSubmit(payload);
+      if (invalidField) {
+        invalidField.reportValidity();
+        setButtonsDisabled(false);
+        return;
+      }
 
-        msg.textContent = "";
-        msg.style.color = "";
-        setButtonsDisabled(true);
+      payload.postalCode = normalizePostalCode(payload.postalCode);
+      payload.phoneCountry =
+        phoneCountryHidden.value || payload.phoneCountry || "";
+      payload.promoCode = promoApplied
+        ? appliedCode || payload.promoCode
+        : "";
+      payload.paymentProvider = "autopay";
 
-        syncPhoneCountry();
+      msg.style.color = "#ffffff";
+      msg.textContent = "Tworzę zamówienie AutoPay...";
 
-        const intlPhone =
-          typeof iti.getNumber === "function" ? iti.getNumber() : "";
-        if (intlPhone) {
-          phoneInput.value = intlPhone;
-        }
+      try {
+        const res = await fetch("/api/create-order", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
 
-        const fd = new FormData(form);
-        const payload = Object.fromEntries(fd.entries());
+        const raw = await res.text();
+        let data = null;
 
-        const invalidField = validateBeforeSubmit(payload);
-        if (invalidField) {
-          invalidField.reportValidity();
+        try {
+          data = raw ? JSON.parse(raw) : null;
+        } catch (_) { }
+
+        if (!res.ok) {
+          const errText =
+            (data && (data.error || data.message)) || raw || "Nieznany błąd.";
+          msg.style.color = "#ffffff";
+          msg.textContent = `Błąd: ${res.status} ${errText}`;
           setButtonsDisabled(false);
           return;
         }
 
-        payload.postalCode = normalizePostalCode(payload.postalCode);
-        payload.phoneCountry =
-          phoneCountryHidden.value || payload.phoneCountry || "";
+        const paymentUrl =
+          (data && (data.redirectUrl || data.redirectUri)) || null;
+        const redirectFields = (data && data.redirectFields) || null;
+        const redirectMethod = (data && data.redirectMethod) || "POST";
 
-        if (!promoApplied) {
-          payload.promoCode = "";
-        } else {
-          payload.promoCode = appliedCode || payload.promoCode;
-        }
-
-        payload.paymentProvider = "autopay";
-
-        const endpoint =
-          submitMode === "book" ? "/api/book-order" : "/api/create-order";
-
-        msg.textContent =
-          submitMode === "book"
-            ? "Zapisuję rezerwację..."
-            : "Tworzę zamówienie AutoPay...";
-
-        try {
-          const res = await fetch(endpoint, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload),
-          });
-
-          const raw = await res.text();
-          let data = null;
-
-          try {
-            data = raw ? JSON.parse(raw) : null;
-          } catch (_) {}
-
-          if (!res.ok) {
-            const errText =
-              (data && (data.error || data.message)) || raw || "Nieznany błąd.";
-            msg.style.color = "#ffffff";
-            msg.textContent = `Błąd: ${res.status} ${errText}`;
-            setButtonsDisabled(false);
-            return;
-          }
-
-          if (submitMode === "book") {
-            msg.style.color = "#ffffff";
-            msg.textContent =
-              (data && data.message) ||
-              "Dziękujemy, zapis został przyjęty. Link do płatności wyślemy mailowo.";
-
-            form.reset();
-            providerInput.value = "autopay";
-            clearPromo();
-            ticketSel.value = "premium";
-            qtyInput.value = "1";
-            iti.setCountry("pl");
-            phoneInput.value = "";
-            syncPhoneCountry();
-            renderTotal();
-            setButtonsDisabled(false);
-            return;
-          }
-
-          const paymentUrl =
-            (data && (data.redirectUrl || data.redirectUri)) || null;
-          const redirectFields = (data && data.redirectFields) || null;
-          const redirectMethod = (data && data.redirectMethod) || "POST";
-
-          if (!paymentUrl) {
-            msg.style.color = "#ffffff";
-            msg.textContent = "Brak adresu przekierowania do płatności.";
-            setButtonsDisabled(false);
-            return;
-          }
-
-          if (!redirectFields || typeof redirectFields !== "object") {
-            msg.style.color = "#ffffff";
-            msg.textContent = "Brak danych formularza płatności.";
-            setButtonsDisabled(false);
-            return;
-          }
-
-          redirectToAutopay(paymentUrl, redirectFields, redirectMethod);
-        } catch (err) {
+        if (!paymentUrl) {
           msg.style.color = "#ffffff";
-          msg.textContent =
-            submitMode === "book"
-              ? "Nie udało się zapisać rezerwacji. Spróbuj ponownie."
-              : "Nie udało się utworzyć zamówienia. Spróbuj ponownie.";
+          msg.textContent = "Brak adresu przekierowania do płatności.";
           setButtonsDisabled(false);
+          return;
         }
-      });
-    </script>
 
-    <script src="main.js" defer></script>
-  </body>
+        if (!redirectFields || typeof redirectFields !== "object") {
+          msg.style.color = "#ffffff";
+          msg.textContent = "Brak danych formularza płatności.";
+          setButtonsDisabled(false);
+          return;
+        }
+
+        redirectToAutopay(paymentUrl, redirectFields, redirectMethod);
+      } catch (err) {
+        msg.style.color = "#ffffff";
+        msg.textContent =
+          "Nie udało się utworzyć zamówienia. Spróbuj ponownie.";
+        setButtonsDisabled(false);
+      }
+    });
+  </script>
+
+  <script src="main.js" defer></script>
+</body>
+
 </html>
