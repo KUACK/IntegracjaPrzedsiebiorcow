@@ -642,14 +642,14 @@
         const normalized = code.trim().toLowerCase();
         const now = new Date();
 
-        if (normalized === "czerwiec") {
+        if (normalized === "lipiec") {
           const deadline = new Date("2026-07-01T00:00:00+02:00");
           if (now >= deadline) {
             return { valid: false, label: "Ten kod już wygasł." };
           }
           return {
             valid: true,
-            code: "CZERWIEC",
+            code: "LIPIEC",
             factor: 0.65,
             label: "Kod zastosowany (–35%).",
           };
