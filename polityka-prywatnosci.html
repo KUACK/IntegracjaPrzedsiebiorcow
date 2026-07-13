@@ -1,10 +1,13 @@
 <!doctype html>
 <html lang="pl">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Polityka Prywatności</title>
-
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Polityka Prywatności – Integracja Przedsiębiorców</title>
+    <meta
+      name="description"
+      content="Polityka Prywatności strony Integracja Przedsiębiorców – zasady przetwarzania danych osobowych."
+    />
     <link
       rel="icon"
       href="obrazy/logo.png"
@@ -15,354 +18,692 @@
       href="obrazy/logo_biale.png"
       media="(prefers-color-scheme: dark)"
     />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700;800&family=DM+Serif+Display&display=swap"
+    />
+
     <style>
-      :root {
-        --bg: #f7f8fb;
-        --card: #ffffff;
-        --text: #1f2937;
-        --muted: #6b7280;
-        --line: #e5e7eb;
-        --accent: #1d4ed8;
-        --accent-soft: #eff6ff;
+      .legal-container {
+        max-width: 860px;
+        margin: 40px auto 80px;
+        padding: 0 20px;
+        font-family: "DM Sans", sans-serif;
+        line-height: 1.65;
+        color: #1a1a1a;
       }
-      * {
-        box-sizing: border-box;
+      .legal-container h1 {
+        font-family: "DM Serif Display", serif;
+        font-size: 2rem;
+        margin-bottom: 24px;
       }
-      body {
-        margin: 0;
-        font-family: Inter, Arial, Helvetica, sans-serif;
-        background: var(--bg);
-        color: var(--text);
-        line-height: 1.7;
+      .legal-container h2 {
+        font-size: 1.25rem;
+        margin-top: 32px;
+        margin-bottom: 12px;
       }
-      .wrap {
-        max-width: 960px;
-        margin: 0 auto;
-        padding: 40px 20px 80px;
+      .legal-container p {
+        margin: 12px 0;
       }
-      .card {
-        background: var(--card);
-        border: 1px solid var(--line);
-        border-radius: 18px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
-        overflow: hidden;
+      .legal-container ul {
+        margin: 12px 0 12px 20px;
       }
-      .hero {
-        padding: 40px 32px 24px;
-        background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+      .legal-container li {
+        margin: 6px 0;
+      }
+      .legal-container .admin-line {
+        font-weight: 700;
+        margin-bottom: 28px;
+      }
+
+      /* ======= PRZEŁĄCZNIK JĘZYKA / LANGUAGE SWITCHER ======= */
+      .lang-switcher {
+        position: fixed;
+        top: 16px;
+        left: 16px;
+        z-index: 9999;
+        display: flex;
+        gap: 4px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 999px;
+        padding: 4px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+        font-family: "DM Sans", sans-serif;
+      }
+      .lang-switcher button {
+        border: none;
+        background: transparent;
+        padding: 6px 12px;
+        border-radius: 999px;
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 13px;
+        letter-spacing: 0.5px;
+        color: #333;
+        transition:
+          background 0.2s,
+          color 0.2s;
+      }
+      .lang-switcher button.active {
+        background: #1a1a1a;
         color: #fff;
       }
-      .hero h1 {
-        margin: 0 0 10px;
-        font-size: 2rem;
-        line-height: 1.2;
+      .lang-switcher button:hover:not(.active) {
+        background: rgba(0, 0, 0, 0.08);
       }
-      .hero p {
-        margin: 0;
-        color: rgba(255, 255, 255, 0.86);
-      }
-      .content {
-        padding: 32px;
-      }
-      h2 {
-        margin: 34px 0 12px;
-        font-size: 1.3rem;
-        color: var(--accent);
-      }
-      h2:first-child {
-        margin-top: 0;
-      }
-      p {
-        margin: 0 0 14px;
-      }
-      ul {
-        margin: 0 0 14px 20px;
-        padding: 0;
-      }
-      li {
-        margin-bottom: 8px;
-      }
-      .box {
-        background: var(--accent-soft);
-        border: 1px solid #bfdbfe;
-        border-radius: 14px;
-        padding: 16px 18px;
-        margin: 18px 0;
-      }
-      .muted {
-        color: var(--muted);
-        font-size: 0.96rem;
-      }
-      .footer {
-        margin-top: 36px;
-        padding-top: 20px;
-        border-top: 1px solid var(--line);
-        color: var(--muted);
-        font-size: 0.95rem;
-      }
-      a {
-        color: var(--accent);
-      }
-      @media (max-width: 640px) {
-        .hero,
-        .content {
-          padding: 24px 18px;
+      @media (prefers-color-scheme: dark) {
+        .lang-switcher {
+          background: rgba(30, 30, 30, 0.85);
         }
-        .hero h1 {
-          font-size: 1.7rem;
+        .lang-switcher button {
+          color: #eee;
+        }
+        .lang-switcher button.active {
+          background: #fff;
+          color: #111;
         }
       }
     </style>
   </head>
-  <body>
-    <main class="wrap">
-      <article class="card">
-        <header class="hero">
-          <h1>Polityka Prywatności</h1>
-          <p>
-            Duszpasterstwo Przedsiębiorców i Pracodawców Talent w Archidiecezji
-            Poznańskiej
-          </p>
-        </header>
 
-        <section class="content">
-          <div class="box">
-            <p>
-              <<strong>Administrator danych:</strong> Kościół Katolicki –
+  <body>
+    <!-- PRZEŁĄCZNIK JĘZYKA / LANGUAGE SWITCHER -->
+    <div
+      class="lang-switcher"
+      role="group"
+      aria-label="Wybór języka / Language selector"
+    >
+      <button type="button" id="lang-pl" class="active" onclick="setLang('pl')">
+        PL
+      </button>
+      <button type="button" id="lang-en" onclick="setLang('en')">ENG</button>
+    </div>
+
+    <div class="header">
+      <div class="logo">
+        <a class="logo" href="index.html" aria-label="Strona główna">
+          <img src="obrazy/logo.png" alt="logo" />
+        </a>
+      </div>
+    </div>
+
+    <div class="legal-container">
+      <h1 data-i18n="page-title">Polityka Prywatności</h1>
+
+      <p class="admin-line" data-i18n="admin-line">
+        <strong>Administrator danych:</strong> Kościół Katolicki –
+        Duszpasterstwo Przedsiębiorców i Pracodawców Talent w Archidiecezji
+        Poznańskiej, ul. Głogowska 92, 60-262 Poznań, NIP: 7792461653, REGON:
+        367168175, tel.: 798 765 282, e-mail: konferencja@brfh.eu.
+      </p>
+
+      <h2 data-i18n="h-1">1. Informacje ogólne</h2>
+      <p data-i18n="p-1-1">
+        Niniejsza Polityka Prywatności określa zasady przetwarzania danych
+        osobowych osób korzystających ze strony internetowej, zapisujących się
+        na wydarzenia oraz kupujących bilety organizowane przez Duszpasterstwo
+        Przedsiębiorców i Pracodawców Talent w Archidiecezji Poznańskiej.
+      </p>
+      <p data-i18n="p-1-2">
+        Administrator przetwarza dane osobowe zgodnie z Rozporządzeniem
+        Parlamentu Europejskiego i Rady (UE) 2016/679 z dnia 27 kwietnia 2016 r.
+        (RODO) oraz właściwymi przepisami prawa polskiego.
+      </p>
+
+      <h2 data-i18n="h-2">2. Zakres przetwarzanych danych</h2>
+      <p data-i18n="p-2-1">
+        W zależności od sposobu korzystania ze strony oraz zakupu biletu
+        Administrator może przetwarzać następujące dane osobowe:
+      </p>
+      <ul>
+        <li data-i18n="li-2-1">imię i nazwisko,</li>
+        <li data-i18n="li-2-2">adres e-mail,</li>
+        <li data-i18n="li-2-3">numer telefonu,</li>
+        <li data-i18n="li-2-4">
+          dane podane w formularzu zapisu lub formularzu zakupu biletu,
+        </li>
+        <li data-i18n="li-2-5">dane dotyczące płatności,</li>
+        <li data-i18n="li-2-6">
+          dane do faktury, jeśli kupujący zażąda jej wystawienia,
+        </li>
+        <li data-i18n="li-2-7">dane zawarte w korespondencji e-mailowej,</li>
+        <li data-i18n="li-2-8">
+          metadane związane z wysyłką wiadomości i biletów elektronicznych,
+        </li>
+        <li data-i18n="li-2-9">
+          wizerunek utrwalony na zdjęciach lub nagraniach z wydarzenia.
+        </li>
+      </ul>
+
+      <h2 data-i18n="h-3">3. Cele i podstawy przetwarzania danych</h2>
+      <p data-i18n="p-3-1">
+        Dane osobowe są przetwarzane w następujących celach:
+      </p>
+      <ul>
+        <li data-i18n="li-3-1">przyjęcia zgłoszenia na wydarzenie,</li>
+        <li data-i18n="li-3-2">
+          zawarcia i wykonania umowy udziału w wydarzeniu,
+        </li>
+        <li data-i18n="li-3-3">obsługi płatności za bilet,</li>
+        <li data-i18n="li-3-4">
+          wygenerowania i doręczenia biletu elektronicznego,
+        </li>
+        <li data-i18n="li-3-5">
+          kontaktu organizacyjnego przed wydarzeniem i po jego zakończeniu,
+        </li>
+        <li data-i18n="li-3-6">
+          obsługi zapytań kierowanych przez formularz lub e-mail,
+        </li>
+        <li data-i18n="li-3-7">
+          realizacji obowiązków wynikających z przepisów podatkowych i
+          rachunkowych, w tym wystawienia faktury lub innego dokumentu
+          księgowego na żądanie kupującego,
+        </li>
+        <li data-i18n="li-3-8">
+          ustalenia, dochodzenia lub obrony przed roszczeniami,
+        </li>
+        <li data-i18n="li-3-9">
+          dokumentacji wydarzenia oraz publikacji relacji fotograficznej lub
+          wideo.
+        </li>
+      </ul>
+      <p data-i18n="p-3-2">
+        Podstawą prawną przetwarzania danych jest art. 6 ust. 1 lit. b RODO, gdy
+        przetwarzanie jest niezbędne do podjęcia działań przed zawarciem umowy
+        oraz do wykonania umowy, której stroną jest osoba, której dane dotyczą.
+      </p>
+      <p data-i18n="p-3-3">
+        Podstawą prawną przetwarzania danych dla celów podatkowych i
+        rachunkowych jest art. 6 ust. 1 lit. c RODO, czyli wypełnienie obowiązku
+        prawnego ciążącego na Administratorze.
+      </p>
+      <p data-i18n="p-3-4">
+        Podstawą prawną przetwarzania danych dla celów kontaktowych,
+        organizacyjnych, zabezpieczenia roszczeń oraz dokumentacji wydarzenia
+        jest art. 6 ust. 1 lit. f RODO, czyli prawnie uzasadniony interes
+        Administratora.
+      </p>
+      <p data-i18n="p-3-5">
+        Jeżeli wykorzystanie wizerunku wymaga zgody, podstawą przetwarzania jest
+        art. 6 ust. 1 lit. a RODO, czyli zgoda osoby, której dane dotyczą.
+      </p>
+
+      <h2 data-i18n="h-4">4. Odbiorcy danych</h2>
+      <p data-i18n="p-4-1">
+        Dane osobowe mogą być przekazywane podmiotom świadczącym usługi
+        niezbędne do działania strony i organizacji wydarzenia, w szczególności:
+      </p>
+      <ul>
+        <li data-i18n="li-4-1">
+          operatorowi płatności <strong>Autopay S.A.</strong>,
+        </li>
+        <li data-i18n="li-4-2">
+          dostawcom infrastruktury technicznej i bezpieczeństwa, w tym
+          <strong>Cloudflare</strong>,
+        </li>
+        <li data-i18n="li-4-3">
+          podmiotowi obsługującemu wysyłkę wiadomości transakcyjnych i biletów
+          elektronicznych, w tym <strong>Resend.com</strong>,
+        </li>
+        <li data-i18n="li-4-4">
+          podmiotom świadczącym usługi IT, hostingowe, księgowe, prawne i
+          organizacyjne,
+        </li>
+        <li data-i18n="li-4-5">
+          podmiotom uprawnionym do otrzymania danych na podstawie przepisów
+          prawa.
+        </li>
+      </ul>
+
+      <h2 data-i18n="h-5">5. Przekazywanie danych poza EOG</h2>
+      <p data-i18n="p-5-1">
+        W związku z korzystaniem z niektórych usług technicznych, w
+        szczególności Cloudflare oraz Resend.com, niektóre dane osobowe lub dane
+        techniczne mogą być przekazywane poza Europejski Obszar Gospodarczy, w
+        tym do Stanów Zjednoczonych.
+      </p>
+      <p data-i18n="p-5-2">
+        W przypadku takiego przekazania Administrator korzysta wyłącznie z
+        rozwiązań przewidujących odpowiednie zabezpieczenia wymagane przez RODO,
+        w szczególności standardowe klauzule umowne lub inne dopuszczalne
+        mechanizmy legalizujące transfer danych.
+      </p>
+
+      <h2 data-i18n="h-6">6. Okres przechowywania danych</h2>
+      <p data-i18n="p-6-1">
+        Dane uczestników wydarzeń i kupujących bilety są przechowywane przez
+        okres 2 lat od dnia zakończenia wydarzenia albo od dnia zakończenia
+        ostatniego kontaktu związanego z obsługą zgłoszenia.
+      </p>
+      <p data-i18n="p-6-2">
+        Jeżeli dane są przetwarzane dla celów podatkowych, rachunkowych lub
+        dokumentacyjnych, w tym na fakturach i innych dokumentach księgowych,
+        będą przechowywane przez okres wymagany przez przepisy prawa.
+      </p>
+      <p data-i18n="p-6-3">
+        Dane utrwalone na zdjęciach lub nagraniach mogą być przechowywane przez
+        okres niezbędny do dokumentacji, archiwizacji i promocji wydarzenia albo
+        do czasu skutecznego wniesienia sprzeciwu lub wycofania zgody, jeżeli
+        była ona podstawą przetwarzania.
+      </p>
+
+      <h2 data-i18n="h-7">7. Prawa osób, których dane dotyczą</h2>
+      <p data-i18n="p-7-1">
+        Każdej osobie, której dane dotyczą, przysługuje prawo:
+      </p>
+      <ul>
+        <li data-i18n="li-7-1">dostępu do danych,</li>
+        <li data-i18n="li-7-2">sprostowania danych,</li>
+        <li data-i18n="li-7-3">usunięcia danych,</li>
+        <li data-i18n="li-7-4">ograniczenia przetwarzania,</li>
+        <li data-i18n="li-7-5">przenoszenia danych,</li>
+        <li data-i18n="li-7-6">wniesienia sprzeciwu wobec przetwarzania,</li>
+        <li data-i18n="li-7-7">
+          cofnięcia zgody w dowolnym momencie, jeśli przetwarzanie odbywa się na
+          podstawie zgody,
+        </li>
+        <li data-i18n="li-7-8">
+          wniesienia skargi do Prezesa Urzędu Ochrony Danych Osobowych.
+        </li>
+      </ul>
+      <p data-i18n="p-7-2">
+        W celu realizacji swoich praw można skontaktować się z Administratorem
+        pod adresem e-mail: konferencja@brfh.eu.
+      </p>
+
+      <h2 data-i18n="h-8">8. Dobrowolność podania danych</h2>
+      <p data-i18n="p-8-1">
+        Podanie danych osobowych jest dobrowolne, jednak w zakresie wymaganym
+        przez formularz zapisu lub zakupu biletu jest niezbędne do dokonania
+        rejestracji, zawarcia umowy, obsługi płatności, wygenerowania biletu
+        oraz udziału w wydarzeniu.
+      </p>
+      <p data-i18n="p-8-2">
+        W przypadku żądania wystawienia faktury podanie danych wymaganych do jej
+        wystawienia jest niezbędne do realizacji tego żądania.
+      </p>
+
+      <h2 data-i18n="h-9">9. Zdjęcia i nagrania podczas wydarzeń</h2>
+      <p data-i18n="p-9-1">
+        Podczas wydarzeń mogą być wykonywane zdjęcia oraz nagrania wideo w
+        celach dokumentacyjnych, informacyjnych i promocyjnych.
+      </p>
+      <p data-i18n="p-9-2">
+        Jeżeli materiały będą przedstawiały uczestników jako element większej
+        całości, takiej jak zgromadzenie, konferencja, spotkanie lub publiczna
+        relacja z wydarzenia, mogą być publikowane zgodnie z obowiązującymi
+        przepisami.
+      </p>
+      <p data-i18n="p-9-3">
+        W przypadku publikacji materiałów skupionych na konkretnej osobie w
+        sposób indywidualny Administrator może poprosić o odrębną zgodę.
+      </p>
+
+      <h2 data-i18n="h-10">10. Pliki cookies i dane techniczne</h2>
+      <p data-i18n="p-10-1">
+        Strona może wykorzystywać wyłącznie niezbędne pliki cookies i podobne
+        technologie potrzebne do prawidłowego działania strony, utrzymania sesji
+        użytkownika, bezpieczeństwa, obsługi formularza oraz realizacji
+        płatności.
+      </p>
+      <p data-i18n="p-10-2">
+        Administrator nie korzysta obecnie z narzędzi analitycznych ani
+        marketingowych służących profilowaniu użytkowników.
+      </p>
+
+      <h2 data-i18n="h-11">11. Zautomatyzowane podejmowanie decyzji</h2>
+      <p data-i18n="p-11-1">
+        Dane osobowe nie są wykorzystywane do zautomatyzowanego podejmowania
+        decyzji ani do profilowania wywołującego skutki prawne lub w podobny
+        sposób istotnie wpływającego na użytkownika.
+      </p>
+
+      <h2 data-i18n="h-12">12. Zmiany polityki prywatności</h2>
+      <p data-i18n="p-12-1">
+        Administrator może aktualizować niniejszą Politykę Prywatności w
+        przypadku zmiany przepisów prawa, sposobu działania strony lub
+        organizacji wydarzeń.
+      </p>
+      <p data-i18n="p-12-2">
+        Aktualna wersja Polityki Prywatności jest publikowana na tej podstronie.
+      </p>
+    </div>
+    <div class="footer" style="text-align: center">
+      <p>Data ostatniej aktualizacji: 12 marca 2026 r.</p>
+    </div>
+
+    <footer class="site-footer">
+      <div class="footer-bg" aria-hidden="true"></div>
+
+      <div class="container footer-container">
+        <div class="footer-grid">
+          <div class="footer-col footer-brand">
+            <div class="footer-mark">
+              <div class="logo_footer">
+                <img src="obrazy/logo.png" alt="logo" />
+              </div>
+            </div>
+
+            <p class="footer-desc" data-i18n="footer-desc">
               Duszpasterstwo Przedsiębiorców i Pracodawców Talent w
-              Archidiecezji Poznańskiej, ul. Głogowska 92, 60-262 Poznań, NIP:
-              7792461653, REGON: 367168175, tel.: 798 765 282, e-mail:
-              <a href="mailto:konferencja@brfh.eu">konferencja@brfh.eu</a>.
+              Archidiecezji Poznańskiej
             </p>
           </div>
 
-          <h2>1. Informacje ogólne</h2>
-          <p>
-            Niniejsza Polityka Prywatności określa zasady przetwarzania danych
-            osobowych osób korzystających ze strony internetowej, zapisujących
-            się na wydarzenia oraz kupujących bilety organizowane przez
-            Duszpasterstwo Przedsiębiorców i Pracodawców Talent w Archidiecezji
-            Poznańskiej.
-          </p>
-          <p>
-            Administrator przetwarza dane osobowe zgodnie z Rozporządzeniem
-            Parlamentu Europejskiego i Rady (UE) 2016/679 z dnia 27 kwietnia
-            2016 r. (RODO) oraz właściwymi przepisami prawa polskiego.
-          </p>
+          <div class="footer-col">
+            <h3 class="footer-title" data-i18n="footer-address-title">Adres</h3>
 
-          <h2>2. Zakres przetwarzanych danych</h2>
-          <p>
-            W zależności od sposobu korzystania ze strony oraz zakupu biletu
-            Administrator może przetwarzać następujące dane osobowe:
-          </p>
-          <ul>
-            <li>imię i nazwisko,</li>
-            <li>adres e-mail,</li>
-            <li>numer telefonu,</li>
-            <li>
-              dane podane w formularzu zapisu lub formularzu zakupu biletu,
-            </li>
-            <li>dane dotyczące płatności,</li>
-            <li>dane do faktury, jeśli kupujący zażąda jej wystawienia,</li>
-            <li>dane zawarte w korespondencji e-mailowej,</li>
-            <li>
-              metadane związane z wysyłką wiadomości i biletów elektronicznych,
-            </li>
-            <li>
-              wizerunek utrwalony na zdjęciach lub nagraniach z wydarzenia.
-            </li>
-          </ul>
+            <ul class="footer-list footer-list--icons">
+              <li>
+                <span class="footer-ico" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+                    <path
+                      d="M12 22s7-4.6 7-12a7 7 0 1 0-14 0c0 7.4 7 12 7 12Z"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    />
+                    <path
+                      d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    />
+                  </svg>
+                </span>
+                <span>ul. Głogowska 92, Poznań</span>
+              </li>
 
-          <h2>3. Cele i podstawy przetwarzania danych</h2>
-          <p>Dane osobowe są przetwarzane w następujących celach:</p>
-          <ul>
-            <li>przyjęcia zgłoszenia na wydarzenie,</li>
-            <li>zawarcia i wykonania umowy udziału w wydarzeniu,</li>
-            <li>obsługi płatności za bilet,</li>
-            <li>wygenerowania i doręczenia biletu elektronicznego,</li>
-            <li>
-              kontaktu organizacyjnego przed wydarzeniem i po jego zakończeniu,
-            </li>
-            <li>obsługi zapytań kierowanych przez formularz lub e-mail,</li>
-            <li>
-              realizacji obowiązków wynikających z przepisów podatkowych i
-              rachunkowych, w tym wystawienia faktury lub innego dokumentu
-              księgowego na żądanie kupującego,
-            </li>
-            <li>ustalenia, dochodzenia lub obrony przed roszczeniami,</li>
-            <li>
-              dokumentacji wydarzenia oraz publikacji relacji fotograficznej lub
-              wideo.
-            </li>
-          </ul>
-          <p>
-            Podstawą prawną przetwarzania danych jest art. 6 ust. 1 lit. b RODO,
-            gdy przetwarzanie jest niezbędne do podjęcia działań przed zawarciem
-            umowy oraz do wykonania umowy, której stroną jest osoba, której dane
-            dotyczą.
-          </p>
-          <p>
-            Podstawą prawną przetwarzania danych dla celów podatkowych i
-            rachunkowych jest art. 6 ust. 1 lit. c RODO, czyli wypełnienie
-            obowiązku prawnego ciążącego na Administratorze.
-          </p>
-          <p>
-            Podstawą prawną przetwarzania danych dla celów kontaktowych,
-            organizacyjnych, zabezpieczenia roszczeń oraz dokumentacji
-            wydarzenia jest art. 6 ust. 1 lit. f RODO, czyli prawnie uzasadniony
-            interes Administratora.
-          </p>
-          <p>
-            Jeżeli wykorzystanie wizerunku wymaga zgody, podstawą przetwarzania
-            jest art. 6 ust. 1 lit. a RODO, czyli zgoda osoby, której dane
-            dotyczą.
-          </p>
+              <li>
+                <span class="footer-ico" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+                    <path
+                      d="M4 6h16v12H4V6Z"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    />
+                    <path
+                      d="m4.5 7 7.5 6 7.5-6"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    />
+                  </svg>
+                </span>
+                <a href="mailto:konferencja@brfh.eu">konferencja@brfh.eu</a>
+              </li>
 
-          <h2>4. Odbiorcy danych</h2>
-          <p>
-            Dane osobowe mogą być przekazywane podmiotom świadczącym usługi
-            niezbędne do działania strony i organizacji wydarzenia, w
-            szczególności:
-          </p>
-          <ul>
-            <li>operatorowi płatności <strong>Autopay S.A.</strong>,</li>
-            <li>
-              dostawcom infrastruktury technicznej i bezpieczeństwa, w tym
-              <strong>Cloudflare</strong>,
-            </li>
-            <li>
-              podmiotowi obsługującemu wysyłkę wiadomości transakcyjnych i
-              biletów elektronicznych, w tym <strong>Resend.com</strong>,
-            </li>
-            <li>
-              podmiotom świadczącym usługi IT, hostingowe, księgowe, prawne i
-              organizacyjne,
-            </li>
-            <li>
-              podmiotom uprawnionym do otrzymania danych na podstawie przepisów
-              prawa.
-            </li>
-          </ul>
-
-          <h2>5. Przekazywanie danych poza EOG</h2>
-          <p>
-            W związku z korzystaniem z niektórych usług technicznych, w
-            szczególności Cloudflare oraz Resend.com, niektóre dane osobowe lub
-            dane techniczne mogą być przekazywane poza Europejski Obszar
-            Gospodarczy, w tym do Stanów Zjednoczonych.
-          </p>
-          <p>
-            W przypadku takiego przekazania Administrator korzysta wyłącznie z
-            rozwiązań przewidujących odpowiednie zabezpieczenia wymagane przez
-            RODO, w szczególności standardowe klauzule umowne lub inne
-            dopuszczalne mechanizmy legalizujące transfer danych.
-          </p>
-
-          <h2>6. Okres przechowywania danych</h2>
-          <p>
-            Dane uczestników wydarzeń i kupujących bilety są przechowywane przez
-            okres 2 lat od dnia zakończenia wydarzenia albo od dnia zakończenia
-            ostatniego kontaktu związanego z obsługą zgłoszenia.
-          </p>
-          <p>
-            Jeżeli dane są przetwarzane dla celów podatkowych, rachunkowych lub
-            dokumentacyjnych, w tym na fakturach i innych dokumentach
-            księgowych, będą przechowywane przez okres wymagany przez przepisy
-            prawa.
-          </p>
-          <p>
-            Dane utrwalone na zdjęciach lub nagraniach mogą być przechowywane
-            przez okres niezbędny do dokumentacji, archiwizacji i promocji
-            wydarzenia albo do czasu skutecznego wniesienia sprzeciwu lub
-            wycofania zgody, jeżeli była ona podstawą przetwarzania.
-          </p>
-
-          <h2>7. Prawa osób, których dane dotyczą</h2>
-          <p>Każdej osobie, której dane dotyczą, przysługuje prawo:</p>
-          <ul>
-            <li>dostępu do danych,</li>
-            <li>sprostowania danych,</li>
-            <li>usunięcia danych,</li>
-            <li>ograniczenia przetwarzania,</li>
-            <li>przenoszenia danych,</li>
-            <li>wniesienia sprzeciwu wobec przetwarzania,</li>
-            <li>
-              cofnięcia zgody w dowolnym momencie, jeśli przetwarzanie odbywa
-              się na podstawie zgody,
-            </li>
-            <li>
-              wniesienia skargi do Prezesa Urzędu Ochrony Danych Osobowych.
-            </li>
-          </ul>
-          <p>
-            W celu realizacji swoich praw można skontaktować się z
-            Administratorem pod adresem e-mail:
-            <a href="mailto:konferencja@brfh.eu">konferencja@brfh.eu</a>.
-          </p>
-
-          <h2>8. Dobrowolność podania danych</h2>
-          <p>
-            Podanie danych osobowych jest dobrowolne, jednak w zakresie
-            wymaganym przez formularz zapisu lub zakupu biletu jest niezbędne do
-            dokonania rejestracji, zawarcia umowy, obsługi płatności,
-            wygenerowania biletu oraz udziału w wydarzeniu.
-          </p>
-          <p>
-            W przypadku żądania wystawienia faktury podanie danych wymaganych do
-            jej wystawienia jest niezbędne do realizacji tego żądania.
-          </p>
-
-          <h2>9. Zdjęcia i nagrania podczas wydarzeń</h2>
-          <p>
-            Podczas wydarzeń mogą być wykonywane zdjęcia oraz nagrania wideo w
-            celach dokumentacyjnych, informacyjnych i promocyjnych.
-          </p>
-          <p>
-            Jeżeli materiały będą przedstawiały uczestników jako element
-            większej całości, takiej jak zgromadzenie, konferencja, spotkanie
-            lub publiczna relacja z wydarzenia, mogą być publikowane zgodnie z
-            obowiązującymi przepisami.
-          </p>
-          <p>
-            W przypadku publikacji materiałów skupionych na konkretnej osobie w
-            sposób indywidualny Administrator może poprosić o odrębną zgodę.
-          </p>
-
-          <h2>10. Pliki cookies i dane techniczne</h2>
-          <p>
-            Strona może wykorzystywać wyłącznie niezbędne pliki cookies i
-            podobne technologie potrzebne do prawidłowego działania strony,
-            utrzymania sesji użytkownika, bezpieczeństwa, obsługi formularza
-            oraz realizacji płatności.
-          </p>
-          <p>
-            Administrator nie korzysta obecnie z narzędzi analitycznych ani
-            marketingowych służących profilowaniu użytkowników.
-          </p>
-
-          <h2>11. Zautomatyzowane podejmowanie decyzji</h2>
-          <p>
-            Dane osobowe nie są wykorzystywane do zautomatyzowanego podejmowania
-            decyzji ani do profilowania wywołującego skutki prawne lub w podobny
-            sposób istotnie wpływającego na użytkownika.
-          </p>
-
-          <h2>12. Zmiany polityki prywatności</h2>
-          <p>
-            Administrator może aktualizować niniejszą Politykę Prywatności w
-            przypadku zmiany przepisów prawa, sposobu działania strony lub
-            organizacji wydarzeń.
-          </p>
-          <p>
-            Aktualna wersja Polityki Prywatności jest publikowana na tej
-            podstronie.
-          </p>
-
-          <div class="footer">
-            <p>Data ostatniej aktualizacji: 12 marca 2026 r.</p>
+              <li>
+                <span
+                  class="footer-ico footer-ico--dot"
+                  aria-hidden="true"
+                ></span>
+                <span>NIP: 7792461653</span>
+              </li>
+            </ul>
           </div>
-        </section>
-      </article>
-    </main>
+
+          <div class="footer-col">
+            <h3 class="footer-title" data-i18n="footer-menu-title">Menu</h3>
+
+            <ul class="footer-list">
+              <li>
+                <a href="index.html#program" data-i18n="menu-program"
+                  >Program</a
+                >
+              </li>
+              <li>
+                <a href="index.html#prelegenci" data-i18n="menu-prelegenci"
+                  >Prelegenci</a
+                >
+              </li>
+              <li>
+                <a href="buy_form.html" data-i18n="menu-zapisy">Zapisy</a>
+              </li>
+              <li class="tooltip">
+                <a href="#reklamacje" data-i18n="menu-zwroty">Zwroty</a>
+                <span class="tooltip-text" data-i18n="tooltip-zwroty">
+                  W sprawie zwrotów prosimy o wysyłanie wiadomości na adres
+                  email: [konferencja@brfh.eu](mailto:konferencja@brfh.eu). Czas
+                  na zwrot biletu wynosi 14 dni od dnia zakupu.
+                </span>
+              </li>
+              <li>
+                <a href="regulamin.html" data-i18n="menu-regulamin"
+                  >Regulamin Konferencji</a
+                >
+              </li>
+              <li>
+                <a href="polityka-prywatnosci.html" data-i18n="menu-polityka"
+                  >Polityka prywatności</a
+                >
+              </li>
+              <li class="tooltip">
+                <a href="#reklamacje" data-i18n="menu-reklamacje">Reklamacje</a>
+                <span class="tooltip-text" data-i18n="tooltip-reklamacje">
+                  W sprawie reklamacji prosimy o wysyłanie wiadomości na adres
+                  email: [konferencja@brfh.eu](mailto:konferencja@brfh.eu)
+                </span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="footer-col footer-org">
+            <h3 class="footer-title" data-i18n="footer-org-title">
+              Organizator
+            </h3>
+
+            <a
+              class="footer-org-card"
+              href="https://talentpoznan.pl/"
+              aria-label="Talent"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img src="obrazy/talent.png" alt="talent" />
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-bottom" data-i18n="footer-bottom">
+          © 2026 Duszpasterstwo Przedsiębiorców i Pracodawców Talent w
+          Archidiecezji Poznańskiej
+        </div>
+      </div>
+    </footer>
+
+    <script src="main.js" defer></script>
+
+    <!-- ======= TŁUMACZENIE PL/ENG ======= -->
+    <script>
+      const translations = {
+        pl: {},
+        en: {
+          "page-title": "Privacy Policy",
+          "admin-line":
+            '<strong>Data Controller:</strong> Catholic Church – Chaplaincy of Entrepreneurs and Employers "Talent" in the Archdiocese of Poznań, ul. Głogowska 92, 60-262 Poznań, Tax ID (NIP): 7792461653, REGON: 367168175, phone: 798 765 282, e-mail: konferencja@brfh.eu.',
+
+          "h-1": "1. General information",
+          "p-1-1":
+            'This Privacy Policy sets out the rules for processing personal data of persons using the website, registering for events, and purchasing tickets organized by the Chaplaincy of Entrepreneurs and Employers "Talent" in the Archdiocese of Poznań.',
+          "p-1-2":
+            "The Controller processes personal data in accordance with Regulation (EU) 2016/679 of the European Parliament and of the Council of 27 April 2016 (GDPR) and applicable provisions of Polish law.",
+
+          "h-2": "2. Scope of processed data",
+          "p-2-1":
+            "Depending on how the website is used and how a ticket is purchased, the Controller may process the following personal data:",
+          "li-2-1": "first and last name,",
+          "li-2-2": "email address,",
+          "li-2-3": "phone number,",
+          "li-2-4":
+            "data provided in the registration form or ticket purchase form,",
+          "li-2-5": "payment-related data,",
+          "li-2-6": "invoicing data, if the buyer requests an invoice,",
+          "li-2-7": "data contained in email correspondence,",
+          "li-2-8":
+            "metadata related to the delivery of messages and electronic tickets,",
+          "li-2-9": "image recorded in photos or recordings from the event.",
+
+          "h-3": "3. Purposes and legal basis for processing",
+          "p-3-1": "Personal data is processed for the following purposes:",
+          "li-3-1": "accepting an event registration,",
+          "li-3-2":
+            "concluding and performing the contract for participation in the event,",
+          "li-3-3": "handling ticket payments,",
+          "li-3-4": "generating and delivering the electronic ticket,",
+          "li-3-5": "organizational contact before and after the event,",
+          "li-3-6": "handling inquiries submitted via the form or email,",
+          "li-3-7":
+            "fulfilling obligations under tax and accounting regulations, including issuing an invoice or other accounting document at the buyer's request,",
+          "li-3-8": "establishing, pursuing, or defending against claims,",
+          "li-3-9":
+            "documenting the event and publishing photo or video coverage.",
+          "p-3-2":
+            "The legal basis for processing data is Article 6(1)(b) GDPR, when processing is necessary to take steps prior to entering into a contract and to perform the contract to which the data subject is a party.",
+          "p-3-3":
+            "The legal basis for processing data for tax and accounting purposes is Article 6(1)(c) GDPR, i.e. fulfilling a legal obligation on the Controller.",
+          "p-3-4":
+            "The legal basis for processing data for contact, organizational, claim-securing, and event-documentation purposes is Article 6(1)(f) GDPR, i.e. the Controller's legitimate interest.",
+          "p-3-5":
+            "If the use of an image requires consent, the legal basis for processing is Article 6(1)(a) GDPR, i.e. the consent of the data subject.",
+
+          "h-4": "4. Data recipients",
+          "p-4-1":
+            "Personal data may be shared with entities providing services necessary for the operation of the website and the organization of the event, in particular:",
+          "li-4-1": "payment operator <strong>Autopay S.A.</strong>,",
+          "li-4-2":
+            "providers of technical and security infrastructure, including <strong>Cloudflare</strong>,",
+          "li-4-3":
+            "the entity handling the delivery of transactional messages and electronic tickets, including <strong>Resend.com</strong>,",
+          "li-4-4":
+            "providers of IT, hosting, accounting, legal, and organizational services,",
+          "li-4-5": "entities authorized to receive data under applicable law.",
+
+          "h-5": "5. Transfer of data outside the EEA",
+          "p-5-1":
+            "Due to the use of certain technical services, in particular Cloudflare and Resend.com, some personal or technical data may be transferred outside the European Economic Area, including to the United States.",
+          "p-5-2":
+            "In the event of such a transfer, the Controller uses only solutions providing appropriate safeguards required by the GDPR, in particular standard contractual clauses or other permissible mechanisms legalizing data transfer.",
+
+          "h-6": "6. Data retention period",
+          "p-6-1":
+            "Data of event participants and ticket buyers is stored for 2 years from the end of the event or from the end of the last contact related to handling the registration.",
+          "p-6-2":
+            "If data is processed for tax, accounting, or documentation purposes, including on invoices and other accounting documents, it will be stored for the period required by law.",
+          "p-6-3":
+            "Data recorded in photos or recordings may be stored for the period necessary for documentation, archiving, and promotion of the event, or until an effective objection is raised or consent is withdrawn, if consent was the basis for processing.",
+
+          "h-7": "7. Rights of data subjects",
+          "p-7-1": "Every data subject has the right to:",
+          "li-7-1": "access their data,",
+          "li-7-2": "rectify their data,",
+          "li-7-3": "erase their data,",
+          "li-7-4": "restrict processing,",
+          "li-7-5": "data portability,",
+          "li-7-6": "object to processing,",
+          "li-7-7":
+            "withdraw consent at any time, if processing is based on consent,",
+          "li-7-8":
+            "lodge a complaint with the President of the Personal Data Protection Office.",
+          "p-7-2":
+            "To exercise these rights, please contact the Controller at: konferencja@brfh.eu.",
+
+          "h-8": "8. Voluntary provision of data",
+          "p-8-1":
+            "Providing personal data is voluntary; however, to the extent required by the registration or ticket purchase form, it is necessary to complete registration, conclude the contract, process payment, generate the ticket, and participate in the event.",
+          "p-8-2":
+            "In the case of a request to issue an invoice, providing the data required to issue it is necessary to fulfill that request.",
+
+          "h-9": "9. Photos and recordings during events",
+          "p-9-1":
+            "Photos and video recordings may be taken during events for documentation, informational, and promotional purposes.",
+          "p-9-2":
+            "If the materials show participants as part of a larger whole, such as a gathering, conference, meeting, or public event coverage, they may be published in accordance with applicable regulations.",
+          "p-9-3":
+            "In the case of publishing materials focused on a specific individual, the Controller may request separate consent.",
+
+          "h-10": "10. Cookies and technical data",
+          "p-10-1":
+            "The website may use only essential cookies and similar technologies necessary for the proper functioning of the site, maintaining the user's session, security, form handling, and payment processing.",
+          "p-10-2":
+            "The Controller does not currently use analytical or marketing tools for user profiling.",
+
+          "h-11": "11. Automated decision-making",
+          "p-11-1":
+            "Personal data is not used for automated decision-making or profiling that produces legal effects or similarly significantly affects the user.",
+
+          "h-12": "12. Changes to the privacy policy",
+          "p-12-1":
+            "The Controller may update this Privacy Policy in the event of changes to the law, the way the website operates, or the organization of events.",
+          "p-12-2":
+            "The current version of the Privacy Policy is published on this subpage.",
+
+          "footer-desc":
+            'Chaplaincy of Entrepreneurs and Employers "Talent" in the Archdiocese of Poznań',
+          "footer-address-title": "Address",
+          "footer-menu-title": "Menu",
+          "menu-program": "Program",
+          "menu-prelegenci": "Speakers",
+          "menu-zapisy": "Registration",
+          "menu-zwroty": "Refunds",
+          "tooltip-zwroty":
+            "For refunds, please send an email to: konferencja@brfh.eu. The ticket refund period is 14 days from the date of purchase.",
+          "menu-regulamin": "Conference Terms & Conditions",
+          "menu-polityka": "Privacy Policy",
+          "menu-reklamacje": "Complaints",
+          "tooltip-reklamacje":
+            "For complaints, please send an email to: konferencja@brfh.eu",
+          "footer-org-title": "Organizer",
+          "footer-bottom":
+            '© 2026 Chaplaincy of Entrepreneurs and Employers "Talent" in the Archdiocese of Poznań',
+        },
+      };
+
+      function buildPolishDictionary() {
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
+          const key = el.getAttribute("data-i18n");
+          if (!(key in translations.pl)) {
+            translations.pl[key] = el.innerHTML.trim();
+          }
+        });
+      }
+
+      function applyLang(lang) {
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
+          const key = el.getAttribute("data-i18n");
+          if (translations[lang] && translations[lang][key] !== undefined) {
+            el.innerHTML = translations[lang][key];
+          }
+        });
+        document.documentElement.lang = lang === "en" ? "en" : "pl";
+      }
+
+      function setCookie(name, value, days) {
+        const maxAge = days * 24 * 60 * 60;
+        document.cookie = `${name}=${value}; path=/; max-age=${maxAge}; SameSite=Lax`;
+      }
+
+      function getCookie(name) {
+        const match = document.cookie.match(
+          new RegExp("(^| )" + name + "=([^;]+)"),
+        );
+        return match ? match[2] : null;
+      }
+
+      function setLang(lang) {
+        applyLang(lang);
+        setCookie("site-lang", lang, 365);
+        document
+          .getElementById("lang-pl")
+          .classList.toggle("active", lang === "pl");
+        document
+          .getElementById("lang-en")
+          .classList.toggle("active", lang === "en");
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        buildPolishDictionary();
+        const saved = getCookie("site-lang") || "pl";
+        setLang(saved);
+      });
+    </script>
   </body>
 </html>

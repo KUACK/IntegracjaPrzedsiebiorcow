@@ -3,7 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Regulamin Konferencji | Konferencja Przedsiębiorców</title>
+    <title data-i18n="page-title">
+      Regulamin Konferencji | Konferencja Przedsiębiorców
+    </title>
 
     <link
       rel="icon"
@@ -71,6 +73,54 @@
       .container {
         width: min(var(--container), calc(100% - 32px));
         margin: 0 auto;
+      }
+
+      /* ======= PRZEŁĄCZNIK JĘZYKA / LANGUAGE SWITCHER ======= */
+      .lang-switcher {
+        position: fixed;
+        top: 16px;
+        left: 16px;
+        z-index: 9999;
+        display: flex;
+        gap: 4px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 999px;
+        padding: 4px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+        font-family: "DM Sans", sans-serif;
+      }
+      .lang-switcher button {
+        border: none;
+        background: transparent;
+        padding: 6px 12px;
+        border-radius: 999px;
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 13px;
+        letter-spacing: 0.5px;
+        color: #333;
+        transition:
+          background 0.2s,
+          color 0.2s;
+      }
+      .lang-switcher button.active {
+        background: #1a1a1a;
+        color: #fff;
+      }
+      .lang-switcher button:hover:not(.active) {
+        background: rgba(0, 0, 0, 0.08);
+      }
+      @media (prefers-color-scheme: dark) {
+        .lang-switcher {
+          background: rgba(30, 30, 30, 0.85);
+        }
+        .lang-switcher button {
+          color: #eee;
+        }
+        .lang-switcher button.active {
+          background: #fff;
+          color: #111;
+        }
       }
 
       .promo-bar {
@@ -505,13 +555,16 @@
     </style>
   </head>
   <body>
-    <div class="promo-bar">
-      <div class="promo-content">
-        <div class="promo-text">
-          Tylko do końca kwietnia!<br />
-          Kod <strong>KWIECIEN</strong> -35% na wszystkie bilety!
-        </div>
-      </div>
+    <!-- PRZEŁĄCZNIK JĘZYKA / LANGUAGE SWITCHER -->
+    <div
+      class="lang-switcher"
+      role="group"
+      aria-label="Wybór języka / Language selector"
+    >
+      <button type="button" id="lang-pl" class="active" onclick="setLang('pl')">
+        PL
+      </button>
+      <button type="button" id="lang-en" onclick="setLang('en')">ENG</button>
     </div>
 
     <header class="site-header">
@@ -521,17 +574,25 @@
             <img src="obrazy/logo.png" alt="Logo konferencji" class="logo" />
           </a>
           <div class="brand-text">
-            <div class="brand-title">Konferencja Przedsiębiorców</div>
-            <div class="brand-subtitle">Poznań, 9-10 października 2026</div>
+            <div class="brand-title" data-i18n="brand-title">
+              Konferencja Przedsiębiorców
+            </div>
+            <div class="brand-subtitle" data-i18n="brand-subtitle">
+              Poznań, 9-10 października 2026
+            </div>
           </div>
         </div>
 
         <nav class="nav" aria-label="Menu główne">
-          <a href="index.html">Start</a>
-          <a href="index.html#program">Program</a>
-          <a href="index.html#prelegenci">Prelegenci</a>
-          <a href="polityka-prywatnosci.html">Polityka prywatności</a>
-          <a href="buyform.html" class="btn">Zapisy</a>
+          <a href="index.html" data-i18n="nav-start">Start</a>
+          <a href="index.html#program" data-i18n="nav-program">Program</a>
+          <a href="index.html#prelegenci" data-i18n="nav-speakers"
+            >Prelegenci</a
+          >
+          <a href="polityka-prywatnosci.html" data-i18n="nav-privacy"
+            >Polityka prywatności</a
+          >
+          <a href="buyform.html" class="btn" data-i18n="nav-register">Zapisy</a>
         </nav>
       </div>
     </header>
@@ -540,17 +601,19 @@
       <section class="hero">
         <div class="container">
           <div class="hero-card">
-            <div class="eyebrow">Dokument formalny</div>
-            <h1>Regulamin Konferencji</h1>
-            <p>
+            <div class="eyebrow" data-i18n="hero-eyebrow">
+              Dokument formalny
+            </div>
+            <h1 data-i18n="hero-title">Regulamin Konferencji</h1>
+            <p data-i18n="hero-desc">
               Poniższy regulamin określa zasady rejestracji, uczestnictwa,
               płatności, zwrotów, reklamacji, przetwarzania danych osobowych
-              oraz organizacji wydarzenia „Konferencja Przedsiębiorców”.
+              oraz organizacji wydarzenia „Konferencja Przedsiębiorców".
             </p>
             <div class="hero-meta">
-              <span>9-10 października 2026</span>
-              <span>Poznań</span>
-              <span>Wydarzenie stacjonarne</span>
+              <span data-i18n="hero-date">9-10 października 2026</span>
+              <span data-i18n="hero-city">Poznań</span>
+              <span data-i18n="hero-type">Wydarzenie stacjonarne</span>
             </div>
           </div>
         </div>
@@ -560,22 +623,32 @@
         <div class="container">
           <div class="legal-layout">
             <aside class="sidebar">
-              <h2>Spis treści</h2>
+              <h2 data-i18n="sidebar-title">Spis treści</h2>
               <nav>
-                <a href="#postanowienia-ogolne">§ 1. Postanowienia ogólne</a>
-                <a href="#definicje">§ 2. Definicje</a>
-                <a href="#rejestracja">§ 3. Rejestracja i uczestnictwo</a>
-                <a href="#oplaty">§ 4. Opłaty i płatności</a>
-                <a href="#zwroty">§ 5. Zwroty i rezygnacja</a>
-                <a href="#program">§ 6. Program i organizacja</a>
-                <a href="#porzadek">§ 7. Zasady porządkowe</a>
-                <a href="#wizerunek">§ 8. Wizerunek i materiały</a>
-                <a href="#odpowiedzialnosc">§ 9. Odpowiedzialność</a>
-                <a href="#reklamacje">§ 10. Reklamacje</a>
-                <a href="#dane">§ 11. Dane osobowe</a>
-                <a href="#koncowe">§ 12. Postanowienia końcowe</a>
+                <a href="#postanowienia-ogolne" data-i18n="s1"
+                  >§ 1. Postanowienia ogólne</a
+                >
+                <a href="#definicje" data-i18n="s2">§ 2. Definicje</a>
+                <a href="#rejestracja" data-i18n="s3"
+                  >§ 3. Rejestracja i uczestnictwo</a
+                >
+                <a href="#oplaty" data-i18n="s4">§ 4. Opłaty i płatności</a>
+                <a href="#zwroty" data-i18n="s5">§ 5. Zwroty i rezygnacja</a>
+                <a href="#program" data-i18n="s6">§ 6. Program i organizacja</a>
+                <a href="#porzadek" data-i18n="s7">§ 7. Zasady porządkowe</a>
+                <a href="#wizerunek" data-i18n="s8"
+                  >§ 8. Wizerunek i materiały</a
+                >
+                <a href="#odpowiedzialnosc" data-i18n="s9"
+                  >§ 9. Odpowiedzialność</a
+                >
+                <a href="#reklamacje" data-i18n="s10">§ 10. Reklamacje</a>
+                <a href="#dane" data-i18n="s11">§ 11. Dane osobowe</a>
+                <a href="#koncowe" data-i18n="s12"
+                  >§ 12. Postanowienia końcowe</a
+                >
               </nav>
-              <div class="sidebar-note">
+              <div class="sidebar-note" data-i18n="sidebar-note">
                 Kontakt organizacyjny:<br />
                 <a href="mailto:konferencja@brfh.eu">konferencja@brfh.eu</a
                 ><br />
@@ -585,8 +658,10 @@
 
             <article class="legal-card">
               <div class="legal-intro">
-                <h2>Regulamin udziału w wydarzeniu</h2>
-                <p>
+                <h2 data-i18n="legal-intro-title">
+                  Regulamin udziału w wydarzeniu
+                </h2>
+                <p data-i18n="legal-intro-desc">
                   Dokument obowiązuje wszystkich uczestników konferencji,
                   paneli, części networkingowej, bankietu oraz wydarzeń
                   towarzyszących.
@@ -594,24 +669,30 @@
 
                 <div class="info-boxes">
                   <div class="info-box">
-                    <div class="label">Organizator</div>
-                    <div class="value">
+                    <div class="label" data-i18n="info-organizer-label">
+                      Organizator
+                    </div>
+                    <div class="value" data-i18n="info-organizer-value">
                       Kościół Katolicki – Duszpasterstwo Przedsiębiorców i
                       Pracodawców Talent w Archidiecezji Poznańskiej
                     </div>
                   </div>
 
                   <div class="info-box">
-                    <div class="label">Kontakt</div>
-                    <div class="value">
+                    <div class="label" data-i18n="info-contact-label">
+                      Kontakt
+                    </div>
+                    <div class="value" data-i18n="info-contact-value">
                       konferencja@brfh.eu<br />
                       798 765 282
                     </div>
                   </div>
 
                   <div class="info-box">
-                    <div class="label">Adres</div>
-                    <div class="value">
+                    <div class="label" data-i18n="info-address-label">
+                      Adres
+                    </div>
+                    <div class="value" data-i18n="info-address-value">
                       ul. Głogowska 92<br />
                       60-262 Poznań
                     </div>
@@ -620,14 +701,14 @@
               </div>
 
               <section class="legal-section" id="postanowienia-ogolne">
-                <h3>§ 1. Postanowienia ogólne</h3>
+                <h3 data-i18n="sec1-title">§ 1. Postanowienia ogólne</h3>
                 <ol>
-                  <li>
+                  <li data-i18n="sec1-p1">
                     Niniejszy Regulamin określa zasady uczestnictwa w wydarzeniu
-                    pod nazwą „Konferencja Przedsiębiorców”, zwanym dalej
-                    „Konferencją”.
+                    pod nazwą „Konferencja Przedsiębiorców", zwanym dalej
+                    „Konferencją".
                   </li>
-                  <li>
+                  <li data-i18n="sec1-p2">
                     Organizatorem Konferencji jest Kościół Katolicki –
                     Duszpasterstwo Przedsiębiorców i Pracodawców Talent w
                     Archidiecezji Poznańskiej, z siedzibą przy ul. Głogowskiej
@@ -635,26 +716,26 @@
                     <a href="mailto:konferencja@brfh.eu">konferencja@brfh.eu</a
                     >, numerem telefonu:
                     <a href="tel:+48798765282">798 765 282</a>, NIP: 7792461653,
-                    REGON: 367168175, zwany dalej „Organizatorem”.
+                    REGON: 367168175, zwany dalej „Organizatorem".
                   </li>
-                  <li>
+                  <li data-i18n="sec1-p3">
                     Konferencja ma charakter stacjonarny i odbywa się w dniach
                     9-10 października 2026 r. na terenie Poznania, w
                     lokalizacjach wskazanych przez Organizatora na stronie
                     internetowej wydarzenia.
                   </li>
-                  <li>
+                  <li data-i18n="sec1-p4">
                     Regulamin jest dostępny na stronie internetowej Konferencji
                     i obowiązuje wszystkich Uczestników, w tym osoby biorące
                     udział w programie, panelach, spotkaniach networkingowych,
                     części bankietowej oraz wydarzeniach towarzyszących.
                   </li>
-                  <li>
+                  <li data-i18n="sec1-p5">
                     Uczestnik zobowiązany jest do zapoznania się z Regulaminem
                     oraz Polityką Prywatności przed dokonaniem rejestracji lub
                     zakupu biletu.
                   </li>
-                  <li>
+                  <li data-i18n="sec1-p6">
                     Dokonanie rejestracji i/lub zakupu biletu oznacza zapoznanie
                     się z Regulaminem, akceptację jego postanowień oraz
                     akceptację Polityki Prywatności.
@@ -663,37 +744,37 @@
               </section>
 
               <section class="legal-section" id="definicje">
-                <h3>§ 2. Definicje</h3>
+                <h3 data-i18n="sec2-title">§ 2. Definicje</h3>
                 <ol>
-                  <li>
+                  <li data-i18n="sec2-p1">
                     <strong>Konferencja</strong> – wydarzenie organizowane przez
                     Organizatora zgodnie z informacjami opublikowanymi na
                     stronie internetowej.
                   </li>
-                  <li>
+                  <li data-i18n="sec2-p2">
                     <strong>Uczestnik</strong> – osoba fizyczna, która
                     skutecznie zarejestrowała swój udział w Konferencji lub
                     nabyła bilet.
                   </li>
-                  <li>
+                  <li data-i18n="sec2-p3">
                     <strong>Strona internetowa</strong> – serwis internetowy
                     Organizatora poświęcony Konferencji.
                   </li>
-                  <li>
+                  <li data-i18n="sec2-p4">
                     <strong>Formularz rejestracyjny / Formularz zakupu</strong>
                     – formularz online umożliwiający zgłoszenie udziału w
                     Konferencji oraz zakup biletu.
                   </li>
-                  <li>
+                  <li data-i18n="sec2-p5">
                     <strong>Bilet</strong> – elektroniczne potwierdzenie
                     uprawnienia do udziału w Konferencji w zakresie wynikającym
                     z wybranego pakietu.
                   </li>
-                  <li>
+                  <li data-i18n="sec2-p6">
                     <strong>Opłata</strong> – cena biletu wskazana na stronie
                     internetowej Konferencji.
                   </li>
-                  <li>
+                  <li data-i18n="sec2-p7">
                     <strong>Płatność online</strong> – płatność dokonywana za
                     pośrednictwem operatora płatności dostępnego na stronie
                     internetowej Konferencji.
@@ -702,40 +783,42 @@
               </section>
 
               <section class="legal-section" id="rejestracja">
-                <h3>§ 3. Zasady rejestracji i uczestnictwa</h3>
+                <h3 data-i18n="sec3-title">
+                  § 3. Zasady rejestracji i uczestnictwa
+                </h3>
                 <ol>
-                  <li>
+                  <li data-i18n="sec3-p1">
                     Uczestnictwo w Konferencji wymaga prawidłowego wypełnienia
                     Formularza rejestracyjnego lub Formularza zakupu, podania
                     danych zgodnych ze stanem faktycznym, akceptacji Regulaminu
                     oraz Polityki Prywatności, a także dokonania Opłaty, jeżeli
                     udział w danym pakiecie jest odpłatny.
                   </li>
-                  <li>
+                  <li data-i18n="sec3-p2">
                     O przyjęciu zgłoszenia decyduje kolejność prawidłowo
                     opłaconych rejestracji, chyba że Organizator postanowi
                     inaczej.
                   </li>
-                  <li>
+                  <li data-i18n="sec3-p3">
                     Zakres świadczeń przysługujących Uczestnikowi zależy od
                     rodzaju zakupionego biletu i opisu pakietu zamieszczonego na
                     stronie internetowej Konferencji.
                   </li>
-                  <li>
+                  <li data-i18n="sec3-p4">
                     Organizator może wprowadzić limity miejsc dla całej
                     Konferencji albo dla wybranych stref, paneli, prezentacji,
                     bankietu lub innych części programu.
                   </li>
-                  <li>
+                  <li data-i18n="sec3-p5">
                     Uczestnik zobowiązany jest do podania prawdziwych,
                     kompletnych i aktualnych danych wymaganych w formularzu.
                   </li>
-                  <li>
+                  <li data-i18n="sec3-p6">
                     Uczestnik zobowiązany jest do odbioru identyfikatora lub
                     innych materiałów konferencyjnych w sposób wskazany przez
                     Organizatora.
                   </li>
-                  <li>
+                  <li data-i18n="sec3-p7">
                     Organizator może odmówić udziału w Konferencji lub anulować
                     rejestrację Uczestnika w przypadku naruszenia Regulaminu,
                     podania nieprawdziwych danych albo działania na szkodę
@@ -745,7 +828,9 @@
               </section>
 
               <section class="legal-section" id="oplaty">
-                <h3>§ 4. Opłaty, płatności i dostarczenie biletu</h3>
+                <h3 data-i18n="sec4-title">
+                  § 4. Opłaty, płatności i dostarczenie biletu
+                </h3>
                 <div
                   class="payment-banner"
                   style="margin: 0 0 18px; text-align: center"
@@ -753,70 +838,70 @@
                   <img
                     class="img-fluid"
                     src="https://developers.autopay.pl/storage/loga/blik-karty-portfele_elektroniczne-PIS-przelew-platnosci_odroczone-raty/820x45-bankpay.png"
-                    alt="Blik + karty + portfele elektroniczne + PIS + przelew + płatności odroczone + raty 820x45 bank pay"
+                    alt="Metody płatności"
                     style="max-width: 100%; height: auto; display: inline-block"
                   />
                 </div>
                 <ol>
-                  <li>
+                  <li data-i18n="sec4-p1">
                     Udział w Konferencji może być odpłatny albo bezpłatny,
                     zgodnie z aktualną ofertą opublikowaną na stronie
                     internetowej.
                   </li>
-                  <li>
+                  <li data-i18n="sec4-p2">
                     Ceny biletów, dostępne pakiety, zakres świadczeń oraz
                     ewentualne promocje publikowane są na stronie internetowej
                     Konferencji.
                   </li>
-                  <li>
+                  <li data-i18n="sec4-p3">
                     Ceny podawane na stronie internetowej wyrażone są w złotych
                     polskich i obejmują wszystkie należne podatki, chyba że z
                     oferty wyraźnie wynika inaczej.
                   </li>
-                  <li>
+                  <li data-i18n="sec4-p4">
                     Dostępne formy płatności obejmują płatności elektroniczne, w
                     tym BLIK, szybkie przelewy oraz płatności kartami
                     płatniczymi.
                   </li>
-                  <li>
+                  <li data-i18n="sec4-p5">
                     Dostępne formy płatności kartą obejmują: Visa, Visa
                     Electron, Mastercard, MasterCard Electronic oraz Maestro.
                   </li>
-                  <li>
+                  <li data-i18n="sec4-p6">
                     Podmiotem świadczącym obsługę płatności online jest Autopay
                     S.A.
                   </li>
-                  <li>
+                  <li data-i18n="sec4-p7">
                     Czas realizacji zamówienia liczony jest od momentu uzyskania
                     pozytywnej autoryzacji płatności albo potwierdzenia
                     dokonania płatności przez operatora płatności.
                   </li>
-                  <li>
+                  <li data-i18n="sec4-p8">
                     Po otrzymaniu potwierdzenia skutecznej płatności Organizator
                     przesyła bilet lub potwierdzenie zakupu na adres e-mail
                     podany przez Uczestnika w Formularzu zakupu.
                   </li>
-                  <li>
+                  <li data-i18n="sec4-p9">
                     Bilet dostarczany jest w formie elektronicznej na adres
                     e-mail Uczestnika i jego dostarczenie nie wiąże się z
                     dodatkowymi kosztami.
                   </li>
-                  <li>
+                  <li data-i18n="sec4-p10">
                     Organizator zastrzega sobie prawo do wprowadzania
                     ograniczonych czasowo promocji, kodów rabatowych i ofert
                     specjalnych, które nie podlegają łączeniu, chyba że warunki
                     danej promocji stanowią inaczej.
                   </li>
-                  <li>
+                  <li data-i18n="sec4-p11">
                     Bilet uprawnia do udziału wyłącznie jedną osobę, chyba że z
                     opisu oferty wynika inaczej.
                   </li>
-                  <li>
+                  <li data-i18n="sec4-p12">
                     Uczestnik nie może przenosić uprawnień wynikających z biletu
                     na inną osobę bez uprzedniej zgody Organizatora wyrażonej co
                     najmniej drogą mailową.
                   </li>
-                  <li>
+                  <li data-i18n="sec4-p13">
                     Organizator może dopuścić zmianę danych Uczestnika
                     przypisanych do biletu najpóźniej na 7 dni przed
                     rozpoczęciem Konferencji, o ile pozwalają na to względy
@@ -826,50 +911,52 @@
               </section>
 
               <section class="legal-section" id="zwroty">
-                <h3>§ 5. Rezygnacja, zwroty i odwołanie Konferencji</h3>
+                <h3 data-i18n="sec5-title">
+                  § 5. Rezygnacja, zwroty i odwołanie Konferencji
+                </h3>
                 <ol>
-                  <li>
+                  <li data-i18n="sec5-p1">
                     Uczestnik może zrezygnować z udziału w Konferencji,
                     przesyłając informację na adres e-mail Organizatora.
                   </li>
-                  <li>
+                  <li data-i18n="sec5-p2">
                     Organizator przyznaje możliwość rezygnacji i zwrotu ceny
                     biletu w przypadku zgłoszenia rezygnacji w terminie 14 dni
                     od dnia zakupu biletu, nie później jednak niż 14 dni przed
                     rozpoczęciem Konferencji.
                   </li>
-                  <li>
+                  <li data-i18n="sec5-p3">
                     Po upływie terminów wskazanych w ustępie poprzedzającym
                     Opłata za bilet nie podlega zwrotowi, z zastrzeżeniem
                     przypadków wynikających z bezwzględnie obowiązujących
                     przepisów prawa.
                   </li>
-                  <li>
+                  <li data-i18n="sec5-p4">
                     W przypadku wystąpienia konieczności zwrotu środków za
                     transakcję dokonaną przez Uczestnika kartą płatniczą
                     Sprzedający dokonuje zwrotu na rachunek bankowy przypisany
                     do karty płatniczej Uczestnika.
                   </li>
-                  <li>
+                  <li data-i18n="sec5-p5">
                     Sprzedawca dokonuje zwrotu płatności przy użyciu takiego
                     samego sposobu płatności, jakiego użył Uczestnik, chyba że
                     Uczestnik wyraźnie zgodzi się na inny sposób zwrotu, który
                     nie wiąże się dla niego z żadnymi kosztami.
                   </li>
-                  <li>
+                  <li data-i18n="sec5-p6">
                     Organizator ma prawo odwołać Konferencję albo zmienić jej
                     termin, miejsce, formułę, program, godziny wystąpień,
                     prelegentów lub poszczególne elementy wydarzenia z przyczyn
                     organizacyjnych, technicznych, bezpieczeństwa, niskiej
                     frekwencji lub siły wyższej.
                   </li>
-                  <li>
+                  <li data-i18n="sec5-p7">
                     W przypadku odwołania Konferencji przez Organizatora i
                     niezaoferowania Uczestnikowi udziału w nowym terminie albo
                     wydarzeniu zastępczym, Uczestnikowi przysługuje zwrot ceny
                     niewykorzystanego biletu.
                   </li>
-                  <li>
+                  <li data-i18n="sec5-p8">
                     Organizator nie odpowiada za koszty dodatkowe poniesione
                     przez Uczestnika, w szczególności koszty transportu,
                     noclegu, parkingu ani utraconych korzyści.
@@ -878,26 +965,28 @@
               </section>
 
               <section class="legal-section" id="program">
-                <h3>§ 6. Program i organizacja wydarzenia</h3>
+                <h3 data-i18n="sec6-title">
+                  § 6. Program i organizacja wydarzenia
+                </h3>
                 <ol>
-                  <li>
+                  <li data-i18n="sec6-p1">
                     Organizator ustala program Konferencji i zastrzega sobie
                     prawo do jego zmian, w tym do zmiany kolejności wystąpień,
                     godzin, zakresu programu, sal, stref, części dodatkowych
                     oraz planowanych atrakcji.
                   </li>
-                  <li>
+                  <li data-i18n="sec6-p2">
                     Informacje publikowane na stronie internetowej, w tym
                     dotyczące prelegentów, godzin i pakietów, mają charakter
                     organizacyjny i mogą ulegać aktualizacjom.
                   </li>
-                  <li>
+                  <li data-i18n="sec6-p3">
                     Organizator zapewnia Uczestnikom świadczenia zgodne z
                     zakresem zakupionego biletu, chyba że wykonanie danego
                     świadczenia stanie się niemożliwe z przyczyn niezależnych od
                     Organizatora.
                   </li>
-                  <li>
+                  <li data-i18n="sec6-p4">
                     Konferencja ma charakter biznesowo-formacyjny i obejmuje
                     również elementy o charakterze religijnym, dlatego Uczestnik
                     zobowiązany jest do poszanowania charakteru wydarzenia,
@@ -908,37 +997,37 @@
               </section>
 
               <section class="legal-section" id="porzadek">
-                <h3>§ 7. Zasady porządkowe</h3>
+                <h3 data-i18n="sec7-title">§ 7. Zasady porządkowe</h3>
                 <ol>
-                  <li>
+                  <li data-i18n="sec7-p1">
                     Uczestnik zobowiązany jest do przestrzegania przepisów
                     prawa, zasad bezpieczeństwa, przepisów przeciwpożarowych,
                     sanitarnych, porządkowych oraz poleceń Organizatora i
                     obsługi obiektu.
                   </li>
-                  <li>
+                  <li data-i18n="sec7-p2">
                     Zabronione jest w szczególności zakłócanie przebiegu
                     Konferencji, zachowanie agresywne lub obraźliwe, wnoszenie
                     przedmiotów niebezpiecznych, spożywanie środków odurzających
                     oraz prowadzenie działań handlowych lub promocyjnych bez
                     zgody Organizatora.
                   </li>
-                  <li>
+                  <li data-i18n="sec7-p3">
                     Zabronione jest także nagrywanie całych wystąpień lub
                     transmisja wydarzenia bez uprzedniej zgody Organizatora.
                   </li>
-                  <li>
+                  <li data-i18n="sec7-p4">
                     Organizator ma prawo wyprosić z terenu Konferencji osobę
                     naruszającą Regulamin lub stwarzającą zagrożenie dla
                     bezpieczeństwa, porządku albo dobrego imienia wydarzenia,
                     bez prawa do zwrotu Opłaty.
                   </li>
-                  <li>
+                  <li data-i18n="sec7-p5">
                     Uczestnik ponosi odpowiedzialność za szkody wyrządzone przez
                     siebie Organizatorowi, obiektowi, podwykonawcom lub innym
                     Uczestnikom.
                   </li>
-                  <li>
+                  <li data-i18n="sec7-p6">
                     Uczestnicy mogą otrzymać zestawy słuchawkowe do tłumaczeń
                     symultanicznych. Zestaw pozostaje własnością Organizatora i
                     podlega zwrotowi po zakończeniu każdego dnia Konferencji. W
@@ -949,13 +1038,15 @@
               </section>
 
               <section class="legal-section" id="wizerunek">
-                <h3>§ 8. Wizerunek i materiały z wydarzenia</h3>
+                <h3 data-i18n="sec8-title">
+                  § 8. Wizerunek i materiały z wydarzenia
+                </h3>
                 <ol>
-                  <li>
+                  <li data-i18n="sec8-p1">
                     Przebieg Konferencji może być utrwalany przez Organizatora w
                     formie fotografii, nagrań audio oraz nagrań wideo.
                   </li>
-                  <li>
+                  <li data-i18n="sec8-p2">
                     Uczestnik przyjmuje do wiadomości, że jego wizerunek może
                     zostać utrwalony w związku z udziałem w Konferencji i
                     wykorzystany przez Organizatora do celów informacyjnych,
@@ -963,19 +1054,19 @@
                     Konferencją oraz kolejnymi edycjami wydarzenia, w zakresie
                     dopuszczalnym przez obowiązujące przepisy prawa.
                   </li>
-                  <li>
+                  <li data-i18n="sec8-p3">
                     Jeżeli Uczestnik nie wyraża zgody na publikację swojego
                     wizerunku w ujęciach indywidualnych, powinien zgłosić ten
                     fakt Organizatorowi najpóźniej w dniu rejestracji na
                     miejscu.
                   </li>
-                  <li>
+                  <li data-i18n="sec8-p4">
                     Materiały konferencyjne, prezentacje, nagrania, grafiki i
                     treści udostępniane Uczestnikom mogą być chronione prawem
                     autorskim i nie mogą być kopiowane, rozpowszechniane ani
                     wykorzystywane komercyjnie bez zgody uprawnionych podmiotów.
                   </li>
-                  <li>
+                  <li data-i18n="sec8-p5">
                     Organizator ma prawo udostępniać relacje z Konferencji, w
                     tym fotografie i nagrania, patronom medialnym oraz partnerom
                     wydarzenia, w zakresie związanym z informowaniem o
@@ -985,33 +1076,33 @@
               </section>
 
               <section class="legal-section" id="odpowiedzialnosc">
-                <h3>§ 9. Odpowiedzialność</h3>
+                <h3 data-i18n="sec9-title">§ 9. Odpowiedzialność</h3>
                 <ol>
-                  <li>
+                  <li data-i18n="sec9-p1">
                     Organizator dokłada należytej staranności, aby zapewnić
                     prawidłowy przebieg Konferencji, jednak nie ponosi
                     odpowiedzialności za zdarzenia spowodowane siłą wyższą ani
                     za okoliczności od niego niezależne.
                   </li>
-                  <li>
+                  <li data-i18n="sec9-p2">
                     Organizator nie ponosi odpowiedzialności za rzeczy
                     pozostawione, zagubione lub skradzione podczas Konferencji,
                     chyba że zostały przyjęte do przechowania na podstawie
                     odrębnego potwierdzenia.
                   </li>
-                  <li>
+                  <li data-i18n="sec9-p3">
                     Organizator nie ponosi odpowiedzialności za brak możliwości
                     udziału w Konferencji wynikający z przyczyn leżących po
                     stronie Uczestnika, w szczególności z powodu błędnie
                     podanych danych, problemów z dojazdem, spóźnienia lub braku
                     wymaganych dokumentów.
                   </li>
-                  <li>
+                  <li data-i18n="sec9-p4">
                     W zakresie usług świadczonych przez Organizatora
                     Uczestnikowi przysługują uprawnienia wynikające z
                     bezwzględnie obowiązujących przepisów prawa.
                   </li>
-                  <li>
+                  <li data-i18n="sec9-p5">
                     Organizator nie udziela odrębnej gwarancji na usługi objęte
                     Regulaminem, chyba że co innego wyraźnie wynika z oferty
                     opublikowanej na stronie internetowej.
@@ -1020,29 +1111,29 @@
               </section>
 
               <section class="legal-section" id="reklamacje">
-                <h3>§ 10. Reklamacje</h3>
+                <h3 data-i18n="sec10-title">§ 10. Reklamacje</h3>
                 <ol>
-                  <li>
+                  <li data-i18n="sec10-p1">
                     Uczestnik ma prawo złożyć reklamację dotyczącą organizacji
                     Konferencji, procesu rejestracji, płatności lub świadczonych
                     usług.
                   </li>
-                  <li>
+                  <li data-i18n="sec10-p2">
                     Reklamacje należy przesyłać drogą elektroniczną na adres
                     <a href="mailto:konferencja@brfh.eu">konferencja@brfh.eu</a>
                     albo pisemnie na adres siedziby Organizatora.
                   </li>
-                  <li>
+                  <li data-i18n="sec10-p3">
                     Reklamacja powinna zawierać co najmniej imię i nazwisko
                     Uczestnika, dane kontaktowe, opis zgłaszanych zastrzeżeń
                     oraz wskazanie żądania Uczestnika.
                   </li>
-                  <li>
+                  <li data-i18n="sec10-p4">
                     Reklamację należy złożyć w terminie 14 dni od dnia
                     zakończenia Konferencji albo od dnia wystąpienia zdarzenia
                     będącego podstawą reklamacji.
                   </li>
-                  <li>
+                  <li data-i18n="sec10-p5">
                     Organizator rozpatrzy reklamację w terminie 14 dni od dnia
                     jej otrzymania. W przypadkach wymagających uzupełnienia
                     informacji termin może ulec odpowiedniemu przedłużeniu, o
@@ -1052,9 +1143,9 @@
               </section>
 
               <section class="legal-section" id="dane">
-                <h3>§ 11. Dane osobowe</h3>
+                <h3 data-i18n="sec11-title">§ 11. Dane osobowe</h3>
                 <ol>
-                  <li>
+                  <li data-i18n="sec11-p1">
                     Administratorem danych osobowych Uczestników jest Kościół
                     Katolicki – Duszpasterstwo Przedsiębiorców i Pracodawców
                     Talent w Archidiecezji Poznańskiej, ul. Głogowska 92, 60-262
@@ -1062,7 +1153,7 @@
                     <a href="mailto:konferencja@brfh.eu">konferencja@brfh.eu</a
                     >.
                   </li>
-                  <li>
+                  <li data-i18n="sec11-p2">
                     Dane osobowe przetwarzane są w celu przyjęcia zgłoszenia na
                     wydarzenie, zawarcia i wykonania umowy udziału w wydarzeniu,
                     obsługi płatności za bilet, wygenerowania i doręczenia
@@ -1070,7 +1161,7 @@
                     reklamacji, wykonania obowiązków podatkowych i rachunkowych
                     oraz ustalenia, dochodzenia lub obrony przed roszczeniami.
                   </li>
-                  <li>
+                  <li data-i18n="sec11-p3">
                     Zakres przetwarzanych danych może obejmować w szczególności
                     imię i nazwisko, adres e-mail, numer telefonu, dane podane w
                     formularzu zapisu lub formularzu zakupu biletu, dane
@@ -1079,7 +1170,7 @@
                     wiadomości i biletów elektronicznych oraz wizerunek
                     utrwalony na zdjęciach lub nagraniach z wydarzenia.
                   </li>
-                  <li>
+                  <li data-i18n="sec11-p4">
                     Podstawą prawną przetwarzania danych osobowych jest art. 6
                     ust. 1 lit. b RODO w zakresie niezbędnym do podjęcia działań
                     przed zawarciem umowy oraz wykonania umowy, art. 6 ust. 1
@@ -1089,7 +1180,7 @@
                     ust. 1 lit. a RODO, jeżeli przetwarzanie odbywa się na
                     podstawie zgody.
                   </li>
-                  <li>
+                  <li data-i18n="sec11-p5">
                     Dane osobowe mogą być przekazywane podmiotom świadczącym
                     usługi niezbędne do działania strony i organizacji
                     wydarzenia, w szczególności operatorowi płatności Autopay
@@ -1101,14 +1192,14 @@
                     uprawnionym do otrzymania danych na podstawie przepisów
                     prawa.
                   </li>
-                  <li>
+                  <li data-i18n="sec11-p6">
                     W związku z korzystaniem z niektórych usług technicznych
                     niektóre dane osobowe lub dane techniczne mogą być
                     przekazywane poza Europejski Obszar Gospodarczy, w
                     szczególności do Stanów Zjednoczonych, przy zastosowaniu
                     zabezpieczeń wymaganych przez RODO.
                   </li>
-                  <li>
+                  <li data-i18n="sec11-p7">
                     Dane uczestników wydarzeń i kupujących bilety są
                     przechowywane przez okres 2 lat od dnia zakończenia
                     wydarzenia albo od dnia zakończenia ostatniego kontaktu
@@ -1116,7 +1207,7 @@
                     celów podatkowych, rachunkowych lub dokumentacyjnych przez
                     okres wymagany przez przepisy prawa.
                   </li>
-                  <li>
+                  <li data-i18n="sec11-p8">
                     Każdej osobie, której dane dotyczą, przysługuje prawo
                     dostępu do danych, ich sprostowania, usunięcia, ograniczenia
                     przetwarzania, przenoszenia danych, wniesienia sprzeciwu
@@ -1124,13 +1215,13 @@
                     przetwarzania, oraz wniesienia skargi do Prezesa Urzędu
                     Ochrony Danych Osobowych.
                   </li>
-                  <li>
+                  <li data-i18n="sec11-p9">
                     Podanie danych osobowych jest dobrowolne, jednak w zakresie
                     wymaganym przez formularz zapisu lub zakupu biletu jest
                     niezbędne do dokonania rejestracji, zawarcia umowy, obsługi
                     płatności, wygenerowania biletu oraz udziału w wydarzeniu.
                   </li>
-                  <li>
+                  <li data-i18n="sec11-p10">
                     Szczegółowe zasady przetwarzania danych osobowych określa
                     Polityka Prywatności dostępna na stronie internetowej
                     Konferencji.
@@ -1139,29 +1230,29 @@
               </section>
 
               <section class="legal-section" id="koncowe">
-                <h3>§ 12. Postanowienia końcowe</h3>
+                <h3 data-i18n="sec12-title">§ 12. Postanowienia końcowe</h3>
                 <ol>
-                  <li>
+                  <li data-i18n="sec12-p1">
                     Organizator zastrzega sobie prawo do zmiany Regulaminu z
                     ważnych przyczyn, w szczególności prawnych, organizacyjnych,
                     technicznych albo związanych z bezpieczeństwem.
                   </li>
-                  <li>
+                  <li data-i18n="sec12-p2">
                     Zmiany Regulaminu będą publikowane na stronie internetowej
                     Konferencji i wchodzą w życie w terminie wskazanym przez
                     Organizatora, z zastrzeżeniem poszanowania praw nabytych
                     Uczestników.
                   </li>
-                  <li>
+                  <li data-i18n="sec12-p3">
                     W sprawach nieuregulowanych w Regulaminie zastosowanie mają
                     przepisy prawa polskiego.
                   </li>
-                  <li>
+                  <li data-i18n="sec12-p4">
                     Ewentualne spory związane z uczestnictwem w Konferencji będą
                     rozstrzygane przez właściwy miejscowo sąd powszechny, z
                     uwzględnieniem przepisów bezwzględnie obowiązujących.
                   </li>
-                  <li>
+                  <li data-i18n="sec12-p5">
                     Regulamin wchodzi w życie z dniem jego opublikowania na
                     stronie internetowej.
                   </li>
@@ -1183,7 +1274,7 @@
                 <img src="obrazy/logo.png" alt="Logo" />
               </div>
               <div>
-                <p class="footer-desc">
+                <p class="footer-desc" data-i18n="footer-desc">
                   Kościół Katolicki – Duszpasterstwo Przedsiębiorców i
                   Pracodawców Talent w Archidiecezji Poznańskiej
                 </p>
@@ -1192,48 +1283,368 @@
           </div>
 
           <div class="footer-col">
-            <h3 class="footer-title">Dane</h3>
+            <h3 class="footer-title" data-i18n="footer-data-title">Dane</h3>
             <ul class="footer-list">
-              <li>ul. Głogowska 92, 60-262 Poznań</li>
+              <li data-i18n="footer-address">
+                ul. Głogowska 92, 60-262 Poznań
+              </li>
               <li>
                 <a href="mailto:konferencja@brfh.eu">konferencja@brfh.eu</a>
               </li>
               <li><a href="tel:+48798765282">798 765 282</a></li>
-              <li>NIP: 7792461653</li>
-              <li>REGON: 367168175</li>
+              <li data-i18n="footer-nip">NIP: 7792461653</li>
+              <li data-i18n="footer-regon">REGON: 367168175</li>
             </ul>
           </div>
 
           <div class="footer-col">
-            <h3 class="footer-title">Menu</h3>
+            <h3 class="footer-title" data-i18n="footer-menu-title">Menu</h3>
             <ul class="footer-list">
-              <li><a href="index.html#program">Program</a></li>
-              <li><a href="index.html#prelegenci">Prelegenci</a></li>
-              <li><a href="buyform.html">Zapisy</a></li>
-              <li><a href="regulamin.html">Regulamin Konferencji</a></li>
               <li>
-                <a href="polityka-prywatnosci.html">Polityka prywatności</a>
+                <a href="index.html#program" data-i18n="fmenu-program"
+                  >Program</a
+                >
+              </li>
+              <li>
+                <a href="index.html#prelegenci" data-i18n="fmenu-speakers"
+                  >Prelegenci</a
+                >
+              </li>
+              <li>
+                <a href="buyform.html" data-i18n="fmenu-register">Zapisy</a>
+              </li>
+              <li>
+                <a href="regulamin.html" data-i18n="fmenu-rules"
+                  >Regulamin Konferencji</a
+                >
+              </li>
+              <li>
+                <a href="polityka-prywatnosci.html" data-i18n="fmenu-privacy"
+                  >Polityka prywatności</a
+                >
               </li>
             </ul>
           </div>
 
           <div class="footer-col footer-org">
-            <h3 class="footer-title">Płatności</h3>
+            <h3 class="footer-title" data-i18n="footer-payment-title">
+              Płatności
+            </h3>
             <ul class="footer-list">
-              <li>Operator płatności online: Autopay S.A.</li>
-              <li>BLIK</li>
-              <li>Szybkie przelewy</li>
-              <li>Visa, Visa Electron</li>
-              <li>Mastercard, MasterCard Electronic, Maestro</li>
+              <li data-i18n="footer-payment-operator">
+                Operator płatności online: Autopay S.A.
+              </li>
+              <li data-i18n="footer-blik">BLIK</li>
+              <li data-i18n="footer-transfer">Szybkie przelewy</li>
+              <li data-i18n="footer-visa">Visa, Visa Electron</li>
+              <li data-i18n="footer-mastercard">
+                Mastercard, MasterCard Electronic, Maestro
+              </li>
             </ul>
           </div>
         </div>
 
-        <div class="footer-bottom">
+        <div class="footer-bottom" data-i18n="footer-bottom">
           © 2026 Kościół Katolicki – Duszpasterstwo Przedsiębiorców i
           Pracodawców Talent w Archidiecezji Poznańskiej
         </div>
       </div>
     </footer>
+
+    <!-- ======= TŁUMACZENIE PL/ENG ======= -->
+    <script>
+      const translations = {
+        pl: {}, // wypełnione automatycznie oryginalną treścią HTML przy starcie
+        en: {
+          "page-title":
+            "Conference Terms & Conditions | Entrepreneurs Conference",
+          "promo-text":
+            "Only until the end of April!<br> Code <strong>KWIECIEN</strong> -35% on all tickets!",
+          "brand-title": "Entrepreneurs Conference",
+          "brand-subtitle": "Poznań, October 9-10, 2026",
+          "nav-start": "Home",
+          "nav-program": "Program",
+          "nav-speakers": "Speakers",
+          "nav-privacy": "Privacy Policy",
+          "nav-register": "Registration",
+          "hero-eyebrow": "Formal document",
+          "hero-title": "Conference Terms & Conditions",
+          "hero-desc":
+            'The following regulations define the rules of registration, participation, payments, refunds, complaints, personal data processing and organization of the "Entrepreneurs Conference" event.',
+          "hero-date": "October 9-10, 2026",
+          "hero-city": "Poznań",
+          "hero-type": "In-person event",
+          "sidebar-title": "Table of contents",
+          s1: "§ 1. General provisions",
+          s2: "§ 2. Definitions",
+          s3: "§ 3. Registration and participation",
+          s4: "§ 4. Fees and payments",
+          s5: "§ 5. Refunds and cancellation",
+          s6: "§ 6. Program and event organization",
+          s7: "§ 7. Order regulations",
+          s8: "§ 8. Image and materials",
+          s9: "§ 9. Liability",
+          s10: "§ 10. Complaints",
+          s11: "§ 11. Personal data",
+          s12: "§ 12. Final provisions",
+          "sidebar-note":
+            'Organizational contact:<br><a href="mailto:konferencja@brfh.eu">konferencja@brfh.eu</a><br><a href="tel:+48798765282">798 765 282</a>',
+          "legal-intro-title": "Event participation regulations",
+          "legal-intro-desc":
+            "This document applies to all conference participants, panels, networking part, banquet and accompanying events.",
+          "info-organizer-label": "Organizer",
+          "info-organizer-value":
+            "Catholic Church – Talent Entrepreneurs and Employers Chaplaincy in the Archdiocese of Poznań",
+          "info-contact-label": "Contact",
+          "info-contact-value": "konferencja@brfh.eu<br>798 765 282",
+          "info-address-label": "Address",
+          "info-address-value": "ul. Głogowska 92<br>60-262 Poznań",
+
+          "sec1-title": "§ 1. General provisions",
+          "sec1-p1":
+            'These Regulations define the rules of participation in the event named "Entrepreneurs Conference", hereinafter referred to as the "Conference".',
+          "sec1-p2":
+            'The Organizer of the Conference is the Catholic Church – Talent Entrepreneurs and Employers Chaplaincy in the Archdiocese of Poznań, with its registered office at ul. Głogowska 92, 60-262 Poznań, e-mail address: <a href="mailto:konferencja@brfh.eu">konferencja@brfh.eu</a>, phone number: <a href="tel:+48798765282">798 765 282</a>, NIP: 7792461653, REGON: 367168175, hereinafter referred to as the "Organizer".',
+          "sec1-p3":
+            "The Conference is held in person and takes place on October 9-10, 2026 in Poznań, at locations indicated by the Organizer on the event website.",
+          "sec1-p4":
+            "The Regulations are available on the Conference website and apply to all Participants, including persons participating in the program, panels, networking meetings, banquet part and accompanying events.",
+          "sec1-p5":
+            "The Participant is obliged to familiarize themselves with the Regulations and Privacy Policy before completing registration or purchasing a ticket.",
+          "sec1-p6":
+            "Completing registration and/or purchasing a ticket means that the Participant has read the Regulations, accepts its provisions and accepts the Privacy Policy.",
+
+          "sec2-title": "§ 2. Definitions",
+          "sec2-p1":
+            "<strong>Conference</strong> – an event organized by the Organizer in accordance with information published on the website.",
+          "sec2-p2":
+            "<strong>Participant</strong> – a natural person who has effectively registered their participation in the Conference or purchased a ticket.",
+          "sec2-p3":
+            "<strong>Website</strong> – the Organizer's website dedicated to the Conference.",
+          "sec2-p4":
+            "<strong>Registration form / Purchase form</strong> – an online form enabling registration for the Conference and purchase of a ticket.",
+          "sec2-p5":
+            "<strong>Ticket</strong> – electronic confirmation of the right to participate in the Conference to the extent resulting from the selected package.",
+          "sec2-p6":
+            "<strong>Fee</strong> – the ticket price indicated on the Conference website.",
+          "sec2-p7":
+            "<strong>Online payment</strong> – payment made through a payment operator available on the Conference website.",
+
+          "sec3-title": "§ 3. Registration and participation rules",
+          "sec3-p1":
+            "Participation in the Conference requires correctly completing the Registration form or Purchase form, providing data consistent with the actual state, accepting the Regulations and Privacy Policy, and paying the Fee, if participation in the given package is paid.",
+          "sec3-p2":
+            "The order of properly paid registrations determines acceptance of applications, unless the Organizer decides otherwise.",
+          "sec3-p3":
+            "The scope of benefits entitled to the Participant depends on the type of ticket purchased and the package description posted on the Conference website.",
+          "sec3-p4":
+            "The Organizer may introduce limits on the number of places for the entire Conference or for selected zones, panels, presentations, banquet or other parts of the program.",
+          "sec3-p5":
+            "The Participant is obliged to provide true, complete and current data required in the form.",
+          "sec3-p6":
+            "The Participant is obliged to collect their badge or other conference materials in the manner indicated by the Organizer.",
+          "sec3-p7":
+            "The Organizer may refuse participation in the Conference or cancel the Participant's registration in case of violation of the Regulations, providing false data or acting to the detriment of the Organizer or other Participants.",
+
+          "sec4-title": "§ 4. Fees, payments and ticket delivery",
+          "sec4-p1":
+            "Participation in the Conference may be paid or free, according to the current offer published on the website.",
+          "sec4-p2":
+            "Ticket prices, available packages, scope of benefits and any promotions are published on the Conference website.",
+          "sec4-p3":
+            "Prices shown on the website are expressed in Polish zloty and include all applicable taxes, unless otherwise stated in the offer.",
+          "sec4-p4":
+            "Available payment methods include electronic payments, including BLIK, fast transfers and card payments.",
+          "sec4-p5":
+            "Available card payment methods include: Visa, Visa Electron, Mastercard, MasterCard Electronic and Maestro.",
+          "sec4-p6":
+            "The entity providing online payment services is Autopay S.A.",
+          "sec4-p7":
+            "The order processing time is counted from the moment of obtaining positive payment authorization or confirmation of payment by the payment operator.",
+          "sec4-p8":
+            "After receiving confirmation of successful payment, the Organizer sends the ticket or purchase confirmation to the e-mail address provided by the Participant in the Purchase form.",
+          "sec4-p9":
+            "The ticket is delivered electronically to the Participant's e-mail address and its delivery does not involve additional costs.",
+          "sec4-p10":
+            "The Organizer reserves the right to introduce limited-time promotions, discount codes and special offers that cannot be combined, unless the terms of a given promotion state otherwise.",
+          "sec4-p11":
+            "The ticket entitles only one person to participate, unless the offer description states otherwise.",
+          "sec4-p12":
+            "The Participant may not transfer the rights arising from the ticket to another person without the prior consent of the Organizer expressed at least by e-mail.",
+          "sec4-p13":
+            "The Organizer may allow changes to the Participant's data assigned to the ticket no later than 7 days before the start of the Conference, if organizational reasons permit.",
+
+          "sec5-title":
+            "§ 5. Cancellation, refunds and Conference cancellation",
+          "sec5-p1":
+            "The Participant may withdraw from participation in the Conference by sending information to the Organizer's e-mail address.",
+          "sec5-p2":
+            "The Organizer allows withdrawal and refund of the ticket price if the cancellation is reported within 14 days from the date of ticket purchase, but no later than 14 days before the start of the Conference.",
+          "sec5-p3":
+            "After the deadlines indicated in the preceding paragraph, the Fee for the ticket is non-refundable, subject to cases arising from mandatory provisions of law.",
+          "sec5-p4":
+            "In the event of the need to refund funds for a transaction made by the Participant by payment card, the Seller shall make the refund to the bank account assigned to the Participant's payment card.",
+          "sec5-p5":
+            "The Seller shall make the refund using the same payment method used by the Participant, unless the Participant expressly agrees to a different refund method that does not involve any costs for them.",
+          "sec5-p6":
+            "The Organizer has the right to cancel the Conference or change its date, place, format, program, hours of appearances, speakers or individual elements of the event for organizational, technical, safety, low attendance or force majeure reasons.",
+          "sec5-p7":
+            "In the event of cancellation of the Conference by the Organizer and failure to offer the Participant participation at a new date or substitute event, the Participant is entitled to a refund of the price of the unused ticket.",
+          "sec5-p8":
+            "The Organizer is not responsible for additional costs incurred by the Participant, in particular transport, accommodation, parking costs or lost profits.",
+
+          "sec6-title": "§ 6. Program and event organization",
+          "sec6-p1":
+            "The Organizer sets the Conference program and reserves the right to change it, including changing the order of appearances, hours, scope of the program, rooms, zones, additional parts and planned attractions.",
+          "sec6-p2":
+            "Information published on the website, including regarding speakers, hours and packages, is of an organizational nature and may be subject to updates.",
+          "sec6-p3":
+            "The Organizer provides Participants with benefits in accordance with the scope of the purchased ticket, unless the provision of a given benefit becomes impossible for reasons beyond the Organizer's control.",
+          "sec6-p4":
+            "The Conference has a business-formative character and also includes elements of a religious nature, therefore the Participant is obliged to respect the character of the event, the place of its organization and other persons participating in the Conference.",
+
+          "sec7-title": "§ 7. Order regulations",
+          "sec7-p1":
+            "The Participant is obliged to comply with legal regulations, safety rules, fire, sanitary and order regulations, as well as instructions from the Organizer and facility staff.",
+          "sec7-p2":
+            "It is strictly prohibited to disrupt the course of the Conference, aggressive or offensive behavior, bringing dangerous items, consuming intoxicants and conducting commercial or promotional activities without the Organizer's consent.",
+          "sec7-p3":
+            "It is also prohibited to record entire performances or broadcast the event without the prior consent of the Organizer.",
+          "sec7-p4":
+            "The Organizer has the right to remove from the Conference premises any person violating the Regulations or posing a threat to safety, order or the good name of the event, without the right to a refund of the Fee.",
+          "sec7-p5":
+            "The Participant is liable for damages caused by them to the Organizer, facility, subcontractors or other Participants.",
+          "sec7-p6":
+            "Participants may receive headphone sets for simultaneous interpretation. The set remains the property of the Organizer and must be returned at the end of each Conference day. In case of loss, failure to return or damage to the set, the Participant bears financial liability.",
+
+          "sec8-title": "§ 8. Image and materials from the event",
+          "sec8-p1":
+            "The course of the Conference may be recorded by the Organizer in the form of photographs, audio recordings and video recordings.",
+          "sec8-p2":
+            "The Participant acknowledges that their image may be recorded in connection with participation in the Conference and used by the Organizer for informational, documentary, archival and promotional purposes related to the Conference and subsequent editions of the event, to the extent permitted by applicable law.",
+          "sec8-p3":
+            "If the Participant does not consent to the publication of their image in individual shots, they should report this to the Organizer no later than on the day of on-site registration.",
+          "sec8-p4":
+            "Conference materials, presentations, recordings, graphics and content made available to Participants may be protected by copyright and may not be copied, distributed or used commercially without the consent of the entitled entities.",
+          "sec8-p5":
+            "The Organizer has the right to share Conference coverage, including photographs and recordings, with media patrons and event partners, to the extent related to informing about the Conference, its promotion and documentation of the event.",
+
+          "sec9-title": "§ 9. Liability",
+          "sec9-p1":
+            "The Organizer exercises due diligence to ensure the proper course of the Conference, but is not liable for events caused by force majeure or circumstances beyond its control.",
+          "sec9-p2":
+            "The Organizer is not liable for items left behind, lost or stolen during the Conference, unless they were accepted for storage on the basis of separate confirmation.",
+          "sec9-p3":
+            "The Organizer is not liable for the inability to participate in the Conference due to reasons on the Participant's side, in particular due to incorrectly provided data, transport problems, delay or lack of required documents.",
+          "sec9-p4":
+            "In the scope of services provided by the Organizer, the Participant is entitled to rights arising from mandatory provisions of law.",
+          "sec9-p5":
+            "The Organizer does not provide a separate warranty for services covered by the Regulations, unless otherwise stated in the offer published on the website.",
+
+          "sec10-title": "§ 10. Complaints",
+          "sec10-p1":
+            "The Participant has the right to file a complaint regarding the organization of the Conference, registration process, payments or services provided.",
+          "sec10-p2":
+            'Complaints should be sent electronically to <a href="mailto:konferencja@brfh.eu">konferencja@brfh.eu</a> or in writing to the Organizer\'s registered office address.',
+          "sec10-p3":
+            "The complaint should include at least the Participant's first and last name, contact details, description of the reported objections and indication of the Participant's request.",
+          "sec10-p4":
+            "The complaint should be filed within 14 days from the end of the Conference or from the date of the event that is the basis for the complaint.",
+          "sec10-p5":
+            "The Organizer will consider the complaint within 14 days from the date of its receipt. In cases requiring supplementary information, the deadline may be extended accordingly, about which the Participant will be informed.",
+
+          "sec11-title": "§ 11. Personal data",
+          "sec11-p1":
+            'The administrator of Participants\' personal data is the Catholic Church – Talent Entrepreneurs and Employers Chaplaincy in the Archdiocese of Poznań, ul. Głogowska 92, 60-262 Poznań, e-mail: <a href="mailto:konferencja@brfh.eu">konferencja@brfh.eu</a>.',
+          "sec11-p2":
+            "Personal data is processed for the purpose of accepting the event registration, concluding and performing the event participation contract, handling ticket payment, generating and delivering the electronic ticket, organizational contact, handling complaints, performing tax and accounting obligations and establishing, pursuing or defending claims.",
+          "sec11-p3":
+            "The scope of processed data may include in particular first and last name, e-mail address, phone number, data provided in the registration form or ticket purchase form, payment data, invoice data, data contained in e-mail correspondence, metadata related to sending messages and electronic tickets and image recorded in photographs or recordings from the event.",
+          "sec11-p4":
+            "The legal basis for processing personal data is Article 6(1)(b) GDPR in the scope necessary to take steps before entering into a contract and to perform the contract, Article 6(1)(c) GDPR in the scope of legal obligations incumbent on the Administrator, Article 6(1)(f) GDPR in the scope of the Administrator's legitimate interest and Article 6(1)(a) GDPR, if processing is based on consent.",
+          "sec11-p5":
+            "Personal data may be transferred to entities providing services necessary for the operation of the website and organization of the event, in particular to the payment operator Autopay S.A., technical and security infrastructure providers, including Cloudflare, the entity handling transactional message and electronic ticket sending, including Resend.com, as well as entities providing IT, hosting, accounting, legal and organizational services and entities authorized to receive data under legal provisions.",
+          "sec11-p6":
+            "In connection with the use of certain technical services, some personal data or technical data may be transferred outside the European Economic Area, in particular to the United States, with the application of safeguards required by the GDPR.",
+          "sec11-p7":
+            "Data of event participants and ticket buyers is stored for a period of 2 years from the date of completion of the event or from the date of completion of the last contact related to handling the application, and data processed for tax, accounting or documentary purposes for the period required by legal provisions.",
+          "sec11-p8":
+            "Every data subject has the right to access data, rectify it, delete it, restrict processing, transfer data, object to processing, withdraw consent if it was the basis for processing, and file a complaint with the President of the Personal Data Protection Office.",
+          "sec11-p9":
+            "Providing personal data is voluntary, but in the scope required by the registration or ticket purchase form, it is necessary to complete registration, conclude a contract, handle payment, generate a ticket and participate in the event.",
+          "sec11-p10":
+            "Detailed rules for processing personal data are specified in the Privacy Policy available on the Conference website.",
+
+          "sec12-title": "§ 12. Final provisions",
+          "sec12-p1":
+            "The Organizer reserves the right to change the Regulations for important reasons, in particular legal, organizational, technical or related to safety.",
+          "sec12-p2":
+            "Changes to the Regulations will be published on the Conference website and will enter into force on the date indicated by the Organizer, with respect for the acquired rights of Participants.",
+          "sec12-p3":
+            "In matters not regulated by the Regulations, the provisions of Polish law shall apply.",
+          "sec12-p4":
+            "Any disputes related to participation in the Conference will be resolved by the locally competent ordinary court, taking into account mandatory provisions.",
+          "sec12-p5":
+            "The Regulations enter into force on the date of their publication on the website.",
+
+          "footer-desc":
+            "Catholic Church – Talent Entrepreneurs and Employers Chaplaincy in the Archdiocese of Poznań",
+          "footer-data-title": "Data",
+          "footer-address": "ul. Głogowska 92, 60-262 Poznań",
+          "footer-nip": "VAT ID: 7792461653",
+          "footer-regon": "REGON: 367168175",
+          "footer-menu-title": "Menu",
+          "fmenu-program": "Program",
+          "fmenu-speakers": "Speakers",
+          "fmenu-register": "Registration",
+          "fmenu-rules": "Conference Terms & Conditions",
+          "fmenu-privacy": "Privacy Policy",
+          "footer-payment-title": "Payments",
+          "footer-payment-operator": "Online payment operator: Autopay S.A.",
+          "footer-blik": "BLIK",
+          "footer-transfer": "Fast transfers",
+          "footer-visa": "Visa, Visa Electron",
+          "footer-mastercard": "Mastercard, MasterCard Electronic, Maestro",
+          "footer-bottom":
+            "© 2026 Catholic Church – Talent Entrepreneurs and Employers Chaplaincy in the Archdiocese of Poznań",
+        },
+      };
+
+      function buildPolishDictionary() {
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
+          const key = el.getAttribute("data-i18n");
+          if (!(key in translations.pl)) {
+            translations.pl[key] = el.innerHTML.trim();
+          }
+        });
+      }
+
+      function applyLang(lang) {
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
+          const key = el.getAttribute("data-i18n");
+          if (translations[lang] && translations[lang][key] !== undefined) {
+            el.innerHTML = translations[lang][key];
+          }
+        });
+        document.documentElement.lang = lang === "en" ? "en" : "pl";
+      }
+
+      function setLang(lang) {
+        applyLang(lang);
+        localStorage.setItem("site-lang", lang);
+        document
+          .getElementById("lang-pl")
+          .classList.toggle("active", lang === "pl");
+        document
+          .getElementById("lang-en")
+          .classList.toggle("active", lang === "en");
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        buildPolishDictionary();
+        const saved = localStorage.getItem("site-lang") || "pl";
+        setLang(saved);
+      });
+    </script>
   </body>
 </html>
