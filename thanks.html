@@ -20,43 +20,85 @@
     />
     <link rel="stylesheet" href="style.css" />
     <style>
+      /* ======= PRZEŁĄCZNIK JĘZYKA / LANGUAGE SWITCHER ======= */
+      .lang-switcher {
+        position: fixed;
+        top: 16px;
+        left: 16px;
+        z-index: 9999;
+        display: flex;
+        gap: 4px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 999px;
+        padding: 4px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+        font-family: "DM Sans", sans-serif;
+      }
+      .lang-switcher button {
+        border: none;
+        background: transparent;
+        padding: 6px 12px;
+        border-radius: 999px;
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 13px;
+        letter-spacing: 0.5px;
+        color: #333;
+        transition:
+          background 0.2s,
+          color 0.2s;
+      }
+      .lang-switcher button.active {
+        background: #1a1a1a;
+        color: #fff;
+      }
+      .lang-switcher button:hover:not(.active) {
+        background: rgba(0, 0, 0, 0.08);
+      }
+      @media (prefers-color-scheme: dark) {
+        .lang-switcher {
+          background: rgba(30, 30, 30, 0.85);
+        }
+        .lang-switcher button {
+          color: #eee;
+        }
+        .lang-switcher button.active {
+          background: #fff;
+          color: #111;
+        }
+      }
+
+      /* ======= RESZTA STYLÓW DLA THANKS.HTML ======= */
       .box {
         max-width: 760px;
         margin: 24px auto 24px;
         padding: 0 16px;
       }
-
       .card {
         background: #fff;
         border: 1px solid rgba(0, 0, 0, 0.08);
         border-radius: 14px;
         padding: 22px;
       }
-
       .muted {
         opacity: 0.8;
         font-size: 14px;
       }
-
       code {
         word-break: break-all;
       }
-
       .ok {
         color: #0a7a2f;
       }
-
       .bad {
         color: #b00020;
       }
-
       .actions {
         display: flex;
         gap: 12px;
         flex-wrap: wrap;
         margin-top: 14px;
       }
-
       .btn {
         padding: 10px 14px;
         cursor: pointer;
@@ -66,12 +108,10 @@
         color: #fff;
         text-decoration: none;
       }
-
       .btn.secondary {
         background: #fff;
         color: #0f172a;
       }
-
       .btn:disabled {
         opacity: 0.6;
         cursor: not-allowed;
@@ -80,6 +120,18 @@
   </head>
 
   <body class="page-short">
+    <!-- ======= PRZEŁĄCZNIK JĘZYKA / LANGUAGE SWITCHER ======= -->
+    <div
+      class="lang-switcher"
+      role="group"
+      aria-label="Wybór języka / Language selector"
+    >
+      <button type="button" id="lang-pl" class="active" onclick="setLang('pl')">
+        PL
+      </button>
+      <button type="button" id="lang-en" onclick="setLang('en')">ENG</button>
+    </div>
+
     <!-- Header jak w index.html -->
     <div class="header">
       <div class="logo">
@@ -91,12 +143,22 @@
 
     <div class="box">
       <div class="card">
-        <h1>Dziękujemy!</h1>
-        <p id="status">Sprawdzam status płatności…</p>
-        <p class="muted">Zamówienie: <code id="orderId">-</code></p>
+        <h1 data-i18n="thanks-title">Dziękujemy!</h1>
+        <p id="status" data-i18n="status-checking">
+          Sprawdzam status płatności…
+        </p>
+        <p class="muted">
+          <span data-i18n="order-label">Zamówienie:</span>
+          <code id="orderId">-</code>
+        </p>
 
         <div class="actions" id="actions" style="display: none">
-          <button class="btn secondary" id="retry" type="button">
+          <button
+            class="btn secondary"
+            id="retry"
+            type="button"
+            data-i18n="btn-refresh"
+          >
             Odśwież status
           </button>
 
@@ -106,6 +168,7 @@
             id="downloadBtn"
             type="button"
             style="display: none"
+            data-i18n="btn-download"
           >
             Pobierz bilety (PDF)
           </button>
@@ -114,9 +177,10 @@
         <p id="hint" class="muted"></p>
       </div>
     </div>
+
     <div class="notice-box">
       <span class="notice-icon">⏳</span>
-      <p style="margin: 0">
+      <p style="margin: 0" data-i18n="notice-text">
         Czasami oczekiwanie na potwierdzenie od operatora płatności trwa dłuższą
         chwilę. Jeżeli płatność została pobrana z Twojego konta, na pewno
         otrzymasz bilet. Nie ma takiej konieczności — sami sprawdzamy, czy
@@ -132,6 +196,7 @@
         zamówienia.
       </p>
     </div>
+
     <footer class="site-footer">
       <div class="footer-bg" aria-hidden="true"></div>
 
@@ -145,7 +210,7 @@
               </div>
             </div>
 
-            <p class="footer-desc">
+            <p class="footer-desc" data-i18n="footer-desc">
               Duszpasterstwo Przedsiębiorców i Pracodawców Talent w
               Archidiecezji Poznańskiej
             </p>
@@ -166,13 +231,15 @@
                   />
                 </svg>
               </span>
-              <span>Poznań, ul. Głogowska 92</span>
+              <span data-i18n="footer-address">Poznań, ul. Głogowska 92</span>
             </p>
           </div>
 
           <!-- ŚRODKOWA: adres -->
           <div class="footer-col">
-            <h3 class="footer-title">Kontakt</h3>
+            <h3 class="footer-title" data-i18n="footer-contact-title">
+              Kontakt
+            </h3>
 
             <ul class="footer-list footer-list--icons">
               <li>
@@ -206,29 +273,43 @@
 
           <!-- MENU -->
           <div class="footer-col">
-            <h3 class="footer-title">Menu</h3>
+            <h3 class="footer-title" data-i18n="footer-menu-title">Menu</h3>
 
             <ul class="footer-list">
-              <li><a href="#program">Program</a></li>
-              <li><a href="#prelegenci">Prelegenci</a></li>
-              <li><a href="buy_form.html">Zapisy</a></li>
+              <li>
+                <a href="index.html#program" data-i18n="menu-program"
+                  >Program</a
+                >
+              </li>
+              <li>
+                <a href="index.html#prelegenci" data-i18n="menu-prelegenci"
+                  >Prelegenci</a
+                >
+              </li>
+              <li>
+                <a href="buy_form.html" data-i18n="menu-zapisy">Zapisy</a>
+              </li>
               <li class="tooltip">
-                <a href="#reklamacje">Zwroty</a>
-                <span class="tooltip-text">
+                <a href="#reklamacje" data-i18n="menu-zwroty">Zwroty</a>
+                <span class="tooltip-text" data-i18n="tooltip-zwroty">
                   W sprawie zwrotów prosimy o wysyłanie wiadomości na adres
                   email: [konferencja@brfh.eu](mailto:konferencja@brfh.eu). Czas
                   na zwrot biletu wynosi 14 dni od dnia zakupu.
                 </span>
               </li>
               <li>
-                <a href="regulamin.html">Regulamin Konferencji</a>
+                <a href="regulamin.html" data-i18n="menu-regulamin"
+                  >Regulamin Konferencji</a
+                >
               </li>
               <li>
-                <a href="polityka-prywatnosci.html">Polityka prywatności</a>
+                <a href="polityka-prywatnosci.html" data-i18n="menu-polityka"
+                  >Polityka prywatności</a
+                >
               </li>
               <li class="tooltip">
-                <a href="#reklamacje">Reklamacje</a>
-                <span class="tooltip-text">
+                <a href="#reklamacje" data-i18n="menu-reklamacje">Reklamacje</a>
+                <span class="tooltip-text" data-i18n="tooltip-reklamacje">
                   W sprawie reklamacji prosimy o wysyłanie wiadomości na adres
                   email: [konferencja@brfh.eu](mailto:konferencja@brfh.eu)
                 </span>
@@ -238,27 +319,129 @@
 
           <!-- ORGANIZATOR -->
           <div class="footer-col footer-org">
-            <h3 class="footer-title">Organizator</h3>
+            <h3 class="footer-title" data-i18n="footer-org-title">
+              Organizator
+            </h3>
 
             <a
               class="footer-org-card"
               href="https://talentpoznan.pl/"
               aria-label="Talent"
             >
-              <!-- Podmień ścieżkę na właściwą w Twoim projekcie -->
               <img src="obrazy/talent.png" alt="talent" />
             </a>
           </div>
         </div>
 
-        <div class="footer-bottom">
+        <div class="footer-bottom" data-i18n="footer-bottom">
           © 2026 Duszpasterstwo Przedsiębiorców i Pracodawców Talent w
           Archidiecezji Poznańskiej
         </div>
       </div>
     </footer>
 
+    <!-- ======= TŁUMACZENIE PL/ENG ======= -->
     <script>
+      const translations = {
+        pl: {}, // Wypełniane automatycznie przy starcie
+        en: {
+          "thanks-title": "Thank You!",
+          "status-checking": "Checking payment status...",
+          "order-label": "Order:",
+          "btn-refresh": "Refresh status",
+          "btn-download": "Download tickets (PDF)",
+          "btn-back": "Back to form",
+          "status-no-order":
+            "No order number in the URL. Go back to the form and try again.",
+          "status-not-found": "Order not found in the database.",
+          "status-pending": "Order created, waiting for bank confirmation...",
+          "status-success": "Payment confirmed. You can download your tickets.",
+          "status-failed": "Payment failed (status: {status}).",
+          "hint-failed":
+            "If money was deducted from your account, contact us providing your order number.",
+          "status-long":
+            "This is taking longer than usual. Click 'Refresh status' in a moment.",
+          "hint-long":
+            "If you still haven't received your ticket, send an email to konferencja@brfh.eu with your order number.",
+          "status-error": "Status check error. Click 'Refresh status'.",
+          "hint-preparing": "Preparing tickets...",
+          "hint-downloaded": "Downloaded.",
+          "notice-text":
+            'Sometimes waiting for confirmation from the payment operator takes a longer while. If the payment was collected from your account, you will definitely receive a ticket. There is no such necessity - we check ourselves whether the tickets have been sent to the participants - but if you want, you can contact us about this at: <a href="mailto:konferencja@brfh.eu" style="color: #92400e; font-weight: 600">[konferencja@brfh.eu](mailto:konferencja@brfh.eu)</a>. Send an email from the address provided in the form and include the order number.',
+          // Stopka (wspólne z index.html)
+          "footer-desc":
+            "Chaplaincy of Entrepreneurs and Employers Talent in the Archdiocese of Poznań",
+          "footer-address": "Poznań, ul. Głogowska 92",
+          "footer-contact-title": "Contact",
+          "footer-menu-title": "Menu",
+          "menu-program": "Program",
+          "menu-prelegenci": "Speakers",
+          "menu-zapisy": "Registration",
+          "menu-zwroty": "Refunds",
+          "tooltip-zwroty":
+            "For refunds, please send an email to konferencja@brfh.eu. The ticket refund period is 14 days from the date of purchase.",
+          "menu-regulamin": "Conference Terms & Conditions",
+          "menu-polityka": "Privacy Policy",
+          "menu-reklamacje": "Complaints",
+          "tooltip-reklamacje":
+            "For complaints, please send an email to konferencja@brfh.eu",
+          "footer-org-title": "Organizer",
+          "footer-bottom":
+            "© 2026 Chaplaincy of Entrepreneurs and Employers Talent in the Archdiocese of Poznań",
+        },
+      };
+
+      // Funkcje tłumaczące UI
+      function buildPolishDictionary() {
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
+          const key = el.getAttribute("data-i18n");
+          if (!(key in translations.pl)) {
+            translations.pl[key] = el.innerHTML.trim();
+          }
+        });
+      }
+
+      function applyLang(lang) {
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
+          const key = el.getAttribute("data-i18n");
+          if (translations[lang] && translations[lang][key] !== undefined) {
+            el.innerHTML = translations[lang][key];
+          }
+        });
+        document.documentElement.lang = lang === "en" ? "en" : "pl";
+      }
+
+      // Główna funkcja zmiany języka - wywoływana m.in przez przyciski PL / ENG
+      function setLang(lang) {
+        applyLang(lang);
+        localStorage.setItem("site-lang", lang);
+
+        document
+          .getElementById("lang-pl")
+          .classList.toggle("active", lang === "pl");
+        document
+          .getElementById("lang-en")
+          .classList.toggle("active", lang === "en");
+
+        // Zaktualizuj ewentualne teksty statusów generowane z JS,
+        // które mogą być aktualnie wyświetlane
+        updateJsGeneratedTexts(lang);
+      }
+
+      let currentLang = "pl";
+
+      function getText(key) {
+        return translations[currentLang][key] || translations["pl"][key] || key;
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        buildPolishDictionary();
+        const saved = localStorage.getItem("site-lang") || "pl";
+        setLang(saved);
+        currentLang = saved;
+      });
+
+      // Oryginalny kod JS aplikacji
       const statusEl = document.getElementById("status");
       const orderEl = document.getElementById("orderId");
       const actionsEl = document.getElementById("actions");
@@ -278,12 +461,46 @@
 
       orderEl.textContent = extOrderId || "(brak)";
 
+      // Funkcja pomocnicza do uaktualniania tekstów statusów po zmianie języka
+      // (zmienna globalna currentDynamicStatus trzyma nazwę klucza statusu)
+      let currentDynamicStatus = null;
+      let currentStatusParam = null;
+
+      function updateJsGeneratedTexts(lang) {
+        currentLang = lang;
+        if (currentDynamicStatus === "no-order") {
+          statusEl.textContent = getText("status-no-order");
+          retryBtn.textContent = getText("btn-back");
+        } else if (currentDynamicStatus === "not-found") {
+          statusEl.textContent = getText("status-not-found");
+        } else if (currentDynamicStatus === "pending") {
+          statusEl.textContent = getText("status-pending");
+        } else if (currentDynamicStatus === "success") {
+          statusEl.textContent = getText("status-success");
+        } else if (currentDynamicStatus === "failed") {
+          statusEl.textContent = getText("status-failed").replace(
+            "{status}",
+            currentStatusParam,
+          );
+          hintEl.textContent = getText("hint-failed");
+        } else if (currentDynamicStatus === "long") {
+          statusEl.textContent = getText("status-long");
+          hintEl.textContent = getText("hint-long");
+        } else if (currentDynamicStatus === "error") {
+          statusEl.textContent = getText("status-error");
+        } else if (currentDynamicStatus === "raw") {
+          statusEl.textContent =
+            (currentLang === "en" ? "Current status: " : "Aktualny status: ") +
+            currentStatusParam;
+        }
+      }
+
       if (!extOrderId) {
-        statusEl.textContent =
-          "Brak numeru zamówienia w adresie. Wróć do formularza i spróbuj ponownie.";
+        currentDynamicStatus = "no-order";
+        statusEl.textContent = getText("status-no-order");
         statusEl.className = "bad";
         actionsEl.style.display = "flex";
-        retryBtn.textContent = "Wróć do formularza";
+        retryBtn.textContent = getText("btn-back");
         retryBtn.onclick = () => (window.location.href = "/buy_form.html");
       } else {
         let tries = 0;
@@ -308,7 +525,8 @@
             const j = await r.json();
 
             if (!j || !j.found) {
-              statusEl.textContent = "Nie znaleziono zamówienia w bazie.";
+              currentDynamicStatus = "not-found";
+              statusEl.textContent = getText("status-not-found");
               statusEl.className = "bad";
               actionsEl.style.display = "flex";
               return { done: true };
@@ -317,15 +535,15 @@
             const s = String(j.status || "").toUpperCase();
 
             if (!s || s === "PENDING" || s === "WAITING") {
-              statusEl.textContent =
-                "Zamówienie utworzone, czekamy na potwierdzenie z banku…";
+              currentDynamicStatus = "pending";
+              statusEl.textContent = getText("status-pending");
               statusEl.className = "";
               return { done: false };
             }
 
             if (s === "COMPLETED" || s === "SUCCESS") {
-              statusEl.textContent =
-                "Płatność potwierdzona. Możesz pobrać bilety.";
+              currentDynamicStatus = "success";
+              statusEl.textContent = getText("status-success");
               statusEl.className = "ok";
               actionsEl.style.display = "flex";
               downloadBtn.style.display = "inline-block";
@@ -334,15 +552,24 @@
             }
 
             if (s === "CANCELED" || s === "REJECTED" || s === "FAILED") {
-              statusEl.textContent = `Płatność nieudana (status: ${s}).`;
+              currentDynamicStatus = "failed";
+              currentStatusParam = s;
+              statusEl.textContent = getText("status-failed").replace(
+                "{status}",
+                s,
+              );
               statusEl.className = "bad";
               actionsEl.style.display = "flex";
-              hintEl.textContent =
-                "Jeśli pieniądze zeszły z konta, skontaktuj się z nami podając numer zamówienia.";
+              hintEl.textContent = getText("hint-failed");
               return { done: true };
             }
 
-            statusEl.textContent = `Aktualny status: ${s}`;
+            currentDynamicStatus = "raw";
+            currentStatusParam = s;
+            statusEl.textContent =
+              (currentLang === "en"
+                ? "Current status: "
+                : "Aktualny status: ") + s;
             statusEl.className = "";
             return { done: false };
           } catch (e) {
@@ -356,19 +583,18 @@
             if (done) return;
 
             if (tries >= maxTries) {
-              statusEl.textContent =
-                "To trwa dłużej niż zwykle. Kliknij „Odśwież status” za chwilę.";
+              currentDynamicStatus = "long";
+              statusEl.textContent = getText("status-long");
               statusEl.className = "";
               actionsEl.style.display = "flex";
-              hintEl.textContent =
-                "Jeżeli nadal nie otrzymałeś biletu, wyślij mail na adres konferencja@brfh.eu podając numer zamówienia.";
+              hintEl.textContent = getText("hint-long");
               return;
             }
 
             setTimeout(loop, intervalMs);
           } catch (e) {
-            statusEl.textContent =
-              "Błąd sprawdzania statusu. Kliknij „Odśwież status”.";
+            currentDynamicStatus = "error";
+            statusEl.textContent = getText("status-error");
             statusEl.className = "bad";
             actionsEl.style.display = "flex";
             hintEl.textContent = String(e && e.message ? e.message : e);
@@ -376,12 +602,16 @@
         }
 
         retryBtn.onclick = () => {
-          if (retryBtn.textContent === "Wróć do formularza") {
+          if (
+            retryBtn.textContent === getText("btn-back") ||
+            currentDynamicStatus === "no-order"
+          ) {
             window.location.href = "/buy_form.html";
             return;
           }
           tries = 0;
-          statusEl.textContent = "Sprawdzam status płatności…";
+          currentDynamicStatus = "pending";
+          statusEl.textContent = getText("status-pending");
           statusEl.className = "";
           downloadBtn.style.display = "none";
           hintEl.textContent = "";
@@ -391,7 +621,7 @@
         downloadBtn.onclick = async () => {
           try {
             downloadBtn.disabled = true;
-            hintEl.textContent = "Przygotowuję bilety…";
+            hintEl.textContent = getText("hint-preparing");
 
             const a = document.createElement("a");
             a.href = `/api/tickets-pdf-all?order=${encodeURIComponent(extOrderId)}`;
@@ -400,9 +630,9 @@
             a.click();
             a.remove();
 
-            hintEl.textContent = "Pobrano.";
+            hintEl.textContent = getText("hint-downloaded");
           } catch (e) {
-            hintEl.textContent = "Błąd: " + (e?.message || String(e));
+            hintEl.textContent = "Error: " + (e?.message || String(e));
           } finally {
             downloadBtn.disabled = false;
           }

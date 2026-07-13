@@ -106,10 +106,73 @@
       .iti__country-container {
         z-index: 3;
       }
+
+      /* ======= PRZEŁĄCZNIK JĘZYKA / LANGUAGE SWITCHER ======= */
+      .lang-switcher {
+        position: fixed;
+        top: 16px;
+        left: 16px;
+        z-index: 9999;
+        display: flex;
+        gap: 4px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 999px;
+        padding: 4px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+        font-family: "DM Sans", sans-serif;
+      }
+      .lang-switcher button {
+        border: none;
+        background: transparent;
+        padding: 6px 12px;
+        border-radius: 999px;
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 13px;
+        letter-spacing: 0.5px;
+        color: #333;
+        transition:
+          background 0.2s,
+          color 0.2s;
+      }
+      footer h3 {
+        text-transform: none;
+      }
+      .lang-switcher button.active {
+        background: #1a1a1a;
+        color: #fff;
+      }
+      .lang-switcher button:hover:not(.active) {
+        background: rgba(0, 0, 0, 0.08);
+      }
+      @media (prefers-color-scheme: dark) {
+        .lang-switcher {
+          background: rgba(30, 30, 30, 0.85);
+        }
+        .lang-switcher button {
+          color: #eee;
+        }
+        .lang-switcher button.active {
+          background: #fff;
+          color: #111;
+        }
+      }
     </style>
   </head>
 
   <body>
+    <!-- PRZEŁĄCZNIK JĘZYKA / LANGUAGE SWITCHER -->
+    <div
+      class="lang-switcher"
+      role="group"
+      aria-label="Wybór języka / Language selector"
+    >
+      <button type="button" id="lang-pl" class="active" onclick="setLang('pl')">
+        PL
+      </button>
+      <button type="button" id="lang-en" onclick="setLang('en')">ENG</button>
+    </div>
+
     <!--
   <div class="promo-bar">
     <div class="promo-content">
@@ -133,13 +196,13 @@
     </div>
 
     <div class="row">
-      <h1>Kup bilet</h1>
+      <h1 data-i18n="page-title">Kup bilet</h1>
 
       <div>
         <form id="buy">
-          <h3>Dane osobowe</h3>
+          <h3 data-i18n="section-personal">Dane osobowe</h3>
 
-          <label>Imię i Nazwisko</label>
+          <label data-i18n="label-fullname">Imię i Nazwisko</label>
           <input
             name="fullName"
             required
@@ -148,7 +211,7 @@
             maxlength="120"
           />
 
-          <label>Email</label>
+          <label data-i18n="label-email">Email</label>
           <input
             name="email"
             type="email"
@@ -158,7 +221,7 @@
             maxlength="120"
           />
 
-          <label>Numer telefonu</label>
+          <label data-i18n="label-phone">Numer telefonu</label>
           <input
             name="phone"
             id="phone"
@@ -169,13 +232,13 @@
           />
           <input type="hidden" name="phoneCountry" id="phoneCountry" />
 
-          <label>Ulica</label>
+          <label data-i18n="label-street">Ulica</label>
           <input name="street" required minlength="3" maxlength="120" />
 
-          <label>Miasto</label>
+          <label data-i18n="label-city">Miasto</label>
           <input name="city" required minlength="2" maxlength="80" />
 
-          <label>Kod pocztowy</label>
+          <label data-i18n="label-postal">Kod pocztowy</label>
           <input
             name="postalCode"
             required
@@ -188,19 +251,25 @@
             maxlength="6"
           />
 
-          <h3>Bilety</h3>
+          <h3 data-i18n="section-tickets">Bilety</h3>
 
-          <label>Typ biletu</label>
+          <label data-i18n="label-ticket-type">Typ biletu</label>
           <select name="ticketType" id="ticketType" required>
-            <option value="premium">Premium – 1 dzień (499 PLN)</option>
-            <option value="biznesplus">Biznes Plus – 2 dni (599 PLN)</option>
-            <option value="vipbankiet">VIP – 2 dni + bankiet (999 PLN)</option>
-            <option value="vip">
+            <option value="premium" data-i18n="opt-premium">
+              Premium – 1 dzień (499 PLN)
+            </option>
+            <option value="biznesplus" data-i18n="opt-biznesplus">
+              Biznes Plus – 2 dni (599 PLN)
+            </option>
+            <option value="vipbankiet" data-i18n="opt-vipbankiet">
+              VIP – 2 dni + bankiet (999 PLN)
+            </option>
+            <option value="vip" data-i18n="opt-vip">
               VIP z Prezentacją – 2 dni + bankiet (1 499 PLN)
             </option>
           </select>
 
-          <label>Ilość sztuk</label>
+          <label data-i18n="label-quantity">Ilość sztuk</label>
           <input
             name="quantity"
             type="number"
@@ -210,17 +279,24 @@
             required
           />
 
-          <label>Kod promocyjny</label>
+          <label data-i18n="label-promo">Kod promocyjny</label>
           <div class="promo-line">
             <input name="promoCode" id="promoCode" placeholder=" " />
-            <button type="button" id="applyPromo" class="promo-apply-btn">
+            <button
+              type="button"
+              id="applyPromo"
+              class="promo-apply-btn"
+              data-i18n="btn-apply"
+            >
               Zastosuj
             </button>
           </div>
           <div id="promoHint" class="promo-hint"></div>
 
           <div class="order-summary" aria-live="polite">
-            <span class="order-summary__label">Razem:</span>
+            <span class="order-summary__label" data-i18n="label-total"
+              >Razem:</span
+            >
             <span class="order-summary__value" id="orderTotal">—</span>
           </div>
 
@@ -239,7 +315,7 @@
               value="1"
               required
             />
-            <label for="consent">
+            <label for="consent" data-i18n="consent-label">
               Zapoznałem się i akceptuję
               <a href="regulamin.html" target="_blank" rel="noopener noreferrer"
                 >Regulamin</a
@@ -256,7 +332,9 @@
 
           <div class="pay-buttons">
             <button type="button" id="autopayBtn" class="payu-btn">
-              <span class="payu-btn__text">Zapłać przez</span>
+              <span class="payu-btn__text" data-i18n="btn-pay-via"
+                >Zapłać przez</span
+              >
               <img
                 src="svg/Logo-full-black.svg"
                 alt=""
@@ -271,7 +349,7 @@
         </form>
       </div>
 
-      <p class="realizacja" style="margin: 20px 0">
+      <p class="realizacja" style="margin: 20px 0" data-i18n="realizacja-text">
         Czas realizacji zamówienia - 1 dzień roboczy.
       </p>
       <img
@@ -293,14 +371,14 @@
               </div>
             </div>
 
-            <p class="footer-desc">
+            <p class="footer-desc" data-i18n="footer-desc">
               Duszpasterstwo Przedsiębiorców i Pracodawców Talent w
               Archidiecezji Poznańskiej
             </p>
           </div>
 
           <div class="footer-col">
-            <h3 class="footer-title">Adres</h3>
+            <h3 class="footer-title" data-i18n="footer-address-title">Adres</h3>
 
             <ul class="footer-list footer-list--icons">
               <li>
@@ -350,38 +428,48 @@
           </div>
 
           <div class="footer-col">
-            <h3 class="footer-title">Menu</h3>
+            <h3 class="footer-title" data-i18n="footer-menu-title">Menu</h3>
 
             <ul class="footer-list">
-              <li><a href="#program">Program</a></li>
-              <li><a href="#prelegenci">Prelegenci</a></li>
-              <li><a href="buy_form.html">Zapisy</a></li>
+              <li><a href="#program" data-i18n="menu-program">Program</a></li>
+              <li>
+                <a href="#prelegenci" data-i18n="menu-prelegenci">Prelegenci</a>
+              </li>
+              <li>
+                <a href="buy_form.html" data-i18n="menu-zapisy">Zapisy</a>
+              </li>
               <li class="tooltip">
-                <a href="#reklamacje">Zwroty</a>
-                <span class="tooltip-text">
+                <a href="#reklamacje" data-i18n="menu-zwroty">Zwroty</a>
+                <span class="tooltip-text" data-i18n="tooltip-zwroty">
                   W sprawie zwrotów prosimy o wysyłanie wiadomości na adres
-                  email: konferencja@brfh.eu. Czas na zwrot biletu wynosi 14 dni
-                  od dnia zakupu.
+                  email: [konferencja@brfh.eu](mailto:konferencja@brfh.eu). Czas
+                  na zwrot biletu wynosi 14 dni od dnia zakupu.
                 </span>
               </li>
               <li>
-                <a href="regulamin.html">Regulamin Konferencji</a>
+                <a href="regulamin.html" data-i18n="menu-regulamin"
+                  >Regulamin Konferencji</a
+                >
               </li>
               <li>
-                <a href="polityka-prywatnosci.html">Polityka prywatności</a>
+                <a href="polityka-prywatnosci.html" data-i18n="menu-polityka"
+                  >Polityka prywatności</a
+                >
               </li>
               <li class="tooltip">
-                <a href="#reklamacje">Reklamacje</a>
-                <span class="tooltip-text">
+                <a href="#reklamacje" data-i18n="menu-reklamacje">Reklamacje</a>
+                <span class="tooltip-text" data-i18n="tooltip-reklamacje">
                   W sprawie reklamacji prosimy o wysyłanie wiadomości na adres
-                  email: konferencja@brfh.eu
+                  email: [konferencja@brfh.eu](mailto:konferencja@brfh.eu)
                 </span>
               </li>
             </ul>
           </div>
 
           <div class="footer-col footer-org">
-            <h3 class="footer-title">Organizator</h3>
+            <h3 class="footer-title" data-i18n="footer-org-title">
+              Organizator
+            </h3>
 
             <a
               class="footer-org-card"
@@ -395,7 +483,7 @@
           </div>
         </div>
 
-        <div class="footer-bottom">
+        <div class="footer-bottom" data-i18n="footer-bottom">
           © 2026 Duszpasterstwo Przedsiębiorców i Pracodawców Talent w
           Archidiecezji Poznańskiej
         </div>
@@ -578,17 +666,17 @@
         postalCodeInput.value = postalCode;
 
         if (fullName.length < 3) {
-          fullNameInput.setCustomValidity("Podaj imię i nazwisko.");
+          fullNameInput.setCustomValidity(t("err-fullname"));
           return fullNameInput;
         }
 
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-          emailInput.setCustomValidity("Podaj poprawny adres e-mail.");
+          emailInput.setCustomValidity(t("err-email"));
           return emailInput;
         }
 
         if (!phone) {
-          phoneInput.setCustomValidity("Podaj numer telefonu.");
+          phoneInput.setCustomValidity(t("err-phone-required"));
           return phoneInput;
         }
 
@@ -597,41 +685,37 @@
           typeof window.intlTelInputUtils !== "undefined" &&
           !iti.isValidNumber()
         ) {
-          phoneInput.setCustomValidity("Podaj poprawny numer telefonu.");
+          phoneInput.setCustomValidity(t("err-phone-invalid"));
           return phoneInput;
         }
 
         if (street.length < 3) {
-          streetInput.setCustomValidity("Podaj ulicę.");
+          streetInput.setCustomValidity(t("err-street"));
           return streetInput;
         }
 
         if (city.length < 2) {
-          cityInput.setCustomValidity("Podaj miasto.");
+          cityInput.setCustomValidity(t("err-city"));
           return cityInput;
         }
 
         if (!/^\d{2}-\d{3}$/.test(postalCode)) {
-          postalCodeInput.setCustomValidity(
-            "Podaj kod pocztowy w formacie 00-000.",
-          );
+          postalCodeInput.setCustomValidity(t("err-postal"));
           return postalCodeInput;
         }
 
         if (!PRICE_GROSZE[ticketType]) {
-          ticketSel.setCustomValidity("Wybierz poprawny typ biletu.");
+          ticketSel.setCustomValidity(t("err-ticket"));
           return ticketSel;
         }
 
         if (!Number.isFinite(qty) || qty < 1 || qty > 20) {
-          qtyInput.setCustomValidity("Ilość biletów musi być od 1 do 20.");
+          qtyInput.setCustomValidity(t("err-qty"));
           return qtyInput;
         }
 
         if (!consent) {
-          consentInput.setCustomValidity(
-            "Zaakceptuj Regulamin oraz Politykę prywatności.",
-          );
+          consentInput.setCustomValidity(t("err-consent"));
           return consentInput;
         }
 
@@ -645,13 +729,13 @@
         if (normalized === "lipiec") {
           const deadline = new Date("2026-07-01T00:00:00+02:00");
           if (now >= deadline) {
-            return { valid: false, label: "Ten kod już wygasł." };
+            return { valid: false, label: t("promo-expired") };
           }
           return {
             valid: true,
             code: "LIPIEC",
             factor: 0.65,
-            label: "Kod zastosowany (–35%).",
+            label: t("promo-applied-35"),
           };
         }
 
@@ -662,10 +746,10 @@
               valid: true,
               code: "NASKALE",
               factor: 0.5,
-              label: "Kod zastosowany (–50%).",
+              label: t("promo-applied-50"),
             };
           }
-          return { valid: false, label: "Ten kod już wygasł." };
+          return { valid: false, label: t("promo-expired") };
         }
 
         if (normalized === "talent") {
@@ -675,10 +759,10 @@
               valid: true,
               code: "TALENT",
               factor: 0.5,
-              label: "Kod zastosowany (–50%).",
+              label: t("promo-applied-50"),
             };
           }
-          return { valid: false, label: "Ten kod już wygasł." };
+          return { valid: false, label: t("promo-expired") };
         }
 
         if (normalized === "asknet12#") {
@@ -686,11 +770,11 @@
             valid: true,
             code: "asknet12#",
             fixedPrice: 300,
-            label: "Kod zastosowany.",
+            label: t("promo-applied"),
           };
         }
 
-        return { valid: false, label: "Nieprawidłowy kod." };
+        return { valid: false, label: t("promo-invalid") };
       }
 
       function setButtonsDisabled(disabled) {
@@ -856,7 +940,7 @@
         payload.paymentProvider = "autopay";
 
         msg.style.color = "#ffffff";
-        msg.textContent = "Tworzę zamówienie AutoPay...";
+        msg.textContent = t("msg-creating-order");
 
         try {
           const res = await fetch("/api/create-order", {
@@ -874,9 +958,11 @@
 
           if (!res.ok) {
             const errText =
-              (data && (data.error || data.message)) || raw || "Nieznany błąd.";
+              (data && (data.error || data.message)) ||
+              raw ||
+              t("msg-unknown-error");
             msg.style.color = "#ffffff";
-            msg.textContent = `Błąd: ${res.status} ${errText}`;
+            msg.textContent = `${t("msg-error-prefix")}: ${res.status} ${errText}`;
             setButtonsDisabled(false);
             return;
           }
@@ -888,14 +974,14 @@
 
           if (!paymentUrl) {
             msg.style.color = "#ffffff";
-            msg.textContent = "Brak adresu przekierowania do płatności.";
+            msg.textContent = t("msg-no-redirect");
             setButtonsDisabled(false);
             return;
           }
 
           if (!redirectFields || typeof redirectFields !== "object") {
             msg.style.color = "#ffffff";
-            msg.textContent = "Brak danych formularza płatności.";
+            msg.textContent = t("msg-no-payment-data");
             setButtonsDisabled(false);
             return;
           }
@@ -903,13 +989,170 @@
           redirectToAutopay(paymentUrl, redirectFields, redirectMethod);
         } catch (err) {
           msg.style.color = "#ffffff";
-          msg.textContent =
-            "Nie udało się utworzyć zamówienia. Spróbuj ponownie.";
+          msg.textContent = t("msg-order-failed");
           setButtonsDisabled(false);
         }
       });
     </script>
 
     <script src="main.js" defer></script>
+
+    <!-- ======= TŁUMACZENIE PL/ENG ======= -->
+    <script>
+      const translations = {
+        pl: {},
+        en: {
+          "page-title": "Buy a ticket",
+          "section-personal": "Personal details",
+          "label-fullname": "Full name",
+          "label-email": "Email",
+          "label-phone": "Phone number",
+          "label-street": "Street",
+          "label-city": "City",
+          "label-postal": "Postal code",
+          "section-tickets": "Tickets",
+          "label-ticket-type": "Ticket type",
+          "opt-premium": "Premium – 1 day (499 PLN)",
+          "opt-biznesplus": "Business Plus – 2 days (599 PLN)",
+          "opt-vipbankiet": "VIP – 2 days + banquet (999 PLN)",
+          "opt-vip": "VIP with Presentation – 2 days + banquet (1,499 PLN)",
+          "label-quantity": "Quantity",
+          "label-promo": "Promo code",
+          "btn-apply": "Apply",
+          "label-total": "Total:",
+          "consent-label":
+            'I have read and accept the <a href="regulamin.html" target="_blank" rel="noopener noreferrer">Terms &amp; Conditions</a> and the <a href="polityka-prywatnosci.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.',
+          "btn-pay-via": "Pay via",
+          "realizacja-text": "Order processing time - 1 business day.",
+          "footer-desc":
+            'Chaplaincy of Entrepreneurs and Employers "Talent" in the Archdiocese of Poznań',
+          "footer-address-title": "Address",
+          "footer-menu-title": "Menu",
+          "menu-program": "Program",
+          "menu-prelegenci": "Speakers",
+          "menu-zapisy": "Registration",
+          "menu-zwroty": "Refunds",
+          "tooltip-zwroty":
+            "For refunds, please send an email to: konferencja@brfh.eu. The ticket refund period is 14 days from the date of purchase.",
+          "menu-regulamin": "Conference Terms & Conditions",
+          "menu-polityka": "Privacy Policy",
+          "menu-reklamacje": "Complaints",
+          "tooltip-reklamacje":
+            "For complaints, please send an email to: konferencja@brfh.eu",
+          "footer-org-title": "Organizer",
+          "footer-bottom":
+            '© 2026 Chaplaincy of Entrepreneurs and Employers "Talent" in the Archdiocese of Poznań',
+
+          "err-fullname": "Please enter your full name.",
+          "err-email": "Please enter a valid email address.",
+          "err-phone-required": "Please enter a phone number.",
+          "err-phone-invalid": "Please enter a valid phone number.",
+          "err-street": "Please enter the street.",
+          "err-city": "Please enter the city.",
+          "err-postal": "Please enter the postal code in the format 00-000.",
+          "err-ticket": "Please select a valid ticket type.",
+          "err-qty": "The number of tickets must be between 1 and 20.",
+          "err-consent":
+            "Please accept the Terms & Conditions and Privacy Policy.",
+
+          "promo-expired": "This code has expired.",
+          "promo-applied-35": "Code applied (–35%).",
+          "promo-applied-50": "Code applied (–50%).",
+          "promo-applied": "Code applied.",
+          "promo-invalid": "Invalid code.",
+
+          "msg-creating-order": "Creating AutoPay order...",
+          "msg-unknown-error": "Unknown error.",
+          "msg-error-prefix": "Error",
+          "msg-no-redirect": "No payment redirect address.",
+          "msg-no-payment-data": "Missing payment form data.",
+          "msg-order-failed": "Failed to create the order. Please try again.",
+        },
+      };
+
+      function buildPolishDictionary() {
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
+          const key = el.getAttribute("data-i18n");
+          if (!(key in translations.pl)) {
+            translations.pl[key] = el.innerHTML.trim();
+          }
+        });
+        translations.pl["err-fullname"] = "Podaj imię i nazwisko.";
+        translations.pl["err-email"] = "Podaj poprawny adres e-mail.";
+        translations.pl["err-phone-required"] = "Podaj numer telefonu.";
+        translations.pl["err-phone-invalid"] = "Podaj poprawny numer telefonu.";
+        translations.pl["err-street"] = "Podaj ulicę.";
+        translations.pl["err-city"] = "Podaj miasto.";
+        translations.pl["err-postal"] = "Podaj kod pocztowy w formacie 00-000.";
+        translations.pl["err-ticket"] = "Wybierz poprawny typ biletu.";
+        translations.pl["err-qty"] = "Ilość biletów musi być od 1 do 20.";
+        translations.pl["err-consent"] =
+          "Zaakceptuj Regulamin oraz Politykę prywatności.";
+        translations.pl["promo-expired"] = "Ten kod już wygasł.";
+        translations.pl["promo-applied-35"] = "Kod zastosowany (–35%).";
+        translations.pl["promo-applied-50"] = "Kod zastosowany (–50%).";
+        translations.pl["promo-applied"] = "Kod zastosowany.";
+        translations.pl["promo-invalid"] = "Nieprawidłowy kod.";
+        translations.pl["msg-creating-order"] = "Tworzę zamówienie AutoPay...";
+        translations.pl["msg-unknown-error"] = "Nieznany błąd.";
+        translations.pl["msg-error-prefix"] = "Błąd";
+        translations.pl["msg-no-redirect"] =
+          "Brak adresu przekierowania do płatności.";
+        translations.pl["msg-no-payment-data"] =
+          "Brak danych formularza płatności.";
+        translations.pl["msg-order-failed"] =
+          "Nie udało się utworzyć zamówienia. Spróbuj ponownie.";
+      }
+
+      let currentLang = "pl";
+
+      function t(key) {
+        return (
+          (translations[currentLang] && translations[currentLang][key]) ||
+          (translations.pl && translations.pl[key]) ||
+          key
+        );
+      }
+
+      function applyLang(lang) {
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
+          const key = el.getAttribute("data-i18n");
+          if (translations[lang] && translations[lang][key] !== undefined) {
+            el.innerHTML = translations[lang][key];
+          }
+        });
+        document.documentElement.lang = lang === "en" ? "en" : "pl";
+        currentLang = lang;
+      }
+
+      function setCookie(name, value, days) {
+        const maxAge = days * 24 * 60 * 60;
+        document.cookie = `${name}=${value}; path=/; max-age=${maxAge}; SameSite=Lax`;
+      }
+
+      function getCookie(name) {
+        const match = document.cookie.match(
+          new RegExp("(^| )" + name + "=([^;]+)"),
+        );
+        return match ? match[2] : null;
+      }
+
+      function setLang(lang) {
+        applyLang(lang);
+        setCookie("site-lang", lang, 365);
+        document
+          .getElementById("lang-pl")
+          .classList.toggle("active", lang === "pl");
+        document
+          .getElementById("lang-en")
+          .classList.toggle("active", lang === "en");
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        buildPolishDictionary();
+        const saved = getCookie("site-lang") || "pl";
+        setLang(saved);
+      });
+    </script>
   </body>
 </html>

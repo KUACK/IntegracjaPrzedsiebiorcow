@@ -23,9 +23,70 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700;800&family=DM+Serif+Display&display=swap"
     />
+    <style>
+      /* ======= PRZEŁĄCZNIK JĘZYKA / LANGUAGE SWITCHER ======= */
+      .lang-switcher {
+        position: fixed;
+        top: 16px;
+        left: 16px;
+        z-index: 9999;
+        display: flex;
+        gap: 4px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 999px;
+        padding: 4px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+        font-family: "DM Sans", sans-serif;
+      }
+      .lang-switcher button {
+        border: none;
+        background: transparent;
+        padding: 6px 12px;
+        border-radius: 999px;
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 13px;
+        letter-spacing: 0.5px;
+        color: #333;
+        transition:
+          background 0.2s,
+          color 0.2s;
+      }
+      .lang-switcher button.active {
+        background: #1a1a1a;
+        color: #fff;
+      }
+      .lang-switcher button:hover:not(.active) {
+        background: rgba(0, 0, 0, 0.08);
+      }
+      @media (prefers-color-scheme: dark) {
+        .lang-switcher {
+          background: rgba(30, 30, 30, 0.85);
+        }
+        .lang-switcher button {
+          color: #eee;
+        }
+        .lang-switcher button.active {
+          background: #fff;
+          color: #111;
+        }
+      }
+    </style>
   </head>
 
   <body>
+    <!-- PRZEŁĄCZNIK JĘZYKA / LANGUAGE SWITCHER -->
+    <div
+      class="lang-switcher"
+      role="group"
+      aria-label="Wybór języka / Language selector"
+    >
+      <button type="button" id="lang-pl" class="active" onclick="setLang('pl')">
+        PL
+      </button>
+      <button type="button" id="lang-en" onclick="setLang('en')">ENG</button>
+    </div>
+
     <!-- PASEK PROMOCYJNY 
     <div class="promo-bar">
       <div class="promo-content">
@@ -51,6 +112,7 @@
     <!--<dialog id="welcome-modal">
       <h2>Płatności już dostępne!</h2>
 
+
       <p class="extend">
         Ważność wszystkich kodów promocyjnych została przedłużona do
         31.05.2026r.
@@ -61,7 +123,9 @@
     <section class="hero" id="prelegenci">
       <div class="container">
         <div class="section hiro">
-          <h2 class="section-title">NASI PRELEGENCI</h2>
+          <h2 class="section-title" data-i18n="section-title">
+            NASI PRELEGENCI
+          </h2>
           <div class="speakers-grid">
             <div class="speaker-card">
               <img
@@ -85,12 +149,12 @@
               />
             </div>
           </div>
-          <p class="section-subtitle2">
+          <p class="section-subtitle2" data-i18n="section-subtitle2">
             WKRÓTCE PRZEDSTAWIMY NASZYCH PRELEGENTÓW
           </p>
 
           <div class="guzikhiro">
-            <p class="zoba">
+            <p class="zoba" data-i18n="zoba">
               W MIĘDZYCZASIE ZOBACZ JAK WYGLĄDAŁY POPRZEDNIE EDYCJE
             </p>
             <a
@@ -98,6 +162,7 @@
               class="brfh"
               target="_blank"
               rel="noopener noreferrer"
+              data-i18n="brfh-link"
               >KLIKAJĄC TUTAJ</a
             >
           </div>
@@ -111,80 +176,94 @@
       <div class="schedule-stripe day-1">
         <div class="container">
           <header class="schedule-head">
-            <div class="schedule-kicker">Program Integracji</div>
-            <h2 class="schedule-main-date">9 X 2026 piątek</h2>
+            <div class="schedule-kicker" data-i18n="kicker">
+              Program Integracji
+            </div>
+            <h2 class="schedule-main-date" data-i18n="day1-date">
+              9 X 2026 piątek
+            </h2>
           </header>
 
           <div class="schedule-grid">
             <article class="schedule-card">
               <div class="schedule-time">08.00</div>
-              <h4 class="schedule-title">MSZA ŚWIĘTA</h4>
-              <p class="schedule-desc">
+              <h4 class="schedule-title" data-i18n="d1-1-title">MSZA ŚWIĘTA</h4>
+              <p class="schedule-desc" data-i18n="d1-1-desc">
                 Rozpoczęcie konferencji wspólną modlitwą.
               </p>
             </article>
 
             <article class="schedule-card">
               <div class="schedule-time">08.45</div>
-              <h4 class="schedule-title">REJESTRACJA UCZESTNIKÓW</h4>
-              <p class="schedule-desc">
+              <h4 class="schedule-title" data-i18n="d1-2-title">
+                REJESTRACJA UCZESTNIKÓW
+              </h4>
+              <p class="schedule-desc" data-i18n="d1-2-desc">
                 Odbiór identyfikatorów i materiałów konferencyjnych.
               </p>
             </article>
 
             <article class="schedule-card">
               <div class="schedule-time">09.30</div>
-              <h4 class="schedule-title">OFICJALNE POWITANIE</h4>
-              <p class="schedule-desc">
+              <h4 class="schedule-title" data-i18n="d1-3-title">
+                OFICJALNE POWITANIE
+              </h4>
+              <p class="schedule-desc" data-i18n="d1-3-desc">
                 Powitanie uczestników i wprowadzenie organizatorów.
               </p>
             </article>
 
             <article class="schedule-card schedule-card--wide">
               <div class="schedule-time">10.00</div>
-              <h4 class="schedule-title">BLOK PRELEKCJI I</h4>
+              <h4 class="schedule-title" data-i18n="d1-4-title">
+                BLOK PRELEKCJI I
+              </h4>
               <div class="prelekcje-grid">
                 <div class="prelekcja-slot">
-                  <span>Panel 1</span>
+                  <span data-i18n="panel-1">Panel 1</span>
                 </div>
                 <div class="prelekcja-slot">
-                  <span>Panel 2</span>
+                  <span data-i18n="panel-2">Panel 2</span>
                 </div>
                 <div class="prelekcja-slot">
-                  <span>Panel 3</span>
+                  <span data-i18n="panel-3">Panel 3</span>
                 </div>
                 <div class="prelekcja-slot">
-                  <span>Panel 4</span>
+                  <span data-i18n="panel-4">Panel 4</span>
                 </div>
                 <div class="prelekcja-slot">
-                  <span>Panel 5</span>
+                  <span data-i18n="panel-5">Panel 5</span>
                 </div>
                 <div class="prelekcja-slot">
-                  <span>Panel 6</span>
+                  <span data-i18n="panel-6">Panel 6</span>
                 </div>
               </div>
             </article>
 
             <article class="schedule-card">
               <div class="schedule-time">13.00</div>
-              <h4 class="schedule-title">BLOK NETWORKINGOWY</h4>
-              <p class="schedule-desc">
+              <h4 class="schedule-title" data-i18n="d1-5-title">
+                BLOK NETWORKINGOWY
+              </h4>
+              <p class="schedule-desc" data-i18n="d1-5-desc">
                 Czas na rozmowy, nawiązywanie kontaktów i wymianę doświadczeń.
               </p>
             </article>
 
             <article class="schedule-card">
               <div class="schedule-time">14.00</div>
-              <h4 class="schedule-title">OBIAD</h4>
-              <p class="schedule-desc">
+              <h4 class="schedule-title" data-i18n="d1-6-title">OBIAD</h4>
+              <p class="schedule-desc" data-i18n="d1-6-desc">
                 Wspólny posiłek dla uczestników konferencji.
               </p>
             </article>
 
             <article class="schedule-card">
               <div class="schedule-time">15.00</div>
-              <h4 class="schedule-title">PREZENTACJA VIP</h4>
-              <p class="schedule-desc">
+              <h4 class="schedule-title" data-i18n="d1-7-title">
+                PREZENTACJA VIP
+              </h4>
+              <p class="schedule-desc" data-i18n="d1-7-desc">
                 Specjalne prezentacje dla uczestników posiadających bilety VIP z
                 prezentacją.
               </p>
@@ -192,25 +271,27 @@
 
             <article class="schedule-card schedule-card--wide">
               <div class="schedule-time">16.00</div>
-              <h4 class="schedule-title">BLOK PRELEKCJI II</h4>
+              <h4 class="schedule-title" data-i18n="d1-8-title">
+                BLOK PRELEKCJI II
+              </h4>
               <div class="prelekcje-grid">
                 <div class="prelekcja-slot">
-                  <span>Panel 1</span>
+                  <span data-i18n="panel-1">Panel 1</span>
                 </div>
                 <div class="prelekcja-slot">
-                  <span>Panel 2</span>
+                  <span data-i18n="panel-2">Panel 2</span>
                 </div>
                 <div class="prelekcja-slot">
-                  <span>Panel 3</span>
+                  <span data-i18n="panel-3">Panel 3</span>
                 </div>
                 <div class="prelekcja-slot">
-                  <span>Panel 4</span>
+                  <span data-i18n="panel-4">Panel 4</span>
                 </div>
                 <div class="prelekcja-slot">
-                  <span>Panel 5</span>
+                  <span data-i18n="panel-5">Panel 5</span>
                 </div>
                 <div class="prelekcja-slot">
-                  <span>Panel 6</span>
+                  <span data-i18n="panel-6">Panel 6</span>
                 </div>
               </div>
             </article>
@@ -222,10 +303,14 @@
       <div class="banquet">
         <div class="banquet__inner bankiet1">
           <div class="banquet__label">
-            <span>BANKIET</span>
-            <span class="godzina">GODZ. 20:00</span>
+            <span data-i18n="banquet-label">BANKIET</span>
+            <span class="godzina" data-i18n="banquet-time">GODZ. 20:00</span>
           </div>
-          <div class="banquet__title" style="letter-spacing: 2px">
+          <div
+            class="banquet__title"
+            style="letter-spacing: 2px"
+            data-i18n="banquet-title"
+          >
             SALA<br class="mobile-break" />
             SAFFRON
           </div>
@@ -236,35 +321,41 @@
       <div class="schedule-stripe day-2">
         <div class="container">
           <header class="schedule-head schedule-head--compact">
-            <div class="schedule-kicker">Program Integracji</div>
-            <h2 class="schedule-main-date">10 X 2026 sobota</h2>
+            <div class="schedule-kicker" data-i18n="kicker">
+              Program Integracji
+            </div>
+            <h2 class="schedule-main-date" data-i18n="day2-date">
+              10 X 2026 sobota
+            </h2>
           </header>
 
           <div class="schedule-grid schedule-grid--day2">
             <article class="schedule-card schedule-card--wide">
               <div class="schedule-time">9.00</div>
-              <h4 class="schedule-title">BLOK PRELEKCJI III</h4>
+              <h4 class="schedule-title" data-i18n="d2-1-title">
+                BLOK PRELEKCJI III
+              </h4>
               <div class="prelekcje-grid">
                 <div class="prelekcja-slot">
-                  <span>Panel 1</span>
+                  <span data-i18n="panel-1">Panel 1</span>
                 </div>
                 <div class="prelekcja-slot">
-                  <span>Panel 2</span>
+                  <span data-i18n="panel-2">Panel 2</span>
                 </div>
                 <div class="prelekcja-slot">
-                  <span>Panel 3</span>
+                  <span data-i18n="panel-3">Panel 3</span>
                 </div>
                 <div class="prelekcja-slot">
-                  <span>Panel 4</span>
+                  <span data-i18n="panel-4">Panel 4</span>
                 </div>
                 <div class="prelekcja-slot">
-                  <span>Panel 5</span>
+                  <span data-i18n="panel-5">Panel 5</span>
                 </div>
                 <div class="prelekcja-slot">
-                  <span>Panel 6</span>
+                  <span data-i18n="panel-6">Panel 6</span>
                 </div>
               </div>
-              <p class="inne_miejsce">
+              <p class="inne_miejsce" data-i18n="d2-1-place">
                 Miejsce: Sala czerwona <br />
                 Stare Miasto - Poznań
               </p>
@@ -272,32 +363,36 @@
 
             <article class="schedule-card">
               <div class="schedule-time">–</div>
-              <h4 class="schedule-title">ZWIEDZANIE POZNANIA</h4>
-              <p class="schedule-desc">
+              <h4 class="schedule-title" data-i18n="d2-2-title">
+                ZWIEDZANIE POZNANIA
+              </h4>
+              <p class="schedule-desc" data-i18n="d2-2-desc">
                 Wspólne zwiedzanie najważniejszych miejsc i atrakcji Poznania.
               </p>
             </article>
 
             <article class="schedule-card">
               <div class="schedule-time">13.00</div>
-              <h4 class="schedule-title">MSZA ŚWIĘTA</h4>
-              <p class="schedule-desc">
+              <h4 class="schedule-title" data-i18n="d2-3-title">MSZA ŚWIĘTA</h4>
+              <p class="schedule-desc" data-i18n="d2-3-desc">
                 Eucharystia w intencji uczestników konferencji.
               </p>
             </article>
 
             <article class="schedule-card">
               <div class="schedule-time">14.00</div>
-              <h4 class="schedule-title">OBIAD</h4>
-              <p class="schedule-desc">
+              <h4 class="schedule-title" data-i18n="d2-4-title">OBIAD</h4>
+              <p class="schedule-desc" data-i18n="d2-4-desc">
                 Wspólny obiad uczestników drugiego dnia konferencji.
               </p>
             </article>
 
             <article class="schedule-card">
               <div class="schedule-time">–</div>
-              <h4 class="schedule-title">ODWIEDZENIE RELIKWII</h4>
-              <p class="schedule-desc">
+              <h4 class="schedule-title" data-i18n="d2-5-title">
+                ODWIEDZENIE RELIKWII
+              </h4>
+              <p class="schedule-desc" data-i18n="d2-5-desc">
                 Miecz z czasów Jezusa – którym św. Piotr odciął ucho słudze
                 arcykapłana.
               </p>
@@ -311,7 +406,7 @@
     <div class="banquet">
       <div class="banquet__inner">
         <div class="banquet__label">
-          <span>MIEJSCE WYDARZENIA</span>
+          <span data-i18n="venue-label">MIEJSCE WYDARZENIA</span>
         </div>
         <div class="banquet__title">World Trade Center Poznań</div>
         <div class="miejsce_adress">
@@ -341,122 +436,185 @@
     <div class="tickets-grid">
       <!-- BILET 1: 1 dzień Premium -->
       <div class="ticket-card">
-        <div class="ticket-badge">Premium</div>
-        <div class="ticket-name">Bilet Premium</div>
+        <div class="ticket-badge" data-i18n="t1-badge">Premium</div>
+        <div class="ticket-name" data-i18n="t1-name">Bilet Premium</div>
 
         <div class="ticket-description">
-          <div class="ticket-desc-title">1 dzień konferencji</div>
+          <div class="ticket-desc-title" data-i18n="t1-desc-title">
+            1 dzień konferencji
+          </div>
           <ul class="ticket-features">
-            <li>Dostęp do wszystkich prelekcji i paneli tego dnia.</li>
-            <li>Przerwy networkingowe.</li>
-            <li>Kawa, herbata i ciastka przez cały dzień wydarzenia.</li>
-            <li>Materiały konferencyjne.</li>
-            <li>Certyfikat uczestnictwa.</li>
+            <li data-i18n="t1-f1">
+              Dostęp do wszystkich prelekcji i paneli tego dnia.
+            </li>
+            <li data-i18n="t1-f2">Przerwy networkingowe.</li>
+            <li data-i18n="t1-f3">
+              Kawa, herbata i ciastka przez cały dzień wydarzenia.
+            </li>
+            <li data-i18n="t1-f4">Materiały konferencyjne.</li>
+            <li data-i18n="t1-f5">Certyfikat uczestnictwa.</li>
           </ul>
         </div>
 
         <div class="ticket-price">
           <div class="old-price">599 PLN</div>
           <div class="new-price">499 PLN</div>
-          <p class="sierpien">promocja do końca sierpnia</p>
+          <p class="sierpien" data-i18n="promo-text">
+            promocja do końca sierpnia
+          </p>
         </div>
-        <a class="btn-buy" href="buy_form.html?ticket=premium">Kup teraz</a>
+        <a
+          class="btn-buy"
+          href="buy_form.html?ticket=premium"
+          data-i18n="buy-btn"
+          >Kup teraz</a
+        >
       </div>
 
       <!-- BILET 2: 2 dni -->
       <div class="ticket-card">
-        <div class="ticket-badge">Biznes Plus</div>
-        <div class="ticket-name">Bilet Biznes Plus</div>
+        <div class="ticket-badge" data-i18n="t2-badge">Biznes Plus</div>
+        <div class="ticket-name" data-i18n="t2-name">Bilet Biznes Plus</div>
 
         <div class="ticket-description">
-          <div class="ticket-desc-title">2 dni konferencji</div>
+          <div class="ticket-desc-title" data-i18n="t2-desc-title">
+            2 dni konferencji
+          </div>
           <ul class="ticket-features">
-            <li>
+            <li data-i18n="t2-f1">
               Pełny program 2 dni: więcej strategii, case studies i praktyki.
             </li>
-            <li>Dostęp do nagrań wybranych wystąpień (po konferencji).</li>
-            <li>Przerwy networkingowe.</li>
-            <li>Kawa, herbata i ciastka przez cały dzień wydarzenia.</li>
-            <li>Materiały konferencyjne.</li>
-            <li>Certyfikat uczestnictwa.</li>
+            <li data-i18n="t2-f2">
+              Dostęp do nagrań wybranych wystąpień (po konferencji).
+            </li>
+            <li data-i18n="t2-f3">Przerwy networkingowe.</li>
+            <li data-i18n="t2-f4">
+              Kawa, herbata i ciastka przez cały dzień wydarzenia.
+            </li>
+            <li data-i18n="t2-f5">Materiały konferencyjne.</li>
+            <li data-i18n="t2-f6">Certyfikat uczestnictwa.</li>
           </ul>
         </div>
 
         <div class="ticket-price">
           <div class="old-price">699 PLN</div>
           <div class="new-price">599 PLN</div>
-          <p class="sierpien">promocja do końca sierpnia</p>
+          <p class="sierpien" data-i18n="promo-text">
+            promocja do końca sierpnia
+          </p>
         </div>
-        <a class="btn-buy" href="buy_form.html?ticket=biznesplus">Kup teraz</a>
+        <a
+          class="btn-buy"
+          href="buy_form.html?ticket=biznesplus"
+          data-i18n="buy-btn"
+          >Kup teraz</a
+        >
       </div>
 
       <!-- BILET 3: 2 dni + bankiet -->
       <div class="ticket-card">
-        <div class="ticket-badge">VIP + Bankiet</div>
-        <div class="ticket-name">Bilet VIP + Bankiet</div>
+        <div class="ticket-badge" data-i18n="t3-badge">VIP + Bankiet</div>
+        <div class="ticket-name" data-i18n="t3-name">Bilet VIP + Bankiet</div>
 
         <div class="ticket-description">
-          <div class="ticket-desc-title">2 dni + bankiet VIP</div>
+          <div class="ticket-desc-title" data-i18n="t3-desc-title">
+            2 dni + bankiet VIP
+          </div>
           <ul class="ticket-features">
-            <li>Najlepsze miejsca (strefa VIP / przód sali).</li>
-            <li>Bankiet: networking przy stole z przedsiębiorcami i gośćmi.</li>
-            <li>
-              Meet & greet / foto po wybranych prelekcjach (jeśli dostępne).
+            <li data-i18n="t3-f1">
+              Najlepsze miejsca (strefa VIP / przód sali).
             </li>
-            <li>Pakiet VIP: upominek + materiały premium po konferencji.</li>
-            <li>
+            <li data-i18n="t3-f2">
+              Bankiet: networking przy stole z przedsiębiorcami i gośćmi.
+            </li>
+            <li data-i18n="t3-f3">
+              Meet &amp; greet / foto po wybranych prelekcjach (jeśli dostępne).
+            </li>
+            <li data-i18n="t3-f4">
+              Pakiet VIP: upominek + materiały premium po konferencji.
+            </li>
+            <li data-i18n="t3-f5">
               Pełny program 2 dni: więcej strategii, case studies i praktyki.
             </li>
-            <li>Dostęp do nagrań wybranych wystąpień (po konferencji).</li>
-            <li>
+            <li data-i18n="t3-f6">
+              Dostęp do nagrań wybranych wystąpień (po konferencji).
+            </li>
+            <li data-i18n="t3-f7">
               Priorytetowe wejście/rejestracja (mniej stania w kolejkach).
             </li>
-            <li>Przerwy networkingowe.</li>
-            <li>Kawa, herbata i ciastka przez cały dzień wydarzenia.</li>
-            <li>Materiały konferencyjne.</li>
-            <li>Certyfikat uczestnictwa.</li>
+            <li data-i18n="t3-f8">Przerwy networkingowe.</li>
+            <li data-i18n="t3-f9">
+              Kawa, herbata i ciastka przez cały dzień wydarzenia.
+            </li>
+            <li data-i18n="t3-f10">Materiały konferencyjne.</li>
+            <li data-i18n="t3-f11">Certyfikat uczestnictwa.</li>
           </ul>
         </div>
 
         <div class="ticket-price">
           <div class="old-price">1 099 PLN</div>
           <div class="new-price">999 PLN</div>
-          <p class="sierpien">promocja do końca sierpnia</p>
+          <p class="sierpien" data-i18n="promo-text">
+            promocja do końca sierpnia
+          </p>
         </div>
-        <a class="btn-buy" href="buy_form.html?ticket=vipbankiet">Kup teraz</a>
+        <a
+          class="btn-buy"
+          href="buy_form.html?ticket=vipbankiet"
+          data-i18n="buy-btn"
+          >Kup teraz</a
+        >
       </div>
 
       <!-- BILET 4: VIP z prezentacją -->
       <div class="ticket-card">
-        <div class="ticket-badge">VIP</div>
-        <div class="ticket-name">Bilet VIP z Prezentacją</div>
+        <div class="ticket-badge" data-i18n="t4-badge">VIP</div>
+        <div class="ticket-name" data-i18n="t4-name">
+          Bilet VIP z Prezentacją
+        </div>
 
         <div class="ticket-description">
-          <div class="ticket-desc-title">2 dni + bankiet + prezentacja VIP</div>
+          <div class="ticket-desc-title" data-i18n="t4-desc-title">
+            2 dni + bankiet + prezentacja VIP
+          </div>
           <ul class="ticket-features">
-            <li>Ekskluzywna prezentacja VIP.</li>
-            <li>Najlepsze miejsca (strefa VIP / przód sali).</li>
-            <li>Bankiet: networking przy stole z przedsiębiorcami i gośćmi.</li>
-            <li>Meet & greet / foto po wybranych prelekcjach.</li>
-            <li>Pakiet VIP: upominek + materiały premium po konferencji.</li>
-            <li>
+            <li data-i18n="t4-f1">Ekskluzywna prezentacja VIP.</li>
+            <li data-i18n="t4-f2">
+              Najlepsze miejsca (strefa VIP / przód sali).
+            </li>
+            <li data-i18n="t4-f3">
+              Bankiet: networking przy stole z przedsiębiorcami i gośćmi.
+            </li>
+            <li data-i18n="t4-f4">
+              Meet &amp; greet / foto po wybranych prelekcjach.
+            </li>
+            <li data-i18n="t4-f5">
+              Pakiet VIP: upominek + materiały premium po konferencji.
+            </li>
+            <li data-i18n="t4-f6">
               Pełny program 2 dni: więcej strategii, case studies i praktyki.
             </li>
-            <li>Dostęp do nagrań wybranych wystąpień.</li>
-            <li>Priorytetowe wejście/rejestracja.</li>
-            <li>Przerwy networkingowe.</li>
-            <li>Kawa, herbata i ciastka przez cały dzień wydarzenia.</li>
-            <li>Materiały konferencyjne.</li>
-            <li>Certyfikat uczestnictwa.</li>
+            <li data-i18n="t4-f7">Dostęp do nagrań wybranych wystąpień.</li>
+            <li data-i18n="t4-f8">Priorytetowe wejście/rejestracja.</li>
+            <li data-i18n="t4-f9">Przerwy networkingowe.</li>
+            <li data-i18n="t4-f10">
+              Kawa, herbata i ciastka przez cały dzień wydarzenia.
+            </li>
+            <li data-i18n="t4-f11">Materiały konferencyjne.</li>
+            <li data-i18n="t4-f12">Certyfikat uczestnictwa.</li>
           </ul>
         </div>
 
         <div class="ticket-price">
           <div class="old-price">1 599 PLN</div>
           <div class="new-price">1 499 PLN</div>
-          <p class="sierpien">promocja do końca sierpnia</p>
+          <p class="sierpien" data-i18n="promo-text">
+            promocja do końca sierpnia
+          </p>
         </div>
-        <a class="btn-buy" href="buy_form.html?ticket=vip">Kup teraz</a>
+        <a class="btn-buy" href="buy_form.html?ticket=vip" data-i18n="buy-btn"
+          >Kup teraz</a
+        >
       </div>
     </div>
 
@@ -473,7 +631,7 @@
               </div>
             </div>
 
-            <p class="footer-desc">
+            <p class="footer-desc" data-i18n="footer-desc">
               Duszpasterstwo Przedsiębiorców i Pracodawców Talent w
               Archidiecezji Poznańskiej
             </p>
@@ -494,13 +652,15 @@
                   />
                 </svg>
               </span>
-              <span>Poznań, ul. Głogowska 92</span>
+              <span data-i18n="footer-address">Poznań, ul. Głogowska 92</span>
             </p>
           </div>
 
           <!-- ŚRODKOWA: adres -->
           <div class="footer-col">
-            <h3 class="footer-title">Kontakt</h3>
+            <h3 class="footer-title" data-i18n="footer-contact-title">
+              Kontakt
+            </h3>
 
             <ul class="footer-list footer-list--icons">
               <li>
@@ -534,31 +694,39 @@
 
           <!-- MENU -->
           <div class="footer-col">
-            <h3 class="footer-title">Menu</h3>
+            <h3 class="footer-title" data-i18n="footer-menu-title">Menu</h3>
 
             <ul class="footer-list">
-              <li><a href="#program">Program</a></li>
-              <li><a href="#prelegenci">Prelegenci</a></li>
-              <li><a href="buy_form.html">Zapisy</a></li>
+              <li><a href="#program" data-i18n="menu-program">Program</a></li>
+              <li>
+                <a href="#prelegenci" data-i18n="menu-prelegenci">Prelegenci</a>
+              </li>
+              <li>
+                <a href="buy_form.html" data-i18n="menu-zapisy">Zapisy</a>
+              </li>
               <li class="tooltip">
-                <a href="#reklamacje">Zwroty</a>
-                <span class="tooltip-text">
+                <a href="#reklamacje" data-i18n="menu-zwroty">Zwroty</a>
+                <span class="tooltip-text" data-i18n="tooltip-zwroty">
                   W sprawie zwrotów prosimy o wysyłanie wiadomości na adres
-                  email: konferencja@brfh.eu. Czas na zwrot biletu wynosi 14 dni
-                  od dnia zakupu.
+                  email: [konferencja@brfh.eu](mailto:konferencja@brfh.eu). Czas
+                  na zwrot biletu wynosi 14 dni od dnia zakupu.
                 </span>
               </li>
               <li>
-                <a href="regulamin.html">Regulamin Konferencji</a>
+                <a href="regulamin.html" data-i18n="menu-regulamin"
+                  >Regulamin Konferencji</a
+                >
               </li>
               <li>
-                <a href="polityka-prywatnosci.html">Polityka prywatności</a>
+                <a href="polityka-prywatnosci.html" data-i18n="menu-polityka"
+                  >Polityka prywatności</a
+                >
               </li>
               <li class="tooltip">
-                <a href="#reklamacje">Reklamacje</a>
-                <span class="tooltip-text">
+                <a href="#reklamacje" data-i18n="menu-reklamacje">Reklamacje</a>
+                <span class="tooltip-text" data-i18n="tooltip-reklamacje">
                   W sprawie reklamacji prosimy o wysyłanie wiadomości na adres
-                  email: konferencja@brfh.eu
+                  email: [konferencja@brfh.eu](mailto:konferencja@brfh.eu)
                 </span>
               </li>
             </ul>
@@ -566,7 +734,9 @@
 
           <!-- ORGANIZATOR -->
           <div class="footer-col footer-org">
-            <h3 class="footer-title">Organizator</h3>
+            <h3 class="footer-title" data-i18n="footer-org-title">
+              Organizator
+            </h3>
 
             <a
               class="footer-org-card"
@@ -579,7 +749,7 @@
           </div>
         </div>
 
-        <div class="footer-bottom">
+        <div class="footer-bottom" data-i18n="footer-bottom">
           © 2026 Duszpasterstwo Przedsiębiorców i Pracodawców Talent w
           Archidiecezji Poznańskiej
         </div>
@@ -593,6 +763,175 @@
         const targets = document.querySelectorAll(
           ".schedule-card, .ticket-card, .speaker-card, .banquet__inner, .schedule-head",
         );
+      });
+    </script>
+
+    <!-- ======= TŁUMACZENIE PL/ENG ======= -->
+    <script>
+      const translations = {
+        pl: {}, // wypełnione automatycznie oryginalną treścią HTML przy starcie
+        en: {
+          "section-title": "OUR SPEAKERS",
+          "section-subtitle2": "SPEAKERS WILL BE ANNOUNCED SOON",
+          zoba: "IN THE MEANTIME, SEE HOW PREVIOUS EDITIONS LOOKED",
+          "brfh-link": "BY CLICKING HERE",
+          kicker: "Integration Program",
+          "day1-date": "October 9, 2026 (Friday)",
+          "day2-date": "October 10, 2026 (Saturday)",
+          "d1-1-title": "HOLY MASS",
+          "d1-1-desc": "Opening of the conference with a joint prayer.",
+          "d1-2-title": "PARTICIPANT REGISTRATION",
+          "d1-2-desc": "Collecting badges and conference materials.",
+          "d1-3-title": "OFFICIAL WELCOME",
+          "d1-3-desc": "Welcoming participants and introducing the organizers.",
+          "d1-4-title": "LECTURE BLOCK I",
+          "d1-5-title": "NETWORKING BLOCK",
+          "d1-5-desc":
+            "Time for conversations, building contacts and exchanging experiences.",
+          "d1-6-title": "LUNCH",
+          "d1-6-desc": "A joint meal for conference participants.",
+          "d1-7-title": "VIP PRESENTATION",
+          "d1-7-desc":
+            "Special presentations for participants holding VIP tickets with presentation.",
+          "d1-8-title": "LECTURE BLOCK II",
+          "panel-1": "Panel 1",
+          "panel-2": "Panel 2",
+          "panel-3": "Panel 3",
+          "panel-4": "Panel 4",
+          "panel-5": "Panel 5",
+          "panel-6": "Panel 6",
+          "banquet-label": "BANQUET",
+          "banquet-time": "8:00 PM",
+          "banquet-title": 'SAFFRON<br class="mobile-break">HALL',
+          "d2-1-title": "LECTURE BLOCK III",
+          "d2-1-place": "Location: Red Hall<br>Old Town - Poznań",
+          "d2-2-title": "SIGHTSEEING IN POZNAŃ",
+          "d2-2-desc":
+            "A joint tour of the most important places and attractions of Poznań.",
+          "d2-3-title": "HOLY MASS",
+          "d2-3-desc":
+            "Eucharist for the intention of the conference participants.",
+          "d2-4-title": "LUNCH",
+          "d2-4-desc":
+            "A joint lunch for participants on the second day of the conference.",
+          "d2-5-title": "VISITING THE RELIC",
+          "d2-5-desc":
+            "A sword from the time of Jesus – used by St. Peter to cut off the ear of the high priest's servant.",
+          "venue-label": "EVENT VENUE",
+          "t1-badge": "Premium",
+          "t1-name": "Premium Ticket",
+          "t1-desc-title": "1 day of the conference",
+          "t1-f1": "Access to all lectures and panels of the day.",
+          "t1-f2": "Networking breaks.",
+          "t1-f3": "Coffee, tea and cookies throughout the event.",
+          "t1-f4": "Conference materials.",
+          "t1-f5": "Certificate of participation.",
+          "promo-text": "promotion until the end of August",
+          "buy-btn": "Buy now",
+          "t2-badge": "Business Plus",
+          "t2-name": "Business Plus Ticket",
+          "t2-desc-title": "2 days of the conference",
+          "t2-f1":
+            "Full 2-day program: more strategies, case studies and practice.",
+          "t2-f2":
+            "Access to recordings of selected talks (after the conference).",
+          "t2-f3": "Networking breaks.",
+          "t2-f4": "Coffee, tea and cookies throughout the event.",
+          "t2-f5": "Conference materials.",
+          "t2-f6": "Certificate of participation.",
+          "t3-badge": "VIP + Banquet",
+          "t3-name": "VIP + Banquet Ticket",
+          "t3-desc-title": "2 days + VIP banquet",
+          "t3-f1": "Best seats (VIP zone / front of the room).",
+          "t3-f2":
+            "Banquet: networking at the table with entrepreneurs and guests.",
+          "t3-f3":
+            "Meet & greet / photo after selected lectures (if available).",
+          "t3-f4":
+            "VIP package: gift + premium materials after the conference.",
+          "t3-f5":
+            "Full 2-day program: more strategies, case studies and practice.",
+          "t3-f6":
+            "Access to recordings of selected talks (after the conference).",
+          "t3-f7": "Priority entry/registration (less time in queues).",
+          "t3-f8": "Networking breaks.",
+          "t3-f9": "Coffee, tea and cookies throughout the event.",
+          "t3-f10": "Conference materials.",
+          "t3-f11": "Certificate of participation.",
+          "t4-badge": "VIP",
+          "t4-name": "VIP Ticket with Presentation",
+          "t4-desc-title": "2 days + banquet + VIP presentation",
+          "t4-f1": "Exclusive VIP presentation.",
+          "t4-f2": "Best seats (VIP zone / front of the room).",
+          "t4-f3":
+            "Banquet: networking at the table with entrepreneurs and guests.",
+          "t4-f4": "Meet & greet / photo after selected lectures.",
+          "t4-f5":
+            "VIP package: gift + premium materials after the conference.",
+          "t4-f6":
+            "Full 2-day program: more strategies, case studies and practice.",
+          "t4-f7": "Access to recordings of selected talks.",
+          "t4-f8": "Priority entry/registration.",
+          "t4-f9": "Networking breaks.",
+          "t4-f10": "Coffee, tea and cookies throughout the event.",
+          "t4-f11": "Conference materials.",
+          "t4-f12": "Certificate of participation.",
+          "footer-desc":
+            'Chaplaincy of Entrepreneurs and Employers "Talent" in the Archdiocese of Poznań',
+          "footer-address": "Poznań, ul. Głogowska 92",
+          "footer-contact-title": "Contact",
+          "footer-menu-title": "Menu",
+          "menu-program": "Program",
+          "menu-prelegenci": "Speakers",
+          "menu-zapisy": "Registration",
+          "menu-zwroty": "Refunds",
+          "tooltip-zwroty":
+            "For refunds, please send an email to: konferencja@brfh.eu. The ticket refund period is 14 days from the date of purchase.",
+          "menu-regulamin": "Conference Terms & Conditions",
+          "menu-polityka": "Privacy Policy",
+          "menu-reklamacje": "Complaints",
+          "tooltip-reklamacje":
+            "For complaints, please send an email to: konferencja@brfh.eu",
+          "footer-org-title": "Organizer",
+          "footer-bottom":
+            '© 2026 Chaplaincy of Entrepreneurs and Employers "Talent" in the Archdiocese of Poznań',
+        },
+      };
+
+      function buildPolishDictionary() {
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
+          const key = el.getAttribute("data-i18n");
+          if (!(key in translations.pl)) {
+            translations.pl[key] = el.innerHTML.trim();
+          }
+        });
+      }
+
+      function applyLang(lang) {
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
+          const key = el.getAttribute("data-i18n");
+          if (translations[lang] && translations[lang][key] !== undefined) {
+            el.innerHTML = translations[lang][key];
+          }
+        });
+        document.documentElement.lang = lang === "en" ? "en" : "pl";
+      }
+
+      function setLang(lang) {
+        applyLang(lang);
+        localStorage.setItem("site-lang", lang);
+        document
+          .getElementById("lang-pl")
+          .classList.toggle("active", lang === "pl");
+        document
+          .getElementById("lang-en")
+          .classList.toggle("active", lang === "en");
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        buildPolishDictionary();
+        const saved = localStorage.getItem("site-lang") || "pl";
+        setLang(saved);
       });
     </script>
   </body>
