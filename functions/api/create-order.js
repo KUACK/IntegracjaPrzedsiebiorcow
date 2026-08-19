@@ -148,6 +148,9 @@ export async function onRequestPost({ request, env }) {
   let fixedPriceGrosze = 0;
 
   const promoDeadline = new Date("2026-09-01T00:00:00+02:00");
+  // Nowe kody promocyjne (wrzesień/październik/integracja/BRFH/Poznań/Talent/Jesień)
+  // ważne do 10 października 2026 włącznie.
+  const promoDeadline2 = new Date("2026-10-10T23:59:59+02:00");
 
   if (promo === "lipiec") {
     if (now < promoDeadline) discountFactor = 0.65;
@@ -157,6 +160,38 @@ export async function onRequestPost({ request, env }) {
     if (now < promoDeadline) discountFactor = 0.5;
   } else if (promo === "asknet12#") {
     fixedPriceGrosze = 300;
+  } else if (promo === "talent45") {
+    if (now < promoDeadline2) discountFactor = 0.55; // -45%
+  } else if (
+    promo === "40wrzesien" ||
+    promo === "pazdziernik40" ||
+    promo === "40brfh"
+  ) {
+    if (now < promoDeadline2) discountFactor = 0.6; // -40%
+  } else if (
+    promo === "wrzesien35" ||
+    promo === "35pazdziernik" ||
+    promo === "integracja35"
+  ) {
+    if (now < promoDeadline2) discountFactor = 0.65; // -35%
+  } else if (
+    promo === "brfh30pl" ||
+    promo === "wrzesien30" ||
+    promo === "30integracja"
+  ) {
+    if (now < promoDeadline2) discountFactor = 0.7; // -30%
+  } else if (
+    promo === "brfh20" ||
+    promo === "poznan20" ||
+    promo === "20integracja"
+  ) {
+    if (now < promoDeadline2) discountFactor = 0.8; // -20%
+  } else if (
+    promo === "jesien15" ||
+    promo === "pl15brfh" ||
+    promo === "15integracja"
+  ) {
+    if (now < promoDeadline2) discountFactor = 0.85; // -15%
   }
 
   // Rabat (procentowy lub kod fixed-price) liczony jest od całej ceny
@@ -219,15 +254,15 @@ export async function onRequestPost({ request, env }) {
   try {
     await env.DB.prepare(
       `
-      INSERT INTO orders (
-        ext_order_id, status, provider, created_at, updated_at,
-        full_name, email, phone, street, city, postal_code,
-        ticket_type, quantity, unit_price, total_amount, promo_code, promo_applied
-      ) VALUES (?, ?, ?, datetime('now'), datetime('now'),
-        ?, ?, ?, ?, ?, ?,
-        ?, ?, ?, ?, ?, ?
-      )
-      `,
+INSERT INTO orders (
+ext_order_id, status, provider, created_at, updated_at,
+full_name, email, phone, street, city, postal_code,
+ticket_type, quantity, unit_price, total_amount, promo_code, promo_applied
+) VALUES (?, ?, ?, datetime('now'), datetime('now'),
+?, ?, ?, ?, ?, ?,
+?, ?, ?, ?, ?, ?
+)
+`,
     )
       .bind(
         extOrderId,

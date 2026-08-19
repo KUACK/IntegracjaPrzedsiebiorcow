@@ -786,6 +786,101 @@
           };
         }
 
+        // Nowe kody promocyjne — ważne do 10.10.2026 (23:59:59)
+        const deadline2 = new Date("2026-10-10T23:59:59+02:00");
+
+        if (normalized === "talent45") {
+          if (now < deadline2) {
+            return {
+              valid: true,
+              code: "TALENT45",
+              factor: 0.55,
+              label: t("promo-applied-45"),
+            };
+          }
+          return { valid: false, label: t("promo-expired") };
+        }
+
+        if (
+          normalized === "40wrzesien" ||
+          normalized === "pazdziernik40" ||
+          normalized === "40brfh"
+        ) {
+          if (now < deadline2) {
+            return {
+              valid: true,
+              code: normalized.toUpperCase(),
+              factor: 0.6,
+              label: t("promo-applied-40"),
+            };
+          }
+          return { valid: false, label: t("promo-expired") };
+        }
+
+        if (
+          normalized === "wrzesien35" ||
+          normalized === "35pazdziernik" ||
+          normalized === "integracja35"
+        ) {
+          if (now < deadline2) {
+            return {
+              valid: true,
+              code: normalized.toUpperCase(),
+              factor: 0.65,
+              label: t("promo-applied-35"),
+            };
+          }
+          return { valid: false, label: t("promo-expired") };
+        }
+
+        if (
+          normalized === "brfh30pl" ||
+          normalized === "wrzesien30" ||
+          normalized === "30integracja"
+        ) {
+          if (now < deadline2) {
+            return {
+              valid: true,
+              code: normalized.toUpperCase(),
+              factor: 0.7,
+              label: t("promo-applied-30"),
+            };
+          }
+          return { valid: false, label: t("promo-expired") };
+        }
+
+        if (
+          normalized === "brfh20" ||
+          normalized === "poznan20" ||
+          normalized === "20integracja"
+        ) {
+          if (now < deadline2) {
+            return {
+              valid: true,
+              code: normalized.toUpperCase(),
+              factor: 0.8,
+              label: t("promo-applied-20"),
+            };
+          }
+          return { valid: false, label: t("promo-expired") };
+        }
+
+        if (
+          normalized === "jesien15" ||
+          normalized === "pl15brfh" ||
+          normalized === "15integracja"
+        ) {
+          if (now < deadline2) {
+            return {
+              valid: true,
+              code: normalized.toUpperCase(),
+              factor: 0.85,
+              label: t("promo-applied-15"),
+            };
+          }
+          return { valid: false, label: t("promo-expired") };
+        }
+
         return { valid: false, label: t("promo-invalid") };
       }
 
@@ -1072,6 +1167,11 @@
           "promo-expired": "This code has expired.",
           "promo-applied-35": "Code applied (–35%).",
           "promo-applied-50": "Code applied (–50%).",
+          "promo-applied-45": "Code applied -45%.",
+          "promo-applied-40": "Code applied -40%.",
+          "promo-applied-30": "Code applied -30%.",
+          "promo-applied-20": "Code applied -20%.",
+          "promo-applied-15": "Code applied -15%.",
           "promo-applied": "Code applied.",
           "promo-invalid": "Invalid code.",
 
@@ -1105,6 +1205,11 @@
         translations.pl["promo-expired"] = "Ten kod już wygasł.";
         translations.pl["promo-applied-35"] = "Kod zastosowany (–35%).";
         translations.pl["promo-applied-50"] = "Kod zastosowany (–50%).";
+        translations.pl["promo-applied-45"] = "Kod zastosowany -45%.";
+        translations.pl["promo-applied-40"] = "Kod zastosowany -40%.";
+        translations.pl["promo-applied-30"] = "Kod zastosowany -30%.";
+        translations.pl["promo-applied-20"] = "Kod zastosowany -20%.";
+        translations.pl["promo-applied-15"] = "Kod zastosowany -15%.";
         translations.pl["promo-applied"] = "Kod zastosowany.";
         translations.pl["promo-invalid"] = "Nieprawidłowy kod.";
         translations.pl["msg-creating-order"] = "Tworzę zamówienie AutoPay...";
