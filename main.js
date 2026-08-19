@@ -170,22 +170,6 @@ setInterval(updateTimer, 1000);
   });
 })();
 
-// OBSŁUGA PRZYCISKÓW "KUP TERAZ"
-document.querySelectorAll(".btn-buy").forEach((button) => {
-  button.addEventListener("click", function () {
-    const card = this.closest(".ticket-card");
-    const ticketName = card.querySelector(".ticket-name").textContent;
-    const price = card.querySelector(".new-price").textContent;
-
-    document.getElementById("ticket").value = ticketName
-      .toLowerCase()
-      .replace(/\s+/g, "-");
-    document
-      .querySelector(".form-section")
-      .scrollIntoView({ behavior: "smooth" });
-  });
-});
-
 document.addEventListener("DOMContentLoaded", () => {
   const modal = document.getElementById("welcome-modal");
   const closeBtn = document.getElementById("close-modal");
@@ -198,3 +182,51 @@ document.addEventListener("DOMContentLoaded", () => {
     modal.close();
   });
 });
+
+(function () {
+  const dayRadios = document.querySelectorAll('input[name="t1-day"]');
+  const banquetBlock = document.getElementById("t1-banquet-upsell");
+  const banquetCheckbox = document.getElementById("t1-banquet-checkbox");
+  const buyBtn = document.getElementById("t1-buy-btn");
+  const addonLine = document.getElementById("t1-addon-line");
+
+  if (!dayRadios.length || !buyBtn) return;
+
+  function getSelectedDay() {
+    const checked = document.querySelector('input[name="t1-day"]:checked');
+    return checked ? checked.value : null; // null = nic nie zaznaczono
+  }
+
+  function updateSelection() {
+    const day = getSelectedDay(); // '9x', '10x' albo null
+    const isDay1 = day === "9x"; // true TYLKO gdy realnie zaznaczono 9x
+
+    // blok bankietu pokazuje się tylko przy realnym wyborze 9x
+    banquetBlock.style.display = isDay1 ? "block" : "none";
+    if (!isDay1) banquetCheckbox.checked = false;
+
+    const wantsBanquet = isDay1 && banquetCheckbox.checked;
+
+    // fallback tylko dla linku "Kup teraz", nie wpływa na widoczność bankietu
+    const effectiveDay = day || "9x";
+
+    let ticketType;
+    if (effectiveDay === "9x" && wantsBanquet) {
+      ticketType = "jednodniowy9xbankiet";
+    } else if (effectiveDay === "9x") {
+      ticketType = "jednodniowy9x";
+    } else {
+      ticketType = "jednodniowy10x";
+    }
+
+    buyBtn.setAttribute("href", "buy_form.html?ticket=" + ticketType);
+    addonLine.style.display = wantsBanquet ? "block" : "none";
+  }
+
+  dayRadios.forEach(function (radio) {
+    radio.addEventListener("change", updateSelection);
+  });
+  banquetCheckbox.addEventListener("change", updateSelection);
+
+  updateSelection(); // inicjalizacja przy wczytaniu strony
+})();

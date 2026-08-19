@@ -97,11 +97,27 @@ export async function onRequestPost({ request, env }) {
   }
   const qty = Math.max(1, Math.min(20, parsedQty));
 
+  // ==========================================================
+  // SŁOWNIK TYPÓW BILETÓW
+  // Bilet jednodniowy (dawny "premium") rozbity na 3 warianty,
+  // bo dzień oraz udział w bankiecie zmieniają cenę i muszą być
+  // rozpoznawalne jako osobne pozycje w zamówieniu / na fakturze.
+  // ==========================================================
   const tickets = {
-    premium: {
-      dbName: "Premium – 1 dzień",
-      autopayName: "Premium - 1 dzien",
-      unit: 49900,
+    jednodniowy9x: {
+      dbName: "Bilet jednodniowy – 9 października",
+      autopayName: "Jednodniowy 9 X",
+      unit: 49900, // 499 PLN
+    },
+    jednodniowy10x: {
+      dbName: "Bilet jednodniowy – 10 października",
+      autopayName: "Jednodniowy 10 X",
+      unit: 49900, // 499 PLN
+    },
+    jednodniowy9xbankiet: {
+      dbName: "Bilet jednodniowy – 9 października + Bankiet",
+      autopayName: "Jednodniowy 9 X plus Bankiet",
+      unit: 69600, // 499 PLN + 197 PLN bankiet = 696 PLN
     },
     biznesplus: {
       dbName: "Biznes Plus – 2 dni",
@@ -143,6 +159,9 @@ export async function onRequestPost({ request, env }) {
     fixedPriceGrosze = 300;
   }
 
+  // Rabat (procentowy lub kod fixed-price) liczony jest od całej ceny
+  // wariantu, w tym od biletów z dołączonym bankietem — bez osobnej
+  // logiki dla "dodatku", bo cena bankietu jest już wliczona w unit.
   const unitPrice =
     fixedPriceGrosze > 0
       ? fixedPriceGrosze

@@ -415,206 +415,461 @@
         </div>
       </div>
     </div>
-    <!--<section class="promoinfobox">
-      <div class="boxinbox">
-        <div class="promoinfo">
-          Kolejna edycja naszego spotkania przedsiębiorców już w drodze.
-          Pracujemy nad programem i prelegentami, którzy jak co roku pomogą Wam
-          rozwijać firmy w oparciu o wartości, które naprawdę mają znaczenie —
-          wiarę, rodzinę, odpowiedzialność i hojność. Zanim ogłosimy pełny
-          program, chcemy wyrazić wdzięczność tym, którzy są z nami od początku
-          i którzy wiedzą, czego mogą się po nas spodziewać. Do końca kwietnia,
-          wpisując kod <strong>MAJ</strong> podczas zakupu, zyskujesz bilet w
-          cenie o 35% niższej od regularnej.
-        </div>
-        <span class="trawa">
-          <img src="svg/trawa.svg" alt="grass image" width="350" height="350" />
-        </span>
-      </div>
-    </section>-->
+
     <!-- BILETY -->
     <div class="tickets-grid">
-      <!-- BILET 1: 1 dzień Premium -->
+      <!-- BILET 1 - jednodniowy -->
       <div class="ticket-card">
-        <div class="ticket-badge" data-i18n="t1-badge">Premium</div>
-        <div class="ticket-name" data-i18n="t1-name">Bilet Premium</div>
+        <div class="ticket-badge" data-i18n="t1-badge">Jednodniowy</div>
 
-        <div class="ticket-description">
-          <div class="ticket-desc-title" data-i18n="t1-desc-title">
-            1 dzień konferencji
+        <div class="ticket-interior">
+          <div class="ticket-bebech">
+            <div class="ticket-name" data-i18n="t1-name">Bilet jednodniowy</div>
+
+            <p class="opis-biletu" data-i18n="t1-desc-1">
+              Wybierz dzień, który chcesz przeżyć razem z nami.
+            </p>
+            <p class="opis-biletu" data-i18n="t1-desc-2">
+              Bilet jednodniowy daje Ci pełny dostęp do programu wybranego dnia
+              konferencji. Możesz zdecydować, czy chcesz uczestniczyć w głównym
+              dniu konferencyjnym 9 października, czy wybrać 10 października —
+              dzień integracji, relacji i formacji.
+            </p>
+
+            <!-- ====== WYBÓR DNIA ====== -->
+            <div class="day-picker">
+              <p class="day-picker-label" data-i18n="t1-day-label">
+                Wybierz dzień:
+              </p>
+
+              <div class="day-picker-options">
+                <label class="day-option">
+                  <input type="radio" name="t1-day" value="9x" />
+                  <span>
+                    <strong data-i18n="t1-day1-title"
+                      >9 października — dzień konferencyjny</strong
+                    ><br />
+                    <span data-i18n="t1-day1-desc"
+                      >Rodzina w biznesie i Hojność, która zmienia świat.</span
+                    >
+                  </span>
+                </label>
+
+                <label class="day-option">
+                  <input type="radio" name="t1-day" value="10x" />
+                  <span>
+                    <strong data-i18n="t1-day2-title"
+                      >10 października — dzień integracji i formacji</strong
+                    ><br />
+                    <span data-i18n="t1-day2-desc"
+                      >Konferencja i warsztaty formacyjne, integracja.</span
+                    >
+                  </span>
+                </label>
+              </div>
+            </div>
+
+            <!-- ====== UPSELL: BANKIET (tylko dla 9 X) ====== -->
+            <div class="banquet-upsell" id="t1-banquet-upsell">
+              <p
+                class="banquet-upsell-question"
+                data-i18n="t1-banquet-question"
+              >
+                Chcesz dołączyć do nas także podczas bankietu?
+              </p>
+              <p class="banquet-upsell-info">
+                <strong data-i18n="t1-banquet-time"
+                  >9 października, godz. 20:00</strong
+                ><br />
+                <a
+                  href="https://garden-city.pl/pl/o-nas/nasze-przestrzenie/saffron/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span data-i18n="t1-banquet-venue"
+                    >Saffron w GARDENcity</span
+                  > </a
+                ><span data-i18n="t1-banquet-venue-suffix"
+                  >, Międzynarodowe Targi Poznańskie</span
+                >
+              </p>
+              <p class="banquet-upsell-desc" data-i18n="t1-banquet-desc">
+                Jeśli chcesz przedłużyć konferencyjne spotkanie i spędzić
+                wieczór w gronie przedsiębiorców i zaproszonych gości, możesz
+                dokupić bilet na bankiet. To będzie czas na wspólną kolację,
+                rozmowy, poznawanie innych przedsiębiorców i budowanie relacji w
+                mniej formalnej atmosferze.
+              </p>
+              <label class="banquet-upsell-choice">
+                <input type="checkbox" id="t1-banquet-checkbox" />
+                <span data-i18n="t1-banquet-cta"
+                  >Dołącz do nas podczas bankietu! (+197 PLN, liczba miejsc
+                  ograniczona)</span
+                >
+              </label>
+            </div>
+
+            <!-- NOWY BLOK: przycisk / lista na hover -->
+            <div class="feature-toggle">
+              <button type="button" class="feature-btn" data-i18n="feature-btn">
+                Co otrzymujesz w ramach biletu
+              </button>
+              <div class="feature-popup">
+                <p class="feature-popup-title" data-i18n="feature-popup-title">
+                  W ramach biletu otrzymujesz
+                </p>
+                <ul class="ticket-features">
+                  <li data-i18n="t1-f1">
+                    pełny program wybranego dnia konferencji
+                  </li>
+                  <li data-i18n="t1-f2">
+                    udział w prelekcjach, panelach dyskusyjnych i zaplanowanych
+                    aktywnościach
+                  </li>
+                  <li data-i18n="t1-f3">
+                    pokonferencyjny workbook dla przedsiębiorcy (PDF) —
+                    praktyczny materiał pomagający przełożyć treści konferencji
+                    na konkretne refleksje, decyzje i działania
+                  </li>
+                  <li data-i18n="t1-f4">
+                    przestrzeń do networkingu oraz wymiany doświadczeń z innymi
+                    przedsiębiorcami
+                  </li>
+                  <li data-i18n="t1-f5">wspólny obiad</li>
+                  <li data-i18n="t1-f6">
+                    kawę, herbatę i poczęstunek podczas przerw
+                  </li>
+                  <li data-i18n="t1-f7">materiały konferencyjne</li>
+                  <li data-i18n="t1-f8">certyfikat uczestnictwa</li>
+                </ul>
+              </div>
+            </div>
+            <!-- KONIEC NOWEGO BLOKU -->
           </div>
-          <ul class="ticket-features">
-            <li data-i18n="t1-f1">
-              Dostęp do wszystkich prelekcji i paneli tego dnia.
-            </li>
-            <li data-i18n="t1-f2">Przerwy networkingowe.</li>
-            <li data-i18n="t1-f3">
-              Kawa, herbata i ciastka przez cały dzień wydarzenia.
-            </li>
-            <li data-i18n="t1-f4">Materiały konferencyjne.</li>
-            <li data-i18n="t1-f5">Certyfikat uczestnictwa.</li>
-          </ul>
+          <div class="ticket-prawa">
+            <div class="ticket-price">
+              <div class="old-price">599 PLN</div>
+              <div class="new-price">499 PLN</div>
+              <p class="sierpien" data-i18n="promo-text">
+                promocja do końca sierpnia
+              </p>
+              <div class="addon-line" id="t1-addon-line" style="display: none">
+                + 197 PLN — bankiet
+              </div>
+            </div>
+            <a
+              class="btn-buy"
+              href="buyform.html?ticket=jednodniowy9x"
+              id="t1-buy-btn"
+              data-i18n="buy-btn"
+              >Kup teraz</a
+            >
+          </div>
         </div>
-
-        <div class="ticket-price">
-          <div class="old-price">599 PLN</div>
-          <div class="new-price">499 PLN</div>
-          <p class="sierpien" data-i18n="promo-text">
-            promocja do końca sierpnia
-          </p>
-        </div>
-        <a
-          class="btn-buy"
-          href="buy_form.html?ticket=premium"
-          data-i18n="buy-btn"
-          >Kup teraz</a
-        >
       </div>
 
       <!-- BILET 2: 2 dni -->
       <div class="ticket-card">
-        <div class="ticket-badge" data-i18n="t2-badge">Biznes Plus</div>
-        <div class="ticket-name" data-i18n="t2-name">Bilet Biznes Plus</div>
+        <div class="ticket-badge" data-i18n="t2-badge">Bilet dwudniowy</div>
+        <div class="ticket-interior">
+          <div class="ticket-bebech">
+            <div class="ticket-name" data-i18n="t2-name">Bilet dwudniowy</div>
+            <div>
+              <p class="opis-biletu" data-i18n="t2-desc-1">
+                Pełne doświadczenie konferencji — dwa dni inspiracji, relacji i
+                formacji
+              </p>
+              <p class="opis-biletu" data-i18n="t2-desc-2">
+                Bilet dwudniowy daje Ci możliwość uczestniczenia w pełnym
+                programie konferencji „Bóg, Rodzina, Firma, Hojność” — zarówno w
+                części merytorycznej, jak i w dniu integracji, formacji i
+                pogłębionej refleksji.
+              </p>
+              <p class="opis-biletu" data-i18n="t2-desc-3">
+                To propozycja dla osób, które chcą poświęcić dwa dni na rozwój,
+                budowanie relacji z innymi przedsiębiorcami oraz spojrzenie na
+                swoją rolę przedsiębiorcy w perspektywie wiary.
+              </p>
+              <!-- NOWY BLOK: przycisk + lista na hover -->
+              <div class="feature-toggle">
+                <button
+                  type="button"
+                  class="feature-btn"
+                  data-i18n="feature-btn"
+                >
+                  Co otrzymujesz w ramach biletu
+                </button>
 
-        <div class="ticket-description">
-          <div class="ticket-desc-title" data-i18n="t2-desc-title">
-            2 dni konferencji
+                <div class="feature-popup">
+                  <p
+                    class="feature-popup-title"
+                    data-i18n="feature-popup-title"
+                  >
+                    W ramach biletu otrzymujesz:
+                  </p>
+                  <ul class="ticket-features">
+                    <li data-i18n="t2-f1">pełny program obu dni konferencji</li>
+                    <li data-i18n="t2-f2">
+                      udział we wszystkich prelekcjach, panelach dyskusyjnych i
+                      zaplanowanych aktywnościach
+                    </li>
+                    <li data-i18n="t2-f3">
+                      udział w dniu integracji i formacji obejmującym wspólne
+                      doświadczenia, konferencję oraz warsztaty formacyjne
+                    </li>
+                    <li data-i18n="t2-f4">
+                      przestrzeń do networkingu i wymiany doświadczeń z innymi
+                      przedsiębiorcami
+                    </li>
+                    <li data-i18n="t2-f5">
+                      pokonferencyjny workbook dla przedsiębiorcy (PDF) —
+                      praktyczny materiał pomagający przełożyć treści
+                      konferencji na konkretne refleksje, decyzje i działania
+                    </li>
+                    <li data-i18n="t2-f6">wspólne obiady</li>
+                    <li data-i18n="t2-f7">
+                      kawę, herbatę i poczęstunek podczas przerw
+                    </li>
+                    <li data-i18n="t2-f8">materiały konferencyjne</li>
+                    <li data-i18n="t2-f9">certyfikat uczestnictwa</li>
+                  </ul>
+                </div>
+              </div>
+              <!-- KONIEC NOWEGO BLOKU -->
+            </div>
           </div>
-          <ul class="ticket-features">
-            <li data-i18n="t2-f1">
-              Pełny program 2 dni: więcej strategii, case studies i praktyki.
-            </li>
-            <li data-i18n="t2-f2">
-              Dostęp do nagrań wybranych wystąpień (po konferencji).
-            </li>
-            <li data-i18n="t2-f3">Przerwy networkingowe.</li>
-            <li data-i18n="t2-f4">
-              Kawa, herbata i ciastka przez cały dzień wydarzenia.
-            </li>
-            <li data-i18n="t2-f5">Materiały konferencyjne.</li>
-            <li data-i18n="t2-f6">Certyfikat uczestnictwa.</li>
-          </ul>
+          <div class="ticket-prawa">
+            <div class="ticket-price">
+              <div class="old-price">699 PLN</div>
+              <div class="new-price">599 PLN</div>
+              <p class="sierpien" data-i18n="promo-text">
+                promocja do końca sierpnia
+              </p>
+            </div>
+            <a
+              class="btn-buy"
+              href="buy_form.html?ticket=biznesplus"
+              data-i18n="buy-btn"
+              >Kup teraz</a
+            >
+          </div>
         </div>
-
-        <div class="ticket-price">
-          <div class="old-price">699 PLN</div>
-          <div class="new-price">599 PLN</div>
-          <p class="sierpien" data-i18n="promo-text">
-            promocja do końca sierpnia
-          </p>
-        </div>
-        <a
-          class="btn-buy"
-          href="buy_form.html?ticket=biznesplus"
-          data-i18n="buy-btn"
-          >Kup teraz</a
-        >
       </div>
 
       <!-- BILET 3: 2 dni + bankiet -->
       <div class="ticket-card">
-        <div class="ticket-badge" data-i18n="t3-badge">VIP + Bankiet</div>
-        <div class="ticket-name" data-i18n="t3-name">Bilet VIP + Bankiet</div>
+        <div class="ticket-badge" data-i18n="t3-badge">
+          Bilet Premium + Bankiet
+        </div>
+        <div class="ticket-interior">
+          <div class="ticket-bebech">
+            <div class="ticket-name" data-i18n="t3-name">
+              Bilet Premium + Bankiet
+            </div>
+            <div>
+              <p class="opis-biletu" data-i18n="t3-desc-1">
+                Pełny udział w konferencji oraz wieczornym bankiecie
+              </p>
+              <p class="opis-biletu" data-i18n="t3-desc-2">
+                Bilet Premium obejmuje pełny program dwóch dni konferencji „Bóg,
+                Rodzina, Firma, Hojność”, udział w bankiecie oraz dodatkowe
+                materiały dostępne w tym wariancie biletu.
+              </p>
+              <p class="opis-biletu" data-i18n="t3-desc-3">
+                To propozycja dla osób, które chcą w pełni uczestniczyć w
+                konferencji, przedłużyć wspólny czas podczas bankietu oraz
+                zachować ze sobą część treści i doświadczeń także po zakończeniu
+                wydarzenia.
+              </p>
+              <!-- NOWY BLOK: przycisk + lista na hover -->
+              <div class="feature-toggle">
+                <button
+                  type="button"
+                  class="feature-btn"
+                  data-i18n="feature-btn"
+                >
+                  Co otrzymujesz w ramach biletu
+                </button>
 
-        <div class="ticket-description">
-          <div class="ticket-desc-title" data-i18n="t3-desc-title">
-            2 dni + bankiet VIP
+                <div class="feature-popup">
+                  <p
+                    class="feature-popup-title"
+                    data-i18n="feature-popup-title"
+                  >
+                    W ramach biletu otrzymujesz:
+                  </p>
+                  <ul class="ticket-features">
+                    <li data-i18n="t3-f1">pełny program obu dni konferencji</li>
+                    <li data-i18n="t3-f2">
+                      udział we wszystkich prelekcjach, panelach dyskusyjnych i
+                      zaplanowanych aktywnościach
+                    </li>
+                    <li data-i18n="t3-f3">
+                      udział w dniu integracji i formacji obejmującym wspólne
+                      doświadczenia, konferencję oraz warsztaty formacyjne
+                    </li>
+                    <li data-i18n="t3-f4">
+                      udział w bankiecie — wieczornym spotkaniu przy wspólnym
+                      stole, które będzie okazją do rozmów, wymiany doświadczeń
+                      i budowania relacji w mniej formalnej atmosferze
+                    </li>
+                    <li data-i18n="t3-f5">
+                      pokonferencyjny workbook dla przedsiębiorcy (PDF) —
+                      praktyczny materiał pomagający przełożyć treści
+                      konferencji na konkretne refleksje, decyzje i działania
+                    </li>
+                    <li data-i18n="t3-f6">
+                      kompendium konferencji „Bóg, Rodzina, Firma, Hojność"
+                      (PDF) — zbiór najważniejszych idei, myśli i wybranych
+                      cytatów prelegentów, pozwalający wrócić do najważniejszych
+                      treści także po zakończeniu konferencji
+                    </li>
+                    <li data-i18n="t3-f7">
+                      dostęp do nagrań wybranych wystąpień po konferencji
+                    </li>
+                    <li data-i18n="t3-f8">
+                      autorski prezent dla przedsiębiorcy
+                    </li>
+                    <li data-i18n="t3-f9">wspólne obiady</li>
+                    <li data-i18n="t3-f10">
+                      kawę, herbatę i poczęstunek podczas przerw
+                    </li>
+                    <li data-i18n="t3-f11">materiały konferencyjne</li>
+                    <li data-i18n="t3-f12">certyfikat uczestnictwa</li>
+                  </ul>
+                </div>
+              </div>
+              <!-- KONIEC NOWEGO BLOKU -->
+            </div>
           </div>
-          <ul class="ticket-features">
-            <li data-i18n="t3-f1">
-              Najlepsze miejsca (strefa VIP / przód sali).
-            </li>
-            <li data-i18n="t3-f2">
-              Bankiet: networking przy stole z przedsiębiorcami i gośćmi.
-            </li>
-            <li data-i18n="t3-f3">
-              Meet &amp; greet / foto po wybranych prelekcjach (jeśli dostępne).
-            </li>
-            <li data-i18n="t3-f4">
-              Pakiet VIP: upominek + materiały premium po konferencji.
-            </li>
-            <li data-i18n="t3-f5">
-              Pełny program 2 dni: więcej strategii, case studies i praktyki.
-            </li>
-            <li data-i18n="t3-f6">
-              Dostęp do nagrań wybranych wystąpień (po konferencji).
-            </li>
-            <li data-i18n="t3-f7">
-              Priorytetowe wejście/rejestracja (mniej stania w kolejkach).
-            </li>
-            <li data-i18n="t3-f8">Przerwy networkingowe.</li>
-            <li data-i18n="t3-f9">
-              Kawa, herbata i ciastka przez cały dzień wydarzenia.
-            </li>
-            <li data-i18n="t3-f10">Materiały konferencyjne.</li>
-            <li data-i18n="t3-f11">Certyfikat uczestnictwa.</li>
-          </ul>
+          <div class="ticket-prawa">
+            <div class="ticket-price">
+              <div class="old-price">1 099 PLN</div>
+              <div class="new-price">999 PLN</div>
+              <p class="sierpien" data-i18n="promo-text">
+                promocja do końca sierpnia
+              </p>
+            </div>
+            <a
+              class="btn-buy"
+              href="buy_form.html?ticket=vipbankiet"
+              data-i18n="buy-btn"
+              >Kup teraz</a
+            >
+          </div>
         </div>
-
-        <div class="ticket-price">
-          <div class="old-price">1 099 PLN</div>
-          <div class="new-price">999 PLN</div>
-          <p class="sierpien" data-i18n="promo-text">
-            promocja do końca sierpnia
-          </p>
-        </div>
-        <a
-          class="btn-buy"
-          href="buy_form.html?ticket=vipbankiet"
-          data-i18n="buy-btn"
-          >Kup teraz</a
-        >
       </div>
 
       <!-- BILET 4: VIP z prezentacją -->
       <div class="ticket-card">
-        <div class="ticket-badge" data-i18n="t4-badge">VIP</div>
-        <div class="ticket-name" data-i18n="t4-name">
-          Bilet VIP z Prezentacją
+        <div class="ticket-badge" data-i18n="t4-badge">
+          Bilet Premium Plus – Prezentacja Firmy
         </div>
-
-        <div class="ticket-description">
-          <div class="ticket-desc-title" data-i18n="t4-desc-title">
-            2 dni + bankiet + prezentacja VIP
+        <div class="ticket-interior">
+          <div class="ticket-bebech">
+            <div class="ticket-name" data-i18n="t4-name">
+              Bilet Premium Plus – Prezentacja Firmy
+            </div>
+            <div>
+              <p class="opis-biletu" data-i18n="t4-desc-1">
+                Pełny udział w konferencji oraz możliwość prezentacji swojej
+                firmy
+              </p>
+              <p class="opis-biletu" data-i18n="t4-desc-2">
+                Bilet Premium Plus obejmuje pełny program dwóch dni konferencji
+                „Bóg, Rodzina, Firma, Hojność”, udział w bankiecie, dodatkowe
+                materiały oraz możliwość zaprezentowania swojej firmy podczas
+                konferencji.
+              </p>
+              <p class="opis-biletu" data-i18n="t4-desc-3">
+                To propozycja dla przedsiębiorców, którzy chcą nie tylko
+                uczestniczyć w konferencji, ale również przedstawić swoją
+                działalność, wartości i misję innym przedsiębiorcom oraz
+                podzielić się tym, czym zajmują się na co dzień.
+              </p>
+              <!-- NOWY BLOK: przycisk + lista na hover -->
+              <div class="feature-toggle">
+                <button
+                  type="button"
+                  class="feature-btn"
+                  data-i18n="feature-btn"
+                >
+                  Co otrzymujesz w ramach biletu
+                </button>
+                <div class="feature-popup">
+                  <p
+                    class="feature-popup-title"
+                    data-i18n="feature-popup-title"
+                  >
+                    W ramach biletu otrzymujesz:
+                  </p>
+                  <ul class="ticket-features">
+                    <li data-i18n="t4-f1">pełny program obu dni konferencji</li>
+                    <li data-i18n="t4-f2">
+                      udział we wszystkich prelekcjach, panelach dyskusyjnych i
+                      zaplanowanych aktywnościach
+                    </li>
+                    <li data-i18n="t4-f3">
+                      udział w dniu integracji i formacji obejmującym wspólne
+                      doświadczenia, konferencję oraz warsztaty formacyjne
+                    </li>
+                    <li data-i18n="t4-f4">
+                      udział w bankiecie — spotkaniu przy wspólnym stole, które
+                      będzie okazją do rozmów, wymiany doświadczeń i budowania
+                      relacji w mniej formalnej atmosferze
+                    </li>
+                    <li data-i18n="t4-f5">
+                      możliwość prezentacji swojej firmy podczas konferencji w
+                      specjalnie przeznaczonym na ten cel czasie
+                    </li>
+                    <li data-i18n="t4-f6">
+                      możliwość przedstawienia działalności, wartości i misji
+                      swojej firmy innym uczestnikom konferencji
+                    </li>
+                    <li data-i18n="t4-f7">
+                      autorski prezent dla przedsiębiorcy
+                    </li>
+                    <li data-i18n="t4-f8">
+                      dostęp do nagrań wybranych wystąpień po konferencji
+                    </li>
+                    <li data-i18n="t4-f9">
+                      pokonferencyjny workbook dla przedsiębiorcy (PDF) —
+                      praktyczny materiał pomagający przełożyć treści
+                      konferencji na konkretne refleksje, decyzje i działania
+                    </li>
+                    <li data-i18n="t4-f10">
+                      kompendium konferencji „Bóg, Rodzina, Firma, Hojność"
+                      (PDF) — zbiór najważniejszych idei, myśli i wybranych
+                      cytatów prelegentów
+                    </li>
+                    <li data-i18n="t4-f11">wspólne obiady</li>
+                    <li data-i18n="t4-f12">
+                      kawę, herbatę i poczęstunek podczas przerw
+                    </li>
+                    <li data-i18n="t4-f13">materiały konferencyjne</li>
+                    <li data-i18n="t4-f14">certyfikat uczestnictwa</li>
+                  </ul>
+                </div>
+              </div>
+              <!-- KONIEC NOWEGO BLOKU -->
+            </div>
           </div>
-          <ul class="ticket-features">
-            <li data-i18n="t4-f1">Ekskluzywna prezentacja VIP.</li>
-            <li data-i18n="t4-f2">
-              Najlepsze miejsca (strefa VIP / przód sali).
-            </li>
-            <li data-i18n="t4-f3">
-              Bankiet: networking przy stole z przedsiębiorcami i gośćmi.
-            </li>
-            <li data-i18n="t4-f4">
-              Meet &amp; greet / foto po wybranych prelekcjach.
-            </li>
-            <li data-i18n="t4-f5">
-              Pakiet VIP: upominek + materiały premium po konferencji.
-            </li>
-            <li data-i18n="t4-f6">
-              Pełny program 2 dni: więcej strategii, case studies i praktyki.
-            </li>
-            <li data-i18n="t4-f7">Dostęp do nagrań wybranych wystąpień.</li>
-            <li data-i18n="t4-f8">Priorytetowe wejście/rejestracja.</li>
-            <li data-i18n="t4-f9">Przerwy networkingowe.</li>
-            <li data-i18n="t4-f10">
-              Kawa, herbata i ciastka przez cały dzień wydarzenia.
-            </li>
-            <li data-i18n="t4-f11">Materiały konferencyjne.</li>
-            <li data-i18n="t4-f12">Certyfikat uczestnictwa.</li>
-          </ul>
+          <div class="ticket-prawa">
+            <div class="ticket-price">
+              <div class="old-price">1 599 PLN</div>
+              <div class="new-price">1 499 PLN</div>
+              <p class="sierpien" data-i18n="promo-text">
+                promocja do końca sierpnia
+              </p>
+            </div>
+            <a
+              class="btn-buy"
+              href="buy_form.html?ticket=vip"
+              data-i18n="buy-btn"
+              >Kup teraz</a
+            >
+          </div>
         </div>
-
-        <div class="ticket-price">
-          <div class="old-price">1 599 PLN</div>
-          <div class="new-price">1 499 PLN</div>
-          <p class="sierpien" data-i18n="promo-text">
-            promocja do końca sierpnia
-          </p>
-        </div>
-        <a class="btn-buy" href="buy_form.html?ticket=vip" data-i18n="buy-btn"
-          >Kup teraz</a
-        >
       </div>
     </div>
 
@@ -818,64 +1073,122 @@
           "d2-5-desc":
             "A sword from the time of Jesus – used by St. Peter to cut off the ear of the high priest's servant.",
           "venue-label": "EVENT VENUE",
-          "t1-badge": "Premium",
-          "t1-name": "Premium Ticket",
-          "t1-desc-title": "1 day of the conference",
-          "t1-f1": "Access to all lectures and panels of the day.",
-          "t1-f2": "Networking breaks.",
-          "t1-f3": "Coffee, tea and cookies throughout the event.",
-          "t1-f4": "Conference materials.",
-          "t1-f5": "Certificate of participation.",
-          "promo-text": "promotion until the end of August",
-          "buy-btn": "Buy now",
-          "t2-badge": "Business Plus",
-          "t2-name": "Business Plus Ticket",
-          "t2-desc-title": "2 days of the conference",
-          "t2-f1":
-            "Full 2-day program: more strategies, case studies and practice.",
+          // BILET 1 — jednodniowy
+          "t1-badge": "One-day",
+          "t1-name": "One-day Ticket",
+          "t1-desc-1": "Choose the day you want to experience with us.",
+          "t1-desc-2":
+            "A one-day ticket gives you full access to the program of your chosen conference day. You can decide whether to join the main conference day on October 9, or choose October 10 — a day of integration, relationships and formation.",
+          "t1-day-label": "Choose a day:",
+          "t1-day1-title": "October 9 — conference day",
+          "t1-day1-desc":
+            "Family in business and Generosity that changes the world.",
+          "t1-day2-title": "October 10 — integration and formation day",
+          "t1-day2-desc": "Conference and formation workshops, integration.",
+          "t1-banquet-question":
+            "Would you also like to join us for the banquet?",
+          "t1-banquet-time": "October 9, 8:00 PM",
+          "t1-banquet-venue": "Saffron at GARDENcity",
+          "t1-banquet-venue-suffix": ", Poznań International Fair",
+          "t1-banquet-desc":
+            "If you want to extend the conference meeting and spend the evening among entrepreneurs and invited guests, you can add a banquet ticket. It will be time for a shared dinner, conversation, meeting other entrepreneurs and building relationships in a less formal atmosphere.",
+          "t1-banquet-cta": "Join us for the banquet! 197 PLN, limited seats",
+          "t1-f1": "full program of the chosen conference day",
+          "t1-f2":
+            "participation in lectures, panel discussions and scheduled activities",
+          "t1-f3":
+            "post-conference workbook for entrepreneurs (PDF) — a practical resource to turn conference content into concrete reflections, decisions and actions",
+          "t1-f4":
+            "space for networking and exchanging experiences with other entrepreneurs",
+          "t1-f5": "a shared lunch",
+          "t1-f6": "coffee, tea and snacks during breaks",
+          "t1-f7": "conference materials",
+          "t1-f8": "certificate of participation",
+
+          // BILET 2 — dwudniowy
+          "t2-badge": "Two-day",
+          "t2-name": "Two-day Ticket",
+          "t2-desc-1":
+            "The full conference experience — two days of inspiration, relationships and formation",
+          "t2-desc-2":
+            'A two-day ticket gives you the chance to take part in the full program of the "God, Family, Business, Generosity" conference — both the substantive part and the day of integration, formation and deeper reflection.',
+          "t2-desc-3":
+            "This is for people who want to dedicate two days to growth, building relationships with other entrepreneurs, and reflecting on their role as an entrepreneur from a faith perspective.",
+          "t2-f1": "full program of both conference days",
           "t2-f2":
-            "Access to recordings of selected talks (after the conference).",
-          "t2-f3": "Networking breaks.",
-          "t2-f4": "Coffee, tea and cookies throughout the event.",
-          "t2-f5": "Conference materials.",
-          "t2-f6": "Certificate of participation.",
-          "t3-badge": "VIP + Banquet",
-          "t3-name": "VIP + Banquet Ticket",
-          "t3-desc-title": "2 days + VIP banquet",
-          "t3-f1": "Best seats (VIP zone / front of the room).",
+            "participation in all lectures, panel discussions and scheduled activities",
+          "t2-f3":
+            "participation in the integration and formation day, including shared experiences, the conference and formation workshops",
+          "t2-f4":
+            "space for networking and exchanging experiences with other entrepreneurs",
+          "t2-f5":
+            "post-conference workbook for entrepreneurs (PDF) — a practical resource to turn conference content into concrete reflections, decisions and actions",
+          "t2-f6": "shared lunches",
+          "t2-f7": "coffee, tea and snacks during breaks",
+          "t2-f8": "conference materials",
+          "t2-f9": "certificate of participation",
+
+          // BILET 3 — Premium Bankiet
+          "t3-badge": "Premium Banquet",
+          "t3-name": "Premium Banquet Ticket",
+          "t3-desc-1":
+            "Full participation in the conference and the evening banquet",
+          "t3-desc-2":
+            'The Premium ticket includes the full two-day program of the "God, Family, Business, Generosity" conference, participation in the banquet, and additional materials available with this ticket.',
+          "t3-desc-3":
+            "This is for people who want to fully take part in the conference, extend their time together at the banquet, and keep part of the content and experience with them after the event ends.",
+          "t3-f1": "full program of both conference days",
           "t3-f2":
-            "Banquet: networking at the table with entrepreneurs and guests.",
+            "participation in all lectures, panel discussions and scheduled activities",
           "t3-f3":
-            "Meet & greet / photo after selected lectures (if available).",
+            "participation in the integration and formation day, including shared experiences, the conference and formation workshops",
           "t3-f4":
-            "VIP package: gift + premium materials after the conference.",
+            "participation in the banquet — an evening gathering at a shared table, an opportunity for conversation, exchanging experiences and building relationships in a less formal atmosphere",
           "t3-f5":
-            "Full 2-day program: more strategies, case studies and practice.",
+            "post-conference workbook for entrepreneurs (PDF) — a practical resource to turn conference content into concrete reflections, decisions and actions",
           "t3-f6":
-            "Access to recordings of selected talks (after the conference).",
-          "t3-f7": "Priority entry/registration (less time in queues).",
-          "t3-f8": "Networking breaks.",
-          "t3-f9": "Coffee, tea and cookies throughout the event.",
-          "t3-f10": "Conference materials.",
-          "t3-f11": "Certificate of participation.",
-          "t4-badge": "VIP",
-          "t4-name": "VIP Ticket with Presentation",
-          "t4-desc-title": "2 days + banquet + VIP presentation",
-          "t4-f1": "Exclusive VIP presentation.",
-          "t4-f2": "Best seats (VIP zone / front of the room).",
+            '"God, Family, Business, Generosity" conference compendium (PDF) — a collection of key ideas, thoughts and selected speaker quotes, to revisit the most important content after the conference',
+          "t3-f7":
+            "access to recordings of selected talks after the conference",
+          "t3-f8": "an exclusive gift for entrepreneurs",
+          "t3-f9": "shared lunches",
+          "t3-f10": "coffee, tea and snacks during breaks",
+          "t3-f11": "conference materials",
+          "t3-f12": "certificate of participation",
+
+          // BILET 4 — Premium Plus (badge/name już mają data-i18n, tylko dodajemy resztę)
+          "t4-desc-1":
+            "Full participation in the conference plus the chance to present your company",
+          "t4-desc-2":
+            'The Premium Plus ticket includes the full two-day program of the "God, Family, Business, Generosity" conference, participation in the banquet, additional materials, and the chance to present your company during the conference.',
+          "t4-desc-3":
+            "This is for entrepreneurs who want not only to attend the conference but also to present their business, values and mission to other entrepreneurs and share what they do every day.",
+          "t4-f1": "full program of both conference days",
+          "t4-f2":
+            "participation in all lectures, panel discussions and scheduled activities",
           "t4-f3":
-            "Banquet: networking at the table with entrepreneurs and guests.",
-          "t4-f4": "Meet & greet / photo after selected lectures.",
+            "participation in the integration and formation day, including shared experiences, the conference and formation workshops",
+          "t4-f4":
+            "participation in the banquet — a gathering at a shared table, an opportunity for conversation, exchanging experiences and building relationships in a less formal atmosphere",
           "t4-f5":
-            "VIP package: gift + premium materials after the conference.",
+            "the chance to present your company during the conference, in a time slot specially reserved for this purpose",
           "t4-f6":
-            "Full 2-day program: more strategies, case studies and practice.",
-          "t4-f7": "Access to recordings of selected talks.",
-          "t4-f8": "Priority entry/registration.",
-          "t4-f9": "Networking breaks.",
-          "t4-f10": "Coffee, tea and cookies throughout the event.",
-          "t4-f11": "Conference materials.",
-          "t4-f12": "Certificate of participation.",
+            "the chance to present your business, values and mission to other conference participants",
+          "t4-f7": "an exclusive gift for entrepreneurs",
+          "t4-f8":
+            "access to recordings of selected talks after the conference",
+          "t4-f9":
+            "post-conference workbook for entrepreneurs (PDF) — a practical resource to turn conference content into concrete reflections, decisions and actions",
+          "t4-f10":
+            '"God, Family, Business, Generosity" conference compendium (PDF) — a collection of key ideas, thoughts and selected speaker quotes',
+          "t4-f11": "shared lunches",
+          "t4-f12": "coffee, tea and snacks during breaks",
+          "t4-f13": "conference materials",
+          "t4-f14": "certificate of participation",
+
+          // Wspólne
+          "feature-btn": "What you get with this ticket",
+          "feature-popup-title": "With this ticket you get",
           "footer-desc":
             'Chaplaincy of Entrepreneurs and Employers "Talent" in the Archdiocese of Poznań',
           "footer-address": "Poznań, ul. Głogowska 92",

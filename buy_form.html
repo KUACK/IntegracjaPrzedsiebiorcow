@@ -254,18 +254,28 @@
           <h3 data-i18n="section-tickets">Bilety</h3>
 
           <label data-i18n="label-ticket-type">Typ biletu</label>
+          <!-- ZAMIEŃ NA: -->
           <select name="ticketType" id="ticketType" required>
-            <option value="premium" data-i18n="opt-premium">
-              Premium – 1 dzień (499 PLN)
+            <option value="jednodniowy9x" data-i18n="opt-jednodniowy9x">
+              Bilet jednodniowy – 9 października (499 PLN)
+            </option>
+            <option value="jednodniowy10x" data-i18n="opt-jednodniowy10x">
+              Bilet jednodniowy – 10 października (499 PLN)
+            </option>
+            <option
+              value="jednodniowy9xbankiet"
+              data-i18n="opt-jednodniowy9xbankiet"
+            >
+              Bilet jednodniowy – 9 października + Bankiet (696 PLN)
             </option>
             <option value="biznesplus" data-i18n="opt-biznesplus">
-              Biznes Plus – 2 dni (599 PLN)
+              Bilet dwudniowy (599 PLN)
             </option>
             <option value="vipbankiet" data-i18n="opt-vipbankiet">
-              VIP – 2 dni + bankiet (999 PLN)
+              Bilet Premium + Bankiet (999 PLN)
             </option>
             <option value="vip" data-i18n="opt-vip">
-              VIP z Prezentacją – 2 dni + bankiet (1 499 PLN)
+              Bilet Premium Plus – Prezentacja Firmy (1 499 PLN)
             </option>
           </select>
 
@@ -511,7 +521,9 @@
       const postalCodeInput = form.querySelector('input[name="postalCode"]');
 
       const PRICE_GROSZE = {
-        premium: 49900,
+        jednodniowy9x: 49900,
+        jednodniowy10x: 49900,
+        jednodniowy9xbankiet: 69600,
         biznesplus: 59900,
         vipbankiet: 99900,
         vip: 149900,
@@ -1012,10 +1024,12 @@
           "label-postal": "Postal code",
           "section-tickets": "Tickets",
           "label-ticket-type": "Ticket type",
-          "opt-premium": "Premium – 1 day (499 PLN)",
-          "opt-biznesplus": "Business Plus – 2 days (599 PLN)",
-          "opt-vipbankiet": "VIP – 2 days + banquet (999 PLN)",
-          "opt-vip": "VIP with Presentation – 2 days + banquet (1,499 PLN)",
+          "opt-jednodniowy9x": "One day – October 9 (499 PLN)",
+          "opt-jednodniowy10x": "One day – October 10 (499 PLN)",
+          "opt-jednodniowy9xbankiet": "One day – October 9 + Banquet (696 PLN)",
+          "opt-biznesplus": "Two days  (599 PLN)",
+          "opt-vipbankiet": "Ticket Business + Banquet (999 PLN)",
+          "opt-vip": "Ticket Business Plus with Presentation (1,499 PLN)",
           "label-quantity": "Quantity",
           "label-promo": "Promo code",
           "btn-apply": "Apply",
