@@ -664,7 +664,6 @@ body {
 }
 
 .feature-popup li {
-  display: grid;
   grid-template-columns: 16px 1fr;
   column-gap: 10px;
   align-items: start;
@@ -1764,4 +1763,134 @@ dialog::backdrop {
     visibility: hidden;
     max-height: 1px;
   }
+}
+
+/* ====== DIALOG BANKIETOWY (bilet 1) ====== */
+.banquet-modal {
+  max-width: 480px;
+  width: 92%;
+  padding: 26px 28px;
+  border: none;
+  border-radius: 14px;
+  box-shadow: 0 20px 50px rgba(48, 82, 117, 0.25);
+  text-align: left;
+}
+
+.banquet-modal::backdrop {
+  background-color: rgba(15, 22, 36, 0.55);
+}
+
+.banquet-modal .banquet-upsell-question {
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--secondary);
+  margin-bottom: 10px;
+  font-family:
+    "DM Sans",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+}
+
+.banquet-modal .banquet-upsell-info {
+  font-size: 14px;
+  margin-bottom: 10px;
+  color: var(--text-dark);
+}
+
+.banquet-modal .banquet-upsell-info a {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.banquet-modal .banquet-upsell-info a:hover {
+  text-decoration: underline;
+}
+
+.banquet-modal .banquet-upsell-desc {
+  font-size: 14px;
+  color: var(--text-light);
+  margin-bottom: 14px;
+  line-height: 1.6;
+}
+
+.banquet-modal .banquet-upsell-price {
+  font-size: 14px;
+  font-weight: 700;
+  color: #047857;
+  margin-bottom: 18px;
+}
+
+.banquet-modal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn-banquet-yes,
+.btn-banquet-no {
+  padding: 12px 20px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+  border: none;
+}
+
+.btn-banquet-yes {
+  background: linear-gradient(135deg, var(--accent) 0%, #e88a3f 100%);
+  color: var(--white);
+}
+
+.btn-banquet-yes:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(227, 105, 85, 0.35);
+  background: linear-gradient(135deg, #d4513e 0%, var(--accent) 100%);
+}
+
+.btn-banquet-no {
+  background: transparent;
+  color: var(--secondary);
+  border: 1px solid rgba(48, 82, 117, 0.35);
+}
+
+.btn-banquet-no:hover {
+  background: rgba(48, 82, 117, 0.06);
+  border-color: var(--secondary);
+}
+
+/* ====== LINIA Z CHECKBOXEM POD DAY-PICKEREM ====== */
+.banquet-simple-line {
+  margin: 12px 0 0;
+  text-align: left;
+}
+
+.banquet-simple-choice {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text-dark);
+  cursor: pointer;
+}
+
+.banquet-simple-choice input[type="checkbox"] {
+  accent-color: var(--accent);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+.opis-biletu strong,
+.ticket-features li strong,
+.t1-day1-desc strong,
+.day-option strong {
+  font-weight: 700;
 }

@@ -185,29 +185,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
 (function () {
   const dayRadios = document.querySelectorAll('input[name="t1-day"]');
-  const banquetBlock = document.getElementById("t1-banquet-upsell");
+  const day1Radio = document.querySelector('input[name="t1-day"][value="9x"]');
+  const banquetLine = document.getElementById("t1-banquet-line");
   const banquetCheckbox = document.getElementById("t1-banquet-checkbox");
   const buyBtn = document.getElementById("t1-buy-btn");
   const addonLine = document.getElementById("t1-addon-line");
+  const banquetModal = document.getElementById("t1-banquet-modal");
+  const banquetYesBtn = document.getElementById("t1-banquet-yes");
+  const banquetNoBtn = document.getElementById("t1-banquet-no");
 
   if (!dayRadios.length || !buyBtn) return;
 
   function getSelectedDay() {
     const checked = document.querySelector('input[name="t1-day"]:checked');
-    return checked ? checked.value : null; // null = nic nie zaznaczono
+    return checked ? checked.value : null;
   }
 
   function updateSelection() {
-    const day = getSelectedDay(); // '9x', '10x' albo null
-    const isDay1 = day === "9x"; // true TYLKO gdy realnie zaznaczono 9x
+    const day = getSelectedDay();
+    const isDay1 = day === "9x";
 
-    // blok bankietu pokazuje się tylko przy realnym wyborze 9x
-    banquetBlock.style.display = isDay1 ? "block" : "none";
+    banquetLine.style.display = isDay1 ? "block" : "none";
     if (!isDay1) banquetCheckbox.checked = false;
 
     const wantsBanquet = isDay1 && banquetCheckbox.checked;
-
-    // fallback tylko dla linku "Kup teraz", nie wpływa na widoczność bankietu
     const effectiveDay = day || "9x";
 
     let ticketType;
@@ -223,10 +224,38 @@ document.addEventListener("DOMContentLoaded", () => {
     addonLine.style.display = wantsBanquet ? "block" : "none";
   }
 
+  // Otwarcie okna dialogowego przy KAŻDYM kliknięciu opcji "9x"
+  if (day1Radio && banquetModal) {
+    day1Radio.addEventListener("click", () => {
+      banquetModal.showModal();
+    });
+  }
+
+  if (banquetYesBtn && banquetModal) {
+    banquetYesBtn.addEventListener("click", () => {
+      banquetCheckbox.checked = true;
+      banquetModal.close();
+      updateSelection();
+    });
+  }
+
+  if (banquetNoBtn && banquetModal) {
+    banquetNoBtn.addEventListener("click", () => {
+      banquetCheckbox.checked = false;
+      banquetModal.close();
+      updateSelection();
+    });
+  }
+
+  // Zamknięcie dialogu np. klawiszem Esc traktujemy jak brak decyzji — checkbox zostaje bez zmian
+  if (banquetModal) {
+    banquetModal.addEventListener("close", updateSelection);
+  }
+
   dayRadios.forEach(function (radio) {
     radio.addEventListener("change", updateSelection);
   });
   banquetCheckbox.addEventListener("change", updateSelection);
 
-  updateSelection(); // inicjalizacja przy wczytaniu strony
+  updateSelection();
 })();
