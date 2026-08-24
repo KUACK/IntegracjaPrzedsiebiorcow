@@ -755,6 +755,9 @@ body {
   position: relative;
   max-width: 200px;
   align-self: flex-end;
+  display: block;
+  width: fit-content;
+  margin-left: auto;
 }
 
 /* Shimmer efekt na przycisku */
