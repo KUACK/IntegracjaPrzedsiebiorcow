@@ -142,7 +142,7 @@ export async function onRequestPost({ request, env }) {
   }
 
   const now = new Date();
-  const promo = promoCodeRaw.toLowerCase();
+  const promo = promoCodeRaw.toLowerCase().replace(/ń/g, "n");
 
   let discountFactor = 1;
   let fixedPriceGrosze = 0;
@@ -192,6 +192,35 @@ export async function onRequestPost({ request, env }) {
     promo === "15integracja"
   ) {
     if (now < promoDeadline2) discountFactor = 0.85; // -15%
+  } else if (
+    promo === "wrzesien0" ||
+    promo === "wrzesien1" ||
+    promo === "wrzesien2" ||
+    promo === "wrzesien3" ||
+    promo === "wrzesien4" ||
+    promo === "wrzesien5" ||
+    promo === "wrzesien6" ||
+    promo === "wrzesien7" ||
+    promo === "wrzesien8" ||
+    promo === "wrzesien9" ||
+    promo === "wrzesien12"
+  ) {
+    if (now >= promoDeadline && now < promoDeadline2) discountFactor = 0.75; // -25%
+  } else if (
+    promo === "integracja0" ||
+    promo === "integracja1" ||
+    promo === "integracja2" ||
+    promo === "integracja3" ||
+    promo === "integracja4" ||
+    promo === "integracja5" ||
+    promo === "integracja6" ||
+    promo === "integracja7" ||
+    promo === "integracja8" ||
+    promo === "integracja9" ||
+    promo === "integracja12" ||
+    promo === "poznan"
+  ) {
+    if (now >= promoDeadline && now < promoDeadline2) discountFactor = 0.65; // -35%
   }
 
   // Rabat (procentowy lub kod fixed-price) liczony jest od całej ceny

@@ -735,7 +735,7 @@
       }
 
       function validatePromoCode(code) {
-        const normalized = code.trim().toLowerCase();
+        const normalized = code.trim().toLowerCase().replace(/ń/g, "n");
         const now = new Date();
 
         if (normalized === "lipiec") {
@@ -876,6 +876,58 @@
               code: normalized.toUpperCase(),
               factor: 0.85,
               label: t("promo-applied-15"),
+            };
+          }
+          return { valid: false, label: t("promo-expired") };
+        }
+        // Kody wrzesień/październik — rabat 25%, aktywne 1.09–10.10.2026
+        const promoStartWrzesien = new Date("2026-09-01T00:00:00+02:00");
+
+        if (
+          normalized === "wrzesien0" ||
+          normalized === "wrzesien1" ||
+          normalized === "wrzesien2" ||
+          normalized === "wrzesien3" ||
+          normalized === "wrzesien4" ||
+          normalized === "wrzesien5" ||
+          normalized === "wrzesien6" ||
+          normalized === "wrzesien7" ||
+          normalized === "wrzesien8" ||
+          normalized === "wrzesien9" ||
+          normalized === "wrzesien12"
+        ) {
+          if (now >= promoStartWrzesien && now < deadline2) {
+            return {
+              valid: true,
+              code: normalized.toUpperCase(),
+              factor: 0.75,
+              label: t("promo-applied-25"),
+            };
+          }
+          return { valid: false, label: t("promo-expired") };
+        }
+
+        // Kody integracja + poznan — rabat 35%, ten sam okres
+        if (
+          normalized === "integracja0" ||
+          normalized === "integracja1" ||
+          normalized === "integracja2" ||
+          normalized === "integracja3" ||
+          normalized === "integracja4" ||
+          normalized === "integracja5" ||
+          normalized === "integracja6" ||
+          normalized === "integracja7" ||
+          normalized === "integracja8" ||
+          normalized === "integracja9" ||
+          normalized === "integracja12" ||
+          normalized === "poznan"
+        ) {
+          if (now >= promoStartWrzesien && now < deadline2) {
+            return {
+              valid: true,
+              code: normalized.toUpperCase(),
+              factor: 0.65,
+              label: t("promo-applied-35"),
             };
           }
           return { valid: false, label: t("promo-expired") };
@@ -1170,6 +1222,7 @@
           "promo-applied-45": "Code applied -45%.",
           "promo-applied-40": "Code applied -40%.",
           "promo-applied-30": "Code applied -30%.",
+          "promo-applied-25": "Code applied -25%",
           "promo-applied-20": "Code applied -20%.",
           "promo-applied-15": "Code applied -15%.",
           "promo-applied": "Code applied.",
@@ -1207,6 +1260,7 @@
         translations.pl["promo-applied-50"] = "Kod zastosowany (–50%).";
         translations.pl["promo-applied-45"] = "Kod zastosowany -45%.";
         translations.pl["promo-applied-40"] = "Kod zastosowany -40%.";
+        translations.pl["promo-applied-25"] = "Kod zastosowany -25%.";
         translations.pl["promo-applied-30"] = "Kod zastosowany -30%.";
         translations.pl["promo-applied-20"] = "Kod zastosowany -20%.";
         translations.pl["promo-applied-15"] = "Kod zastosowany -15%.";
