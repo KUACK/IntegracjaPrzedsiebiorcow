@@ -1310,7 +1310,7 @@
 
       document.addEventListener("DOMContentLoaded", () => {
         buildPolishDictionary();
-        const saved = getCookie("site-lang") || "pl";
+        const saved = localStorage.getItem("site-lang") || "pl";
         setLang(saved);
       });
     </script>
