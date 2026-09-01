@@ -150,10 +150,20 @@
         Dołącz do nas podczas bankietu! 197 PLN, liczba miejsc ograniczona
       </p>
       <div class="banquet-modal-actions">
-        <button type="button" id="t1-banquet-yes" class="btn-banquet-yes">
+        <button
+          type="button"
+          id="t1-banquet-yes"
+          data-i18n="t1-banquet-yes-btn"
+          class="btn-banquet-yes"
+        >
           Chcę wziąć udział w bankiecie
         </button>
-        <button type="button" id="t1-banquet-no" class="btn-banquet-no">
+        <button
+          type="button"
+          id="t1-banquet-no"
+          data-i18n="t1-banquet-no-btn"
+          class="btn-banquet-no"
+        >
           Nie chcę brać udziału w bankiecie
         </button>
       </div>
@@ -165,10 +175,16 @@
           <h2 class="section-title" data-i18n="section-title">
             INTEGRACJA PRZEDSIĘBIORCÓW
           </h2>
-          <h2 class="section-title" style="font-size: 26px">
+          <h2
+            class="section-title"
+            data-i18n="hero-subtitle"
+            style="font-size: 26px"
+          >
             Konferencja Bóg, Rodzina, Firma, Hojność
           </h2>
-          <h2 class="section-title">9-10 października 2026, Poznań</h2>
+          <h2 class="section-title" data-i18n="hero-date">
+            9-10 października 2026, Poznań
+          </h2>
         </div>
       </div>
     </section>
@@ -1272,13 +1288,14 @@
       const translations = {
         pl: {}, // wypełnione automatycznie oryginalną treścią HTML przy starcie
         en: {
-          "section-title": "OUR SPEAKERS",
+          "section-title": "ENTREPRENEURS' INTEGRATION",
 
           kicker: "Integration Program",
           "day1-date": "October 9, 2026 (Friday)",
           "day2-date": "October 10, 2026 (Saturday)",
           "d1-1-title": "HOLY MASS",
-          "d1-1-desc": "Opening of the conference with a joint prayer.",
+          "d1-1-desc":
+            "Eucharist presided over by Bishop Grzegorz Olszowski at the Church of St. Michael the Archangel.",
           "d1-2-title": "PARTICIPANT REGISTRATION",
           "d1-2-desc": "Collecting badges and conference materials.",
           "d1-3-title": "OFFICIAL WELCOME",
@@ -1479,6 +1496,14 @@
           "t4-f13": "conference materials",
           "t4-f14": "certificate of participation",
 
+          "hero-subtitle": "God, Family, Business, Generosity Conference",
+          "hero-date": "October 9-10, 2026, Poznań",
+          "t1-banquet-yes-btn": "I want to take part in the banquet",
+          "t1-banquet-no-btn": "I don't want to take part in the banquet",
+          "t1-banquet-cta-short":
+            "Join us for the banquet! 197 PLN, limited seats",
+          "t4-name": "Premium Plus Ticket – Company Presentation",
+          "t4-badge": "Premium Plus",
           // Wspólne
           "promo-text": "promotion valid until the end of August,",
           "buy-btn": "Sign up",
