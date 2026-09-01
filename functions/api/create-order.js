@@ -107,32 +107,32 @@ export async function onRequestPost({ request, env }) {
     jednodniowy9x: {
       dbName: "Bilet jednodniowy – 9 października",
       autopayName: "Jednodniowy 9 X",
-      unit: 49900, // 499 PLN
+      unit: 59900, // 599 PLN
     },
     jednodniowy10x: {
       dbName: "Bilet jednodniowy – 10 października",
       autopayName: "Jednodniowy 10 X",
-      unit: 49900, // 499 PLN
+      unit: 59900, // 599 PLN
     },
     jednodniowy9xbankiet: {
       dbName: "Bilet jednodniowy – 9 października + Bankiet",
       autopayName: "Jednodniowy 9 X plus Bankiet",
-      unit: 69600, // 499 PLN + 197 PLN bankiet = 696 PLN
+      unit: 79600, // 599 PLN + 197 PLN bankiet = 796 PLN
     },
     biznesplus: {
       dbName: "Biznes Plus – 2 dni",
       autopayName: "Biznes Plus - 2 dni",
-      unit: 59900,
+      unit: 69900,
     },
     vipbankiet: {
       dbName: "VIP – 2 dni + bankiet",
       autopayName: "VIP - 2 dni bankiet",
-      unit: 99900,
+      unit: 109900,
     },
     vip: {
       dbName: "VIP z Prezentacją – 2 dni + bankiet",
       autopayName: "VIP prezentacja - 2 dni bankiet",
-      unit: 149900,
+      unit: 159900,
     },
   };
 
