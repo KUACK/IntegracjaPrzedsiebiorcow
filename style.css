@@ -1594,7 +1594,9 @@ dialog::backdrop {
   dialog {
     width: 90%;
   }
-
+  .nav-btn {
+    font-size: 10px;
+  }
   .dtekst {
     font-size: 12px;
   }
