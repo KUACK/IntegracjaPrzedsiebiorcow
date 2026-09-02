@@ -136,6 +136,7 @@ body {
   transition:
     transform 0.3s ease,
     opacity 0.3s ease;
+  height: 82px;
 }
 
 .logo:hover img {
@@ -159,6 +160,10 @@ body {
   text-align: center;
   border-bottom: 4px solid var(--primary);
   transition: box-shadow 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* logo po lewej, nawigacja po prawej */
+  padding: 16px 400px;
 }
 
 .header:hover {
@@ -176,7 +181,80 @@ body {
   font-size: 18px;
   color: var(--text-light);
 }
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
 
+.nav-btn {
+  display: inline-block;
+  padding: 10px 22px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 15px;
+  font-family: inherit;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease,
+    color 0.2s ease;
+}
+
+/* Przycisk drugorzędny - "Harmonogram" */
+.nav-btn:not(.nav-btn--primary) {
+  color: var(--secondary);
+  background-color: transparent;
+  border: 1px solid var(--secondary);
+}
+
+.nav-btn:not(.nav-btn--primary):hover {
+  background-color: var(--secondary);
+  color: var(--white);
+  transform: translateY(-2px);
+}
+
+/* Przycisk główny "Zapisz się" - taki sam styl jak .btn-buy */
+.nav-btn--primary {
+  position: relative;
+  background: linear-gradient(135deg, var(--accent) 0%, #e88a3f 100%);
+  color: var(--white);
+  border: none;
+  overflow: hidden;
+}
+
+.nav-btn--primary::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 255, 255, 0.28),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.nav-btn--primary:hover::after {
+  left: 150%;
+}
+
+.nav-btn--primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(227, 105, 85, 0.4);
+  background: linear-gradient(135deg, #d4513e 0%, var(--accent) 100%);
+  letter-spacing: 0.5px;
+}
+
+.nav-btn--primary:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(227, 105, 85, 0.25);
+}
 /* ========================
    SEKCJA PRELEGENCI
    ======================== */
@@ -187,12 +265,20 @@ body {
 }
 
 .hero {
-  background: var(--secondary);
+  background-image: url("obrazy/hero2.jpg");
+  background-size: cover; /* zdjęcie wypełnia cały obszar */
+  background-position: center; /* wycentrowanie kadru */
+  background-repeat: no-repeat; /* bez powtarzania obrazka */
+  height: 84vh; /* na całą wysokość ekranu */
+  display: flex;
+  align-items: center; /* wycentrowanie treści w pionie */
+  justify-content: center; /* wycentrowanie treści w poziomie */
+  text-align: center;
+  color: white; /* kolor napisów widoczny na tle */
+  position: relative;
 }
 
 .section.hiro {
-  margin-top: 0;
-  background: var(--secondary);
   display: flex;
   flex-direction: column;
 }
@@ -478,7 +564,7 @@ body {
   align-items: stretch;
   max-width: 1200px;
   margin: 0 auto;
-  margin-top: 50px;
+  padding-top: 50px;
 }
 
 .ticket-card {
@@ -2018,4 +2104,83 @@ dialog::backdrop {
   align-items: center;
   justify-content: center;
   text-align: center;
+}
+
+/* Sekcja hero z tłem zdjęcia — jeśli tło jest ustawione gdzie indziej,
+   dopisz tu tylko właściwości position/overflow, resztę pomiń */
+.hero {
+  position: relative;
+  min-height: 600px; /* dopasuj do wysokości Twojego zdjęcia */
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Przyciemniający gradient nałożony na zdjęcie — od lewej (ciemniej)
+   do prawej (jaśniej), tak by tekst po lewej miał kontrast, a zdjęcie
+   po prawej zostało widoczne */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.65) 0%,
+    rgba(0, 0, 0, 0.45) 35%,
+    rgba(0, 0, 0, 0.05) 65%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  z-index: 1;
+}
+
+.hero .container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+/* Blok tekstowy przesunięty do ok. 1/4 szerokości strony */
+.hiro {
+  max-width: 620px;
+  margin-left: 1%; /* przesuwa blok w stronę ~1/4 szerokości */
+  padding: 24px 28px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.hiro .section-title {
+  color: #fff;
+  margin: 0;
+  /* dodatkowy kontrast na wypadek jaśniejszych partii zdjęcia */
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+  text-align: left;
+}
+
+/* Przycisk CTA w hero — identyczny wygląd jak w navbarze,
+   ale z odstępem od tekstu */
+.hero-cta {
+  margin-top: 16px;
+  align-self: flex-start;
+}
+
+/* Responsywność — na wąskich ekranach wyśrodkuj i zmniejsz margines */
+@media (max-width: 768px) {
+  .hiro {
+    margin-left: 5%;
+    max-width: 90%;
+  }
+  .hero::before {
+    background: rgba(0, 0, 0, 0.55);
+  }
+}
+.hero {
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 600px;
+  position: relative;
+  overflow: hidden;
 }

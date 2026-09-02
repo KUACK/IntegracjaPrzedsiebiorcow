@@ -104,28 +104,18 @@
       <button type="button" id="lang-en" onclick="setLang('en')">ENG</button>
     </div>
 
-    <!-- PASEK PROMOCYJNY 
-    <div class="promo-bar">
-      <div class="promo-content">
-        <div class="promo-text">
-          Drodzy Uczestnicy! Po długiej batalii z serwisami bramek płatniczych,
-          broniąc dokumentów kościelnych<br />udało nam się uruchomić płatności
-          online. Z tej okazji przedłużamy dla was WSZYSTKIE kody do końca maja!
-          <br />
-          Kod: <strong>MAJ</strong> – 35% na wszystkie bilety!
-        </div>
-        <div class="timer" id="timer">⏱️ Pozostało: Ładowanie...</div>
-      </div>
-    </div>-->
-
-    <!-- HEADER 
+    <!-- HEADER -->
     <div class="header">
       <div class="logo">
         <a class="logo" href="index.html" aria-label="Strona główna">
           <img src="obrazy/logo.png" alt="logo" />
         </a>
       </div>
-    </div>-->
+      <nav class="nav">
+        <a href="#program" class="nav-btn">Harmonogram</a>
+        <a href="#bilety" class="nav-btn nav-btn--primary">Zapisz się</a>
+      </nav>
+    </div>
     <!-- Dialog bankietowy — np. tuż przed </body>, obok welcome-modal -->
     <dialog id="t1-banquet-modal" class="banquet-modal">
       <p class="banquet-upsell-question" data-i18n="t1-banquet-question">
@@ -176,7 +166,7 @@
     <!-- SEKCJA PRELEGENCI -->
     <section class="hero" id="prelegenci">
       <div class="container">
-        <div class="section hiro">
+        <div class="hiro">
           <h2 class="section-title" data-i18n="section-title">
             INTEGRACJA PRZEDSIĘBIORCÓW
           </h2>
@@ -190,6 +180,9 @@
           <h2 class="section-title" data-i18n="hero-date">
             9-10 października 2026, Poznań
           </h2>
+          <a href="#bilety" class="nav-btn nav-btn--primary hero-cta"
+            >Zapisz się</a
+          >
         </div>
       </div>
     </section>
@@ -679,7 +672,7 @@
     </div>
 
     <!-- BILETY -->
-    <div class="tickets-grid">
+    <div class="tickets-grid" id="bilety">
       <!-- BILET 1 - jednodniowy -->
       <div class="ticket-card">
         <div class="ticket-interior">
