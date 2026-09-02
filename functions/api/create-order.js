@@ -162,6 +162,8 @@ export async function onRequestPost({ request, env }) {
     fixedPriceGrosze = 300;
   } else if (promo === "talent45") {
     if (now < promoDeadline2) discountFactor = 0.55; // -45%
+  } else if (promo === "naskale1") {
+    if (now < promoDeadline2) discountFactor = 0.5; // -45%
   } else if (
     promo === "40wrzesien" ||
     promo === "pazdziernik40" ||

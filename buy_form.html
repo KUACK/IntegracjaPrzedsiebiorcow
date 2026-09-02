@@ -800,7 +800,17 @@
           }
           return { valid: false, label: t("promo-expired") };
         }
-
+        if (normalized === "naskale1") {
+          if (now < deadline2) {
+            return {
+              valid: true,
+              code: "NASKALE1",
+              factor: 0.5,
+              label: t("promo-applied-50"),
+            };
+          }
+          return { valid: false, label: t("promo-expired") };
+        }
         if (
           normalized === "40wrzesien" ||
           normalized === "pazdziernik40" ||
