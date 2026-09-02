@@ -265,7 +265,7 @@ body {
 }
 
 .hero {
-  background-image: url("obrazy/hero2.jpg");
+  background-image: url("obrazy/hero3.jpg");
   background-size: cover; /* zdjęcie wypełnia cały obszar */
   background-position: center; /* wycentrowanie kadru */
   background-repeat: no-repeat; /* bez powtarzania obrazka */
