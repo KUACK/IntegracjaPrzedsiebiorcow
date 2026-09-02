@@ -112,8 +112,10 @@
         </a>
       </div>
       <nav class="nav">
-        <a href="#program" class="nav-btn">Harmonogram</a>
-        <a href="#bilety" class="nav-btn nav-btn--primary">Zapisz się</a>
+        <a href="#program" class="nav-btn" data-i18n="harm-nav">Harmonogram</a>
+        <a href="#bilety" class="nav-btn nav-btn--primary" data-i18n="nav-sign"
+          >Zapisz się</a
+        >
       </nav>
     </div>
     <!-- Dialog bankietowy — np. tuż przed </body>, obok welcome-modal -->
@@ -180,7 +182,10 @@
           <h2 class="section-title" data-i18n="hero-date">
             9-10 października 2026, Poznań
           </h2>
-          <a href="#bilety" class="nav-btn nav-btn--primary hero-cta"
+          <a
+            href="#bilety"
+            class="nav-btn nav-btn--primary hero-cta"
+            data-i18n="nav-sign"
             >Zapisz się</a
           >
         </div>
@@ -442,7 +447,7 @@
                       class="prelegent-foto--kwadrat"
                     />
                   </div>
-                  <p class="prelegent-podpis">
+                  <p class="prelegent-podpis" data-i18n="prowadzacy">
                     Robert Bartkowiak<br />Prowadzący
                   </p>
                   <p
@@ -462,7 +467,9 @@
                       class="prelegent-foto--kwadrat"
                     />
                   </div>
-                  <p class="prelegent-podpis">Krzysztof Zuba<br />Uczestnik</p>
+                  <p class="prelegent-podpis" data-i18n="kzp">
+                    Krzysztof Zuba<br />Uczestnik
+                  </p>
                   <p
                     class="schedule-desc prele-tel"
                     style="margin-top: 0"
@@ -501,7 +508,7 @@
                       class="prelegent-foto--kwadrat"
                     />
                   </div>
-                  <p class="prelegent-podpis">
+                  <p class="prelegent-podpis" data-i18n="kdp">
                     Krzysztof Drabik<br />Uczestnik
                   </p>
                   <p
@@ -1295,6 +1302,8 @@
           "d1-1-desc":
             "Eucharist presided over by Bishop Grzegorz Olszowski at the Church of St. Michael the Archangel.",
           "d1-2-title": "PARTICIPANT REGISTRATION",
+          "harm-nav": "Schedule",
+          "nav-sign": "Sign up",
           "d1-2-desc": "Collecting badges and conference materials.",
           "d1-3-title": "OFFICIAL WELCOME",
           "d1-3-desc": "Welcoming participants and introducing the organizers.",
@@ -1308,7 +1317,9 @@
           "d1-7-desc":
             "Special presentations for participants holding VIP tickets with presentation.",
           "d1-8-title": "LECTURE BLOCK II",
-
+          prowadzacy: "Robert Bartkowiak<br />Leading",
+          kzp: "Krzysztof Zuba<br />Participant",
+          kdp: "Krzysztof Drabik<br />Participant",
           "banquet-label": "BANQUET",
           "banquet-time": "8:00 PM",
           "banquet-title": 'SAFFRON <br class="mobile-break">HALL',
@@ -1323,7 +1334,7 @@
           "d2-5-desc":
             "A sword from the time of Jesus – used by St. Peter to cut off the ear of the high priest's servant.",
           "venue-label": "EVENT VENUE",
-          "d1-11-kstk": "Rev. Tomasz Kancelarczyk",
+          "d1-11-kstk": "Rev. Tomasz Kancelarczyk<br />Participant",
           // --- Dzień 1 ---
           "d1-3-desc1":
             "<strong>Rev. Rafał Ostrowski</strong> – chaplain of entrepreneurs in the Archdiocese of Poznań and conference coordinator",
