@@ -259,3 +259,65 @@ document.addEventListener("DOMContentLoaded", () => {
 
   updateSelection();
 })();
+// =========================================================
+// PRELEGENT — inteligentne pozycjonowanie okienka po najechaniu
+// Wstaw ten kod na końcu main.js albo w nowym <script> przed </body>
+// (razem z prelegent-popup.css z tego samego zestawu)
+// =========================================================
+
+function initPrelegentTooltips() {
+  const wrappers = document.querySelectorAll(".prelegent-tooltip");
+
+  wrappers.forEach(function (wrap) {
+    const popup = wrap.querySelector(".prelegent-popup");
+    if (!popup) return;
+
+    // desktop: mysz - liczymy miejsce tuż przed pokazaniem okna
+    wrap.addEventListener("mouseenter", function () {
+      positionPopup(wrap, popup);
+    });
+
+    // telefon/tablet: dotyk (na wypadek gdyby ktoś odpalał hover przez tap)
+    wrap.addEventListener(
+      "touchstart",
+      function () {
+        positionPopup(wrap, popup);
+      },
+      { passive: true },
+    );
+  });
+
+  // przelicz przy zmianie rozmiaru okna (np. obrót telefonu)
+  window.addEventListener("resize", function () {
+    wrappers.forEach(function (wrap) {
+      const popup = wrap.querySelector(".prelegent-popup");
+      if (
+        (popup && popup.classList.contains("pos-left")) ||
+        (popup && popup.classList.contains("pos-right")) ||
+        (popup && popup.classList.contains("pos-top")) ||
+        (popup && popup.classList.contains("pos-bottom"))
+      ) {
+        positionPopup(wrap, popup);
+      }
+    });
+  });
+}
+
+function positionPopup(wrap, popup) {
+  popup.classList.remove("pos-left", "pos-right", "pos-top", "pos-bottom");
+
+  const isMobile = window.innerWidth <= 900;
+  const rect = wrap.getBoundingClientRect();
+
+  if (isMobile) {
+    const spaceAbove = rect.top;
+    const spaceBelow = window.innerHeight - rect.bottom;
+    popup.classList.add(spaceBelow >= spaceAbove ? "pos-bottom" : "pos-top");
+  } else {
+    const spaceLeft = rect.left;
+    const spaceRight = window.innerWidth - rect.right;
+    popup.classList.add(spaceRight >= spaceLeft ? "pos-right" : "pos-left");
+  }
+}
+
+document.addEventListener("DOMContentLoaded", initPrelegentTooltips);

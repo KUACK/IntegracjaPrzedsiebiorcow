@@ -1597,6 +1597,9 @@ dialog::backdrop {
   .nav-btn {
     font-size: 10px;
   }
+  .prelegent-foto--kwadrat {
+    max-width: 93px;
+  }
   .dtekst {
     font-size: 12px;
   }
@@ -2185,4 +2188,161 @@ dialog::backdrop {
   min-height: 600px;
   position: relative;
   overflow: hidden;
+}
+/* =========================================================
+   PRELEGENT — OKIENKO PO NAJECHANIU NA ZDJĘCIE (hover popup)
+   Wersja: okno samo wybiera stronę z większą ilością miejsca
+   (wymaga dodatkowego pliku prelegent-popup.js!)
+   Dopisz ten blok na końcu style.css (nadpisuje poprzednią wersję)
+   ========================================================= */
+
+.prelegent-tooltip {
+  position: relative;
+  cursor: pointer;
+}
+
+.prelegent-popup {
+  position: absolute;
+  width: 840px;
+  max-width: 92vw;
+  max-height: none;
+  overflow: visible;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-bottom: 4px solid var(--primary);
+  border-radius: 12px;
+  box-shadow: 0 22px 50px rgba(48, 82, 117, 0.28);
+  padding: 28px 32px;
+  z-index: 200;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease,
+    visibility 0.25s;
+  text-align: left;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+
+.prelegent-tooltip:hover .prelegent-popup {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* === DESKTOP: otwieranie w prawo lub w lewo, w zależności od miejsca === */
+
+.prelegent-popup.pos-right {
+  top: 50%;
+  left: 112%;
+  right: auto;
+  bottom: auto;
+  transform: translateY(-50%) translateX(-10px);
+}
+.prelegent-tooltip:hover .prelegent-popup.pos-right {
+  transform: translateY(-50%) translateX(0);
+}
+
+.prelegent-popup.pos-left {
+  top: 50%;
+  right: 112%;
+  left: auto;
+  bottom: auto;
+  transform: translateY(-50%) translateX(10px);
+}
+.prelegent-tooltip:hover .prelegent-popup.pos-left {
+  transform: translateY(-50%) translateX(0);
+}
+
+.prelegent-popup-img {
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid var(--primary);
+  display: block;
+  margin: 0 auto 16px;
+  box-shadow: 0 10px 28px rgba(48, 82, 117, 0.22);
+}
+
+.prelegent-popup-name {
+  font-weight: 800;
+  font-size: 20px;
+  color: #000000;
+  text-align: center;
+  margin-bottom: 14px;
+  letter-spacing: 0.02em;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.prelegent-popup .prelegent-popup-desc {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #000000;
+  white-space: normal;
+  margin: 0;
+}
+
+.prelegent-popup p {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+/* === MOBILE: otwieranie w górę lub w dół, w zależności od miejsca === */
+
+@media (max-width: 900px) {
+  .prelegent-popup {
+    width: 320px;
+    max-height: 70vh;
+    overflow-y: auto;
+  }
+
+  .prelegent-popup.pos-bottom {
+    top: 110%;
+    bottom: auto;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%) translateY(8px);
+  }
+  .prelegent-tooltip:hover .prelegent-popup.pos-bottom {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .prelegent-popup.pos-top {
+    bottom: 110%;
+    top: auto;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%) translateY(-8px);
+  }
+  .prelegent-tooltip:hover .prelegent-popup.pos-top {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* na mobile ignorujemy pozycje lewo/prawo z desktopu, jeśli JS jeszcze ich nie nadpisał */
+  .prelegent-popup.pos-left,
+  .prelegent-popup.pos-right {
+    top: auto;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%) translateY(8px);
+  }
+
+  .prelegent-popup-img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .prelegent-popup::-webkit-scrollbar {
+    width: 6px;
+  }
+  .prelegent-popup::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 10px;
+  }
 }
