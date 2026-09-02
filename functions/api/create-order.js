@@ -151,7 +151,7 @@ export async function onRequestPost({ request, env }) {
   // Nowe kody promocyjne (wrzesień/październik/integracja/BRFH/Poznań/Talent/Jesień)
   // ważne do 10 października 2026 włącznie.
   const promoDeadline2 = new Date("2026-10-10T23:59:59+02:00");
-
+  const promoDeadline3 = new Date("2026-9-9T23:59:59+02:00");
   if (promo === "lipiec") {
     if (now < promoDeadline) discountFactor = 0.65;
   } else if (promo === "naskale") {
@@ -163,7 +163,7 @@ export async function onRequestPost({ request, env }) {
   } else if (promo === "talent45") {
     if (now < promoDeadline2) discountFactor = 0.55; // -45%
   } else if (promo === "naskale1") {
-    if (now < promoDeadline2) discountFactor = 0.5; // -45%
+    if (now < promoDeadline3) discountFactor = 0.5; // -45%
   } else if (
     promo === "40wrzesien" ||
     promo === "pazdziernik40" ||
