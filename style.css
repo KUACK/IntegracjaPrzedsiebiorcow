@@ -565,6 +565,7 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding-top: 50px;
+  padding-bottom: 50px;
 }
 
 .ticket-card {
@@ -1227,8 +1228,6 @@ img {
   position: relative;
   background: #0f1624;
   color: rgba(255, 255, 255, 0.86);
-
-  margin-top: 40px;
 }
 
 .site-footer .footer-bg {
@@ -2344,5 +2343,93 @@ dialog::backdrop {
   .prelegent-popup::-webkit-scrollbar-thumb {
     background: var(--primary);
     border-radius: 10px;
+  }
+}
+/* ===================================================== */
+/* SEKCJA PATRONI - dopisz na końcu style.css              */
+/* ===================================================== */
+
+.patroni-sekcja {
+  padding: 64px 20px 72px;
+  background: var(--white);
+  border-top: 1px solid var(--border);
+}
+
+.patroni-head {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.section-title--patroni {
+  color: var(--secondary);
+  font-size: clamp(26px, 4vw, 36px);
+  margin-top: 8px;
+}
+
+.patroni-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.patron-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 22px 36px;
+  background: var(--light-bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease,
+    background 0.3s ease;
+}
+
+.patron-logo img {
+  max-height: 90px;
+  width: auto;
+  max-width: 220px;
+  object-fit: contain;
+
+  opacity: 0.8;
+  transition:
+    filter 0.3s ease,
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+.patron-logo:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 32px rgba(48, 82, 117, 0.15);
+  border-color: var(--primary);
+  background: #fffdf9;
+}
+
+.patron-logo:hover img {
+  filter: grayscale(0);
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+/* RESPONSYWNE MOBILE */
+@media (max-width: 600px) {
+  .patroni-sekcja {
+    padding: 32px 16px;
+  }
+  .patroni-grid {
+    gap: 20px;
+  }
+  .patron-logo {
+    padding: 14px 22px;
+  }
+  .patron-logo img {
+    max-height: 56px;
+    max-width: 150px;
   }
 }
