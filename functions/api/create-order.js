@@ -195,31 +195,41 @@ export async function onRequestPost({ request, env }) {
   ) {
     if (now < promoDeadline2) discountFactor = 0.85; // -15%
   } else if (
-    promo === "wrzesien0" ||
-    promo === "wrzesien1" ||
-    promo === "wrzesien2" ||
-    promo === "wrzesien3" ||
-    promo === "wrzesien4" ||
-    promo === "wrzesien5" ||
-    promo === "wrzesien6" ||
-    promo === "wrzesien7" ||
-    promo === "wrzesien8" ||
-    promo === "wrzesien9" ||
-    promo === "wrzesien12"
+    normalized === "wrzesien0" ||
+    normalized === "wrzesien1" ||
+    normalized === "wrzesien2" ||
+    normalized === "wrzesien3" ||
+    normalized === "wrzesien4" ||
+    normalized === "wrzesien5" ||
+    normalized === "wrzesien6" ||
+    normalized === "wrzesien7" ||
+    normalized === "wrzesien8" ||
+    normalized === "wrzesien9" ||
+    normalized === "wrzesien10" ||
+    normalized === "wrzesien11" ||
+    normalized === "wrzesien12" ||
+    normalized === "wrzesien13" ||
+    normalized === "wrzesien14" ||
+    normalized === "wrzesien15"
   ) {
     if (now >= promoDeadline && now < promoDeadline2) discountFactor = 0.75; // -25%
   } else if (
-    promo === "integracja0" ||
-    promo === "integracja1" ||
-    promo === "integracja2" ||
-    promo === "integracja3" ||
-    promo === "integracja4" ||
-    promo === "integracja5" ||
-    promo === "integracja6" ||
-    promo === "integracja7" ||
-    promo === "integracja8" ||
-    promo === "integracja9" ||
-    promo === "integracja12" ||
+    normalized === "integracja0" ||
+    normalized === "integracja1" ||
+    normalized === "integracja2" ||
+    normalized === "integracja3" ||
+    normalized === "integracja4" ||
+    normalized === "integracja5" ||
+    normalized === "integracja6" ||
+    normalized === "integracja7" ||
+    normalized === "integracja8" ||
+    normalized === "integracja9" ||
+    normalized === "integracja10" ||
+    normalized === "integracja11" ||
+    normalized === "integracja12" ||
+    normalized === "integracja13" ||
+    normalized === "integracja14" ||
+    normalized === "integracja15" ||
     promo === "poznan"
   ) {
     if (now >= promoDeadline && now < promoDeadline2) discountFactor = 0.65; // -35%
