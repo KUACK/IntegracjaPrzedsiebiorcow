@@ -10,7 +10,7 @@
 // WYMAGA: import z Twojego istniejącego pliku finalize-paid-order.js
 // Dostosuj ścieżkę importu do realnej struktury katalogów w projekcie.
 
-import { finalizePaidOrder } from "../lib/finalize-paid-order.js";
+import { finalizePaidOrder } from "./finalize-paid-order.js";
 
 function createManualOrderId() {
   const ts = Date.now().toString(36).toUpperCase();
@@ -40,7 +40,10 @@ function json(data, status = 200) {
 // zsynchronizowany, jeśli zmieniasz ceny/nazwy tam.
 const tickets = {
   jednodniowy9x: { dbName: "Bilet jednodniowy – 9 października", unit: 59900 },
-  jednodniowy10x: { dbName: "Bilet jednodniowy – 10 października", unit: 59900 },
+  jednodniowy10x: {
+    dbName: "Bilet jednodniowy – 10 października",
+    unit: 59900,
+  },
   jednodniowy9xbankiet: {
     dbName: "Bilet jednodniowy – 9 października + Bankiet",
     unit: 79600,
@@ -75,13 +78,18 @@ export async function onRequestPost({ request, env }) {
   const city = normalizeText(input?.city, 80) || "-";
   const postalCode = normalizeText(input?.postalCode, 20) || "-";
   const ticketType = normalizeText(input?.ticketType, 50).toLowerCase();
-  const quantity = Math.max(1, Math.min(20, parseInt(input?.quantity ?? "1", 10) || 1));
+  const quantity = Math.max(
+    1,
+    Math.min(20, parseInt(input?.quantity ?? "1", 10) || 1),
+  );
   // Opcjonalnie: jeśli podasz totalAmountPLN ręcznie (np. bo była zniżka),
   // użyjemy tej kwoty zamiast cennika.
   const manualTotalPLN = input?.totalAmountPLN;
 
   if (!fullName || !email || !ticketType) {
-    return new Response("Missing fields: fullName, email, ticketType", { status: 400 });
+    return new Response("Missing fields: fullName, email, ticketType", {
+      status: 400,
+    });
   }
   if (!isValidEmail(email)) {
     return new Response("Bad email", { status: 400 });
@@ -89,7 +97,10 @@ export async function onRequestPost({ request, env }) {
 
   const t = tickets[ticketType];
   if (!t) {
-    return new Response(`Unknown ticketType. Use one of: ${Object.keys(tickets).join(", ")}`, { status: 400 });
+    return new Response(
+      `Unknown ticketType. Use one of: ${Object.keys(tickets).join(", ")}`,
+      { status: 400 },
+    );
   }
 
   const unitPrice = manualTotalPLN
