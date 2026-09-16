@@ -212,6 +212,16 @@ async function sendTicketsEmail({ to, fullName, ticketType, tickets, env }) {
               <li>Każdy bilet ma unikalny QR — jeden bilet = jedna osoba</li>
             </ul>
           </div>
+          <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:16px 20px;margin:24px 0">
+  <p style="margin:0 0 8px 0;font-size:14px;color:#9a3412;font-weight:600">Polecany nocleg</p>
+  <p style="margin:0 0 8px 0;font-size:14px;line-height:1.6;color:#334155">
+    W dniach <strong>8–11 października</strong> polecamy nocleg w hotelach partnerskich ze zniżką na hasło <strong>TALENT</strong>:
+  </p>
+  <ul style="margin:0;padding-left:20px;font-size:14px;line-height:1.8;color:#334155">
+    <li><a href="https://www.hotelior.pl" style="color:#0f172a">Hotel IOR</a> — www.hotelior.pl</li>
+    <li><a href="https://www.palazzo-rosso.pl" style="color:#0f172a">Palazzo Rosso</a> — www.palazzo-rosso.pl</li>
+  </ul>
+</div>
           <p style="font-size:14px;color:#6b7280;margin-bottom:0;">W razie pytań odpowiedz na tego maila lub napisz do nas.</p>
         </div>
       </div>

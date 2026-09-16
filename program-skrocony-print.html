@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program skrócony – Integracja Przedsiębiorców</title>
+    <meta
+      name="description"
+      content="Skrócony program konferencji Integracja Przedsiębiorców – Bóg, Rodzina, Biznes, Hojność. 9-10 października 2026, Poznań."
+    />
+    <link
+      rel="icon"
+      href="obrazy/logo.png"
+      media="(prefers-color-scheme: light)"
+    />
+    <link
+      rel="icon"
+      href="obrazy/logobiale.png"
+      media="(prefers-color-scheme: dark)"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700;800&family=DM+Serif+Display&display=swap"
+    />
+    <style>
+      /* Dodatkowe, minimalne style tylko dla tej podstrony - nie modyfikują style.css */
+
+      .skrot-hero {
+        background: linear-gradient(135deg, var(--secondary) 0%, #1f3a4d 100%);
+        color: var(--white);
+        padding: 70px 20px 50px;
+        text-align: center;
+      }
+      .skrot-hero .section-kicker {
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--primary);
+        margin-bottom: 10px;
+      }
+      .skrot-hero h1 {
+        font-family: "DM Serif Display", serif;
+        font-weight: 400;
+        font-size: clamp(28px, 4.5vw, 46px);
+        margin: 0 0 10px;
+      }
+      .skrot-hero p {
+        font-size: 16px;
+        color: rgba(255, 255, 255, 0.85);
+        max-width: 620px;
+        margin: 0 auto 26px;
+      }
+      .skrot-actions {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      .btn-pdf {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: linear-gradient(135deg, var(--accent) 0%, #e88a3f 100%);
+        color: var(--white);
+        border: none;
+        padding: 14px 30px;
+        font-size: 16px;
+        font-weight: 700;
+        border-radius: 8px;
+        text-decoration: none;
+        transition:
+          transform 0.25s ease,
+          box-shadow 0.25s ease;
+      }
+      .btn-pdf:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 28px rgba(227, 105, 85, 0.4);
+      }
+      .btn-back {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: transparent;
+        color: var(--white);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        padding: 14px 26px;
+        font-size: 15px;
+        font-weight: 600;
+        border-radius: 8px;
+        text-decoration: none;
+        transition:
+          background 0.25s ease,
+          transform 0.25s ease;
+      }
+      .btn-back:hover {
+        background: rgba(255, 255, 255, 0.12);
+        transform: translateY(-2px);
+      }
+      .skrot-note {
+        max-width: 900px;
+        margin: 40px auto 10px;
+        text-align: center;
+        color: var(--text-light);
+        font-size: 14px;
+      }
+      .schedule-grid {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+      }
+      .schedule-time {
+        margin-bottom: 0px;
+      }
+    </style>
+  </head>
+  <body class="page-short">
+    <!-- HEADER (identyczny jak na stronie głównej) -->
+
+    <!-- HARMONOGRAM SKRÓCONY -->
+    <section class="harmonogram">
+      <!-- DZIEŃ 1 -->
+      <div class="schedule-stripe day-1">
+        <div class="container">
+          <header class="schedule-head">
+            <div class="schedule-kicker">Program Integracji</div>
+            <h2 class="schedule-main-date">9 X 2026 (piątek)</h2>
+          </header>
+          <div class="schedule-grid">
+            <article class="schedule-card">
+              <div class="schedule-time">8:00</div>
+              <h4 class="schedule-title">Msza Święta</h4>
+              <p class="schedule-desc">
+                Eucharystia pod przewodnictwem Księdza Biskupa Grzegorza
+                Olszowskiego.
+              </p>
+              <p class="innemiejsce">Miejsce: ul. Stolarska 7, Poznań</p>
+            </article>
+
+            <article class="schedule-card">
+              <div class="schedule-time">8:45</div>
+              <h4 class="schedule-title">Rejestracja uczestników</h4>
+              <p class="schedule-desc">
+                Odbiór identyfikatorów i materiałów konferencyjnych.
+              </p>
+              <p class="innemiejsce">Miejsce: World Trade Center, Poznań</p>
+            </article>
+
+            <article class="schedule-card schedule-card--wide">
+              <div class="schedule-time">9:30</div>
+              <h4 class="schedule-title">Otwarcie konferencji</h4>
+              <p class="schedule-desc">
+                ks. Rafał Ostrowski – koordynator konferencji. Prowadzący:
+                Wojciech Nowicki, Olaf Pniewski.
+              </p>
+            </article>
+
+            <article class="schedule-card schedule-card--wide">
+              <div class="schedule-time">10:00</div>
+              <h4 class="schedule-title">Część 1: Rodzina w biznesie</h4>
+              <p class="schedule-desc">
+                10:00 – Krzysztof Janowski &nbsp;·&nbsp; 10:30 – Daniel
+                Schachle, „Radykalne zaufanie Bogu”
+              </p>
+            </article>
+
+            <article class="schedule-card">
+              <div class="schedule-time">11:00–11:30</div>
+              <h4 class="schedule-title">Sesja networkingowa</h4>
+              <p class="schedule-desc">Przerwa kawowa.</p>
+            </article>
+
+            <article class="schedule-card schedule-card--wide">
+              <div class="schedule-time">11:30</div>
+              <h4 class="schedule-title">
+                Panel: Rodzina w firmie, firma w rodzinie
+              </h4>
+              <p class="schedule-desc">
+                Goście: Justyna Marks, Jerzy Kołodziej.
+              </p>
+            </article>
+
+            <article class="schedule-card">
+              <div class="schedule-time">12:30</div>
+              <h4 class="schedule-title">Warsztaty w małych grupach</h4>
+            </article>
+
+            <article class="schedule-card">
+              <div class="schedule-time">13:30</div>
+              <h4 class="schedule-title">Przerwa obiadowa</h4>
+            </article>
+
+            <article class="schedule-card schedule-card--wide">
+              <div class="schedule-time">15:00</div>
+              <h4 class="schedule-title">
+                Część 2: Hojność, która zmienia świat
+              </h4>
+              <p class="schedule-desc">
+                15:00 – Sigrid Marz (prezydent UNIAPAC) &nbsp;·&nbsp; 15:30 –
+                ks. prof. Arkadiusz Wuwer, „Rzecz o hojności, czyli logika daru”
+              </p>
+            </article>
+
+            <article class="schedule-card">
+              <div class="schedule-time">16:15</div>
+              <h4 class="schedule-title">Sesja networkingowa</h4>
+              <p class="schedule-desc">Przerwa kawowa.</p>
+            </article>
+
+            <article class="schedule-card">
+              <div class="schedule-time">16:45</div>
+              <h4 class="schedule-title">Prezentacje przedsiębiorców</h4>
+            </article>
+
+            <article
+              class="schedule-card schedule-card--wide"
+              style="margin-top: 65px"
+            >
+              <div class="schedule-time">17:15</div>
+              <h4 class="schedule-title">Panel: Hojny przedsiębiorca</h4>
+              <p class="schedule-desc">
+                Prowadzący: Robert Bartkowiak. Goście: Krzysztof Zuba, ks.
+                Tomasz Kancelarczyk, Krzysztof Drabik.
+              </p>
+            </article>
+
+            <article class="schedule-card">
+              <div class="schedule-time">18:15</div>
+              <h4 class="schedule-title">Warsztaty w małych grupach</h4>
+            </article>
+
+            <article class="schedule-card">
+              <div class="schedule-time">20:00</div>
+              <h4 class="schedule-title">Bankiet</h4>
+              <p class="innemiejsce">Sala Saffron, GARDENcity, MTP</p>
+            </article>
+          </div>
+        </div>
+      </div>
+
+      <!-- DZIEŃ 2 -->
+      <div class="schedule-stripe day-2">
+        <div class="container">
+          <header class="schedule-head schedule-head--compact">
+            <div class="schedule-kicker">Program Integracji</div>
+            <h2 class="schedule-main-date">10 X 2026 (sobota)</h2>
+          </header>
+          <div class="schedule-grid schedule-grid--day2">
+            <article class="schedule-card">
+              <div class="schedule-time">8:30</div>
+              <h4 class="schedule-title">Oprowadzenie po Farze Poznańskiej</h4>
+              <p class="schedule-desc">ks. Mateusz Misiak.</p>
+            </article>
+
+            <article class="schedule-card" style="margin-top: 65px">
+              <div class="schedule-time">9:00</div>
+              <h4 class="schedule-title">Msza Święta</h4>
+              <p class="schedule-desc">
+                Fara Poznańska, pod przewodnictwem abpa Zbigniewa Zielińskiego.
+              </p>
+              <p class="innemiejsce">Miejsce: ul. Gołębia 1, Poznań</p>
+            </article>
+
+            <article class="schedule-card">
+              <div class="schedule-time">9:40</div>
+              <h4 class="schedule-title">Koncert organowy</h4>
+              <p class="schedule-desc">Bartosz Tritt.</p>
+            </article>
+
+            <article class="schedule-card schedule-card--wide">
+              <div class="schedule-time">10:00–11:00</div>
+              <h4 class="schedule-title">
+                Świadectwo wiary i warsztat formacyjny
+              </h4>
+              <p class="schedule-desc">
+                10:00 – Marcin Cyron, świadectwo wiary przedsiębiorcy
+                &nbsp;·&nbsp; 11:00 – ks. Francisco Mota SJ (doradca duchowy
+                UNIAPAC), konferencja i warsztat formacyjny.
+              </p>
+              <p class="innemiejsce">
+                Miejsce: Kamea, ul. Klasztorna 17/18, Poznań
+              </p>
+            </article>
+
+            <article class="schedule-card">
+              <div class="schedule-time">12:30</div>
+              <h4 class="schedule-title">Przerwa obiadowa</h4>
+            </article>
+
+            <article class="schedule-card">
+              <div class="schedule-time">14:30</div>
+              <h4 class="schedule-title">Spotkania tematyczne w grupach</h4>
+              <p class="innemiejsce">Ostrów Tumski</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

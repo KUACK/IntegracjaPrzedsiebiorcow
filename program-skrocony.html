@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program skrócony – Integracja Przedsiębiorców</title>
+    <meta
+      name="description"
+      content="Skrócony program konferencji Integracja Przedsiębiorców – Bóg, Rodzina, Biznes, Hojność. 9-10 października 2026, Poznań."
+    />
+    <link
+      rel="icon"
+      href="obrazy/logo.png"
+      media="(prefers-color-scheme: light)"
+    />
+    <link
+      rel="icon"
+      href="obrazy/logobiale.png"
+      media="(prefers-color-scheme: dark)"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700;800&family=DM+Serif+Display&display=swap"
+    />
+    <style>
+      /* Dodatkowe, minimalne style tylko dla tej podstrony - nie modyfikują style.css */
+
+      .skrot-hero {
+        background: linear-gradient(135deg, var(--secondary) 0%, #1f3a4d 100%);
+        color: var(--white);
+        padding: 70px 20px 50px;
+        text-align: center;
+      }
+      .skrot-hero .section-kicker {
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--primary);
+        margin-bottom: 10px;
+      }
+      .skrot-hero h1 {
+        font-family: "DM Serif Display", serif;
+        font-weight: 400;
+        font-size: clamp(28px, 4.5vw, 46px);
+        margin: 0 0 10px;
+      }
+      .skrot-hero p {
+        font-size: 16px;
+        color: rgba(255, 255, 255, 0.85);
+        max-width: 620px;
+        margin: 0 auto 26px;
+      }
+      .skrot-actions {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      .btn-pdf {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: linear-gradient(135deg, var(--accent) 0%, #e88a3f 100%);
+        color: var(--white);
+        border: none;
+        padding: 14px 30px;
+        font-size: 16px;
+        font-weight: 700;
+        border-radius: 8px;
+        text-decoration: none;
+        transition:
+          transform 0.25s ease,
+          box-shadow 0.25s ease;
+      }
+      .btn-pdf:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 28px rgba(227, 105, 85, 0.4);
+      }
+      .btn-back {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: transparent;
+        color: var(--white);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        padding: 14px 26px;
+        font-size: 15px;
+        font-weight: 600;
+        border-radius: 8px;
+        text-decoration: none;
+        transition:
+          background 0.25s ease,
+          transform 0.25s ease;
+      }
+      .btn-back:hover {
+        background: rgba(255, 255, 255, 0.12);
+        transform: translateY(-2px);
+      }
+      .skrot-note {
+        max-width: 900px;
+        margin: 40px auto 10px;
+        text-align: center;
+        color: var(--text-light);
+        font-size: 14px;
+      }
+      .schedule-grid {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+      }
+      .schedule-time {
+        margin-bottom: 0px;
+      }
+    </style>
+  </head>
+  <body class="page-short">
+    <!-- HEADER (identyczny jak na stronie głównej) -->
+    <div class="header">
+      <div class="logo">
+        <a class="logo" href="index.html" aria-label="Strona główna">
+          <img src="obrazy/logo.png" alt="logo" />
+        </a>
+      </div>
+      <nav class="nav">
+        <a href="index.html#program" class="nav-btn">Pełny harmonogram</a>
+        <a href="index.html#bilety" class="nav-btn nav-btn--primary"
+          >Zapisz się</a
+        >
+      </nav>
+    </div>
+
+    <!-- HERO PODSTRONY -->
+    <section class="skrot-hero">
+      <div class="container">
+        <div class="section-kicker">Program Integracji</div>
+        <h1>Program skrócony</h1>
+        <p>
+          Konferencja „Bóg, Rodzina, Biznes, Hojność” · 9–10 października 2026,
+          Poznań.
+        </p>
+        <div class="skrot-actions">
+          <a
+            class="btn-pdf"
+            href="Program_skrocony_Integracja_Przedsiebiorcow.pdf"
+            download
+          >
+            ⬇ Pobierz program w PDF
+          </a>
+          <a class="btn-back" href="index.html#program">
+            ← Zobacz pełny program
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- HARMONOGRAM SKRÓCONY -->
+    <section class="harmonogram">
+      <!-- DZIEŃ 1 -->
+      <div class="schedule-stripe day-1">
+        <div class="container">
+          <header class="schedule-head">
+            <div class="schedule-kicker">Program Integracji</div>
+            <h2 class="schedule-main-date">9 X 2026 (piątek)</h2>
+          </header>
+          <div class="schedule-grid">
+            <article class="schedule-card">
+              <div class="schedule-time">8:00</div>
+              <h4 class="schedule-title">Msza Święta</h4>
+              <p class="schedule-desc">
+                Eucharystia pod przewodnictwem Księdza Biskupa Grzegorza
+                Olszowskiego.
+              </p>
+              <p class="innemiejsce">Miejsce: ul. Stolarska 7, Poznań</p>
+            </article>
+
+            <article class="schedule-card">
+              <div class="schedule-time">8:45</div>
+              <h4 class="schedule-title">Rejestracja uczestników</h4>
+              <p class="schedule-desc">
+                Odbiór identyfikatorów i materiałów konferencyjnych.
+              </p>
+              <p class="innemiejsce">Miejsce: World Trade Center, Poznań</p>
+            </article>
+
+            <article class="schedule-card schedule-card--wide">
+              <div class="schedule-time">9:30</div>
+              <h4 class="schedule-title">Otwarcie konferencji</h4>
+              <p class="schedule-desc">
+                ks. Rafał Ostrowski – koordynator konferencji. Prowadzący:
+                Wojciech Nowicki, Olaf Pniewski.
+              </p>
+            </article>
+
+            <article class="schedule-card schedule-card--wide">
+              <div class="schedule-time">10:00</div>
+              <h4 class="schedule-title">Część 1: Rodzina w biznesie</h4>
+              <p class="schedule-desc">
+                10:00 – Krzysztof Janowski &nbsp;·&nbsp; 10:30 – Daniel
+                Schachle, „Radykalne zaufanie Bogu”
+              </p>
+            </article>
+
+            <article class="schedule-card">
+              <div class="schedule-time">11:00–11:30</div>
+              <h4 class="schedule-title">Sesja networkingowa</h4>
+              <p class="schedule-desc">Przerwa kawowa.</p>
+            </article>
+
+            <article class="schedule-card schedule-card--wide">
+              <div class="schedule-time">11:30</div>
+              <h4 class="schedule-title">
+                Panel: Rodzina w firmie, firma w rodzinie
+              </h4>
+              <p class="schedule-desc">
+                Goście: Justyna Marks, Jerzy Kołodziej.
+              </p>
+            </article>
+
+            <article class="schedule-card">
+              <div class="schedule-time">12:30</div>
+              <h4 class="schedule-title">Warsztaty w małych grupach</h4>
+            </article>
+
+            <article class="schedule-card">
+              <div class="schedule-time">13:30</div>
+              <h4 class="schedule-title">Przerwa obiadowa</h4>
+            </article>
+
+            <article class="schedule-card schedule-card--wide">
+              <div class="schedule-time">15:00</div>
+              <h4 class="schedule-title">
+                Część 2: Hojność, która zmienia świat
+              </h4>
+              <p class="schedule-desc">
+                15:00 – Sigrid Marz (prezydent UNIAPAC) &nbsp;·&nbsp; 15:30 –
+                ks. prof. Arkadiusz Wuwer, „Rzecz o hojności, czyli logika daru”
+              </p>
+            </article>
+
+            <article class="schedule-card">
+              <div class="schedule-time">16:15</div>
+              <h4 class="schedule-title">Sesja networkingowa</h4>
+              <p class="schedule-desc">Przerwa kawowa.</p>
+            </article>
+
+            <article class="schedule-card">
+              <div class="schedule-time">16:45</div>
+              <h4 class="schedule-title">Prezentacje przedsiębiorców</h4>
+            </article>
+
+            <article class="schedule-card schedule-card--wide">
+              <div class="schedule-time">17:15</div>
+              <h4 class="schedule-title">Panel: Hojny przedsiębiorca</h4>
+              <p class="schedule-desc">
+                Prowadzący: Robert Bartkowiak. Goście: Krzysztof Zuba, ks.
+                Tomasz Kancelarczyk, Krzysztof Drabik.
+              </p>
+            </article>
+
+            <article class="schedule-card">
+              <div class="schedule-time">18:15</div>
+              <h4 class="schedule-title">Warsztaty w małych grupach</h4>
+            </article>
+
+            <article class="schedule-card">
+              <div class="schedule-time">20:00</div>
+              <h4 class="schedule-title">Bankiet</h4>
+              <p class="innemiejsce">Sala Saffron, GARDENcity, MTP</p>
+            </article>
+          </div>
+        </div>
+      </div>
+
+      <!-- DZIEŃ 2 -->
+      <div class="schedule-stripe day-2">
+        <div class="container">
+          <header class="schedule-head schedule-head--compact">
+            <div class="schedule-kicker">Program Integracji</div>
+            <h2 class="schedule-main-date">10 X 2026 (sobota)</h2>
+          </header>
+          <div class="schedule-grid schedule-grid--day2">
+            <article class="schedule-card">
+              <div class="schedule-time">8:30</div>
+              <h4 class="schedule-title">Oprowadzenie po Farze Poznańskiej</h4>
+              <p class="schedule-desc">ks. Mateusz Misiak.</p>
+            </article>
+
+            <article class="schedule-card">
+              <div class="schedule-time">9:00</div>
+              <h4 class="schedule-title">Msza Święta</h4>
+              <p class="schedule-desc">
+                Fara Poznańska, pod przewodnictwem abpa Zbigniewa Zielińskiego.
+              </p>
+              <p class="innemiejsce">Miejsce: ul. Gołębia 1, Poznań</p>
+            </article>
+
+            <article class="schedule-card">
+              <div class="schedule-time">9:40</div>
+              <h4 class="schedule-title">Koncert organowy</h4>
+              <p class="schedule-desc">Bartosz Tritt.</p>
+            </article>
+
+            <article class="schedule-card schedule-card--wide">
+              <div class="schedule-time">10:00–11:00</div>
+              <h4 class="schedule-title">
+                Świadectwo wiary i warsztat formacyjny
+              </h4>
+              <p class="schedule-desc">
+                10:00 – Marcin Cyron, świadectwo wiary przedsiębiorcy
+                &nbsp;·&nbsp; 11:00 – ks. Francisco Mota SJ (doradca duchowy
+                UNIAPAC), konferencja i warsztat formacyjny.
+              </p>
+              <p class="innemiejsce">
+                Miejsce: Kamea, ul. Klasztorna 17/18, Poznań
+              </p>
+            </article>
+
+            <article class="schedule-card">
+              <div class="schedule-time">12:30</div>
+              <h4 class="schedule-title">Przerwa obiadowa</h4>
+            </article>
+
+            <article class="schedule-card">
+              <div class="schedule-time">14:30</div>
+              <h4 class="schedule-title">Spotkania tematyczne w grupach</h4>
+              <p class="innemiejsce">Ostrów Tumski</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <p class="skrot-note">
+      Pełny program konferencji, wraz z opisami prelegentów i biletami, znajduje
+      się na
+      <a href="index.html" class="link-kamea">stronie głównej</a>.
+    </p>
+
+    <div class="skrot-actions" style="margin: 20px 0 60px">
+      <a class="nav-btn nav-btn--primary" href="index.html#bilety"
+        >Zapisz się</a
+      >
+    </div>
+    <footer class="site-footer">
+      <div class="footer-bg" aria-hidden="true"></div>
+
+      <div class="container footer-container">
+        <div class="footer-grid">
+          <!-- LEWA KOLUMNA: znak + opis -->
+          <div class="footer-col footer-brand">
+            <div class="footer-mark">
+              <div class="logo_footer">
+                <img src="obrazy/logo.png" alt="logo" />
+              </div>
+            </div>
+
+            <p class="footer-desc" data-i18n="footer-desc">
+              Duszpasterstwo Przedsiębiorców i Pracodawców Talent w
+              Archidiecezji Poznańskiej
+            </p>
+
+            <p class="adresss">
+              <span class="footer-ico" aria-hidden="true">
+                <!-- pin -->
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+                  <path
+                    d="M12 22s7-4.6 7-12a7 7 0 1 0-14 0c0 7.4 7 12 7 12Z"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                  />
+                  <path
+                    d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                  />
+                </svg>
+              </span>
+              <span data-i18n="footer-address">Poznań, ul. Głogowska 92</span>
+            </p>
+          </div>
+
+          <!-- ŚRODKOWA: adres -->
+          <div class="footer-col">
+            <h3 class="footer-title" data-i18n="footer-contact-title">
+              Kontakt
+            </h3>
+
+            <ul class="footer-list footer-list--icons">
+              <li>
+                <span class="footer-ico" aria-hidden="true">
+                  <!-- mail -->
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+                    <path
+                      d="M4 6h16v12H4V6Z"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    />
+                    <path
+                      d="m4.5 7 7.5 6 7.5-6"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    />
+                  </svg>
+                </span>
+                <a href="mailto:konferencja@brh.eu">konferencja@brfh.eu</a>
+              </li>
+
+              <li>
+                <span
+                  class="footer-ico footer-ico--dot"
+                  aria-hidden="true"
+                ></span>
+                <span>NIP: 7792461653</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- MENU -->
+          <div class="footer-col">
+            <h3 class="footer-title" data-i18n="footer-menu-title">Menu</h3>
+
+            <ul class="footer-list">
+              <li><a href="#program" data-i18n="menu-program">Program</a></li>
+              <li>
+                <a href="#prelegenci" data-i18n="menu-prelegenci">Prelegenci</a>
+              </li>
+              <li>
+                <a href="buy_form.html" data-i18n="menu-zapisy">Zapisy</a>
+              </li>
+              <li class="tooltip">
+                <a href="#reklamacje" data-i18n="menu-zwroty">Zwroty</a>
+                <span class="tooltip-text" data-i18n="tooltip-zwroty">
+                  W sprawie zwrotów prosimy o wysyłanie wiadomości na adres
+                  email: [konferencja@brfh.eu](mailto:konferencja@brfh.eu). Czas
+                  na zwrot biletu wynosi 14 dni od dnia zakupu.
+                </span>
+              </li>
+              <li>
+                <a href="regulamin.html" data-i18n="menu-regulamin"
+                  >Regulamin Konferencji</a
+                >
+              </li>
+              <li>
+                <a href="polityka-prywatnosci.html" data-i18n="menu-polityka"
+                  >Polityka prywatności</a
+                >
+              </li>
+              <li class="tooltip">
+                <a href="#reklamacje" data-i18n="menu-reklamacje">Reklamacje</a>
+                <span class="tooltip-text" data-i18n="tooltip-reklamacje">
+                  W sprawie reklamacji prosimy o wysyłanie wiadomości na adres
+                  email: [konferencja@brfh.eu](mailto:konferencja@brfh.eu)
+                </span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- ORGANIZATOR -->
+          <div class="footer-col footer-org">
+            <h3 class="footer-title" data-i18n="footer-org-title">
+              Organizator
+            </h3>
+
+            <a
+              class="footer-org-card"
+              href="https://talentpoznan.pl/"
+              aria-label="Talent"
+            >
+              <!-- Podmień ścieżkę na właściwą w Twoim projekcie -->
+              <img src="obrazy/talent.png" alt="talent" />
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-bottom" data-i18n="footer-bottom">
+          © 2026 Duszpasterstwo Przedsiębiorców i Pracodawców Talent w
+          Archidiecezji Poznańskiej
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
