@@ -26,6 +26,54 @@
     <style>
       /* Dodatkowe, minimalne style tylko dla tej podstrony - nie modyfikują style.css */
 
+      /* PRZEŁĄCZNIK JĘZYKA / LANGUAGE SWITCHER */
+      .lang-switcher {
+        position: fixed;
+        top: 16px;
+        left: 16px;
+        z-index: 9999;
+        display: flex;
+        gap: 4px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 999px;
+        padding: 4px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+        font-family: "DM Sans", sans-serif;
+      }
+      .lang-switcher button {
+        border: none;
+        background: transparent;
+        padding: 6px 12px;
+        border-radius: 999px;
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 13px;
+        letter-spacing: 0.5px;
+        color: #333;
+        transition:
+          background 0.2s,
+          color 0.2s;
+      }
+      .lang-switcher button.active {
+        background: #1a1a1a;
+        color: #fff;
+      }
+      .lang-switcher button:hover:not(.active) {
+        background: rgba(0, 0, 0, 0.08);
+      }
+      @media (prefers-color-scheme: dark) {
+        .lang-switcher {
+          background: rgba(30, 30, 30, 0.85);
+        }
+        .lang-switcher button {
+          color: #eee;
+        }
+        .lang-switcher button.active {
+          background: #fff;
+          color: #111;
+        }
+      }
+
       .skrot-hero {
         background: linear-gradient(135deg, var(--secondary) 0%, #1f3a4d 100%);
         color: var(--white);
@@ -115,6 +163,12 @@
     </style>
   </head>
   <body class="page-short">
+    <!-- PRZEŁĄCZNIK JĘZYKA / LANGUAGE SWITCHER -->
+    <div class="lang-switcher" role="group" aria-label="Wybór języka / Language selector">
+      <button type="button" id="lang-pl" class="active" onclick="setLang('pl')">PL</button>
+      <button type="button" id="lang-en" onclick="setLang('en')">ENG</button>
+    </div>
+
     <!-- HEADER (identyczny jak na stronie głównej) -->
     <div class="header">
       <div class="logo">
@@ -123,8 +177,8 @@
         </a>
       </div>
       <nav class="nav">
-        <a href="index.html#program" class="nav-btn">Pełny harmonogram</a>
-        <a href="index.html#bilety" class="nav-btn nav-btn--primary"
+        <a href="index.html#program" class="nav-btn" data-i18n="sk-nav-harm">Pełny harmonogram</a>
+        <a href="index.html#bilety" class="nav-btn nav-btn--primary" data-i18n="nav-sign"
           >Zapisz się</a
         >
       </nav>
@@ -133,9 +187,9 @@
     <!-- HERO PODSTRONY -->
     <section class="skrot-hero">
       <div class="container">
-        <div class="section-kicker">Program Integracji</div>
-        <h1>Program skrócony</h1>
-        <p>
+        <div class="section-kicker" data-i18n="kicker">Program Integracji</div>
+        <h1 data-i18n="sk-h1">Program skrócony</h1>
+        <p data-i18n="sk-subtitle">
           Konferencja „Bóg, Rodzina, Biznes, Hojność” · 9–10 października 2026,
           Poznań.
         </p>
@@ -145,10 +199,10 @@
             href="Program_skrocony_Integracja_Przedsiebiorcow.pdf"
             download
           >
-            ⬇ Pobierz program w PDF
+            <span data-i18n="sk-btn-pdf">⬇ Pobierz program w PDF</span>
           </a>
           <a class="btn-back" href="index.html#program">
-            ← Zobacz pełny program
+            <span data-i18n="sk-btn-back">← Zobacz pełny program</span>
           </a>
         </div>
       </div>
@@ -160,33 +214,33 @@
       <div class="schedule-stripe day-1">
         <div class="container">
           <header class="schedule-head">
-            <div class="schedule-kicker">Program Integracji</div>
-            <h2 class="schedule-main-date">9 X 2026 (piątek)</h2>
+            <div class="schedule-kicker" data-i18n="kicker">Program Integracji</div>
+            <h2 class="schedule-main-date" data-i18n="sk-day1-date">9 X 2026 (piątek)</h2>
           </header>
           <div class="schedule-grid">
             <article class="schedule-card">
               <div class="schedule-time">8:00</div>
-              <h4 class="schedule-title">Msza Święta</h4>
-              <p class="schedule-desc">
+              <h4 class="schedule-title" data-i18n="sk-d1-1-title">Msza Święta</h4>
+              <p class="schedule-desc" data-i18n="sk-d1-1-desc">
                 Eucharystia pod przewodnictwem Księdza Biskupa Grzegorza
                 Olszowskiego.
               </p>
-              <p class="inne_miejsce">Miejsce: ul. Stolarska 7, Poznań</p>
+              <p class="inne_miejsce" data-i18n="sk-d1-1-place">Miejsce: ul. Stolarska 7, Poznań</p>
             </article>
 
             <article class="schedule-card">
               <div class="schedule-time">8:45</div>
-              <h4 class="schedule-title">Rejestracja uczestników</h4>
-              <p class="schedule-desc">
+              <h4 class="schedule-title" data-i18n="sk-d1-2-title">Rejestracja uczestników</h4>
+              <p class="schedule-desc" data-i18n="sk-d1-2-desc">
                 Odbiór identyfikatorów i materiałów konferencyjnych.
               </p>
-              <p class="inne_miejsce">Miejsce: World Trade Center, Poznań</p>
+              <p class="inne_miejsce" data-i18n="sk-d1-2-place">Miejsce: World Trade Center, Poznań</p>
             </article>
 
             <article class="schedule-card schedule-card--wide">
               <div class="schedule-time">9:30</div>
-              <h4 class="schedule-title">Otwarcie konferencji</h4>
-              <p class="schedule-desc">
+              <h4 class="schedule-title" data-i18n="sk-d1-3-title">Otwarcie konferencji</h4>
+              <p class="schedule-desc" data-i18n="sk-d1-3-desc">
                 ks. Rafał Ostrowski – koordynator konferencji. Prowadzący:
                 Wojciech Nowicki, Olaf Pniewski.
               </p>
@@ -194,8 +248,8 @@
 
             <article class="schedule-card schedule-card--wide">
               <div class="schedule-time">10:00</div>
-              <h4 class="schedule-title">Część 1: Rodzina w biznesie</h4>
-              <p class="schedule-desc">
+              <h4 class="schedule-title" data-i18n="sk-d1-4-title">Część 1: Rodzina w biznesie</h4>
+              <p class="schedule-desc" data-i18n="sk-d1-4-desc">
                 10:00 – Krzysztof Janowski &nbsp;·&nbsp; 10:30 – Daniel
                 Schachle, „Radykalne zaufanie Bogu”
               </p>
@@ -203,36 +257,36 @@
 
             <article class="schedule-card">
               <div class="schedule-time">11:00–11:30</div>
-              <h4 class="schedule-title">Sesja networkingowa</h4>
-              <p class="schedule-desc">Przerwa kawowa.</p>
+              <h4 class="schedule-title" data-i18n="sk-d1-5-title">Sesja networkingowa</h4>
+              <p class="schedule-desc" data-i18n="sk-d1-5-desc">Przerwa kawowa.</p>
             </article>
 
             <article class="schedule-card schedule-card--wide">
               <div class="schedule-time">11:30</div>
-              <h4 class="schedule-title">
+              <h4 class="schedule-title" data-i18n="sk-d1-6-title">
                 Panel: Rodzina w firmie, firma w rodzinie
               </h4>
-              <p class="schedule-desc">
+              <p class="schedule-desc" data-i18n="sk-d1-6-desc">
                 Goście: Justyna Marks, Jerzy Kołodziej.
               </p>
             </article>
 
             <article class="schedule-card">
               <div class="schedule-time">12:30</div>
-              <h4 class="schedule-title">Warsztaty w małych grupach</h4>
+              <h4 class="schedule-title" data-i18n="sk-d1-7-title">Warsztaty w małych grupach</h4>
             </article>
 
             <article class="schedule-card">
               <div class="schedule-time">13:30</div>
-              <h4 class="schedule-title">Przerwa obiadowa</h4>
+              <h4 class="schedule-title" data-i18n="sk-d1-8-title">Przerwa obiadowa</h4>
             </article>
 
             <article class="schedule-card schedule-card--wide">
               <div class="schedule-time">15:00</div>
-              <h4 class="schedule-title">
+              <h4 class="schedule-title" data-i18n="sk-d1-9-title">
                 Część 2: Hojność, która zmienia świat
               </h4>
-              <p class="schedule-desc">
+              <p class="schedule-desc" data-i18n="sk-d1-9-desc">
                 15:00 – Sigrid Marz (prezydent UNIAPAC) &nbsp;·&nbsp; 15:30 –
                 ks. prof. Arkadiusz Wuwer, „Rzecz o hojności, czyli logika daru”
               </p>
@@ -240,19 +294,19 @@
 
             <article class="schedule-card">
               <div class="schedule-time">16:15</div>
-              <h4 class="schedule-title">Sesja networkingowa</h4>
-              <p class="schedule-desc">Przerwa kawowa.</p>
+              <h4 class="schedule-title" data-i18n="sk-d1-5-title">Sesja networkingowa</h4>
+              <p class="schedule-desc" data-i18n="sk-d1-5-desc">Przerwa kawowa.</p>
             </article>
 
             <article class="schedule-card">
               <div class="schedule-time">16:45</div>
-              <h4 class="schedule-title">Prezentacje przedsiębiorców</h4>
+              <h4 class="schedule-title" data-i18n="sk-d1-10-title">Prezentacje przedsiębiorców</h4>
             </article>
 
             <article class="schedule-card schedule-card--wide">
               <div class="schedule-time">17:15</div>
-              <h4 class="schedule-title">Panel: Hojny przedsiębiorca</h4>
-              <p class="schedule-desc">
+              <h4 class="schedule-title" data-i18n="sk-d1-11-title">Panel: Hojny przedsiębiorca</h4>
+              <p class="schedule-desc" data-i18n="sk-d1-11-desc">
                 Prowadzący: Robert Bartkowiak. Goście: Krzysztof Zuba, ks.
                 Tomasz Kancelarczyk, Krzysztof Drabik.
               </p>
@@ -260,13 +314,13 @@
 
             <article class="schedule-card">
               <div class="schedule-time">18:15</div>
-              <h4 class="schedule-title">Warsztaty w małych grupach</h4>
+              <h4 class="schedule-title" data-i18n="sk-d1-7-title">Warsztaty w małych grupach</h4>
             </article>
 
             <article class="schedule-card">
               <div class="schedule-time">20:00</div>
-              <h4 class="schedule-title">Bankiet</h4>
-              <p class="inne_miejsce">Sala Saffron, GARDENcity, MTP</p>
+              <h4 class="schedule-title" data-i18n="sk-d1-12-title">Bankiet</h4>
+              <p class="inne_miejsce" data-i18n="sk-d1-12-place">Sala Saffron, GARDENcity, MTP</p>
             </article>
           </div>
         </div>
@@ -276,74 +330,74 @@
       <div class="schedule-stripe day-2">
         <div class="container">
           <header class="schedule-head schedule-head--compact">
-            <div class="schedule-kicker">Program Integracji</div>
-            <h2 class="schedule-main-date">10 X 2026 (sobota)</h2>
+            <div class="schedule-kicker" data-i18n="kicker">Program Integracji</div>
+            <h2 class="schedule-main-date" data-i18n="sk-day2-date">10 X 2026 (sobota)</h2>
           </header>
           <div class="schedule-grid schedule-grid--day2">
             <article class="schedule-card">
               <div class="schedule-time">8:30</div>
-              <h4 class="schedule-title">Oprowadzenie po Farze Poznańskiej</h4>
-              <p class="schedule-desc">ks. Mateusz Misiak.</p>
+              <h4 class="schedule-title" data-i18n="sk-d2-1-title">Oprowadzenie po Farze Poznańskiej</h4>
+              <p class="schedule-desc" data-i18n="sk-d2-1-desc">ks. Mateusz Misiak.</p>
             </article>
 
             <article class="schedule-card">
               <div class="schedule-time">9:00</div>
-              <h4 class="schedule-title">Msza Święta</h4>
-              <p class="schedule-desc">
+              <h4 class="schedule-title" data-i18n="sk-d1-1-title">Msza Święta</h4>
+              <p class="schedule-desc" data-i18n="sk-d2-2-desc">
                 Fara Poznańska, pod przewodnictwem abpa Zbigniewa Zielińskiego.
               </p>
-              <p class="inne_miejsce">Miejsce: ul. Gołębia 1, Poznań</p>
+              <p class="inne_miejsce" data-i18n="sk-d2-2-place">Miejsce: ul. Gołębia 1, Poznań</p>
             </article>
 
             <article class="schedule-card">
               <div class="schedule-time">9:40</div>
-              <h4 class="schedule-title">Koncert organowy</h4>
-              <p class="schedule-desc">Bartosz Tritt.</p>
+              <h4 class="schedule-title" data-i18n="sk-d2-3-title">Koncert organowy</h4>
+              <p class="schedule-desc" data-i18n="sk-d2-3-desc">Bartosz Tritt.</p>
             </article>
             <article class="schedule-card">
               <div class="schedule-time">10:00</div>
-              <h4 class="schedule-title">
+              <h4 class="schedule-title" data-i18n="sk-d2-4-title">
                 Prelekcja: Świadectwo wiary przedsiębiorcy
               </h4>
-              <p class="schedule-desc">Marcin Cyron</p>
+              <p class="schedule-desc" data-i18n="sk-d2-4-desc">Marcin Cyron</p>
             </article>
 
             <article class="schedule-card schedule-card--wide">
               <div class="schedule-time">11:00</div>
-              <h4 class="schedule-title">
+              <h4 class="schedule-title" data-i18n="sk-d2-5-title">
                 Konferencja i warsztat formacyjny dla przedsiębiorców
               </h4>
-              <p class="schedule-desc">
+              <p class="schedule-desc" data-i18n="sk-d2-5-desc">
                 ks. Francisco Mota SJ (doradca duchowy UNIAPAC)
               </p>
-              <p class="inne_miejsce">
+              <p class="inne_miejsce" data-i18n="sk-d2-5-place">
                 Miejsce: Kamea, ul. Klasztorna 17/18, Poznań
               </p>
             </article>
 
             <article class="schedule-card">
               <div class="schedule-time">12:30</div>
-              <h4 class="schedule-title">Przerwa obiadowa</h4>
+              <h4 class="schedule-title" data-i18n="sk-d1-8-title">Przerwa obiadowa</h4>
             </article>
 
             <article class="schedule-card">
               <div class="schedule-time">14:30</div>
-              <h4 class="schedule-title">Spotkania tematyczne w grupach</h4>
-              <p class="inne_miejsce">Ostrów Tumski</p>
+              <h4 class="schedule-title" data-i18n="sk-d2-6-title">Spotkania tematyczne w grupach</h4>
+              <p class="inne_miejsce" data-i18n="sk-d2-6-place">Ostrów Tumski</p>
             </article>
           </div>
         </div>
       </div>
     </section>
 
-    <p class="skrot-note">
+    <p class="skrot-note" data-i18n="sk-note">
       Pełny program konferencji, wraz z opisami prelegentów i biletami, znajduje
       się na
       <a href="index.html" class="link-kamea">stronie głównej</a>.
     </p>
 
     <div class="skrot-actions" style="margin: 20px 0 60px">
-      <a class="nav-btn nav-btn--primary" href="index.html#bilety"
+      <a class="nav-btn nav-btn--primary" href="index.html#bilety" data-i18n="nav-sign"
         >Zapisz się</a
       >
     </div>
@@ -426,15 +480,15 @@
             <h3 class="footer-title" data-i18n="footer-menu-title">Menu</h3>
 
             <ul class="footer-list">
-              <li><a href="#program" data-i18n="menu-program">Program</a></li>
+              <li><a href="index.html#program" data-i18n="menu-program">Program</a></li>
               <li>
-                <a href="#prelegenci" data-i18n="menu-prelegenci">Prelegenci</a>
+                <a href="index.html#prelegenci" data-i18n="menu-prelegenci">Prelegenci</a>
               </li>
               <li>
                 <a href="buy_form.html" data-i18n="menu-zapisy">Zapisy</a>
               </li>
               <li class="tooltip">
-                <a href="#reklamacje" data-i18n="menu-zwroty">Zwroty</a>
+                <a href="index.html#reklamacje" data-i18n="menu-zwroty">Zwroty</a>
                 <span class="tooltip-text" data-i18n="tooltip-zwroty">
                   W sprawie zwrotów prosimy o wysyłanie wiadomości na adres
                   email: [konferencja@brfh.eu](mailto:konferencja@brfh.eu). Czas
@@ -452,7 +506,7 @@
                 >
               </li>
               <li class="tooltip">
-                <a href="#reklamacje" data-i18n="menu-reklamacje">Reklamacje</a>
+                <a href="index.html#reklamacje" data-i18n="menu-reklamacje">Reklamacje</a>
                 <span class="tooltip-text" data-i18n="tooltip-reklamacje">
                   W sprawie reklamacji prosimy o wysyłanie wiadomości na adres
                   email: [konferencja@brfh.eu](mailto:konferencja@brfh.eu)
@@ -484,5 +538,148 @@
         </div>
       </div>
     </footer>
+
+    <!-- TŁUMACZENIE PL/ENG -->
+    <script>
+      const translations = {
+        pl: {
+          /* wypełniane automatycznie oryginalną treścią HTML przy starcie */
+        },
+        en: {
+          "sk-nav-harm": "Full schedule",
+          "nav-sign": "Sign up",
+          kicker: "Integration Program",
+          "sk-h1": "Short Program",
+          "sk-subtitle":
+            "God, Family, Business, Generosity Conference · October 9–10, 2026, Poznań.",
+          "sk-btn-pdf": "⬇ Download the program (PDF)",
+          "sk-btn-back": "← See the full program",
+
+          "sk-day1-date": "October 9, 2026 (Friday)",
+          "sk-d1-1-title": "Holy Mass",
+          "sk-d1-1-desc":
+            "Eucharist presided over by Bishop Grzegorz Olszowski.",
+          "sk-d1-1-place": "Location: ul. Stolarska 7, Poznań",
+
+          "sk-d1-2-title": "Participant registration",
+          "sk-d1-2-desc": "Collecting badges and conference materials.",
+          "sk-d1-2-place": "Location: World Trade Center, Poznań",
+
+          "sk-d1-3-title": "Conference opening",
+          "sk-d1-3-desc":
+            "Fr. Rafał Ostrowski – conference coordinator. Hosts: Wojciech Nowicki, Olaf Pniewski.",
+
+          "sk-d1-4-title": "Part 1: Family in Business",
+          "sk-d1-4-desc":
+            "10:00 – Krzysztof Janowski &nbsp;·&nbsp; 10:30 – Daniel Schachle, “Radical Trust in God”",
+
+          "sk-d1-5-title": "Networking session",
+          "sk-d1-5-desc": "Coffee break.",
+
+          "sk-d1-6-title": "Panel: Family in the company, company in the family",
+          "sk-d1-6-desc": "Guests: Justyna Marks, Jerzy Kołodziej.",
+
+          "sk-d1-7-title": "Small-group workshops",
+
+          "sk-d1-8-title": "Lunch break",
+
+          "sk-d1-9-title": "Part 2: Generosity that changes the world",
+          "sk-d1-9-desc":
+            "15:00 – Sigrid Marz (President of UNIAPAC) &nbsp;·&nbsp; 15:30 – Rev. Prof. Arkadiusz Wuwer, “On generosity, or the logic of the gift”",
+
+          "sk-d1-10-title": "Entrepreneur presentations",
+
+          "sk-d1-11-title": "Panel: The generous entrepreneur",
+          "sk-d1-11-desc":
+            "Host: Robert Bartkowiak. Guests: Krzysztof Zuba, Fr. Tomasz Kancelarczyk, Krzysztof Drabik.",
+
+          "sk-d1-12-title": "Banquet",
+          "sk-d1-12-place":
+            "Saffron Hall, GARDENcity, Poznań International Fair",
+
+          "sk-day2-date": "October 10, 2026 (Saturday)",
+
+          "sk-d2-1-title": "Guided tour of the Poznań Parish Church (Fara)",
+          "sk-d2-1-desc": "Fr. Mateusz Misiak.",
+
+          "sk-d2-2-desc":
+            "Poznań Parish Church (Fara), presided over by Archbishop Zbigniew Zieliński.",
+          "sk-d2-2-place": "Location: ul. Gołębia 1, Poznań",
+
+          "sk-d2-3-title": "Organ concert",
+          "sk-d2-3-desc": "Bartosz Tritt.",
+
+          "sk-d2-4-title": "Talk: An entrepreneur's testimony of faith",
+          "sk-d2-4-desc": "Marcin Cyron",
+
+          "sk-d2-5-title":
+            "Conference and formation workshop for entrepreneurs",
+          "sk-d2-5-desc": "Fr. Francisco Mota SJ (Spiritual Advisor to UNIAPAC)",
+          "sk-d2-5-place": "Location: Kamea, ul. Klasztorna 17/18, Poznań",
+
+          "sk-d2-6-title": "Thematic group meetings",
+          "sk-d2-6-place": "Ostrów Tumski",
+
+          "sk-note":
+            'The full conference program, along with speaker bios and tickets, is available on the <a href="index.html" class="link-kamea">homepage</a>.',
+
+          "footer-desc":
+            "Chaplaincy of Entrepreneurs and Employers Talent in the Archdiocese of Poznań",
+          "footer-address": "Poznań, ul. Głogowska 92",
+          "footer-contact-title": "Contact",
+          "footer-menu-title": "Menu",
+          "menu-program": "Program",
+          "menu-prelegenci": "Speakers",
+          "menu-zapisy": "Registration",
+          "menu-zwroty": "Refunds",
+          "tooltip-zwroty":
+            "For refunds, please send an email to konferencja@brfh.eu. The ticket refund period is 14 days from the date of purchase.",
+          "menu-regulamin": "Conference Terms & Conditions",
+          "menu-polityka": "Privacy Policy",
+          "menu-reklamacje": "Complaints",
+          "tooltip-reklamacje":
+            "For complaints, please send an email to konferencja@brfh.eu",
+          "footer-org-title": "Organizer",
+          "footer-bottom":
+            "© 2026 Chaplaincy of Entrepreneurs and Employers Talent in the Archdiocese of Poznań",
+        },
+      };
+
+      function buildPolishDictionary() {
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
+          const key = el.getAttribute("data-i18n");
+          if (!(key in translations.pl)) {
+            translations.pl[key] = el.innerHTML.trim();
+          }
+        });
+      }
+
+      function applyLang(lang) {
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
+          const key = el.getAttribute("data-i18n");
+          if (translations[lang] && translations[lang][key] !== undefined) {
+            el.innerHTML = translations[lang][key];
+          }
+        });
+        document.documentElement.lang = lang === "en" ? "en" : "pl";
+      }
+
+      function setLang(lang) {
+        applyLang(lang);
+        localStorage.setItem("site-lang", lang);
+        document
+          .getElementById("lang-pl")
+          .classList.toggle("active", lang === "pl");
+        document
+          .getElementById("lang-en")
+          .classList.toggle("active", lang === "en");
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        buildPolishDictionary();
+        const saved = localStorage.getItem("site-lang") || "pl";
+        setLang(saved);
+      });
+    </script>
   </body>
 </html>
