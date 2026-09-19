@@ -108,7 +108,7 @@
     donationBtn.disabled = true;
 
     try {
-      const res = await fetch("/create-donation-order", {
+      const res = await fetch("/api/create-donation-order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
