@@ -1,4 +1,5 @@
 import { finalizePaidOrder } from "./finalize-paid-order.js";
+import { finalizeDonation } from "./finalize-donation.js";
 
 function xmlEscape(value) {
   return String(value ?? "")
@@ -296,19 +297,19 @@ export async function onRequestPost({ request, env }) {
     });
   }
 
-  const order = await env.DB.prepare(
-    `
-    SELECT
-      ext_order_id,
-      status,
-      total_amount
-    FROM orders
-    WHERE ext_order_id = ?
-    LIMIT 1
-    `,
-  )
-    .bind(orderID)
-    .first();
+  const isDonation = String(orderID || "").startsWith("DON");
+
+  const order = isDonation
+    ? await env.DB.prepare(
+        `SELECT ext_order_id, status, amount_grosze AS total_amount FROM donations WHERE ext_order_id = ? LIMIT 1`,
+      )
+        .bind(orderID)
+        .first()
+    : await env.DB.prepare(
+        `SELECT ext_order_id, status, total_amount FROM orders WHERE ext_order_id = ? LIMIT 1`,
+      )
+        .bind(orderID)
+        .first();
 
   console.log(
     "AUTOPAY_ITN_ORDER_ROW",
@@ -397,7 +398,18 @@ export async function onRequestPost({ request, env }) {
 
   try {
     const metaUpdate = await env.DB.prepare(
+      isDonation
+        ? `
+      UPDATE donations
+      SET
+        updated_at = datetime('now'),
+        autopay_remote_id = COALESCE(autopay_remote_id, ?),
+        autopay_payment_status = ?,
+        autopay_payment_date = ?,
+        autopay_gateway_id = COALESCE(autopay_gateway_id, ?)
+      WHERE ext_order_id = ?
       `
+        : `
       UPDATE orders
       SET
         updated_at = datetime('now'),
@@ -453,12 +465,18 @@ export async function onRequestPost({ request, env }) {
         reason: "already_completed_ignore_downgrade",
       };
     } else {
-      finalized = await finalizePaidOrder({
-        extOrderId: orderID,
-        provider: "autopay",
-        status: localStatus,
-        env,
-      });
+      finalized = isDonation
+        ? await finalizeDonation({
+            extOrderId: orderID,
+            status: localStatus,
+            env,
+          })
+        : await finalizePaidOrder({
+            extOrderId: orderID,
+            provider: "autopay",
+            status: localStatus,
+            env,
+          });
     }
 
     console.log("AUTOPAY_ITN_FINALIZE_RESULT", JSON.stringify(finalized));

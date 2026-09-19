@@ -157,6 +157,261 @@
           color: #111;
         }
       }
+
+      /* =========================================================
+   DAROWIZNY — WERSJA FINALNA
+   Dopisz na końcu form_style.css (żeby korzystać z tych
+   samych zmiennych --primary/--secondary i tego samego
+   sposobu skalowania na mobile).
+   ========================================================= */
+
+      .donation-section {
+        max-width: 640px;
+        margin: 40px auto;
+        padding: 0 20px;
+      }
+
+      /* Karta formularza — jak #buy, ale gradient pomarańczowy
+   zamiast niebieskiego (ticket form jest niebieski, więc
+   darowizny odróżniamy kolorem) */
+      #donation-form {
+        max-width: 640px;
+        margin: 0 auto;
+        padding: 22px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--primary) 0%, #c97a2e 100%);
+        color: var(--white);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+      }
+
+      #donation-form h3 {
+        font-family:
+          "Inter",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Roboto,
+          "Helvetica Neue",
+          sans-serif;
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 20px;
+        margin-top: 10px;
+        margin-bottom: 16px;
+        text-align: center;
+      }
+
+      .donation-intro {
+        max-width: 640px;
+        margin: 0 auto 24px;
+        text-align: left;
+      }
+
+      .donation-intro p {
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 1.7;
+        color: var(--text-dark);
+        margin-bottom: 14px;
+      }
+
+      /* Pola — identyczna logika jak #buy input/select/textarea */
+      #donation-form label {
+        display: block;
+        margin-top: 6px;
+        margin-bottom: 2px;
+        font-weight: 600;
+        font-size: 14px;
+        letter-spacing: 0.02em;
+      }
+
+      #donation-form input:not([type="checkbox"]),
+      #donation-form select,
+      #donation-form textarea {
+        width: 100%;
+        min-height: 30px;
+        padding: 6px 14px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 10px;
+        font-size: 14px;
+        font-family: inherit;
+        color: var(--text-dark);
+        background: rgba(255, 255, 255, 0.96);
+        outline: none;
+        box-sizing: border-box;
+      }
+
+      #donation-form textarea {
+        min-height: 80px;
+        resize: vertical;
+      }
+
+      #donation-form input:not([type="checkbox"])::placeholder,
+      #donation-form textarea::placeholder {
+        color: #9aa3ad;
+      }
+
+      #donation-form input:not([type="checkbox"]):focus,
+      #donation-form select:focus,
+      #donation-form textarea:focus {
+        border-color: rgba(
+          48,
+          82,
+          117,
+          0.85
+        ); /* pod var(--secondary), bo tło jest teraz pomarańczowe */
+        box-shadow: 0 0 0 4px rgba(48, 82, 117, 0.18);
+      }
+
+      #donation-form select {
+        cursor: pointer;
+        appearance: none;
+        padding-right: 36px;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='%23305275' d='M5.5 7.5l4.5 4.5 4.5-4.5'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 12px center;
+        background-size: 16px;
+      }
+
+      #donation-form input[type="checkbox"] {
+        width: auto;
+        min-height: auto;
+        margin-right: 10px;
+        transform: translateY(1px);
+      }
+
+      .field-hint {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.85);
+        margin-top: 4px;
+      }
+
+      .donor-fields {
+        background: rgba(255, 255, 255, 0.1);
+        border-top: 1px solid rgba(255, 255, 255, 0.18);
+        padding-top: 14px;
+        margin-top: 14px;
+      }
+
+      .checkbox-field label {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        font-weight: 500;
+        font-size: 13px;
+        line-height: 1.6;
+        color: rgba(255, 255, 255, 0.92);
+        cursor: pointer;
+      }
+
+      .checkbox-field a {
+        color: var(--white);
+        font-weight: 700;
+        text-decoration: underline;
+      }
+
+      .checkbox-field a:hover {
+        color: var(--secondary);
+      }
+
+      .donation-section .form-error {
+        background: rgba(255, 255, 255, 0.95);
+        color: #b91c1c;
+        border: 1px solid #b91c1c;
+        border-radius: 8px;
+        padding: 10px 14px;
+        font-size: 13px;
+        font-weight: 600;
+        margin-bottom: 16px;
+      }
+
+      /* =========================================================
+   .payu-btn — TO JEST DOKŁADNA KOPIA z form_style.css
+   (tam scoped do #buy, tutaj do #donation-form), żeby
+   przycisk wyglądał identycznie jak w formularzu zakupu.
+   Kolor NIE jest tematyczny (pomarańczowy/niebieski) —
+   zostaje ten sam flat blue #199bfa co w oryginale, bo to
+   kolor marki płatności, nie kolor sekcji.
+   ========================================================= */
+
+      #donation-form .payu-btn {
+        width: 100%;
+        margin-top: 18px;
+
+        background: #0072ce;
+        color: #ffffff;
+
+        border: 0;
+        border-radius: 14px;
+        padding: 16px 18px;
+
+        font: inherit;
+        font-weight: 800;
+        letter-spacing: 0.01em;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+
+        cursor: pointer;
+        transition:
+          transform 0.15s ease,
+          background 0.15s ease;
+        box-shadow: none;
+      }
+
+      #donation-form .payu-btn__text {
+        font-weight: 700;
+      }
+
+      #donation-form .payu-btn:hover {
+        background: #0058a3;
+        transform: translateY(-1px);
+      }
+
+      #donation-form .payu-btn:active {
+        transform: translateY(0);
+      }
+
+      #donation-form .payu-btn:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 4px rgba(48, 82, 117, 0.22);
+      }
+
+      #donation-form .payu-btn:disabled {
+        background: #d1d5db;
+        color: #6b7280;
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+      .pola-wide {
+        display: flex;
+        gap: 10px;
+        justify-content: space-between;
+      }
+      .email {
+        width: 70%;
+      }
+      /* ========================
+   RESPONSYWNE — MOBILE
+   ======================== */
+      @media (max-width: 600px) {
+        .donation-section {
+          padding: 0 16px;
+          margin: 24px auto;
+        }
+
+        #donation-form {
+          padding: 22px 16px;
+          border-radius: 12px;
+        }
+
+        #donation-form .payu-btn__text {
+          font-weight: 700;
+          font-size: 13px;
+        }
+      }
     </style>
   </head>
 
@@ -362,6 +617,165 @@
       <p class="realizacja" style="margin: 20px 0" data-i18n="realizacja-text">
         Czas realizacji zamówienia - 1 dzień roboczy.
       </p>
+      <!--
+  Wersja 2: rozsuwana lista (select) zamiast kafelków,
+  domyślnie zaznaczone "Jako firma", przycisk AutoPay
+  wizualnie jak w formularzu zakupu (.payu-btn).
+-->
+
+      <section class="donation-section" id="donation-section">
+        <div class="donation-intro">
+          <p>
+            Jeśli chcieliby Państwo dodatkowo wesprzeć działalność naszego
+            duszpasterstwa, można to zrobić poprzez darowiznę.
+            <strong>Warto wiedzieć</strong>, że darowizny na cele kultu
+            religijnego mogą – po spełnieniu warunków określonych w przepisach –
+            <strong>podlegać odliczeniu od dochodu</strong> w zeznaniu
+            podatkowym.
+          </p>
+          <p>
+            W ten sposób Państwa wsparcie pomaga nam organizować kolejne
+            wydarzenia, a jednocześnie może wiązać się z możliwością
+            skorzystania z przewidzianej prawem ulgi podatkowej.
+          </p>
+        </div>
+
+        <form id="donation-form" class="form" autocomplete="off">
+          <h3>Wpłata darowizny</h3>
+
+          <div class="field">
+            <label for="donorType">Forma wpłaty</label>
+            <select id="donorType" name="donorType">
+              <option value="anonymous" selected>Anonimowo</option>
+              <option value="private">Jako osoba prywatna</option>
+              <option value="company">Jako firma</option>
+            </select>
+          </div>
+
+          <!-- Pola: firma (widoczne domyślnie, bo to domyślny wybór) -->
+          <div class="field donor-fields" data-donor-fields="company">
+            <label for="donationCompanyName">Nazwa firmy</label>
+            <input type="text" id="donationCompanyName" name="companyName" />
+
+            <label for="donationNip">NIP</label>
+            <input
+              type="text"
+              id="donationNip"
+              name="nip"
+              inputmode="numeric"
+              maxlength="10"
+            />
+
+            <label for="donationCompanyAddress">Adres firmy</label>
+            <input
+              type="text"
+              id="donationCompanyAddress"
+              name="companyAddress"
+            />
+          </div>
+
+          <!-- Pola: osoba prywatna -->
+          <div class="field donor-fields" data-donor-fields="private" hidden>
+            <label for="donationFullName">Imię i nazwisko</label>
+            <input type="text" id="donationFullName" name="fullName" />
+
+            <label for="donationAddress"
+              >Adres (ulica, kod pocztowy, miasto)</label
+            >
+            <input type="text" id="donationAddress" name="address" />
+
+            <label for="donationPesel">PESEL</label>
+            <input
+              type="text"
+              id="donationPesel"
+              name="pesel"
+              inputmode="numeric"
+              maxlength="11"
+            />
+            <p class="field-hint">
+              PESEL jest potrzebny wyłącznie do wystawienia zaświadczenia o
+              darowiźnie na potrzeby ulgi podatkowej.
+            </p>
+          </div>
+
+          <!-- Pole wspólne: email do potwierdzenia płatności -->
+          <div class="pola-wide">
+            <div class="field email">
+              <label for="donationEmail"
+                >E-mail (do potwierdzenia płatności)</label
+              >
+              <input
+                type="email"
+                id="donationEmail"
+                name="contactEmail"
+                required
+              />
+            </div>
+
+            <div class="field">
+              <label for="donationAmount">Kwota darowizny (PLN)</label>
+              <input
+                type="number"
+                id="donationAmount"
+                name="amount"
+                min="1"
+                step="1"
+                required
+              />
+            </div>
+          </div>
+          <div class="field">
+            <label for="donationMessage"
+              >Wiadomość / intencja (opcjonalnie)</label
+            >
+            <textarea
+              id="donationMessage"
+              name="message"
+              maxlength="300"
+            ></textarea>
+          </div>
+
+          <div class="field checkbox-field">
+            <label>
+              <input type="checkbox" id="donationConsent" required />
+              Zapoznałem się i akceptuję
+              <a href="regulamin.html" target="_blank" rel="noopener noreferrer"
+                >Regulamin</a
+              >
+              oraz
+              <a
+                href="polityka-prywatnosci.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Politykę prywatności</a
+              >, i wyrażam zgodę na przetwarzanie podanych danych osobowych w
+              celu realizacji darowizny oraz (jeśli dotyczy) wystawienia
+              zaświadczenia do celów podatkowych.
+            </label>
+          </div>
+
+          <div id="donation-error" class="form-error" hidden></div>
+
+          <!-- Przycisk w tym samym stylu co #autopayBtn w formularzu zakupu -->
+          <div class="pay-buttons">
+            <button
+              type="button"
+              id="donationAutopayBtn"
+              class="payu-btn payu-btn--donation"
+            >
+              <span class="payu-btn__text">Zapłać przez</span>
+              <img
+                src="svg/Logo-full-black.svg"
+                alt=""
+                class="payu-btn__logo"
+                width="90"
+                height="24"
+              />
+            </button>
+          </div>
+        </form>
+      </section>
+
       <img
         class="img-fluid"
         src="obrazy/647x162-bankpay.png"
@@ -501,7 +915,7 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@26.7.5/build/js/intlTelInput.min.js"></script>
-
+    <script src="donation_form.js" defer></script>
     <script>
       const PAYMENTS_AVAILABLE = true;
 
