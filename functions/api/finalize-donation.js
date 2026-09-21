@@ -1,4 +1,4 @@
-// functions/finalize-donation.js
+// functions/api/finalize-donation.js
 // Wołane z autopay-itn.js, gdy ext_order_id zaczyna się od "DON".
 
 const RECIPIENT_EMAIL = "rafalostrowskix@gmail.com";
@@ -42,12 +42,6 @@ function buildEmailBody(donation) {
   return lines.join("\n");
 }
 
-// Wysyłka e-maila przez Resend (https://resend.com).
-// Wymagane env: RESEND_API_KEY, RESEND_FROM_EMAIL (adres na Twojej
-// zweryfikowanej domenie, np. "Duszpasterstwo <darowizny@twojadomena.pl>").
-// Jeśli używacie już innego dostawcy w finalize-paid-order.js (np. przy
-// wysyłce potwierdzeń zakupu biletów), podmieńcie tę funkcję na analogiczną,
-// żeby zachować jeden, wspólny mechanizm mailowy.
 async function sendDonationEmail({ donation, env }) {
   if (!env.RESEND_API_KEY || !env.EMAIL_FROM) {
     console.log(

@@ -1,5 +1,5 @@
-// functions/create-donation-order.js
-// Endpoint Cloudflare Pages Functions: POST /create-donation-order
+// functions/api/create-donation-order.js
+// Endpoint Cloudflare Pages Functions: POST /api/create-donation-order
 // Wzorowany na create-order.js (bilety), ale dla darowizn.
 
 async function sha256Hex(input) {
@@ -10,8 +10,6 @@ async function sha256Hex(input) {
     .join("");
 }
 
-// Prefiks "DON" pozwala ITN odróżnić zamówienia darowizn od biletów
-// bez zmiany struktury istniejącej tabeli orders.
 function createDonationOrderId() {
   const ts = Date.now().toString(36).toUpperCase();
   const rand = crypto.randomUUID().replace(/-/g, "").toUpperCase();
@@ -91,14 +89,13 @@ export async function onRequestPost({ request, env }) {
 
   const message = normalizeText(input?.message, 300);
 
-  // Kwota: przyjmujemy PLN z frontendu, przeliczamy na grosze.
   const rawAmount = Number(input?.amount);
   if (!Number.isFinite(rawAmount) || rawAmount <= 0) {
     return new Response("Bad amount", { status: 400 });
   }
   const amountGrosze = Math.round(rawAmount * 100);
-  const MIN_GROSZE = 100; // 1 PLN
-  const MAX_GROSZE = 10000000; // 100 000 PLN – zabezpieczenie przed pomyłką
+  const MIN_GROSZE = 100;
+  const MAX_GROSZE = 10000000;
   if (amountGrosze < MIN_GROSZE || amountGrosze > MAX_GROSZE) {
     return new Response("Amount out of allowed range", { status: 400 });
   }
@@ -149,7 +146,9 @@ export async function onRequestPost({ request, env }) {
     ServiceID: String(env.AUTOPAY_SERVICE_ID).trim(),
     OrderID: extOrderId,
     Amount: amountForAutopay,
-    Description: sanitizeAutopayDescription("Darowizna na cele kultu religijnego"),
+    Description: sanitizeAutopayDescription(
+      "Darowizna na cele kultu religijnego",
+    ),
     Currency: String(env.AUTOPAY_CURRENCY || "PLN").trim(),
     CustomerEmail: contactEmail,
   };
