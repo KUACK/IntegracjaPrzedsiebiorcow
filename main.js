@@ -173,11 +173,8 @@ setInterval(updateTimer, 1000);
 document.addEventListener("DOMContentLoaded", () => {
   const modal = document.getElementById("welcome-modal");
   const closeBtn = document.getElementById("close-modal");
-
-  // Wyświetlenie okna przy każdym wejściu na stronę
+  if (!modal || !closeBtn) return; // strona nie ma modala -> nic nie rób
   modal.showModal();
-
-  // Zamknięcie okna po kliknięciu przycisku
   closeBtn.addEventListener("click", () => {
     modal.close();
   });
