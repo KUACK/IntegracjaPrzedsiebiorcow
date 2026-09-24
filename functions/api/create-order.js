@@ -225,7 +225,21 @@ export async function onRequestPost({ request, env }) {
     promo === "wrzesien27" ||
     promo === "wrzesien28" ||
     promo === "wrzesien29" ||
-    promo === "wrzesien30"
+    promo === "wrzesien30" ||
+    promo === "BRFH1" ||
+    promo === "BRFH2" ||
+    promo === "BRFH3" ||
+    promo === "BRFH4" ||
+    promo === "BRFH5" ||
+    promo === "BRFH6" ||
+    promo === "BRFH7" ||
+    promo === "BRFH8" ||
+    promo === "BRFH9" ||
+    promo === "BRFH10" ||
+    promo === "BRFH11" ||
+    promo === "BRFH12" ||
+    promo === "BRFH13" ||
+    promo === "BRFH14"
   ) {
     if (now >= promoDeadline && now < promoDeadline2) discountFactor = 0.75; // -25%
   } else if (

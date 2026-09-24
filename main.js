@@ -260,64 +260,74 @@ document.addEventListener("DOMContentLoaded", () => {
   updateSelection();
 })();
 // =========================================================
-// PRELEGENT — inteligentne pozycjonowanie okienka po najechaniu
-// Wstaw ten kod na końcu main.js albo w nowym <script> przed </body>
-// (razem z prelegent-popup.css z tego samego zestawu)
-// =========================================================
+// PRELEGENT — okienko wycentrowane na środku ekranu,
+// pozostaje widoczne, gdy kursor jest NA ZDJĘCIU albo NA OPISIE.
+// Ten blok ZASTĘPUJE poprzednią wersję "PRELEGENT" w main.js
+// (v1 i v2 tego fixu).
 
 function initPrelegentTooltips() {
   const wrappers = document.querySelectorAll(".prelegent-tooltip");
+  const HIDE_DELAY = 200; // ms — czas na "przeskoczenie" kursorem między zdjęciem i popupem
 
   wrappers.forEach(function (wrap) {
     const popup = wrap.querySelector(".prelegent-popup");
     if (!popup) return;
 
-    // desktop: mysz - liczymy miejsce tuż przed pokazaniem okna
-    wrap.addEventListener("mouseenter", function () {
-      positionPopup(wrap, popup);
-    });
+    // usuwamy stare klasy pozycjonujące z wcześniejszych wersji
+    popup.classList.remove("pos-left", "pos-right", "pos-top", "pos-bottom");
 
-    // telefon/tablet: dotyk (na wypadek gdyby ktoś odpalał hover przez tap)
-    wrap.addEventListener(
+    // przenosimy popup do <body>, żeby uniknąć problemu
+    // z transformowanymi rodzicami blokującymi position:fixed
+    document.body.appendChild(popup);
+
+    let hideTimer = null;
+
+    function show() {
+      if (hideTimer) {
+        clearTimeout(hideTimer);
+        hideTimer = null;
+      }
+      popup.classList.add("popup-visible");
+    }
+
+    function scheduleHide() {
+      if (hideTimer) clearTimeout(hideTimer);
+      hideTimer = setTimeout(function () {
+        popup.classList.remove("popup-visible");
+        hideTimer = null;
+      }, HIDE_DELAY);
+    }
+
+    function hideNow() {
+      if (hideTimer) {
+        clearTimeout(hideTimer);
+        hideTimer = null;
+      }
+      popup.classList.remove("popup-visible");
+    }
+
+    // Desktop: mysz na zdjęciu
+    wrap.addEventListener("mouseenter", show);
+    wrap.addEventListener("mouseleave", scheduleHide);
+
+    // Desktop: mysz na samym popupie (żeby nie zamykał się przy przejściu)
+    popup.addEventListener("mouseenter", show);
+    popup.addEventListener("mouseleave", scheduleHide);
+
+    // Mobile/tablet: dotyk zdjęcia otwiera popup
+    wrap.addEventListener("touchstart", show, { passive: true });
+
+    // Mobile: dotknięcie gdziekolwiek indziej (poza zdjęciem i popupem) zamyka
+    document.addEventListener(
       "touchstart",
-      function () {
-        positionPopup(wrap, popup);
+      function (e) {
+        if (!popup.contains(e.target) && !wrap.contains(e.target)) {
+          hideNow();
+        }
       },
       { passive: true },
     );
   });
-
-  // przelicz przy zmianie rozmiaru okna (np. obrót telefonu)
-  window.addEventListener("resize", function () {
-    wrappers.forEach(function (wrap) {
-      const popup = wrap.querySelector(".prelegent-popup");
-      if (
-        (popup && popup.classList.contains("pos-left")) ||
-        (popup && popup.classList.contains("pos-right")) ||
-        (popup && popup.classList.contains("pos-top")) ||
-        (popup && popup.classList.contains("pos-bottom"))
-      ) {
-        positionPopup(wrap, popup);
-      }
-    });
-  });
-}
-
-function positionPopup(wrap, popup) {
-  popup.classList.remove("pos-left", "pos-right", "pos-top", "pos-bottom");
-
-  const isMobile = window.innerWidth <= 900;
-  const rect = wrap.getBoundingClientRect();
-
-  if (isMobile) {
-    const spaceAbove = rect.top;
-    const spaceBelow = window.innerHeight - rect.bottom;
-    popup.classList.add(spaceBelow >= spaceAbove ? "pos-bottom" : "pos-top");
-  } else {
-    const spaceLeft = rect.left;
-    const spaceRight = window.innerWidth - rect.right;
-    popup.classList.add(spaceRight >= spaceLeft ? "pos-right" : "pos-left");
-  }
 }
 
 document.addEventListener("DOMContentLoaded", initPrelegentTooltips);
