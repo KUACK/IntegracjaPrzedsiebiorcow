@@ -226,20 +226,20 @@ export async function onRequestPost({ request, env }) {
     promo === "wrzesien28" ||
     promo === "wrzesien29" ||
     promo === "wrzesien30" ||
-    promo === "BRFH1" ||
-    promo === "BRFH2" ||
-    promo === "BRFH3" ||
-    promo === "BRFH4" ||
-    promo === "BRFH5" ||
-    promo === "BRFH6" ||
-    promo === "BRFH7" ||
-    promo === "BRFH8" ||
-    promo === "BRFH9" ||
-    promo === "BRFH10" ||
-    promo === "BRFH11" ||
-    promo === "BRFH12" ||
-    promo === "BRFH13" ||
-    promo === "BRFH14"
+    promo === "brfh1" ||
+    promo === "brfh2" ||
+    promo === "brfh3" ||
+    promo === "brfh4" ||
+    promo === "brfh5" ||
+    promo === "brfh6" ||
+    promo === "brfh7" ||
+    promo === "brfh8" ||
+    promo === "brfh9" ||
+    promo === "brfh10" ||
+    promo === "brfh11" ||
+    promo === "brfh12" ||
+    promo === "brfh13" ||
+    promo === "brfh14"
   ) {
     if (now >= promoDeadline && now < promoDeadline2) discountFactor = 0.75; // -25%
   } else if (
