@@ -1,12 +1,28 @@
 // functions/api/finalize-donation.js
 // Wołane z autopay-itn.js, gdy ext_order_id zaczyna się od "DON".
 
-const RECIPIENT_EMAIL = "rafalostrowskix@gmail.com";
+// ZMIANA: teraz lista adresów zamiast pojedynczego adresu.
+const RECIPIENT_EMAILS = ["rafalostrowskix@gmail.com", "grzegorzasknet@gmail.com"];
 
 function donorTypeLabel(t) {
   if (t === "private") return "Osoba prywatna";
   if (t === "company") return "Firma";
   return "Anonimowo";
+}
+
+// NOWE: sprawdza, czy podano dane potrzebne do wystawienia zaświadczenia
+// (przydatne też dla thanks.html / order-status, żeby wiedzieć, czy
+// obiecywać wysyłkę zaświadczenia).
+function hasCertificateData(donation) {
+  if (donation.donor_type === "private") {
+    return Boolean(donation.full_name && donation.address && donation.pesel);
+  }
+  if (donation.donor_type === "company") {
+    return Boolean(
+      donation.company_name && donation.nip && donation.company_address,
+    );
+  }
+  return false;
 }
 
 function buildEmailBody(donation) {
@@ -24,17 +40,17 @@ function buildEmailBody(donation) {
     lines.push(`Adres: ${donation.address || "-"}`);
     lines.push(`PESEL: ${donation.pesel || "-"}`);
   }
-
   if (donation.donor_type === "company") {
     lines.push(`Nazwa firmy: ${donation.company_name || "-"}`);
     lines.push(`NIP: ${donation.nip || "-"}`);
     lines.push(`Adres firmy: ${donation.company_address || "-"}`);
   }
-
   if (donation.message) {
     lines.push(`Wiadomość / intencja: ${donation.message}`);
   }
-
+  lines.push(
+    `Zaświadczenie do wysłania: ${hasCertificateData(donation) ? "TAK" : "NIE (brak kompletu danych)"}`,
+  );
   lines.push(
     `Data płatności (AutoPay): ${donation.autopay_payment_date || "-"}`,
   );
@@ -61,7 +77,8 @@ async function sendDonationEmail({ donation, env }) {
     },
     body: JSON.stringify({
       from: env.EMAIL_FROM,
-      to: [RECIPIENT_EMAIL],
+      // ZMIANA: wysyłka do wszystkich adresów z RECIPIENT_EMAILS
+      to: RECIPIENT_EMAILS,
       subject: `Darowizna ${donation.ext_order_id} – ${donation.status}`,
       text: body,
     }),
@@ -117,5 +134,11 @@ export async function finalizeDonation({ extOrderId, status, env }) {
     }
   }
 
-  return { ok: true, finalized: true, status, emailResult };
+  return {
+    ok: true,
+    finalized: true,
+    status,
+    emailResult,
+    certificateRequested: hasCertificateData(donation),
+  };
 }

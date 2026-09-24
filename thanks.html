@@ -343,7 +343,14 @@
     <!-- ======= TŁUMACZENIE PL/ENG ======= -->
     <script>
       const translations = {
-        pl: {}, // Wypełniane automatycznie przy starcie
+        pl: {
+          "thanks-title-donation": "Dziękujemy za wpłatę!",
+          "status-success-donation":
+            "Dziękujemy za wpłatę darowizny! Płatność została potwierdzona.",
+          "hint-certificate-yes":
+            "Zaświadczenie o dokonanej darowiźnie zostanie w najbliższym czasie wysłane na podany adres e-mail.",
+          "hint-certificate-no": "",
+        }, // Wypełniane automatycznie przy starcie
         en: {
           "thanks-title": "Thank You!",
           "status-checking": "Checking payment status...",
@@ -388,6 +395,12 @@
           "footer-org-title": "Organizer",
           "footer-bottom":
             "© 2026 Chaplaincy of Entrepreneurs and Employers Talent in the Archdiocese of Poznań",
+          "thanks-title-donation": "Thank you for your donation!",
+          "status-success-donation":
+            "Thank you for your donation! The payment has been confirmed.",
+          "hint-certificate-yes":
+            "A donation certificate will be sent to the provided email address shortly.",
+          "hint-certificate-no": "",
         },
       };
 
@@ -460,6 +473,14 @@
         url.searchParams.get("orderId");
 
       orderEl.textContent = extOrderId || "(brak)";
+      const isDonation = /^DON/i.test(extOrderId || "");
+      if (isDonation) {
+        const titleEl = document.querySelector('[data-i18n="thanks-title"]');
+        if (titleEl) {
+          titleEl.setAttribute("data-i18n", "thanks-title-donation");
+          titleEl.textContent = getText("thanks-title-donation");
+        }
+      }
 
       // Funkcja pomocnicza do uaktualniania tekstów statusów po zmianie języka
       // (zmienna globalna currentDynamicStatus trzyma nazwę klucza statusu)
@@ -492,6 +513,8 @@
           statusEl.textContent =
             (currentLang === "en" ? "Current status: " : "Aktualny status: ") +
             currentStatusParam;
+        } else if (currentDynamicStatus === "success-donation") {
+          statusEl.textContent = getText("status-success-donation");
         }
       }
 
@@ -542,12 +565,27 @@
             }
 
             if (s === "COMPLETED" || s === "SUCCESS") {
-              currentDynamicStatus = "success";
-              statusEl.textContent = getText("status-success");
-              statusEl.className = "ok";
-              actionsEl.style.display = "flex";
-              downloadBtn.style.display = "inline-block";
-              hintEl.textContent = "";
+              if (isDonation) {
+                currentDynamicStatus = "success-donation";
+                statusEl.textContent = getText("status-success-donation");
+                statusEl.className = "ok";
+                actionsEl.style.display = "none"; // brak biletów do pobrania
+                downloadBtn.style.display = "none";
+                const certificateRequested =
+                  typeof j.certificateRequested === "boolean"
+                    ? j.certificateRequested
+                    : true; // fallback: zakładamy TAK, dopóki backend nie potwierdzi inaczej
+                hintEl.textContent = certificateRequested
+                  ? getText("hint-certificate-yes")
+                  : getText("hint-certificate-no");
+              } else {
+                currentDynamicStatus = "success";
+                statusEl.textContent = getText("status-success");
+                statusEl.className = "ok";
+                actionsEl.style.display = "flex";
+                downloadBtn.style.display = "inline-block";
+                hintEl.textContent = "";
+              }
               return { done: true };
             }
 
