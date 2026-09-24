@@ -626,6 +626,13 @@
       <p class="realizacja" style="margin: 20px 0" data-i18n="realizacja-text">
         Czas realizacji zamówienia - 1 dzień roboczy.
       </p>
+      <p
+        class="realizacja"
+        style="margin: 5px 0; color: #065f46"
+        data-i18n="problemtel"
+      >
+        Masz problem z zakupem biletu? Zadzwoń do nas: +48 736 226 839
+      </p>
       <!--
   Wersja 2: rozsuwana lista (select) zamiast kafelków,
   domyślnie zaznaczone "Jako firma", przycisk AutoPay
@@ -634,7 +641,7 @@
 
       <section class="donation-section" id="donation-section">
         <div class="donation-intro">
-          <p>
+          <p data-i18n="donation-intro-p1">
             Jeśli chcieliby Państwo dodatkowo wesprzeć działalność naszego
             duszpasterstwa, można to zrobić poprzez darowiznę.
             <strong>Warto wiedzieć</strong>, że darowizny na cele kultu
@@ -642,7 +649,7 @@
             <strong>podlegać odliczeniu od dochodu</strong> w zeznaniu
             podatkowym.
           </p>
-          <p>
+          <p data-i18n="donation-intro-p2">
             W ten sposób Państwa wsparcie pomaga nam organizować kolejne
             wydarzenia, a jednocześnie może wiązać się z możliwością
             skorzystania z przewidzianej prawem ulgi podatkowej.
@@ -650,23 +657,39 @@
         </div>
 
         <form id="donation-form" class="form" autocomplete="off">
-          <h3>Wpłata darowizny</h3>
+          <h3 data-i18n="donation-form-title">Wpłata darowizny</h3>
 
           <div class="field">
-            <label for="donorType">Forma wpłaty</label>
+            <label for="donorType" data-i18n="label-donor-type"
+              >Forma wpłaty</label
+            >
             <select id="donorType" name="donorType">
-              <option value="anonymous" selected>Anonimowo</option>
-              <option value="private">Jako osoba prywatna</option>
-              <option value="company">Jako firma</option>
+              <option
+                value="anonymous"
+                data-i18n="opt-donor-anonymous"
+                selected
+              >
+                Anonimowo
+              </option>
+              <option value="private" data-i18n="opt-donor-private">
+                Jako osoba prywatna
+              </option>
+              <option value="company" data-i18n="opt-donor-company">
+                Jako firma
+              </option>
             </select>
           </div>
 
           <!-- Pola: firma (widoczne domyślnie, bo to domyślny wybór) -->
           <div class="field donor-fields" data-donor-fields="company">
-            <label for="donationCompanyName">Nazwa firmy</label>
+            <label
+              for="donationCompanyName"
+              data-i18n="label-donation-company-name"
+              >Nazwa firmy</label
+            >
             <input type="text" id="donationCompanyName" name="companyName" />
 
-            <label for="donationNip">NIP</label>
+            <label for="donationNip" data-i18n="label-donation-nip">NIP</label>
             <input
               type="text"
               id="donationNip"
@@ -675,7 +698,11 @@
               maxlength="10"
             />
 
-            <label for="donationCompanyAddress">Adres firmy</label>
+            <label
+              for="donationCompanyAddress"
+              data-i18n="label-donation-company-address"
+              >Adres firmy</label
+            >
             <input
               type="text"
               id="donationCompanyAddress"
@@ -685,15 +712,19 @@
 
           <!-- Pola: osoba prywatna -->
           <div class="field donor-fields" data-donor-fields="private" hidden>
-            <label for="donationFullName">Imię i nazwisko</label>
+            <label for="donationFullName" data-i18n="label-fullname"
+              >Imię i nazwisko</label
+            >
             <input type="text" id="donationFullName" name="fullName" />
 
-            <label for="donationAddress"
+            <label for="donationAddress" data-i18n="label-donation-address"
               >Adres (ulica, kod pocztowy, miasto)</label
             >
             <input type="text" id="donationAddress" name="address" />
 
-            <label for="donationPesel">PESEL</label>
+            <label for="donationPesel" data-i18n="label-donation-pesel"
+              >PESEL</label
+            >
             <input
               type="text"
               id="donationPesel"
@@ -701,7 +732,7 @@
               inputmode="numeric"
               maxlength="11"
             />
-            <p class="field-hint">
+            <p class="field-hint" data-i18n="hint-donation-pesel">
               PESEL jest potrzebny wyłącznie do wystawienia zaświadczenia o
               darowiźnie na potrzeby ulgi podatkowej.
             </p>
@@ -710,7 +741,7 @@
           <!-- Pole wspólne: email do potwierdzenia płatności -->
           <div class="pola-wide">
             <div class="field email">
-              <label for="donationEmail"
+              <label for="donationEmail" data-i18n="label-donation-email"
                 >E-mail (do potwierdzenia płatności)</label
               >
               <input
@@ -722,7 +753,9 @@
             </div>
 
             <div class="field">
-              <label for="donationAmount">Kwota darowizny (PLN)</label>
+              <label for="donationAmount" data-i18n="label-donation-amount"
+                >Kwota darowizny (PLN)</label
+              >
               <input
                 type="number"
                 id="donationAmount"
@@ -734,7 +767,7 @@
             </div>
           </div>
           <div class="field">
-            <label for="donationMessage"
+            <label for="donationMessage" data-i18n="label-donation-message"
               >Wiadomość / intencja (opcjonalnie)</label
             >
             <textarea
@@ -747,19 +780,24 @@
           <div class="field checkbox-field">
             <label>
               <input type="checkbox" id="donationConsent" required />
-              Zapoznałem się i akceptuję
-              <a href="regulamin.html" target="_blank" rel="noopener noreferrer"
-                >Regulamin</a
-              >
-              oraz
-              <a
-                href="polityka-prywatnosci.html"
-                target="_blank"
-                rel="noopener noreferrer"
-                >Politykę prywatności</a
-              >, i wyrażam zgodę na przetwarzanie podanych danych osobowych w
-              celu realizacji darowizny oraz (jeśli dotyczy) wystawienia
-              zaświadczenia do celów podatkowych.
+              <span data-i18n="consent-donation-label">
+                Zapoznałem się i akceptuję
+                <a
+                  href="regulamin.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Regulamin</a
+                >
+                oraz
+                <a
+                  href="polityka-prywatnosci.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Politykę prywatności</a
+                >, i wyrażam zgodę na przetwarzanie podanych danych osobowych w
+                celu realizacji darowizny oraz (jeśli dotyczy) wystawienia
+                zaświadczenia do celów podatkowych.
+              </span>
             </label>
           </div>
 
@@ -772,7 +810,9 @@
               id="donationAutopayBtn"
               class="payu-btn payu-btn--donation"
             >
-              <span class="payu-btn__text">Zapłać przez</span>
+              <span class="payu-btn__text" data-i18n="btn-pay-via"
+                >Zapłać przez</span
+              >
               <img
                 src="svg/Logo-full-black.svg"
                 alt=""
@@ -925,7 +965,7 @@
     <div class="phone-widget">
       <a href="tel:+48616460046" class="phone-bubble-btn">
         <img src="ikony/phone-svgrepo-com.svg" alt="Phone" />
-        <span class="phone-tooltip"
+        <span class="phone-tooltip" data-i18n="teletool"
           >Masz problem z zakupem biletu? Inne pytania lub wątpliwości? Zadzwoń
           do nas: +48 736 226 839</span
         >
@@ -1722,13 +1762,37 @@
           "promo-applied-15": "Code applied -15%.",
           "promo-applied": "Code applied.",
           "promo-invalid": "Invalid code.",
-
+          teletool:
+            "Having trouble buying a ticket? Other questions or concerns? Call us: +48 736 226 839",
+          problemtel:
+            "Having trouble buying a ticket? Call us at +48 736 226 839.",
           "msg-creating-order": "Creating AutoPay order...",
           "msg-unknown-error": "Unknown error.",
           "msg-error-prefix": "Error",
           "msg-no-redirect": "No payment redirect address.",
           "msg-no-payment-data": "Missing payment form data.",
           "msg-order-failed": "Failed to create the order. Please try again.",
+          "donation-intro-p1":
+            "If you would like to additionally support the work of our chaplaincy, you can do so by making a donation. <strong>It is worth knowing</strong> that donations for religious worship purposes may – once the conditions set out in the regulations are met – <strong>be deducted from income</strong> in your tax return.",
+          "donation-intro-p2":
+            "This way, your support helps us organize future events, while also potentially allowing you to benefit from the tax relief provided by law.",
+          "donation-form-title": "Make a donation",
+          "label-donor-type": "Payment type",
+          "opt-donor-anonymous": "Anonymously",
+          "opt-donor-private": "As a private person",
+          "opt-donor-company": "As a company",
+          "label-donation-company-name": "Company name",
+          "label-donation-nip": "Tax ID (NIP)",
+          "label-donation-company-address": "Company address",
+          "label-donation-address": "Address (street, postal code, city)",
+          "label-donation-pesel": "National ID (PESEL)",
+          "hint-donation-pesel":
+            "The PESEL number is needed only to issue a donation certificate for tax relief purposes.",
+          "label-donation-email": "Email (for payment confirmation)",
+          "label-donation-amount": "Donation amount (PLN)",
+          "label-donation-message": "Message / intention (optional)",
+          "consent-donation-label":
+            'I have read and accept the <a href="regulamin.html" target="_blank" rel="noopener noreferrer">Terms &amp; Conditions</a> and the <a href="polityka-prywatnosci.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>, and I consent to the processing of my personal data for the purpose of processing the donation and (if applicable) issuing a certificate for tax purposes.',
         },
       };
 
