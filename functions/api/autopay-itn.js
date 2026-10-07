@@ -1,4 +1,4 @@
-import { finalizePreorder2027 } from "../lib/finalize-preorder-2027.js";
+import { finalizePreorder2027 } from "./finalize-preorder-2027.js";
 import { finalizePaidOrder } from "./finalize-paid-order.js";
 import { finalizeDonation } from "./finalize-donation.js";
 
@@ -299,18 +299,22 @@ export async function onRequestPost({ request, env }) {
   const isDonation = String(orderID || "").startsWith("DON");
 
   const order = isPreorder2027
-    ? await env.DB.prepare("SELECT ext_order_id,status,total_amount FROM preorders2027 WHERE ext_order_id=? LIMIT 1").bind(orderID).first()
-    : isDonation
     ? await env.DB.prepare(
-        `SELECT ext_order_id, status, amount_grosze AS total_amount FROM donations WHERE ext_order_id = ? LIMIT 1`,
+        "SELECT ext_order_id,status,total_amount FROM preorders2027 WHERE ext_order_id=? LIMIT 1",
       )
         .bind(orderID)
         .first()
-    : await env.DB.prepare(
-        `SELECT ext_order_id, status, total_amount FROM orders WHERE ext_order_id = ? LIMIT 1`,
-      )
-        .bind(orderID)
-        .first();
+    : isDonation
+      ? await env.DB.prepare(
+          `SELECT ext_order_id, status, amount_grosze AS total_amount FROM donations WHERE ext_order_id = ? LIMIT 1`,
+        )
+          .bind(orderID)
+          .first()
+      : await env.DB.prepare(
+          `SELECT ext_order_id, status, total_amount FROM orders WHERE ext_order_id = ? LIMIT 1`,
+        )
+          .bind(orderID)
+          .first();
 
   console.log(
     "AUTOPAY_ITN_ORDER_ROW",
@@ -391,12 +395,21 @@ export async function onRequestPost({ request, env }) {
   if (isPreorder2027) {
     let confirmation = "NOTCONFIRMED";
     try {
-      const result = await finalizePreorder2027({extOrderId:orderID,status:localStatus,remoteID,paymentDate,paymentStatus,gatewayID,env});
-      if(result.ok) confirmation="CONFIRMED";
-    } catch(error) { console.error("PREORDER2027_FINALIZE_ERROR",String(error)); }
-    return buildConfirmationResponse({serviceID,orderID,confirmation,env});
+      const result = await finalizePreorder2027({
+        extOrderId: orderID,
+        status: localStatus,
+        remoteID,
+        paymentDate,
+        paymentStatus,
+        gatewayID,
+        env,
+      });
+      if (result.ok) confirmation = "CONFIRMED";
+    } catch (error) {
+      console.error("PREORDER2027_FINALIZE_ERROR", String(error));
+    }
+    return buildConfirmationResponse({ serviceID, orderID, confirmation, env });
   }
-
 
   console.log(
     "AUTOPAY_ITN_LOCAL_STATUS",
