@@ -102,7 +102,7 @@ export async function onRequestPost({ request, env }) {
     obra2027bez: {
       dbName: "Obra 2027 – pełny bilet bez noclegu",
       autopayName: "Obra 2027 pelny bez noclegu",
-      unit: 300,
+      unit: 49000,
     },
   };
   const t = Object.hasOwn(tickets, ticketType) ? tickets[ticketType] : null;

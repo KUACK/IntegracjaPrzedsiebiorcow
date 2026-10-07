@@ -30,7 +30,7 @@
         ? new Intl.NumberFormat("pl-PL", {
             style: "currency",
             currency: "PLN",
-          }).format(q * (ticket.value === "obra2027nocleg" ? 790 : 3))
+          }).format(q * (ticket.value === "obra2027nocleg" ? 790 : 490))
         : "—";
   }
   document.querySelectorAll(".choose2027").forEach((b) =>
