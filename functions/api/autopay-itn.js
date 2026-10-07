@@ -1,3 +1,4 @@
+import { finalizePreorder2027 } from "../lib/finalize-preorder-2027.js";
 import { finalizePaidOrder } from "./finalize-paid-order.js";
 import { finalizeDonation } from "./finalize-donation.js";
 
@@ -165,7 +166,6 @@ export async function onRequestPost({ request, env }) {
     "AUTOPAY_ITN_TRANSACTIONS_PARAM",
     JSON.stringify({
       length: String(transactionsParam).length,
-      preview: String(transactionsParam).slice(0, 120),
     }),
   );
 
@@ -181,7 +181,6 @@ export async function onRequestPost({ request, env }) {
     "AUTOPAY_ITN_XML",
     JSON.stringify({
       length: xml.length,
-      preview: xml.slice(0, 1200),
     }),
   );
 
@@ -270,7 +269,6 @@ export async function onRequestPost({ request, env }) {
       orderID,
       remoteID,
       verifyParts,
-      verifyString,
       expectedHash,
       incomingHash,
     }),
@@ -297,9 +295,12 @@ export async function onRequestPost({ request, env }) {
     });
   }
 
+  const isPreorder2027 = /^P27[A-F0-9]{29}$/.test(String(orderID || ""));
   const isDonation = String(orderID || "").startsWith("DON");
 
-  const order = isDonation
+  const order = isPreorder2027
+    ? await env.DB.prepare("SELECT ext_order_id,status,total_amount FROM preorders2027 WHERE ext_order_id=? LIMIT 1").bind(orderID).first()
+    : isDonation
     ? await env.DB.prepare(
         `SELECT ext_order_id, status, amount_grosze AS total_amount FROM donations WHERE ext_order_id = ? LIMIT 1`,
       )
@@ -387,6 +388,15 @@ export async function onRequestPost({ request, env }) {
   }
 
   const localStatus = mapAutopayStatus(paymentStatus);
+  if (isPreorder2027) {
+    let confirmation = "NOTCONFIRMED";
+    try {
+      const result = await finalizePreorder2027({extOrderId:orderID,status:localStatus,remoteID,paymentDate,paymentStatus,gatewayID,env});
+      if(result.ok) confirmation="CONFIRMED";
+    } catch(error) { console.error("PREORDER2027_FINALIZE_ERROR",String(error)); }
+    return buildConfirmationResponse({serviceID,orderID,confirmation,env});
+  }
+
 
   console.log(
     "AUTOPAY_ITN_LOCAL_STATUS",

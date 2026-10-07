@@ -8,6 +8,15 @@ export async function onRequestGet({ request, env }) {
 
   const jsonHeaders = { headers: { "Content-Type": "application/json" } };
 
+  if (/^P27[A-F0-9]{29}$/.test(order)) {
+    const row = await env.DB.prepare(`SELECT p.ext_order_id,p.status,p.full_name,p.ticket_type,p.quantity,p.paid_at,
+      COALESCE(q.email_sent,0) AS email_sent FROM preorders2027 p
+      LEFT JOIN paidpreorders2027 q ON q.ext_order_id=p.ext_order_id WHERE p.ext_order_id=? LIMIT 1`).bind(order).first();
+    return new Response(JSON.stringify(row ? {found:true,isPreorder2027:true,extOrderId:row.ext_order_id,status:row.status,
+      fullName:row.full_name,ticketType:row.ticket_type,quantity:row.quantity,paidAt:row.paid_at,customerEmailSent:!!row.email_sent} : {found:false}),
+      {headers:{"Content-Type":"application/json; charset=UTF-8","Cache-Control":"no-store"}});
+  }
+
   // NOWE: darowizny mają swoją tabelę i inny kształt danych niż bilety.
   const isDonation = /^DON/i.test(order);
 
