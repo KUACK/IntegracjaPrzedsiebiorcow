@@ -85,7 +85,7 @@
   bottom: 16px;
   transform: translateX(-50%);
 
-  width: min(10800px, calc(100vw - 32px));
+  width: min(1080px, calc(100vw - 32px));
   padding: 5px 20px;
 
   display: grid;
