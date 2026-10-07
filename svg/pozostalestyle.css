@@ -1,0 +1,441 @@
+  <style>
+      .notice-box {
+        max-width: 640px;
+        margin: 20px 0;
+      }
+
+      .book-btn {
+        background: linear-gradient(135deg, #065f46, #047857);
+        color: #fff;
+        border: 0;
+      }
+
+      .book-btn .payu-btn__brand,
+      .book-btn .payu-btn__text {
+        color: #fff;
+      }
+
+      .pay-note {
+        margin-top: 12px;
+        font-size: 0.95rem;
+        color: #92400e;
+      }
+
+      .consent-box {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        margin: 18px 0 10px;
+        padding: 14px 16px;
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        border-radius: 12px;
+        background: rgba(239, 157, 77, 0.08);
+      }
+
+      .consent-box input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        margin-top: 2px;
+        flex: 0 0 auto;
+      }
+
+      .consent-box label {
+        margin: 0;
+        font-size: 0.95rem;
+        line-height: 1.5;
+      }
+
+      .consent-box a {
+        color: inherit;
+        font-weight: 700;
+      }
+
+      #msg {
+        margin-top: 14px;
+      }
+
+      #buy #autopayBtn {
+        background-color: #0072ce;
+        color: white;
+      }
+
+      #buy #autopayBtn:hover {
+        background-color: #0058a3;
+        color: white;
+      }
+
+      .iti {
+        width: 100%;
+      }
+
+      .iti__tel-input {
+        width: 100%;
+      }
+
+      .iti__country-container {
+        z-index: 3;
+      }
+
+      /* ======= PRZEŁĄCZNIK JĘZYKA / LANGUAGE SWITCHER ======= */
+      .lang-switcher {
+        position: fixed;
+        top: 16px;
+        left: 16px;
+        z-index: 9999;
+        display: flex;
+        gap: 4px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 999px;
+        padding: 4px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+        font-family: "DM Sans", sans-serif;
+      }
+      .lang-switcher button {
+        border: none;
+        background: transparent;
+        padding: 6px 12px;
+        border-radius: 999px;
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 13px;
+        letter-spacing: 0.5px;
+        color: #333;
+        transition:
+          background 0.2s,
+          color 0.2s;
+      }
+      footer h3 {
+        text-transform: none;
+      }
+      .lang-switcher button.active {
+        background: #1a1a1a;
+        color: #fff;
+      }
+      .lang-switcher button:hover:not(.active) {
+        background: rgba(0, 0, 0, 0.08);
+      }
+      @media (prefers-color-scheme: dark) {
+        .lang-switcher {
+          background: rgba(30, 30, 30, 0.85);
+        }
+        .lang-switcher button {
+          color: #eee;
+        }
+        .lang-switcher button.active {
+          background: #fff;
+          color: #111;
+        }
+      }
+
+      /* =========================================================
+   DAROWIZNY — WERSJA FINALNA
+   Dopisz na końcu form_style.css (żeby korzystać z tych
+   samych zmiennych --primary/--secondary i tego samego
+   sposobu skalowania na mobile).
+   ========================================================= */
+
+      .donation-section {
+        max-width: 640px;
+        margin: 40px auto;
+        padding: 0 20px;
+      }
+
+      /* Karta formularza — jak #buy, ale gradient pomarańczowy
+   zamiast niebieskiego (ticket form jest niebieski, więc
+   darowizny odróżniamy kolorem) */
+      #donation-form {
+        max-width: 640px;
+        margin: 0 auto;
+        padding: 22px;
+        border-radius: 12px;
+        background: linear-gradient(90deg, #c97a2e 0%, var(--primary) 100%);
+        color: var(--white);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+      }
+
+      #donation-form h3 {
+        font-family:
+          "Inter",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Roboto,
+          "Helvetica Neue",
+          sans-serif;
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 20px;
+        margin-top: 10px;
+        margin-bottom: 16px;
+        text-align: center;
+      }
+
+      .donation-intro {
+        max-width: 640px;
+        margin: 0 auto 24px;
+        text-align: left;
+      }
+
+      .donation-intro p {
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 1.7;
+        color: var(--text-dark);
+        margin-bottom: 14px;
+      }
+
+      /* Pola — identyczna logika jak #buy input/select/textarea */
+      #donation-form label {
+        display: block;
+        margin-top: 6px;
+        margin-bottom: 2px;
+        font-weight: 600;
+        font-size: 14px;
+        letter-spacing: 0.02em;
+      }
+
+      #donation-form input:not([type="checkbox"]),
+      #donation-form select,
+      #donation-form textarea {
+        width: 100%;
+        min-height: 30px;
+        padding: 6px 14px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 10px;
+        font-size: 14px;
+        font-family: inherit;
+        color: var(--text-dark);
+        background: rgba(255, 255, 255, 0.96);
+        outline: none;
+        box-sizing: border-box;
+      }
+
+      #donation-form textarea {
+        min-height: 80px;
+        resize: vertical;
+      }
+
+      #donation-form input:not([type="checkbox"])::placeholder,
+      #donation-form textarea::placeholder {
+        color: #9aa3ad;
+      }
+
+      #donation-form input:not([type="checkbox"]):focus,
+      #donation-form select:focus,
+      #donation-form textarea:focus {
+        border-color: rgba(
+          48,
+          82,
+          117,
+          0.85
+        ); /* pod var(--secondary), bo tło jest teraz pomarańczowe */
+        box-shadow: 0 0 0 4px rgba(48, 82, 117, 0.18);
+      }
+
+      #donation-form select {
+        cursor: pointer;
+        appearance: none;
+        padding-right: 36px;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='%23305275' d='M5.5 7.5l4.5 4.5 4.5-4.5'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 12px center;
+        background-size: 16px;
+      }
+
+      #donation-form input[type="checkbox"] {
+        width: auto;
+        min-height: auto;
+        margin-right: 10px;
+        transform: translateY(1px);
+      }
+
+      .field-hint {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.85);
+        margin-top: 4px;
+      }
+
+      .donor-fields {
+        background: rgba(255, 255, 255, 0.1);
+        border-top: 1px solid rgba(255, 255, 255, 0.18);
+        padding-top: 14px;
+        margin-top: 14px;
+      }
+
+      .checkbox-field label {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        font-weight: 500;
+        font-size: 13px;
+        line-height: 1.6;
+        color: rgba(255, 255, 255, 0.92);
+        cursor: pointer;
+      }
+
+      .checkbox-field a {
+        color: var(--white);
+        font-weight: 700;
+        text-decoration: underline;
+      }
+
+      .checkbox-field a:hover {
+        color: var(--secondary);
+      }
+
+      .donation-section .form-error {
+        background: rgba(255, 255, 255, 0.95);
+        color: #b91c1c;
+        border: 1px solid #b91c1c;
+        border-radius: 8px;
+        padding: 10px 14px;
+        font-size: 13px;
+        font-weight: 600;
+        margin-bottom: 16px;
+      }
+
+      /* =========================================================
+   .payu-btn — TO JEST DOKŁADNA KOPIA z form_style.css
+   (tam scoped do #buy, tutaj do #donation-form), żeby
+   przycisk wyglądał identycznie jak w formularzu zakupu.
+   Kolor NIE jest tematyczny (pomarańczowy/niebieski) —
+   zostaje ten sam flat blue #199bfa co w oryginale, bo to
+   kolor marki płatności, nie kolor sekcji.
+   ========================================================= */
+
+      #donation-form .payu-btn {
+        width: 100%;
+        margin-top: 18px;
+
+        background: #0072ce;
+        color: #ffffff;
+
+        border: 0;
+        border-radius: 14px;
+        padding: 16px 18px;
+
+        font: inherit;
+        font-weight: 800;
+        letter-spacing: 0.01em;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+
+        cursor: pointer;
+        transition:
+          transform 0.15s ease,
+          background 0.15s ease;
+        box-shadow: none;
+      }
+
+      #donation-form .payu-btn__text {
+        font-weight: 700;
+      }
+
+      #donation-form .payu-btn:hover {
+        background: #0058a3;
+        transform: translateY(-1px);
+      }
+
+      #donation-form .payu-btn:active {
+        transform: translateY(0);
+      }
+
+      #donation-form .payu-btn:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 4px rgba(48, 82, 117, 0.22);
+      }
+
+      #donation-form .payu-btn:disabled {
+        background: #d1d5db;
+        color: #6b7280;
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+      .pola-wide {
+        display: flex;
+        gap: 10px;
+        justify-content: space-between;
+      }
+      .email {
+        width: 70%;
+      }
+      /* ========================
+   RESPONSYWNE — MOBILE
+   ======================== */
+      @media (max-width: 600px) {
+        .donation-section {
+          padding: 0 16px;
+          margin: 24px auto;
+        }
+
+        #donation-form {
+          padding: 22px 16px;
+          border-radius: 12px;
+        }
+
+        #donation-form .payu-btn__text {
+          font-weight: 700;
+          font-size: 13px;
+        }
+        .pola-wide {
+          align-items: flex-end; /* wyrównanie dzieci do dołu kontenera */
+        }
+        .email input {
+          margin-bottom: 0px;
+        }
+        .email {
+          width: 90%;
+        }
+      }
+    </style>  <style>
+      /* ======= PRZEŁĄCZNIK JĘZYKA / LANGUAGE SWITCHER ======= */
+      .lang-switcher {
+        position: fixed;
+        top: 16px;
+        left: 16px;
+        z-index: 9999;
+        display: flex;
+        gap: 4px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 999px;
+        padding: 4px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+        font-family: "DM Sans", sans-serif;
+      }
+      .lang-switcher button {
+        border: none;
+        background: transparent;
+        padding: 6px 12px;
+        border-radius: 999px;
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 13px;
+        letter-spacing: 0.5px;
+        color: #333;
+        transition:
+          background 0.2s,
+          color 0.2s;
+      }
+      .lang-switcher button.active {
+        background: #1a1a1a;
+        color: #fff;
+      }
+      .lang-switcher button:hover:not(.active) {
+        background: rgba(0, 0, 0, 0.08);
+      }
+      @media (prefers-color-scheme: dark) {
+        .lang-switcher {
+          background: rgba(30, 30, 30, 0.85);
+        }
+        .lang-switcher button {
+          color: #eee;
+        }
+        .lang-switcher button.active {
+          background: #fff;
+          color: #111;
+        }
+      }
+    </style>
