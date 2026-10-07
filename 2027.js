@@ -21,7 +21,7 @@
       : `${Math.floor(s / 86400)} dni · ${Math.floor(s / 3600) % 24} godz · ${Math.floor(s / 60) % 60} min · ${s % 60} sek`;
     document.getElementById("sale-status").textContent = ended
       ? "Zakup został wyłączony."
-      : "Oferta do końca 12 października 2026 (czas polski).";
+      : "";
   }
   function total() {
     const q = Number(quantity.value);

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Historia skanowania biletów</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f5f5f5;color:#333;font:15px/1.5 system-ui,sans-serif}main{max-width:1150px;margin:32px auto;padding:0 18px}h1,h2{color:#305275}h1{font-size:28px}h2{font-size:21px;margin:0}section,.controls{background:#fffdf9;border:1px solid #e9ded1;border-top:3px solid #ef9d4d;border-radius:14px;padding:20px;margin:18px 0;box-shadow:0 8px 24px #3052750c}.controls{display:flex;align-items:end;gap:12px;flex-wrap:wrap}label{display:grid;gap:5px}input{padding:11px;border:1px solid #bbc6d1;border-radius:8px;font:inherit}button{padding:12px 18px;border:0;border-radius:8px;background:#305275;color:white;font:600 14px system-ui;cursor:pointer}button:disabled{opacity:.6}button:focus-visible,input:focus-visible{outline:3px solid #ef9d4d;outline-offset:3px}.table-wrap{overflow:auto}table{border-collapse:collapse;width:100%;white-space:nowrap}th,td{text-align:left;padding:11px;border-bottom:1px solid #eee}th{color:#305275;background:#f6f1ea}.count{font-weight:700;color:#305275}#message{color:#b00020}.hint{color:#666;font-size:13px}
+</style></head><body><main>
+<h1>Historia skanowania biletów</h1>
+<p>Jeden wiersz = jeden numer biletu, z zachowaniem końcówki /1, /2 itd. Liczniki dotyczą wyłącznie przedziału wskazanego w danej sekcji.</p>
+<form id="controls" class="controls"><label>Klucz obsługi (SCAN_KEY)<input id="key" type="password" autocomplete="off" required></label><button id="refresh" type="submit">Pokaż / odśwież</button></form>
+<p class="hint">Klucz nie jest zapisywany w pamięci przeglądarki ani w adresie strony. Dane odświeżasz przyciskiem.</p>
+<p id="message" role="status"></p><div id="results"></div>
+</main><script>
+const form=document.getElementById('controls'),message=document.getElementById('message'),results=document.getElementById('results'),button=document.getElementById('refresh');
+const descriptions={day1:'9 października 2026, 00:00–24:00',day2:'10 października 2026, 00:00–24:00',banquet:'9 października 2026, 18:30–24:00'};
+function element(tag,text){const node=document.createElement(tag);if(text!==undefined)node.textContent=text;return node;}
+function time(value){if(!value)return '—';return new Intl.DateTimeFormat('pl-PL',{timeZone:'Europe/Warsaw',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).format(new Date(value.replace(' ','T')+'Z'));}
+form.addEventListener('submit',async event=>{
+ event.preventDefault();button.disabled=true;message.textContent='Pobieram…';results.replaceChildren();
+ try{
+  const response=await fetch('/api/scan-stats',{cache:'no-store',headers:{'X-Scan-Key':document.getElementById('key').value,'Accept':'application/json'}});
+  const data=await response.json();if(!response.ok)throw new Error(data.error || 'Błąd pobierania.');
+  for(const section of data.sections){
+   const card=element('section');card.append(element('h2',section.label),element('p',descriptions[section.code]+' • czas Polski'));
+   card.append(element('p','Unikatowe bilety w tym przedziale: '+section.tickets.length));
+   if(!section.tickets.length)card.append(element('p','Brak odczytów w tym przedziale.'));
+   else{
+    const wrap=element('div');wrap.className='table-wrap';const table=element('table'),thead=element('thead'),head=element('tr');
+    for(const title of ['ID biletu','Imię i nazwisko','Typ biletu','Odczyty w przedziale','Pierwszy odczyt','Ostatni odczyt'])head.append(element('th',title));
+    thead.append(head);table.append(thead);const body=element('tbody');
+    for(const ticket of section.tickets){const row=element('tr');for(const value of [ticket.ticketNo,ticket.fullName || '—',ticket.ticketType || '—',ticket.scanCount,time(ticket.firstScan),time(ticket.lastScan)])row.append(element('td',String(value)));body.append(row);}
+    table.append(body);wrap.append(table);card.append(wrap);
+   }results.append(card);
+  }message.textContent='Zaktualizowano: '+new Date().toLocaleTimeString('pl-PL');
+ }catch(error){message.textContent=error.message;}finally{button.disabled=false;}
+});
+</script></body></html>
