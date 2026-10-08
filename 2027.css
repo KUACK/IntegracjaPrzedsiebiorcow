@@ -243,6 +243,9 @@
   outline: 3px solid #e36955;
   outline-offset: 4px;
 }
+.data2027 {
+  font-size: 48px;
+}
 @media (max-width: 700px) {
   .top2027 {
     padding: 16px;

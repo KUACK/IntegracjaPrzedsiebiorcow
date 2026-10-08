@@ -1,13 +1,47 @@
 function accessFromTicketType(ticketType) {
-  const t = String(ticketType || "").toLowerCase();
+  const type = String(ticketType || "")
+    .trim()
+    .toLowerCase();
 
-  // Dostosuj do swoich nazw w formularzu:
-  // np. "2dni", "vip", "1dzien", "bankiet"
-  return {
-    day1: t.includes("1") || t.includes("2") || t.includes("vip"),
-    day2: t.includes("2") || t.includes("vip"),
-    banquet: t.includes("vip") || t.includes("bankiet"),
+  const permissions = {
+    jednodniowy9x: {
+      day1: true,
+      day2: false,
+      banquet: false,
+    },
+
+    jednodniowy10x: {
+      day1: false,
+      day2: true,
+      banquet: false,
+    },
+
+    jednodniowy9xbankiet: {
+      day1: true,
+      day2: false,
+      banquet: true,
+    },
+
+    biznesplus: {
+      day1: true,
+      day2: true,
+      banquet: false,
+    },
+
+    vipbankiet: {
+      day1: true,
+      day2: true,
+      banquet: true,
+    },
+
+    vip: {
+      day1: true,
+      day2: true,
+      banquet: true,
+    },
   };
+
+  return permissions[type] || null;
 }
 
 export async function onRequestGet({ request, env }) {
@@ -53,7 +87,35 @@ export async function onRequestGet({ request, env }) {
       orderStatus: ticket.order_status,
     });
   }
+  if (!["day1", "day2", "banquet"].includes(scannedFor)) {
+    return Response.json(
+      {
+        valid: false,
+        reason: "INVALID_SCAN_TYPE",
+      },
+      { status: 400 },
+    );
+  }
 
+  const access = accessFromTicketType(ticket.ticket_type);
+
+  if (!access) {
+    return Response.json({
+      valid: false,
+      reason: "UNKNOWN_TICKET_TYPE",
+      ticketType: ticket.ticket_type,
+    });
+  }
+
+  if (!access[scannedFor]) {
+    return Response.json({
+      valid: false,
+      reason: "NO_ACCESS",
+      ticketType: ticket.ticket_type,
+      scannedFor,
+      access,
+    });
+  }
   // 2) log skanu (NIE zmieniamy statusu biletu)
   // D1 ma batch jako transakcję (jak coś padnie, całość się wycofa). [web:133]
   await env.DB.batch([
@@ -66,7 +128,6 @@ export async function onRequestGet({ request, env }) {
   ]);
 
   // 3) zwróć dane dla obsługi
-  const access = accessFromTicketType(ticket.ticket_type);
 
   // (opcjonalnie) policz ile razy skanowano dla poszczególnych "dni"
   const counts = await env.DB.prepare(
