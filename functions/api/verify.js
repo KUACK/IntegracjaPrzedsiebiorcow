@@ -18,10 +18,6 @@ export async function onRequestGet({ request, env }) {
 
   // Prosta ochrona, żeby ktoś z zewnątrz nie sprawdzał tokenów masowo:
   // ustaw w Pages env: SCAN_KEY i wymagaj ?k=...
-  const k = url.searchParams.get("k");
-  if (env.SCAN_KEY && k !== env.SCAN_KEY) {
-    return new Response("Unauthorized", { status: 401 });
-  }
 
   if (!token) return new Response("Missing token", { status: 400 });
 
